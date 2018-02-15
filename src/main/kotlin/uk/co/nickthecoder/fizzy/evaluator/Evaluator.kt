@@ -6,12 +6,13 @@ import uk.co.nickthecoder.fizzy.prop.StringValue
 
 class Evaluator(val text: CharSequence) {
 
-    var index = 0
+    private var index = 0
 
-    var operators = mutableListOf<Operator>()
-    var values = mutableListOf<Prop<*>>()
+    private var operators = mutableListOf<Operator>()
+    private var values = mutableListOf<Prop<*>>()
+    private var expectValue = true
 
-    var debug = false
+    private var debug = false
 
     fun debug(): Evaluator {
         debug = true
@@ -57,12 +58,10 @@ class Evaluator(val text: CharSequence) {
         log("Parsing text $text")
         while (true) {
             val token = readToken()
-            log("Found $token")
             if (token.type == TokenType.UNKNOWN) {
                 log("Breaking out of parse loop")
                 break
             } else {
-                log("Pushing $token")
                 push(token)
             }
         }
@@ -100,31 +99,49 @@ class Evaluator(val text: CharSequence) {
      */
     private fun push(token: Token) {
 
-
-        when (token.type) {
-            TokenType.UNKNOWN -> return
-            TokenType.NUMBER -> pushNumber(token)
-            TokenType.IDENTIFIER -> pushIdentifier(token)
-            TokenType.OPERATOR -> pushOperator(token)
-            TokenType.STRING -> pushString(token)
+        try {
+            when (token.type) {
+                TokenType.UNKNOWN -> return
+                TokenType.NUMBER -> pushNumber(token)
+                TokenType.IDENTIFIER -> pushIdentifier(token)
+                TokenType.OPERATOR -> pushOperator(token)
+                TokenType.STRING -> pushString(token)
+            }
+        } catch (e1: EvaluationException) {
+            throw e1
+        } catch (e2: Exception) {
+            throw EvaluationException(e2, token.startIndex)
         }
+    }
+
+    private fun pushValue(value: Prop<*>) {
+        log("Push value : $value")
+        values.add(value)
+        expectValue = false
+    }
+
+    private fun pushOperator(op: Operator) {
+        log("Push $op")
+        operators.add(op)
+        expectValue = op.expectsValue()
+
     }
 
     private fun pushNumber(token: Token) {
         try {
             val number = token.toDouble()
-            values.add(DoubleValue(number))
+            pushValue(DoubleValue(number))
         } catch (e: Exception) {
             throw EvaluationException("Not a valid number : ${token.text}", token.startIndex)
         }
     }
 
     private fun pushString(token: Token) {
-        values.add(StringValue(token.text))
+        pushValue(StringValue(token.text))
     }
 
     private fun pushOperator(token: Token) {
-        val op = Operators.find(token.text)?.op ?: throw EvaluationException("Unknown operator $text", token.startIndex)
+        var op = Operators.find(token.text)?.op ?: throw EvaluationException("Unknown operator $text", token.startIndex)
 
         when (op) {
             is CloseBracketOperator -> {
@@ -135,53 +152,52 @@ class Evaluator(val text: CharSequence) {
                 if (operators.lastOrNull() !is OpenBracketOperator) {
                     throw EvaluationException("Unmatched ')'", token.startIndex)
                 } else {
-                    operators.removeAt(operators.size - 1)
+                    popOperator()
                 }
             }
             is OpenBracketOperator -> {
-                operators.add(op)
+                pushOperator(op)
             }
             else -> {
+                if (expectValue) {
+                    if (op.unaryOperator != null) {
+                        op = op.unaryOperator!!
+                    } else {
+                        throw EvaluationException("Syntax error", token.startIndex)
+                    }
+                }
 
-                while (operators.lastOrNull()?.precedence ?: -1 > op.precedence) {
+                while (peekOperator()?.precedence ?: -1 > op.precedence) {
+                    log("Applying ${peekOperator()} as it is higher than $op")
                     applyOperator()
                 }
-                operators.add(op)
+                pushOperator(op)
             }
         }
     }
 
+    private fun peekOperator(): Operator? = operators.lastOrNull()
+
+    private fun popOperator(): Operator {
+        return operators.removeAt(operators.size - 1)
+    }
+
+    private fun popValue(): Prop<*> {
+        return values.removeAt(values.size - 1)
+    }
+
     private fun applyOperator() {
-        val op = operators.removeAt(operators.size - 1)
+        val op = popOperator()
         log("Applying $op")
         try {
-            values.add(op.apply(values))
+            pushValue(op.apply(values))
         } catch (e: Exception) {
-            throw EvaluationException(e.message ?: e.toString(), 0) // TODO Add the correct position.
+            throw EvaluationException(e, 0) // TODO Add the correct position.
         }
     }
 
     private fun pushIdentifier(token: Token) {
-        /*
-        val tokenText = token.text
-        val op = operators.lastOrNull()
-        val v = values.lastOrNull()
-
-        if (op.toString() == ".") {
-            val propertyOrMethod = v.findPropertyOrMethod(tokenText)
-            if (propertyOrMethod == null) {
-                throw EvaluationException("Property or method $tokenText", token.startIndex)
-            } else {
-                popOp()
-                popValue()
-                values.add(propertyOrMethod)
-            }
-        } else {
-            values.add(token)
-        }
-        */
+        // TODO Implement
     }
 
 }
-
-class EvaluationException(s: String, index: Int) : Exception(s)

@@ -16,5 +16,7 @@ abstract class Prop<T>(value: T) {
             }
         }
 
+    override fun toString(): String = "Prop : $value"
+
     open fun dump(): String = value.toString()
 }

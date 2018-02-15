@@ -3,7 +3,7 @@ package uk.co.nickthecoder.fizzy.evaluator
 import junit.framework.TestCase
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.prop.DoubleValue
-import kotlin.test.assertFailsWith
+import java.lang.RuntimeException
 
 class TestEvaluator : TestCase() {
 
@@ -34,6 +34,15 @@ class TestEvaluator : TestCase() {
 
         val threeDivTwo = Evaluator("3 / 2").parse()
         assertEquals(1.5, threeDivTwo.value as Double, tiny)
+    }
+
+    @Test
+    fun testUnaryMinus() {
+        val a = Evaluator("3 + -2").parse()
+        assertEquals(1.0, a.value as Double, tiny)
+
+        val b = Evaluator("3 * -2").parse()
+        assertEquals(-6.0, b.value as Double, tiny)
     }
 
     @Test
@@ -118,12 +127,28 @@ class TestEvaluator : TestCase() {
 
     @Test
     fun testInvalidOperands() {
-        assertFailsWith(EvaluationException::class) {
+        // TODO Change the position of the error messages.
+        assertFailsAt(0) {
             Evaluator("\"Hello\" + 3").parse()
         }
 
-        assertFailsWith(EvaluationException::class) {
+        assertFailsAt(0) {
             Evaluator("3 + \"Hello\"").parse()
+        }
+
+        assertFailsAt(4) {
+            Evaluator("3 + * 2").parse()
+        }
+    }
+
+    fun assertFailsAt(position: Int, expression: () -> Any) {
+        try {
+            expression()
+            throw RuntimeException("Expected an EvaluationException")
+        } catch (e: EvaluationException) {
+            if (position != e.index) {
+                throw RuntimeException("Expected an EvaluationException at $position, but found one at ${e.index}", e)
+            }
         }
     }
 

@@ -6,9 +6,32 @@ import uk.co.nickthecoder.fizzy.prop.*
 abstract class Operator(val str: String, val precedence: Int) {
     abstract fun apply(values: MutableList<Prop<*>>): Prop<*>
 
+    /**
+     * Is there is a unary version of this operator?
+     * For example MinusOperator is a BinaryOperator, but also has a unary version (UnaryMinusOperator).
+     */
+    open val unaryOperator: Operator? = null
+
+    fun expectsValue(): Boolean = true
+
     override fun toString() = "Op $str"
 }
 
+class OpenBracketOperator() : UnaryOperator("(", 0) {
+    override fun apply(a: Prop<*>): Prop<*> {
+        throw RuntimeException("Cannot apply '('")
+    }
+}
+
+class CloseBracketOperator() : Operator(")", Int.MAX_VALUE) {
+    override fun apply(values: MutableList<Prop<*>>): Prop<*> {
+        throw RuntimeException("Cannot apply ')'")
+    }
+}
+
+/**
+ * Unary operators, which precede their operands, such as unary minus (e.g. -1)
+ */
 abstract class UnaryOperator(str: String, precedence: Int) : Operator(str, precedence) {
 
     override fun apply(values: MutableList<Prop<*>>): Prop<*> {
@@ -26,19 +49,9 @@ abstract class UnaryOperator(str: String, precedence: Int) : Operator(str, prece
     abstract fun apply(a: Prop<*>): Prop<*>
 }
 
-class OpenBracketOperator() : Operator("(", 0) {
-    override fun apply(values: MutableList<Prop<*>>): Prop<*> {
-        throw RuntimeException("Cannot apply '('")
-    }
-}
-
-class CloseBracketOperator() : Operator(")", Int.MAX_VALUE) {
-    override fun apply(values: MutableList<Prop<*>>): Prop<*> {
-        throw RuntimeException("Cannot apply ')'")
-    }
-}
-
-
+/**
+ * Binary operators have two operands, one is before the operator, the other after it. e.g. 1 + 2
+ */
 abstract class BinaryOperator(str: String, precedence: Int) : Operator(str, precedence) {
 
     override fun apply(values: MutableList<Prop<*>>): Prop<*> {
@@ -72,6 +85,19 @@ class PlusOperator : BinaryOperator("+", 0) {
     }
 }
 
+class UnaryMinusOperator : UnaryOperator("-", 9) {
+    override fun apply(a: Prop<*>): Prop<*> {
+        if (a.value is Double) {
+            return DoubleMinus(DoubleValue(0.0), a as Prop<Double>)
+        } else if (a.value is Vector2) {
+            return Vector2Minus(Vector2Value(), a as Prop<Vector2>)
+        } else {
+            return cannotApply(a)
+        }
+    }
+
+}
+
 class MinusOperator : BinaryOperator("-", 0) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (a.value is Double && b.value is Double) {
@@ -82,6 +108,8 @@ class MinusOperator : BinaryOperator("-", 0) {
             return cannotApply(a, b)
         }
     }
+
+    override val unaryOperator: Operator? = UnaryMinusOperator()
 }
 
 class TimesOperator : BinaryOperator("*", 1) {
