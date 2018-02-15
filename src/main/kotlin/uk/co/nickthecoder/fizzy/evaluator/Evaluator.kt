@@ -58,7 +58,7 @@ class Evaluator(val text: CharSequence) {
         while (true) {
             val token = readToken()
             log("Found $token")
-            if (token.text.isBlank()) {
+            if (token.type == TokenType.UNKNOWN) {
                 log("Breaking out of parse loop")
                 break
             } else {
@@ -154,7 +154,11 @@ class Evaluator(val text: CharSequence) {
     private fun applyOperator() {
         val op = operators.removeAt(operators.size - 1)
         log("Applying $op")
-        values.add(op.apply(values))
+        try {
+            values.add(op.apply(values))
+        } catch (e: Exception) {
+            throw EvaluationException(e.message ?: e.toString(), 0) // TODO Add the correct position.
+        }
     }
 
     private fun pushIdentifier(token: Token) {

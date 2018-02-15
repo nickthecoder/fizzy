@@ -3,6 +3,7 @@ package uk.co.nickthecoder.fizzy.evaluator
 import junit.framework.TestCase
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.prop.DoubleValue
+import kotlin.test.assertFailsWith
 
 class TestEvaluator : TestCase() {
 
@@ -83,6 +84,10 @@ class TestEvaluator : TestCase() {
 
     @Test
     fun testStrings() {
+
+        val empty = Evaluator("\"\"").parse()
+        assertEquals("", empty.value)
+
         val simple = Evaluator("\"Hello\"").parse()
         assertEquals("Hello", simple.value)
 
@@ -106,6 +111,20 @@ class TestEvaluator : TestCase() {
 
         val literalSlashAtEnd = Evaluator("\"Hello\\\\").parse()
         assertEquals("Hello\\", literalSlashAtEnd.value)
+
+        val plusEmpty = Evaluator("\"Hello\" + \"\"").parse()
+        assertEquals("Hello", plusEmpty.value)
+    }
+
+    @Test
+    fun testInvalidOperands() {
+        assertFailsWith(EvaluationException::class) {
+            Evaluator("\"Hello\" + 3").parse()
+        }
+
+        assertFailsWith(EvaluationException::class) {
+            Evaluator("3 + \"Hello\"").parse()
+        }
     }
 
     @Test
