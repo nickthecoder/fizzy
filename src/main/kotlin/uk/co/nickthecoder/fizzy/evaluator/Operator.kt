@@ -64,6 +64,8 @@ class PlusOperator : BinaryOperator("+", 0) {
             return DoublePlus(a as Prop<Double>, b as Prop<Double>)
         } else if (a.value is Vector2 && b.value is Vector2) {
             return Vector2Plus(a as Prop<Vector2>, b as Prop<Vector2>)
+        } else if (a.value is String && b.value is String) {
+            return StringPlus(a as Prop<String>, b as Prop<String>)
         } else {
             return cannotApply(a, b)
         }

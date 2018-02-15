@@ -2,6 +2,7 @@ package uk.co.nickthecoder.fizzy.evaluator
 
 import uk.co.nickthecoder.fizzy.prop.DoubleValue
 import uk.co.nickthecoder.fizzy.prop.Prop
+import uk.co.nickthecoder.fizzy.prop.StringValue
 
 class Evaluator(val text: CharSequence) {
 
@@ -105,18 +106,21 @@ class Evaluator(val text: CharSequence) {
             TokenType.NUMBER -> pushNumber(token)
             TokenType.IDENTIFIER -> pushIdentifier(token)
             TokenType.OPERATOR -> pushOperator(token)
+            TokenType.STRING -> pushString(token)
         }
     }
 
     private fun pushNumber(token: Token) {
-        val number = token.toDouble()
-        values.add(DoubleValue(number))
+        try {
+            val number = token.toDouble()
+            values.add(DoubleValue(number))
+        } catch (e: Exception) {
+            throw EvaluationException("Not a valid number : ${token.text}", token.startIndex)
+        }
     }
 
-    private fun applyOperator() {
-        val op = operators.removeAt(operators.size - 1)
-        log("Applying $op")
-        values.add(op.apply(values))
+    private fun pushString(token: Token) {
+        values.add(StringValue(token.text))
     }
 
     private fun pushOperator(token: Token) {
@@ -145,6 +149,12 @@ class Evaluator(val text: CharSequence) {
                 operators.add(op)
             }
         }
+    }
+
+    private fun applyOperator() {
+        val op = operators.removeAt(operators.size - 1)
+        log("Applying $op")
+        values.add(op.apply(values))
     }
 
     private fun pushIdentifier(token: Token) {

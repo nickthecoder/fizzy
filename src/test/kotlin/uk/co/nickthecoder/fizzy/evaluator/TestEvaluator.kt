@@ -82,6 +82,33 @@ class TestEvaluator : TestCase() {
     }
 
     @Test
+    fun testStrings() {
+        val simple = Evaluator("\"Hello\"").parse()
+        assertEquals("Hello", simple.value)
+
+        val withSpaces = Evaluator("\"Hello World\"").parse()
+        assertEquals("Hello World", withSpaces.value)
+
+        val plus = Evaluator("\"Hello\" + \"World\"").parse()
+        assertEquals("HelloWorld", plus.value)
+
+        val literalQuote = Evaluator("\"Hello\\\"World\"").parse()
+        assertEquals("Hello\"World", literalQuote.value)
+
+        val literalNewLine = Evaluator("\"Hello\\nWorld\"").parse()
+        assertEquals("Hello\nWorld", literalNewLine.value)
+
+        val literalTab = Evaluator("\"Hello\\tWorld\"").parse()
+        assertEquals("Hello\tWorld", literalTab.value)
+
+        val literalSlash = Evaluator("\"Hello\\\\World").parse()
+        assertEquals("Hello\\World", literalSlash.value)
+
+        val literalSlashAtEnd = Evaluator("\"Hello\\\\").parse()
+        assertEquals("Hello\\", literalSlashAtEnd.value)
+    }
+
+    @Test
     fun testCreateVector() {
         //val con = Evaluator("Vector2").parse()
         //assertTrue(con is FConstructor)
