@@ -54,6 +54,34 @@ class TestEvaluator : TestCase() {
     }
 
     @Test
+    fun testBrackets() {
+        val pluses1 = Evaluator("(1 + 2) + 3").parse()
+        assertEquals(6.0, pluses1.value as Double, tiny)
+        val pluses2 = Evaluator("1 + (2 + 3)").parse()
+        assertEquals(6.0, pluses2.value as Double, tiny)
+
+        val timesPlus1 = Evaluator("(2 * 3) + 4").parse()
+        assertEquals(10.0, timesPlus1.value as Double, tiny)
+        val timesPlus2 = Evaluator("2 * (3 + 4)").parse()
+        assertEquals(14.0, timesPlus2.value as Double, tiny)
+
+        val plusTimes1 = Evaluator("(1 + 2) * 3").parse()
+        assertEquals(9.0, plusTimes1.value as Double, tiny)
+        val plusTimes2 = Evaluator("1 + (2 * 3)").parse()
+        assertEquals(7.0, plusTimes2.value as Double, tiny)
+
+        val divMinus1 = Evaluator("(4 / 2) - 1").parse()
+        assertEquals(1.0, divMinus1.value as Double, tiny)
+        val divMinus2 = Evaluator("4 / (2 - 1)").parse()
+        assertEquals(4.0, divMinus2.value as Double, tiny)
+
+        val minusDiv1 = Evaluator("(8 - 6) / 3").parse()
+        assertEquals(2.0 / 3.0, minusDiv1.value as Double, tiny)
+        val minusDiv2 = Evaluator("8 - (6 / 3)").parse()
+        assertEquals(6.0, minusDiv2.value as Double, tiny)
+    }
+
+    @Test
     fun testCreateVector() {
         //val con = Evaluator("Vector2").parse()
         //assertTrue(con is FConstructor)

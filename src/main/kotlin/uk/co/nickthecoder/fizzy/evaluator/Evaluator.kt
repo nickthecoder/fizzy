@@ -30,24 +30,24 @@ class Evaluator(val text: CharSequence) {
     }
 
     private fun readToken(): Token {
-        log("Reading token @ $index")
+        //log("Reading token @ $index")
         skipWhiteSpace()
-        log("Skipped white space to $index")
+        //log("Skipped white space to $index")
         if (index >= text.length) {
-            log("End of text - Empty token")
+            //log("End of text - Empty token")
             return Token(index)
         } else {
             val token: Token = Token(index)
             text.subSequence(index, text.length).forEach { c ->
-                log("Looking at char $c")
+                //log("Looking at char $c")
                 if (!token.accept(c)) {
-                    log("Character $c ended token $token")
+                    //log("Character $c ended token $token")
                     return token
                 }
                 index++
             }
 
-            log("End of text ended token $token")
+            //log("End of text ended token $token")
             return token
         }
     }
@@ -115,16 +115,36 @@ class Evaluator(val text: CharSequence) {
 
     private fun applyOperator() {
         val op = operators.removeAt(operators.size - 1)
+        log("Applying $op")
         values.add(op.apply(values))
     }
 
     private fun pushOperator(token: Token) {
         val op = Operators.find(token.text)?.op ?: throw EvaluationException("Unknown operator $text", token.startIndex)
 
-        while (operators.lastOrNull()?.precedence ?: -1 > op.precedence) {
-            applyOperator()
+        when (op) {
+            is CloseBracketOperator -> {
+                log("Close bracket")
+                while (operators.lastOrNull() !is OpenBracketOperator) {
+                    applyOperator()
+                }
+                if (operators.lastOrNull() !is OpenBracketOperator) {
+                    throw EvaluationException("Unmatched ')'", token.startIndex)
+                } else {
+                    operators.removeAt(operators.size - 1)
+                }
+            }
+            is OpenBracketOperator -> {
+                operators.add(op)
+            }
+            else -> {
+
+                while (operators.lastOrNull()?.precedence ?: -1 > op.precedence) {
+                    applyOperator()
+                }
+                operators.add(op)
+            }
         }
-        operators.add(op)
     }
 
     private fun pushIdentifier(token: Token) {

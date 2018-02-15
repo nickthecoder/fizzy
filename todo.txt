@@ -1,0 +1,107 @@
+1 + 2 * 3
+
+Push 1
+Push Op + (1 arg pending)
+Push 2 (0 args pending)
+Push Op * (1 arg pending)
+Push 3
+
+Apply *
+    Pop *
+    Pop 3, 2
+    Push (2*3)
+Apply +
+    Pop +
+    Pop (2*3), 1
+    Push (1 + (2*3) )
+Done
+----
+
+1 + * 2
+
+Push 1
+Push Op + (1 arg pending)
+Push Op *
+    Top op has a pending arg, and "*" is not a prefix operator, so throw.
+Done
+----
+
+1 + -2
+
+Push 1
+Push Op + (1 arg pending)
+Push Op -
+    Top op has a pending arg, therefore push the unary "-" operator (1 arg pending)
+Push 2
+
+Apply unary -
+    Pop -
+    Pop 2
+    Push (-2) : maybe implemented as (0-2)
+Apply +
+    Pop +
+    Pop (-2), 1
+    Push (1 + (-2) )
+Done
+----
+
+1 * 2 + 3
+
+Push 1
+Push Op * (1 arg pending)
+Push 2 (0 args pending)
+* is higher than +, so apply *
+    Pop *
+    Pop 2, 1
+    Push (1 * 2)
+Push + (1 arg pending)
+Push 3
+
+Apply +
+    Pop +
+    Pop 3, (1 * 2)
+    Push ( (1*2) + 3)
+Done
+----
+
+1 * (2 + 3)
+
+Push 1
+Push op *
+Push op "precedence ("
+Push 2
+Push + (1 arg pending)
+Push 3 (0 args pending)
+Found ), so apply all ops till matching ( is found
+    Pop +
+    Pop 3, 2
+    Push (2+3)
+
+    Pop (
+       Good, matching ( found
+
+Apply *
+    Pop *
+    Pop (2+3), 1
+    Push (1 * (2+3) )
+
+Done
+----
+
+Vector2(1,2)
+
+Push top-level-name "Vector2" (of type Prop<String>)
+Found (
+    The top op is not pending (there is no op!), so this must be an "Apply", not a "precedence ("
+    Pop "Vector2"
+    Push function op Vector2 constructor, 1 arg pending
+Push 1
+Push concat to arg list
+Push 2
+Found )
+    "," is lower than ), so apply it
+    Pop ","
+    Pop 2, 1
+    Push arg list (1,2)
+    End loop when function op is found
+

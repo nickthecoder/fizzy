@@ -5,6 +5,8 @@ import uk.co.nickthecoder.fizzy.prop.*
 
 abstract class Operator(val str: String, val precedence: Int) {
     abstract fun apply(values: MutableList<Prop<*>>): Prop<*>
+
+    override fun toString() = "Op $str"
 }
 
 abstract class UnaryOperator(str: String, precedence: Int) : Operator(str, precedence) {
@@ -23,26 +25,19 @@ abstract class UnaryOperator(str: String, precedence: Int) : Operator(str, prece
 
     abstract fun apply(a: Prop<*>): Prop<*>
 }
-/*
-class OpenBracketOperator() : UnaryOperator("(", 10) {
-    override fun apply(a: Prop<*>): Prop<*> {
-        if (a is FConstructor) {
-            return a.apply()
-        } else {
-            return cannotApply(a)
-        }
+
+class OpenBracketOperator() : Operator("(", 0) {
+    override fun apply(values: MutableList<Prop<*>>): Prop<*> {
+        throw RuntimeException("Cannot apply '('")
     }
 }
-class CloseBracketOperator() : BinaryOperator(")", 10) {
-    override fun apply(a: Prop<*>, b:Prop<*>): Prop<*> {
-        if (a is FConstructor) {
-            return a.apply(b)
-        } else {
-            return cannotApply(a,b)
-        }
+
+class CloseBracketOperator() : Operator(")", Int.MAX_VALUE) {
+    override fun apply(values: MutableList<Prop<*>>): Prop<*> {
+        throw RuntimeException("Cannot apply ')'")
     }
 }
-*/
+
 
 abstract class BinaryOperator(str: String, precedence: Int) : Operator(str, precedence) {
 
@@ -121,7 +116,9 @@ enum class Operators(val op: Operator) {
     PLUS(PlusOperator()),
     MINUS(MinusOperator()),
     DIV(DivOperator()),
-    TIMES(TimesOperator());
+    TIMES(TimesOperator()),
+    OPEN_BRACKET(OpenBracketOperator()),
+    CLOSE_BRACKET(CloseBracketOperator());
 
     companion object {
 
