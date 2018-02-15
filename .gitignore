@@ -1,0 +1,11 @@
+/build/
+/.gradle/
+/gradle/
+/gradlew
+/gradlew.bat
+/goko.iml
+/goko.iml
+/goko.ipr
+/goko.iws
+/out/
+/.idea
