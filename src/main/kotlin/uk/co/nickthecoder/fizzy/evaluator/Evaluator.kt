@@ -145,9 +145,15 @@ class Evaluator(val text: CharSequence) {
         // TODO If the top operator is ".", then push an identifier, and apply the "."
         val function = Function.find(token.text)
         if (function == null) {
-            throw EvaluationException("Unknown identifier ${token.text}", token.startIndex)
+            val constant = constants.get(token.text)
+            if (constant == null) {
+                throw EvaluationException("Unknown identifier ${token.text}", token.startIndex)
+            } else {
+                pushValue(constant)
+            }
+        } else {
+            pushValue(function)
         }
-        pushValue(function)
     }
 
     private fun pushOperator(token: Token) {
@@ -224,5 +230,14 @@ class Evaluator(val text: CharSequence) {
         }
     }
 
-
+    companion object {
+        private val constants = mutableMapOf<String, Prop<*>>(
+                "PI" to DoubleValue(Math.PI),
+                "TAU" to DoubleValue(Math.PI * 2),
+                "E" to DoubleValue(Math.E),
+                "MAX_DOUBLE" to DoubleValue(Double.MAX_VALUE),
+                "MIN_DOUBLE" to DoubleValue(-Double.MAX_VALUE), // Note, this is NOT the same as the badly named Java Double.MIN_VALUE
+                "SMALLEST_DOUBLE" to DoubleValue(Double.MIN_VALUE)
+        )
+    }
 }

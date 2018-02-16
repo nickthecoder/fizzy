@@ -153,6 +153,18 @@ class TestEvaluator : TestCase() {
     }
 
     @Test
+    fun testConstantIdentifiers() {
+        val pi = Evaluator("PI").parse()
+        assertEquals(Math.PI, pi.value as Double, tiny)
+
+        val e = Evaluator("E").parse()
+        assertEquals(Math.E, e.value as Double, tiny)
+
+        val tauMinus2Pi = Evaluator("TAU - 2 * PI").parse()
+        assertEquals(0.0, tauMinus2Pi.value as Double, tiny)
+    }
+
+    @Test
     fun testFunctions() {
         val sqrt = Evaluator("sqrt(4)").parse()
         assertEquals(2.0, sqrt.value as Double, tiny)

@@ -7,7 +7,6 @@ import uk.co.nickthecoder.fizzy.prop.Prop
 abstract class Function(name: String) : Prop<String>(name) {
     abstract fun call(args: Prop<*>): Prop<*>
 
-
     companion object {
         val functions = mutableMapOf<String, Function>()
 
