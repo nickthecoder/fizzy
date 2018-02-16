@@ -140,24 +140,44 @@ class Evaluator(val text: CharSequence) {
         pushValue(StringValue(token.text))
     }
 
+
+    private fun pushIdentifier(token: Token) {
+        pushValue(Identifier(token.text))
+    }
+
     private fun pushOperator(token: Token) {
         var op = Operators.find(token.text)?.op ?: throw EvaluationException("Unknown operator $text", token.startIndex)
 
         when (op) {
+            is OpenBracketOperator -> {
+                if (expectValue) {
+                    pushOperator(op)
+                } else {
+                    val name = peekValue()
+                    if (name is Identifier) {
+                        pushOperator(ApplyOperator())
+                    } else {
+                        throw EvaluationException("Expected function name before '('", token.startIndex)
+                    }
+                }
+            }
             is CloseBracketOperator -> {
                 log("Close bracket")
-                while (operators.lastOrNull() !is OpenBracketOperator) {
+                while (operators.lastOrNull() !is OpenBracket) {
                     applyOperator()
                 }
-                if (operators.lastOrNull() !is OpenBracketOperator) {
-                    throw EvaluationException("Unmatched ')'", token.startIndex)
-                } else {
-                    popOperator()
+
+                val open = peekOperator()
+                when (open) {
+                    is OpenBracketOperator -> popOperator()
+                    is ApplyOperator -> {
+                        log("Applying function")
+                        applyOperator()
+                    }
+                    else -> throw EvaluationException("Unmatched ')'", token.startIndex)
                 }
             }
-            is OpenBracketOperator -> {
-                pushOperator(op)
-            }
+
             else -> {
                 if (expectValue) {
                     if (op.unaryOperator != null) {
@@ -175,6 +195,8 @@ class Evaluator(val text: CharSequence) {
             }
         }
     }
+
+    private fun peekValue(): Prop<*>? = values.lastOrNull()
 
     private fun peekOperator(): Operator? = operators.lastOrNull()
 
@@ -196,8 +218,5 @@ class Evaluator(val text: CharSequence) {
         }
     }
 
-    private fun pushIdentifier(token: Token) {
-        // TODO Implement
-    }
 
 }

@@ -17,15 +17,34 @@ abstract class Operator(val str: String, val precedence: Int) {
     override fun toString() = "Op $str"
 }
 
-class OpenBracketOperator() : UnaryOperator("(", 0) {
+interface OpenBracket
+
+class OpenBracketOperator : UnaryOperator("(", 0), OpenBracket {
     override fun apply(a: Prop<*>): Prop<*> {
         throw RuntimeException("Cannot apply '('")
     }
 }
 
-class CloseBracketOperator() : Operator(")", Int.MAX_VALUE) {
+class CloseBracketOperator : Operator(")", Int.MAX_VALUE) {
     override fun apply(values: MutableList<Prop<*>>): Prop<*> {
         throw RuntimeException("Cannot apply ')'")
+    }
+}
+
+class ApplyOperator : BinaryOperator("(", 0), OpenBracket {
+    override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+        if (a is Identifier) {
+            val name = a.value
+            val function = Function.find(name)
+            if (function == null) {
+                throw RuntimeException("Unknown function $name")
+            } else {
+                val arguments = b.value
+                return function.call(b)
+            }
+        } else {
+            return cannotApply(a, b)
+        }
     }
 }
 

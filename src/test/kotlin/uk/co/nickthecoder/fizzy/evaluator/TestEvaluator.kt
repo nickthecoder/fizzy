@@ -153,6 +153,12 @@ class TestEvaluator : TestCase() {
     }
 
     @Test
+    fun testFunctions() {
+        val sqrt = Evaluator("sqrt(4)").parse()
+        assertEquals(2.0, sqrt.value as Double, tiny)
+    }
+
+    @Test
     fun testCreateVector() {
         //val con = Evaluator("Vector2").parse()
         //assertTrue(con is FConstructor)

@@ -21,6 +21,25 @@ abstract class PropExpression<T>(initialValue: T)
     abstract fun eval()
 }
 
+abstract class UnaryPropExpression<T>(val a: Prop<T>, initialValue: T)
+
+    : PropExpression<T>(initialValue), PropListener<T> {
+
+    init {
+        a.listeners.add(this)
+    }
+
+    override fun changed(prop: Prop<T>) {
+        dirty = true
+        listeners.forEach { it.changed(this) }
+    }
+
+    override fun dump(): String {
+        return "${this.javaClass.simpleName}( ${a.dump()} )"
+    }
+}
+
+
 abstract class BinaryPropExpression<T>(val a: Prop<T>, val b: Prop<T>, initialValue: T)
 
     : PropExpression<T>(initialValue), PropListener<T> {

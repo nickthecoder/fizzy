@@ -18,6 +18,7 @@ class DoubleMinus(a: Prop<Double>, b: Prop<Double>) : BinaryPropExpression<Doubl
         value = a.value - b.value
     }
 }
+
 class DoubleTimes(a: Prop<Double>, b: Prop<Double>) : BinaryPropExpression<Double>(a, b, 0.0) {
 
     override fun eval() {
@@ -29,5 +30,12 @@ class DoubleDiv(a: Prop<Double>, b: Prop<Double>) : BinaryPropExpression<Double>
 
     override fun eval() {
         value = a.value / b.value
+    }
+}
+
+class DoubleSqrt(a: Prop<Double>) : UnaryPropExpression<Double>(a, 0.0) {
+
+    override fun eval() {
+        value = Math.sqrt(a.value)
     }
 }
