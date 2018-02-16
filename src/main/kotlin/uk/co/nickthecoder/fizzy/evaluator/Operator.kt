@@ -164,21 +164,26 @@ class UnaryMinusOperator(precedence: Int) : UnaryOperator("-", precedence) {
 @Suppress("UNCHECKED_CAST")
 class MinusOperator(precedence: Int) : BinaryOperator("-", precedence) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+
         if (a.value is Double && b.value is Double) {
             return DoubleMinus(a as Prop<Double>, b as Prop<Double>)
+
         } else if (a.value is Angle && b.value is Angle) {
             return AngleMinus(a as Prop<Angle>, b as Prop<Angle>)
+
         } else if (a.value is Dimension && b.value is Dimension) {
             return DimensionMinus(a as Prop<Dimension>, b as Prop<Dimension>)
+
         } else if (a.value is Vector2 && b.value is Vector2) {
             return Vector2Minus(a as Prop<Vector2>, b as Prop<Vector2>)
-        } else {
-            return cannotApply(a, b)
+
         }
+        return cannotApply(a, b)
     }
 
     override val unaryOperator: Operator? get() = Operator.UNARY_MINUS
 }
+
 
 @Suppress("UNCHECKED_CAST")
 class TimesOperator(precedence: Int) : BinaryOperator("*", precedence) {
@@ -218,8 +223,12 @@ class DivOperator(precedence: Int) : BinaryOperator("/", precedence) {
         if (a.value is Double && b.value is Double) {
             return DoubleDiv(a as Prop<Double>, b as Prop<Double>)
 
-        } else if (a.value is Angle && b.value is Double) {
-            return AngleDivDouble(a as Prop<Angle>, b as Prop<Double>)
+        } else if (a.value is Angle) {
+            if (b.value is Double) {
+                return AngleDivDouble(a as Prop<Angle>, b as Prop<Double>)
+            } else if (b.value is Angle) {
+                return AngleDiv(a as Prop<Angle>, b as Prop<Angle>)
+            }
 
         } else if (a.value is Dimension && b.value is Dimension) {
             return DimensionDiv(a as Prop<Dimension>, b as Prop<Dimension>)
@@ -233,9 +242,9 @@ class DivOperator(precedence: Int) : BinaryOperator("/", precedence) {
         } else if (a.value is Vector2 && b.value is Double) {
             return Vector2Shrink(a as Prop<Vector2>, b as Prop<Double>)
 
-        } else {
-            return cannotApply(a, b)
         }
+
+        return cannotApply(a, b)
     }
 }
 

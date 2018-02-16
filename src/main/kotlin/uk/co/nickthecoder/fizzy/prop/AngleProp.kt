@@ -48,9 +48,9 @@ class AngleTimesDouble(a: Prop<Angle>, b: Prop<Double>) : GenericBinaryPropCalcu
     }
 }
 
-class DoubleTimesAngle(a: Prop<Double>, b: Prop<Angle>) : GenericBinaryPropCalculation<Angle, Double, Angle>(a, b, Angle.ZERO) {
+class AngleDiv(a: Prop<Angle>, b: Prop<Angle>) : GenericBinaryPropCalculation<Double, Angle, Angle>(a, b, 0.0) {
     override fun eval() {
-        calculatedValue = Angle.radians(a.value * b.value.radians)
+        calculatedValue = a.value.radians / b.value.radians
     }
 }
 

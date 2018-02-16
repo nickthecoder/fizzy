@@ -1,5 +1,7 @@
 package uk.co.nickthecoder.fizzy.evaluator
 
+import uk.co.nickthecoder.fizzy.model.Angle
+import uk.co.nickthecoder.fizzy.prop.AngleProp
 import uk.co.nickthecoder.fizzy.prop.DoubleProp
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.StringValue
@@ -242,8 +244,8 @@ class Evaluator(val text: CharSequence) {
 
     companion object {
         private val constants = mutableMapOf<String, Prop<*>>(
-                "PI" to DoubleProp(Math.PI),
-                "TAU" to DoubleProp(Math.PI * 2),
+                "PI" to AngleProp(Angle.radians(Math.PI)),
+                "TAU" to AngleProp(Angle.radians(Math.PI * 2)),
                 "E" to DoubleProp(Math.E),
                 "MAX_DOUBLE" to DoubleProp(Double.MAX_VALUE),
                 "MIN_DOUBLE" to DoubleProp(-Double.MAX_VALUE), // Note, this is NOT the same as the badly named Java Double.MIN_VALUE

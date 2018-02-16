@@ -157,14 +157,14 @@ class TestEvaluator : TestCase() {
 
     @Test
     fun testConstantIdentifiers() {
-        val pi = Evaluator("PI").parse()
-        assertEquals(Math.PI, pi.value as Double, tiny)
+        val pi = Evaluator("PI").parse() as Prop<Angle>
+        assertEquals(Math.PI, pi.value.radians, tiny)
+
+        val tauMinus2Pi = Evaluator("TAU - 2 * PI").parse() as Prop<Angle>
+        assertEquals(0.0, tauMinus2Pi.value.radians, tiny)
 
         val e = Evaluator("E").parse()
         assertEquals(Math.E, e.value as Double, tiny)
-
-        val tauMinus2Pi = Evaluator("TAU - 2 * PI").parse()
-        assertEquals(0.0, tauMinus2Pi.value as Double, tiny)
     }
 
     @Test
@@ -223,6 +223,13 @@ class TestEvaluator : TestCase() {
 
         val g = Evaluator("-(80 deg)").parse() as Prop<Angle>
         assertEquals(-80.0, g.value.degrees, tiny)
+
+        val h = Evaluator("80 deg / 20 deg").parse() as Prop<Double>
+        assertEquals(4.0, h.value, tiny)
+
+        assertFailsAt(7) {
+            Evaluator("10 deg * 2deg").parse()
+        }
     }
 
     @Test
