@@ -1,3 +1,13 @@
+Soon
+----
+
+Change the PI and TAU constants to Angles.
+
+Add Vector maths tests, + -, unary minus etc.
+
+Maybe
+-----
+
 Consider changing Vector2 to have two Length objects instead of two Doubles.
     This way, we can supply all geometry as Length objects which have UNITS
 
@@ -17,6 +27,17 @@ Shape has an ID, which can be referenced by expressions in other Shapes.
     When Evaluator is run, any time a Shape's ID is used, add a listener to the Shape's ID
         The listener knows the position of the token, and so the expression can be updated ;-)
     Clear the listeners before evaluating the expression and/or when the expression is changed.
+
+Dimension.sqrt doesn't make sense as the units are no longer correct.
+    sqrt(4) = 2, but sqrt(40) != 20 so sqrt on dimensions doesn't make sense, unless they are later multiplied together.
+    Also, 2mm * 2mm is NOT 4mm it is 4mm2. Show it as mm^2 ²
+    If we implement that correctly, then sqrt(4mm2) is 2mm ;-)
+    So either remove DimensionSqrt or add a "degree" to Dimension, which defaults to 1, but is halved when sqrt, and added when multiplied.
+
+4mm / 2mm will return a Prop<Dimension> with power = 0, but many places may require a simple Double.
+    The PROPERTY could keep track of the power too, and revert it to a Double
+        That would be a weird bodge
+
 
 Notes
 -----

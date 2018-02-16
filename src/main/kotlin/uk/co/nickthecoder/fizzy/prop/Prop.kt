@@ -30,3 +30,7 @@ open class PropValue<T>(value: T) : Prop<T>(value) {
             }
         }
 }
+
+fun conversionExpected(type: String, found: Prop<*>): Prop<*> {
+    throw RuntimeException("Expected a $type, but found ${found.value?.javaClass?.simpleName}")
+}

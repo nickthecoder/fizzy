@@ -1,9 +1,8 @@
 package uk.co.nickthecoder.fizzy.evaluator
 
-import uk.co.nickthecoder.fizzy.prop.DoubleSqrt
-import uk.co.nickthecoder.fizzy.prop.LinkedVector2
-import uk.co.nickthecoder.fizzy.prop.NewAngle
-import uk.co.nickthecoder.fizzy.prop.Prop
+import uk.co.nickthecoder.fizzy.model.Angle
+import uk.co.nickthecoder.fizzy.model.Dimension
+import uk.co.nickthecoder.fizzy.prop.*
 
 
 abstract class Function(name: String) : Prop<String>(name) {
@@ -13,7 +12,7 @@ abstract class Function(name: String) : Prop<String>(name) {
         val functions = mutableMapOf<String, Function>()
 
         init {
-            add(Sqrt(), NewVector2(), NewAngle())
+            add(Sqrt(), NewVector2(), NewAngle(), DimensionRatioFunction())
         }
 
         fun find(name: String) = functions[name]
@@ -24,6 +23,34 @@ abstract class Function(name: String) : Prop<String>(name) {
             }
         }
     }
+}
+
+class Sqrt : Function("sqrt") {
+    override fun call(args: Prop<*>): Prop<*> {
+        if (args.value is Double) {
+            return DoubleSqrt(args as Prop<Double>)
+        } else if (args.value is Dimension) {
+            return DimensionSqrt(args as Prop<Dimension>)
+        } else {
+            throw RuntimeException("Expected Double, Angle or Dimension but found ${args.value?.javaClass}")
+        }
+    }
+}
+
+
+abstract class Function2(name: String) : Function(name) {
+    override fun call(args: Prop<*>): Prop<*> {
+        if (args is ArgList) {
+            if (args.value.size != 2) {
+                throw RuntimeException("Expected 2 parameters but found ${args.value.size}")
+            }
+            return call(args.value[0], args.value[1])
+        } else {
+            throw RuntimeException("Expected 2 parameters but found 1")
+        }
+    }
+
+    abstract fun call(a: Prop<*>, b: Prop<*>): Prop<*>
 }
 
 abstract class FunctionDouble(name: String) : Function(name) {
@@ -41,23 +68,19 @@ abstract class FunctionDouble(name: String) : Function(name) {
 
 }
 
-class Sqrt : FunctionDouble("sqrt") {
-    override fun callD(a: Prop<Double>): Prop<*> = DoubleSqrt(a)
-}
+abstract class FunctionAngle(name : String) : Function(name) {
 
-abstract class Function2(name: String) : Function(name) {
     override fun call(args: Prop<*>): Prop<*> {
-        if (args is ArgList) {
-            if (args.value.size != 2) {
-                throw RuntimeException("Expected 2 parameters but found ${args.value.size}")
-            }
-            return call(args.value[0], args.value[1])
+        if (args.value is Double) {
+            @Suppress("UNCHECKED_CAST")
+            return callAngle(args as Prop<Angle>)
         } else {
-            throw RuntimeException("Expected 2 parameters but found 1")
+            throw RuntimeException("Expected Angle, but found ${args.value?.javaClass}")
         }
     }
 
-    abstract fun call(a: Prop<*>, b: Prop<*>): Prop<*>
+    abstract fun callAngle(a: Prop<Angle>): Prop<*>
+
 }
 
 abstract class FunctionDoubleDouble(name: String) : Function2(name) {

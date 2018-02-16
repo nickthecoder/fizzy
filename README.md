@@ -3,7 +3,7 @@ Fizzy
 
 Draw diagrams using pre-defined "Stencils" (or create your own stencils).
 
-For example, an organisation chart has boxes, structured content (a name, and role etc).
+For example, an organisation chart has boxes with structured content (a name, and role etc).
 The boxes can be connected by lines.
 If you move a box, the connecting lines are automatically adjusted.
 

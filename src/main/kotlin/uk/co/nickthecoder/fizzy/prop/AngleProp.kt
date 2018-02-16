@@ -35,6 +35,13 @@ class AngleMinus(a: Prop<Angle>, b: Prop<Angle>) : BinaryPropCalculation<Angle>(
     }
 }
 
+class AngleUnaryMinus(a: Prop<Angle>) : UnaryPropCalculation<Angle>(a, Angle.ZERO) {
+
+    override fun eval() {
+        calculatedValue = Angle.radians(-a.value.radians)
+    }
+}
+
 class AngleTimesDouble(a: Prop<Angle>, b: Prop<Double>) : GenericBinaryPropCalculation<Angle, Angle, Double>(a, b, Angle.ZERO) {
     override fun eval() {
         calculatedValue = Angle.radians(a.value.radians * b.value)
@@ -57,4 +64,18 @@ class NewAngle : FunctionDouble("Angle") {
     override fun callD(a: Prop<Double>): Prop<*> {
         return LinkedAngle(a)
     }
+}
+
+fun degConversion(a: Prop<*>): Prop<*> {
+    if (a.value is Double) {
+        return Prop<Angle>(Angle.degrees(a.value as Double))
+    }
+    return conversionExpected("Double", a)
+}
+
+fun radConversion(a: Prop<*>): Prop<*> {
+    if (a.value is Double) {
+        return Prop<Angle>(Angle.radians(a.value as Double))
+    }
+    return conversionExpected("Double", a)
 }

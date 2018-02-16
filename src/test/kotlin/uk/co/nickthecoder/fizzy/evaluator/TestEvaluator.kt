@@ -3,6 +3,7 @@ package uk.co.nickthecoder.fizzy.evaluator
 import junit.framework.TestCase
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.model.Angle
+import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Vector2
 import uk.co.nickthecoder.fizzy.prop.Prop
 import java.lang.RuntimeException
@@ -212,6 +213,59 @@ class TestEvaluator : TestCase() {
 
         val e = Evaluator("90 deg /2").parse() as Prop<Angle>
         assertEquals(45.0, e.value.degrees, tiny)
+
+        assertFailsAt(2) {
+            Evaluator("5 / 2deg").parse()
+        }
+
+        val f = Evaluator("-90 deg").parse() as Prop<Angle>
+        assertEquals(-90.0, f.value.degrees, tiny)
+
+        val g = Evaluator("-(80 deg)").parse() as Prop<Angle>
+        assertEquals(-80.0, g.value.degrees, tiny)
+    }
+
+    @Test
+    fun testDimensions() {
+        val a = Evaluator("10mm").parse() as Prop<Dimension>
+        assertEquals(10.0, a.value.mm, tiny)
+        assertEquals(1.0, a.value.cm, tiny)
+        assertEquals(0.01, a.value.m, tiny)
+        assertEquals(0.00001, a.value.km, tiny)
+
+        val b = Evaluator("1mm + 2cm").parse() as Prop<Dimension>
+        assertEquals(2.1, b.value.cm, tiny)
+
+        val c = Evaluator("2 cm - 1 mm").parse() as Prop<Dimension>
+        assertEquals(1.9, c.value.cm, tiny)
+
+        val d = Evaluator("2 cm * 4").parse() as Prop<Dimension>
+        assertEquals(8.0, d.value.cm, tiny)
+
+        val e = Evaluator("2 cm / 4").parse() as Prop<Dimension>
+        assertEquals(0.5, e.value.cm, tiny)
+
+        assertFailsAt(2) {
+            Evaluator("5 / 2cm").parse()
+        }
+
+        val f = Evaluator("2mm * 8mm").parse() as Prop<Dimension>
+        assertEquals(16.0, f.value.mm, tiny)
+        assertEquals(2.0, f.value.power)
+
+        val g = Evaluator("sqrt(2mm * 8mm)").parse() as Prop<Dimension>
+        assertEquals(4.0, g.value.mm, tiny)
+        assertEquals(1.0, g.value.power)
+
+        val h = Evaluator("ratio(10mm, 2mm)").parse() as Prop<Double>
+        assertEquals(5.0, h.value, tiny)
+
+        val i = Evaluator("ratio(20cm * 20cm, 200cm * 4cm)").parse() as Prop<Double>
+        assertEquals(0.5, i.value, tiny)
+
+        val j = Evaluator("ratio(0.2m * 0.2m, 200cm * 4cm)").parse() as Prop<Double>
+        assertEquals(0.5, j.value, tiny)
+
     }
 
     @Test
