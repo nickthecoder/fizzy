@@ -142,7 +142,12 @@ class Evaluator(val text: CharSequence) {
 
 
     private fun pushIdentifier(token: Token) {
-        pushValue(Identifier(token.text))
+        // TODO If the top operator is ".", then push an identifier, and apply the "."
+        val function = Function.find(token.text)
+        if (function == null) {
+            throw EvaluationException("Unknown identifier ${token.text}", token.startIndex)
+        }
+        pushValue(function)
     }
 
     private fun pushOperator(token: Token) {
@@ -154,9 +159,7 @@ class Evaluator(val text: CharSequence) {
                     pushOperator(op)
                 } else {
                     val name = peekValue()
-                    // TODO This should test for a Function
-                    // Also, the '(' should be less than '.', so that "foo.bar(1)" will evaluate foo.bar to a Function first,
-                    if (name is Identifier) {
+                    if (name is Function) {
                         pushOperator(Operator.APPLY)
                     } else {
                         throw EvaluationException("Expected function name before '('", token.startIndex)

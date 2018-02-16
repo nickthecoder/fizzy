@@ -68,15 +68,9 @@ class CloseBracketOperator : Operator(")", Int.MAX_VALUE) {
 
 class ApplyOperator : BinaryOperator("(", 0), OpenBracket {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
-        if (a is Identifier) {
-            val name = a.value
-            val function = Function.find(name)
-            if (function == null) {
-                throw RuntimeException("Unknown function $name")
-            } else {
-                val arguments = b.value
-                return function.call(b)
-            }
+        if (a is Function) {
+            val arguments = b.value
+            return a.call(b)
         } else {
             return cannotApply(a, b)
         }
