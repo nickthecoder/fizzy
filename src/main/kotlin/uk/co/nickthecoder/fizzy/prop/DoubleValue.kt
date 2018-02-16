@@ -1,9 +1,6 @@
 package uk.co.nickthecoder.fizzy.prop
 
-
-abstract class DoubleProp(initialValue: Double = 0.0) : Prop<Double>(initialValue)
-
-class DoubleValue(initialValue: Double = 0.0) : DoubleProp(initialValue)
+class DoubleProp(initialValue: Double = 0.0) : Prop<Double>(initialValue)
 
 class DoublePlus(a: Prop<Double>, b: Prop<Double>) : BinaryPropCalculation<Double>(a, b, 0.0) {
 

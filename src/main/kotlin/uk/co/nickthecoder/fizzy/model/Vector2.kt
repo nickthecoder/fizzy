@@ -17,8 +17,8 @@ class Vector2(val x: Double, val y: Double) {
 
 
     companion object {
-        val zero = Vector2(0.0, 0.0)
-        val unit = Vector2(1.0, 1.0)
+        val ZERO = Vector2(0.0, 0.0)
+        val UNIT = Vector2(1.0, 1.0)
     }
 
 }

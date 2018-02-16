@@ -1,6 +1,6 @@
 package uk.co.nickthecoder.fizzy.evaluator
 
-import uk.co.nickthecoder.fizzy.prop.DoubleValue
+import uk.co.nickthecoder.fizzy.prop.DoubleProp
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.StringValue
 
@@ -183,7 +183,7 @@ class Evaluator(val text: CharSequence) {
     private fun pushNumber(token: Token) {
         try {
             val number = token.toDouble()
-            pushValue(DoubleValue(number))
+            pushValue(DoubleProp(number))
         } catch (e: Exception) {
             throw EvaluationException("Not a valid number : ${token.text}", token.startIndex)
         }
@@ -198,7 +198,7 @@ class Evaluator(val text: CharSequence) {
         // TODO If the top operator is ".", then push an identifier, and apply the "."
         val function = Function.find(token.text)
         if (function == null) {
-            val constant = constants.get(token.text)
+            val constant = constants[token.text]
             if (constant == null) {
                 throw EvaluationException("Unknown identifier ${token.text}", token.startIndex)
             } else {
@@ -234,13 +234,13 @@ class Evaluator(val text: CharSequence) {
 
     companion object {
         private val constants = mutableMapOf<String, Prop<*>>(
-                "PI" to DoubleValue(Math.PI),
-                "TAU" to DoubleValue(Math.PI * 2),
-                "E" to DoubleValue(Math.E),
-                "MAX_DOUBLE" to DoubleValue(Double.MAX_VALUE),
-                "MIN_DOUBLE" to DoubleValue(-Double.MAX_VALUE), // Note, this is NOT the same as the badly named Java Double.MIN_VALUE
-                "SMALLEST_DOUBLE" to DoubleValue(Double.MIN_VALUE),
-                "NaN" to DoubleValue(Double.NaN)
+                "PI" to DoubleProp(Math.PI),
+                "TAU" to DoubleProp(Math.PI * 2),
+                "E" to DoubleProp(Math.E),
+                "MAX_DOUBLE" to DoubleProp(Double.MAX_VALUE),
+                "MIN_DOUBLE" to DoubleProp(-Double.MAX_VALUE), // Note, this is NOT the same as the badly named Java Double.MIN_VALUE
+                "SMALLEST_DOUBLE" to DoubleProp(Double.MIN_VALUE),
+                "NaN" to DoubleProp(Double.NaN)
         )
     }
 }

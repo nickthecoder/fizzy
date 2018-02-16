@@ -76,20 +76,5 @@ class Token(val startIndex: Int) {
         }
     }
 
-    fun toOperator(): Operator {
-        val op = Operator.find(text)
-        if (op == null) {
-            throw EvaluationException("Expected an operator, but found $text", startIndex)
-        }
-        return op
-    }
-
-    fun precedence(): Int {
-        if (type == TokenType.OPERATOR) {
-            return Operator.find(text)?.precedence ?: 0
-        }
-        return 0
-    }
-
     override fun toString(): String = "Token $type : '$text'"
 }

@@ -4,7 +4,7 @@ package uk.co.nickthecoder.fizzy.prop
  * T should be an immutable type, so that the property value cannot change without the property's listeners being
  * notified.
  */
-abstract class Prop<T>(value: T) {
+open class Prop<T>(value: T) {
 
     val listeners = PropListeners<T>()
 

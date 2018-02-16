@@ -2,7 +2,9 @@ package uk.co.nickthecoder.fizzy.evaluator
 
 import junit.framework.TestCase
 import org.junit.Test
-import uk.co.nickthecoder.fizzy.prop.DoubleValue
+import uk.co.nickthecoder.fizzy.model.Angle
+import uk.co.nickthecoder.fizzy.model.Vector2
+import uk.co.nickthecoder.fizzy.prop.Prop
 import java.lang.RuntimeException
 
 class TestEvaluator : TestCase() {
@@ -11,14 +13,14 @@ class TestEvaluator : TestCase() {
 
     @Test
     fun testConstant() {
-        val one = Evaluator("1").parse() as DoubleValue
-        assertEquals(1.0, one.value, tiny)
+        val one = Evaluator("1").parse()
+        assertEquals(1.0, one.value as Double, tiny)
 
-        val two = Evaluator("  2  ").parse() as DoubleValue
-        assertEquals(2.0, two.value, tiny)
+        val two = Evaluator("  2  ").parse()
+        assertEquals(2.0, two.value as Double, tiny)
 
-        val oneAndAHalf = Evaluator("1.5").parse() as DoubleValue
-        assertEquals(1.5, oneAndAHalf.value, tiny)
+        val oneAndAHalf = Evaluator("1.5").parse()
+        assertEquals(1.5, oneAndAHalf.value as Double, tiny)
     }
 
     @Test
@@ -171,12 +173,23 @@ class TestEvaluator : TestCase() {
 
     @Test
     fun testCreateVector() {
-        //val con = Evaluator("Vector2").parse()
-        //assertTrue(con is FConstructor)
 
-        //val a = Evaluator("Vector2(1,2)").parse() as Prop<Vector2>
-        //assertEquals(1.0, a.value.x, tiny)
-        //assertEquals(2.0, a.value.y, tiny)
+        val a = Evaluator("Vector2(1,2)").parse() as Prop<Vector2>
+        assertEquals(1.0, a.value.x, tiny)
+        assertEquals(2.0, a.value.y, tiny)
+    }
+
+    @Test
+    fun testAngles() {
+        val a = Evaluator("Angle(0)").parse() as Prop<Angle>
+        assertEquals(0.0, a.value.radians, tiny)
+        assertEquals(0.0, a.value.degrees, tiny)
+
+        val b = Evaluator("Angle(1)").parse() as Prop<Angle>
+        assertEquals(1.0, b.value.radians, tiny)
+
+        val c = Evaluator("Angle(1) + Angle(2)").parse() as Prop<Angle>
+        assertEquals(3.0, c.value.radians, tiny)
     }
 
     @Test

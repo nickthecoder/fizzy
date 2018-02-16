@@ -112,4 +112,5 @@ open class MutableFList<T>(override val backing: MutableList<T> = mutableListOf<
         return super.retainAll(elements)
     }
 
+    override fun toString(): String = backing.toString()
 }

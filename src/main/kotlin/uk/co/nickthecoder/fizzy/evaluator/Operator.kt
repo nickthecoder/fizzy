@@ -1,5 +1,6 @@
 package uk.co.nickthecoder.fizzy.evaluator
 
+import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Vector2
 import uk.co.nickthecoder.fizzy.prop.*
 
@@ -29,6 +30,7 @@ abstract class Operator(val str: String, val precedence: Int) {
         val TIMES = TimesOperator()
         val OPEN_BRACKET = OpenBracketOperator()
         val CLOSE_BRACKET = CloseBracketOperator()
+        val COMMA = CommaOperator()
 
         val APPLY = ApplyOperator()
 
@@ -37,18 +39,18 @@ abstract class Operator(val str: String, val precedence: Int) {
         }
 
         init {
-            add(PLUS, MINUS, DIV, TIMES, OPEN_BRACKET, CLOSE_BRACKET)
+            add(PLUS, MINUS, DIV, TIMES, OPEN_BRACKET, CLOSE_BRACKET, COMMA)
         }
 
-        fun find(str: String): Operator? = operators.get(str)
+        fun find(str: String): Operator? = operators[str]
 
         fun isValid(str: String): Boolean = operators.containsKey(str)
     }
 }
 
-class NoOperator() : Operator("", 0) {
+class NoOperator : Operator("", -2) {
     override fun apply(values: MutableList<Prop<*>>): Prop<*> {
-        throw RuntimeException("Unexpedted use of the NoOperator")
+        throw RuntimeException("Unexpected use of the NoOperator")
     }
 }
 
@@ -123,22 +125,25 @@ class PlusOperator : BinaryOperator("+", 0) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (a.value is Double && b.value is Double) {
             return DoublePlus(a as Prop<Double>, b as Prop<Double>)
+        } else if (a.value is Angle && b.value is Angle) {
+            return AnglePlus(a as Prop<Angle>, b as Prop<Angle>)
         } else if (a.value is Vector2 && b.value is Vector2) {
             return Vector2Plus(a as Prop<Vector2>, b as Prop<Vector2>)
         } else if (a.value is String && b.value is String) {
             return StringPlus(a as Prop<String>, b as Prop<String>)
-        } else {
-            return cannotApply(a, b)
         }
+        return cannotApply(a, b)
     }
 }
 
 class UnaryMinusOperator : UnaryOperator("-", 9) {
     override fun apply(a: Prop<*>): Prop<*> {
         if (a.value is Double) {
-            return DoubleMinus(DoubleValue(0.0), a as Prop<Double>)
+            return DoubleMinus(DoubleProp(0.0), a as Prop<Double>)
+        } else if (a.value is Angle) {
+            return AngleMinus(AngleProp(Angle.ZERO), a as Prop<Angle>)
         } else if (a.value is Vector2) {
-            return Vector2Minus(Vector2Value(), a as Prop<Vector2>)
+            return Vector2Minus(Vector2Prop(), a as Prop<Vector2>)
         } else {
             return cannotApply(a)
         }
@@ -150,6 +155,8 @@ class MinusOperator : BinaryOperator("-", 0) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (a.value is Double && b.value is Double) {
             return DoubleMinus(a as Prop<Double>, b as Prop<Double>)
+        } else if (a.value is Angle && b.value is Angle) {
+            return AngleMinus(a as Prop<Angle>, b as Prop<Angle>)
         } else if (a.value is Vector2 && b.value is Vector2) {
             return Vector2Minus(a as Prop<Vector2>, b as Prop<Vector2>)
         } else {
@@ -162,15 +169,20 @@ class MinusOperator : BinaryOperator("-", 0) {
 
 class TimesOperator : BinaryOperator("*", 1) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
-        if (a.value is Double && b.value is Double) {
-            return DoubleTimes(a as Prop<Double>, b as Prop<Double>)
+        if (a.value is Double) {
+            if (b.value is Double) {
+                return DoubleTimes(a as Prop<Double>, b as Prop<Double>)
+            } else if (b.value is Angle) {
+                return AngleTimesDouble(b as Prop<Angle>, a as Prop<Double>)
+            }
+        } else if (a.value is Angle && b.value is Double) {
+            return AngleTimesDouble(a as Prop<Angle>, b as Prop<Double>)
         } else if (a.value is Vector2 && b.value is Vector2) {
             return Vector2Times(a as Prop<Vector2>, b as Prop<Vector2>)
         } else if (a.value is Vector2 && b.value is Double) {
             return Vector2Scale(a as Prop<Vector2>, b as Prop<Double>)
-        } else {
-            return cannotApply(a, b)
         }
+        return cannotApply(a, b)
     }
 }
 
@@ -178,6 +190,8 @@ class DivOperator : BinaryOperator("/", 1) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (a.value is Double && b.value is Double) {
             return DoubleDiv(a as Prop<Double>, b as Prop<Double>)
+        } else if (a.value is Angle && b.value is Double) {
+            return AngleDivDouble(a as Prop<Angle>, b as Prop<Double>)
         } else if (a.value is Vector2 && b.value is Vector2) {
             return Vector2Div(a as Prop<Vector2>, b as Prop<Vector2>)
         } else if (a.value is Vector2 && b.value is Double) {
@@ -189,3 +203,16 @@ class DivOperator : BinaryOperator("/", 1) {
     }
 }
 
+class CommaOperator : BinaryOperator(",", 19) {
+    override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+        if (a is ArgList) {
+            a.value.add(b)
+            return a
+        } else {
+            val list = ArgList()
+            list.value.add(a)
+            list.value.add(b)
+            return list
+        }
+    }
+}
