@@ -193,19 +193,27 @@ class Evaluator(val text: CharSequence) {
         pushValue(StringValue(token.text))
     }
 
-
     private fun pushIdentifier(token: Token) {
-        // TODO If the top operator is ".", then push an identifier, and apply the "."
-        val function = Function.find(token.text)
-        if (function == null) {
-            val constant = constants[token.text]
-            if (constant == null) {
-                throw EvaluationException("Unknown identifier ${token.text}", token.startIndex)
+        if (expectValue || values.isEmpty()) {
+            // TODO If the top operator is ".", then push an identifier, and apply the "."
+            val function = Function.find(token.text)
+            if (function == null) {
+                val constant = constants[token.text]
+                if (constant == null) {
+                    throw EvaluationException("Unknown identifier ${token.text}", token.startIndex)
+                } else {
+                    pushValue(constant)
+                }
             } else {
-                pushValue(constant)
+                pushValue(function)
             }
         } else {
-            pushValue(function)
+            val conversion = Conversions.find(token.text)
+                    ?: throw EvaluationException("Expected an operator or conversion", token.startIndex)
+            log("Converting ${token.text}")
+            val value = popValue()
+            val converted = conversion.invoke(value)
+            pushValue(converted)
         }
     }
 

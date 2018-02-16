@@ -181,15 +181,36 @@ class TestEvaluator : TestCase() {
 
     @Test
     fun testAngles() {
-        val a = Evaluator("Angle(0)").parse() as Prop<Angle>
+        assertEquals(2.0, Angle.radians(2.0).radians, tiny)
+        assertEquals(2.0 / Math.PI * 180.0, Angle.radians(2.0).degrees, tiny)
+
+        assertEquals(45.0, Angle.degrees(45.0).degrees, tiny)
+        assertEquals(45.0, Angle.radians(45.0 / 180.0 * Math.PI).degrees, tiny)
+
+        val a = Evaluator("0 deg").parse() as Prop<Angle>
         assertEquals(0.0, a.value.radians, tiny)
         assertEquals(0.0, a.value.degrees, tiny)
 
-        val b = Evaluator("Angle(1)").parse() as Prop<Angle>
-        assertEquals(1.0, b.value.radians, tiny)
+        val a2 = Evaluator("0 rad").parse() as Prop<Angle>
+        assertEquals(0.0, a2.value.radians, tiny)
+        assertEquals(0.0, a2.value.degrees, tiny)
+
+        val b = Evaluator("45 deg").parse() as Prop<Angle>
+        assertEquals(45.0, b.value.degrees, tiny)
+        assertEquals(45.0 / 180.0 * Math.PI, b.value.radians, tiny)
+
+        val b2 = Evaluator("2 rad").parse() as Prop<Angle>
+        assertEquals(2.0, b2.value.radians, tiny)
+        assertEquals(2.0 * 180.0 / Math.PI, b2.value.degrees, tiny)
 
         val c = Evaluator("Angle(1) + Angle(2)").parse() as Prop<Angle>
         assertEquals(3.0, c.value.radians, tiny)
+
+        val d = Evaluator("Angle(1) *3").parse() as Prop<Angle>
+        assertEquals(3.0, d.value.radians, tiny)
+
+        val e = Evaluator("Angle(6) /2").parse() as Prop<Angle>
+        assertEquals(3.0, e.value.radians, tiny)
     }
 
     @Test
