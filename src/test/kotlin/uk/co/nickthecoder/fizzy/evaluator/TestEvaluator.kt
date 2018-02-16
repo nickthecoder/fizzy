@@ -7,6 +7,7 @@ import uk.co.nickthecoder.fizzy.model.Vector2
 import uk.co.nickthecoder.fizzy.prop.Prop
 import java.lang.RuntimeException
 
+@Suppress("UNCHECKED_CAST")
 class TestEvaluator : TestCase() {
 
     val tiny = 0.000001
@@ -203,14 +204,14 @@ class TestEvaluator : TestCase() {
         assertEquals(2.0, b2.value.radians, tiny)
         assertEquals(2.0 * 180.0 / Math.PI, b2.value.degrees, tiny)
 
-        val c = Evaluator("Angle(1) + Angle(2)").parse() as Prop<Angle>
-        assertEquals(3.0, c.value.radians, tiny)
+        val c = Evaluator("30 deg + 20 deg").parse() as Prop<Angle>
+        assertEquals(50.0, c.value.degrees, tiny)
 
-        val d = Evaluator("Angle(1) *3").parse() as Prop<Angle>
-        assertEquals(3.0, d.value.radians, tiny)
+        val d = Evaluator("30 deg * 3").parse() as Prop<Angle>
+        assertEquals(90.0, d.value.degrees, tiny)
 
-        val e = Evaluator("Angle(6) /2").parse() as Prop<Angle>
-        assertEquals(3.0, e.value.radians, tiny)
+        val e = Evaluator("90 deg /2").parse() as Prop<Angle>
+        assertEquals(45.0, e.value.degrees, tiny)
     }
 
     @Test

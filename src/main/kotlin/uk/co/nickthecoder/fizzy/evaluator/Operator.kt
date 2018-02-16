@@ -71,7 +71,6 @@ class CloseBracketOperator : Operator(")", Int.MAX_VALUE) {
 class ApplyOperator : BinaryOperator("(", 0), OpenBracket {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (a is Function) {
-            val arguments = b.value
             return a.call(b)
         } else {
             return cannotApply(a, b)
@@ -121,6 +120,7 @@ abstract class BinaryOperator(str: String, precedence: Int) : Operator(str, prec
 
 }
 
+@Suppress("UNCHECKED_CAST")
 class PlusOperator : BinaryOperator("+", 0) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (a.value is Double && b.value is Double) {
@@ -136,6 +136,7 @@ class PlusOperator : BinaryOperator("+", 0) {
     }
 }
 
+@Suppress("UNCHECKED_CAST")
 class UnaryMinusOperator : UnaryOperator("-", 9) {
     override fun apply(a: Prop<*>): Prop<*> {
         if (a.value is Double) {
@@ -151,6 +152,7 @@ class UnaryMinusOperator : UnaryOperator("-", 9) {
 
 }
 
+@Suppress("UNCHECKED_CAST")
 class MinusOperator : BinaryOperator("-", 0) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (a.value is Double && b.value is Double) {
@@ -167,6 +169,7 @@ class MinusOperator : BinaryOperator("-", 0) {
     override val unaryOperator: Operator? get() = Operator.UNARY_MINUS
 }
 
+@Suppress("UNCHECKED_CAST")
 class TimesOperator : BinaryOperator("*", 1) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (a.value is Double) {
@@ -186,6 +189,7 @@ class TimesOperator : BinaryOperator("*", 1) {
     }
 }
 
+@Suppress("UNCHECKED_CAST")
 class DivOperator : BinaryOperator("/", 1) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (a.value is Double && b.value is Double) {

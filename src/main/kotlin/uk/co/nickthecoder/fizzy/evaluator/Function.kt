@@ -30,6 +30,7 @@ abstract class FunctionDouble(name: String) : Function(name) {
 
     override fun call(args: Prop<*>): Prop<*> {
         if (args.value is Double) {
+            @Suppress("UNCHECKED_CAST")
             return callD(args as Prop<Double>)
         } else {
             throw RuntimeException("Expected Double, but found ${args.value?.javaClass}")
@@ -62,6 +63,7 @@ abstract class Function2(name: String) : Function(name) {
 abstract class FunctionDoubleDouble(name: String) : Function2(name) {
     override fun call(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (a.value is Double && b.value is Double) {
+            @Suppress("UNCHECKED_CAST")
             return callDD(a as Prop<Double>, b as Prop<Double>)
         } else {
             throw RuntimeException("Expected arguments (Double,Double)")
