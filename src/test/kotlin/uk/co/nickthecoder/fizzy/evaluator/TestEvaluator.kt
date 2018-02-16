@@ -127,12 +127,11 @@ class TestEvaluator : TestCase() {
 
     @Test
     fun testInvalidOperands() {
-        // TODO Change the position of the error messages.
-        assertFailsAt(0) {
+        assertFailsAt(8) {
             Evaluator("\"Hello\" + 3").parse()
         }
 
-        assertFailsAt(0) {
+        assertFailsAt(2) {
             Evaluator("3 + \"Hello\"").parse()
         }
 

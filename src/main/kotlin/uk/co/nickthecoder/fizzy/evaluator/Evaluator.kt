@@ -8,7 +8,7 @@ class Evaluator(val text: CharSequence) {
 
     private var index = 0
 
-    private var operators = mutableListOf<Operator>()
+    private var operators = mutableListOf<Token>()
     private var values = mutableListOf<Prop<*>>()
     private var expectValue = true
 
@@ -120,11 +120,64 @@ class Evaluator(val text: CharSequence) {
         expectValue = false
     }
 
-    private fun pushOperator(op: Operator) {
-        log("Push $op")
-        operators.add(op)
-        expectValue = op.expectsValue()
+    private fun pushOperator(token: Token, op: Operator) {
+        log("Push $token")
+        token.operator = op
+        operators.add(token)
+        expectValue = token.operator.expectsValue()
 
+    }
+
+    private fun pushOperator(token: Token) {
+        var op = Operator.find(token.text) ?: throw EvaluationException("Unknown operator $text", token.startIndex)
+
+        when (op) {
+            is OpenBracketOperator -> {
+                if (expectValue) {
+                    pushOperator(token, op)
+                } else {
+                    val name = peekValue()
+                    if (name is Function) {
+                        pushOperator(token, Operator.APPLY)
+                    } else {
+                        throw EvaluationException("Expected function name before '('", token.startIndex)
+                    }
+                }
+            }
+            is CloseBracketOperator -> {
+                log("Close bracket")
+                while (operators.lastOrNull()?.operator !is OpenBracket) {
+                    applyOperator()
+                }
+
+                val open = peekOperator()?.operator
+                when (open) {
+                    is OpenBracketOperator -> popOperator()
+                    is ApplyOperator -> {
+                        log("Applying function")
+                        applyOperator()
+                    }
+                    else -> throw EvaluationException("Unmatched ')'", token.startIndex)
+                }
+            }
+
+            else -> {
+                if (expectValue) {
+                    if (op.unaryOperator != null) {
+                        op = op.unaryOperator!!
+                        log("Using : Unary $op")
+                    } else {
+                        throw EvaluationException("Syntax error", token.startIndex)
+                    }
+                }
+
+                while (peekOperator()?.operator?.precedence ?: -1 > op.precedence) {
+                    log("Applying ${peekOperator()} as it is higher than $op")
+                    applyOperator()
+                }
+                pushOperator(token, op)
+            }
+        }
     }
 
     private fun pushNumber(token: Token) {
@@ -156,63 +209,11 @@ class Evaluator(val text: CharSequence) {
         }
     }
 
-    private fun pushOperator(token: Token) {
-        var op = Operator.find(token.text) ?: throw EvaluationException("Unknown operator $text", token.startIndex)
-
-        when (op) {
-            is OpenBracketOperator -> {
-                if (expectValue) {
-                    pushOperator(op)
-                } else {
-                    val name = peekValue()
-                    if (name is Function) {
-                        pushOperator(Operator.APPLY)
-                    } else {
-                        throw EvaluationException("Expected function name before '('", token.startIndex)
-                    }
-                }
-            }
-            is CloseBracketOperator -> {
-                log("Close bracket")
-                while (operators.lastOrNull() !is OpenBracket) {
-                    applyOperator()
-                }
-
-                val open = peekOperator()
-                when (open) {
-                    is OpenBracketOperator -> popOperator()
-                    is ApplyOperator -> {
-                        log("Applying function")
-                        applyOperator()
-                    }
-                    else -> throw EvaluationException("Unmatched ')'", token.startIndex)
-                }
-            }
-
-            else -> {
-                if (expectValue) {
-                    if (op.unaryOperator != null) {
-                        op = op.unaryOperator!!
-                        log("Using : Unary $op")
-                    } else {
-                        throw EvaluationException("Syntax error", token.startIndex)
-                    }
-                }
-
-                while (peekOperator()?.precedence ?: -1 > op.precedence) {
-                    log("Applying ${peekOperator()} as it is higher than $op")
-                    applyOperator()
-                }
-                pushOperator(op)
-            }
-        }
-    }
-
     private fun peekValue(): Prop<*>? = values.lastOrNull()
 
-    private fun peekOperator(): Operator? = operators.lastOrNull()
+    private fun peekOperator(): Token? = operators.lastOrNull()
 
-    private fun popOperator(): Operator {
+    private fun popOperator(): Token {
         return operators.removeAt(operators.size - 1)
     }
 
@@ -221,12 +222,13 @@ class Evaluator(val text: CharSequence) {
     }
 
     private fun applyOperator() {
-        val op = popOperator()
+        val opToken = popOperator()
+        val op = opToken.operator
         log("Applying $op")
         try {
             pushValue(op.apply(values))
         } catch (e: Exception) {
-            throw EvaluationException(e, 0) // TODO Add the correct position.
+            throw EvaluationException(e, opToken.startIndex)
         }
     }
 
@@ -237,7 +239,8 @@ class Evaluator(val text: CharSequence) {
                 "E" to DoubleValue(Math.E),
                 "MAX_DOUBLE" to DoubleValue(Double.MAX_VALUE),
                 "MIN_DOUBLE" to DoubleValue(-Double.MAX_VALUE), // Note, this is NOT the same as the badly named Java Double.MIN_VALUE
-                "SMALLEST_DOUBLE" to DoubleValue(Double.MIN_VALUE)
+                "SMALLEST_DOUBLE" to DoubleValue(Double.MIN_VALUE),
+                "NaN" to DoubleValue(Double.NaN)
         )
     }
 }
