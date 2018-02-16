@@ -14,7 +14,42 @@ abstract class Operator(val str: String, val precedence: Int) {
 
     fun expectsValue(): Boolean = true
 
-    override fun toString() = "Op $str"
+    override fun toString() = "${this.javaClass.simpleName} $str"
+
+    companion object {
+
+        val operators = mutableMapOf<String, Operator>()
+
+        val NONE = NoOperator()
+
+        val PLUS = PlusOperator()
+        val MINUS = MinusOperator()
+        val UNARY_MINUS = UnaryMinusOperator()
+        val DIV = DivOperator()
+        val TIMES = TimesOperator()
+        val OPEN_BRACKET = OpenBracketOperator()
+        val CLOSE_BRACKET = CloseBracketOperator()
+
+        val APPLY = ApplyOperator()
+
+        fun add(vararg ops: Operator) {
+            ops.forEach { operators.put(it.str, it) }
+        }
+
+        init {
+            add(PLUS, MINUS, DIV, TIMES, OPEN_BRACKET, CLOSE_BRACKET)
+        }
+
+        fun find(str: String): Operator? = operators.get(str)
+
+        fun isValid(str: String): Boolean = operators.containsKey(str)
+    }
+}
+
+class NoOperator() : Operator("", 0) {
+    override fun apply(values: MutableList<Prop<*>>): Prop<*> {
+        throw RuntimeException("Unexpedted use of the NoOperator")
+    }
 }
 
 interface OpenBracket
@@ -128,7 +163,7 @@ class MinusOperator : BinaryOperator("-", 0) {
         }
     }
 
-    override val unaryOperator: Operator? = UnaryMinusOperator()
+    override val unaryOperator: Operator? get() = Operator.UNARY_MINUS
 }
 
 class TimesOperator : BinaryOperator("*", 1) {
@@ -160,33 +195,3 @@ class DivOperator : BinaryOperator("/", 1) {
     }
 }
 
-enum class Operators(val op: Operator) {
-
-    PLUS(PlusOperator()),
-    MINUS(MinusOperator()),
-    DIV(DivOperator()),
-    TIMES(TimesOperator()),
-    OPEN_BRACKET(OpenBracketOperator()),
-    CLOSE_BRACKET(CloseBracketOperator());
-
-    companion object {
-
-        fun find(str: String): Operators? {
-            values().forEach {
-                if (it.op.str == str) {
-                    return it
-                }
-            }
-            return null
-        }
-
-        fun isValid(str: String): Boolean {
-            values().forEach {
-                if (it.op.str == str) {
-                    return true
-                }
-            }
-            return false
-        }
-    }
-}

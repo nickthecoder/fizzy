@@ -11,6 +11,8 @@ class Token(val startIndex: Int) {
     val text: String
         get() = buffer.toString()
 
+    var operator: Operator = Operator.NONE
+
     fun accept(c: Char): Boolean {
 
         if (type != TokenType.STRING && c.isWhitespace()) return false
@@ -28,7 +30,7 @@ class Token(val startIndex: Int) {
                     return doAccept(c, true)
                 } else {
                     type = TokenType.OPERATOR
-                    return doAccept(c, Operators.isValid(c.toString()))
+                    return doAccept(c, Operator.isValid(c.toString()))
                 }
             }
             TokenType.STRING -> {
@@ -55,7 +57,7 @@ class Token(val startIndex: Int) {
             }
             TokenType.NUMBER -> return doAccept(c, c.isDigit() || c == '.')
             TokenType.IDENTIFIER -> return doAccept(c, c.isJavaIdentifierPart())
-            TokenType.OPERATOR -> return doAccept(c, Operators.isValid(text + c))
+            TokenType.OPERATOR -> return doAccept(c, Operator.isValid(text + c))
         }
     }
 
@@ -74,8 +76,8 @@ class Token(val startIndex: Int) {
         }
     }
 
-    fun toOperator(): Operators {
-        val op = Operators.find(text)
+    fun toOperator(): Operator {
+        val op = Operator.find(text)
         if (op == null) {
             throw EvaluationException("Expected an operator, but found $text", startIndex)
         }
@@ -84,7 +86,7 @@ class Token(val startIndex: Int) {
 
     fun precedence(): Int {
         if (type == TokenType.OPERATOR) {
-            return Operators.find(text)?.op?.precedence ?: 0
+            return Operator.find(text)?.precedence ?: 0
         }
         return 0
     }

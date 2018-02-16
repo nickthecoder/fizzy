@@ -146,7 +146,7 @@ class Evaluator(val text: CharSequence) {
     }
 
     private fun pushOperator(token: Token) {
-        var op = Operators.find(token.text)?.op ?: throw EvaluationException("Unknown operator $text", token.startIndex)
+        var op = Operator.find(token.text) ?: throw EvaluationException("Unknown operator $text", token.startIndex)
 
         when (op) {
             is OpenBracketOperator -> {
@@ -154,8 +154,10 @@ class Evaluator(val text: CharSequence) {
                     pushOperator(op)
                 } else {
                     val name = peekValue()
+                    // TODO This should test for a Function
+                    // Also, the '(' should be less than '.', so that "foo.bar(1)" will evaluate foo.bar to a Function first,
                     if (name is Identifier) {
-                        pushOperator(ApplyOperator())
+                        pushOperator(Operator.APPLY)
                     } else {
                         throw EvaluationException("Expected function name before '('", token.startIndex)
                     }
@@ -182,6 +184,7 @@ class Evaluator(val text: CharSequence) {
                 if (expectValue) {
                     if (op.unaryOperator != null) {
                         op = op.unaryOperator!!
+                        log("Using : Unary $op")
                     } else {
                         throw EvaluationException("Syntax error", token.startIndex)
                     }
