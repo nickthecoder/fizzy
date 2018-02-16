@@ -1,6 +1,6 @@
 package uk.co.nickthecoder.fizzy.prop
 
-abstract class PropExpression<T>(initialValue: T)
+abstract class PropCalculation<T>(initialValue: T)
 
     : Prop<T>(initialValue) {
 
@@ -21,9 +21,9 @@ abstract class PropExpression<T>(initialValue: T)
     abstract fun eval()
 }
 
-abstract class UnaryPropExpression<T>(val a: Prop<T>, initialValue: T)
+abstract class UnaryPropCalculation<T>(val a: Prop<T>, initialValue: T)
 
-    : PropExpression<T>(initialValue), PropListener<T> {
+    : PropCalculation<T>(initialValue), PropListener<T> {
 
     init {
         a.listeners.add(this)
@@ -40,9 +40,9 @@ abstract class UnaryPropExpression<T>(val a: Prop<T>, initialValue: T)
 }
 
 
-abstract class BinaryPropExpression<T>(val a: Prop<T>, val b: Prop<T>, initialValue: T)
+abstract class BinaryPropCalculation<T>(val a: Prop<T>, val b: Prop<T>, initialValue: T)
 
-    : PropExpression<T>(initialValue), PropListener<T> {
+    : PropCalculation<T>(initialValue), PropListener<T> {
 
     init {
         a.listeners.add(this)
@@ -59,9 +59,9 @@ abstract class BinaryPropExpression<T>(val a: Prop<T>, val b: Prop<T>, initialVa
     }
 }
 
-abstract class GenericBinaryPropExpression<T, A, B>(val a: Prop<A>, val b: Prop<B>, initialValue: T)
+abstract class GenericBinaryPropCalculation<T, A, B>(val a: Prop<A>, val b: Prop<B>, initialValue: T)
 
-    : PropExpression<T>(initialValue) {
+    : PropCalculation<T>(initialValue) {
 
     init {
         a.listeners.add(object : PropListener<A> {
