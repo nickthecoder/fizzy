@@ -3,6 +3,7 @@ package uk.co.nickthecoder.fizzy.evaluator
 import uk.co.nickthecoder.fizzy.prop.DoubleProp
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.StringValue
+import kotlin.reflect.KClass
 
 class Evaluator(val text: CharSequence) {
 

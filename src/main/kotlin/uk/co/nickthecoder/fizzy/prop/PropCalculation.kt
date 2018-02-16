@@ -5,17 +5,22 @@ abstract class PropCalculation<T>(initialValue: T)
     : Prop<T>(initialValue) {
 
     protected var dirty: Boolean = true
-
-    override var value: T
         set(v) {
-            super.value = v
+            field = v
+            if (v) {
+                listeners.forEach { it.dirty(this) }
+            }
         }
+
+    protected var calculatedValue: T = initialValue
+
+    override val value: T
         get() : T {
             if (dirty) {
                 eval()
                 dirty = false
             }
-            return super.value
+            return calculatedValue
         }
 
     abstract fun eval()
@@ -29,9 +34,9 @@ abstract class UnaryPropCalculation<T>(val a: Prop<T>, initialValue: T)
         a.listeners.add(this)
     }
 
-    override fun changed(prop: Prop<T>) {
+    override fun dirty(prop: Prop<T>) {
         dirty = true
-        listeners.forEach { it.changed(this) }
+        listeners.forEach { it.dirty(this) }
     }
 
     override fun dump(): String {
@@ -49,9 +54,9 @@ abstract class BinaryPropCalculation<T>(val a: Prop<T>, val b: Prop<T>, initialV
         b.listeners.add(this)
     }
 
-    override fun changed(prop: Prop<T>) {
+    override fun dirty(prop: Prop<T>) {
         dirty = true
-        listeners.forEach { it.changed(this) }
+        listeners.forEach { it.dirty(this) }
     }
 
     override fun dump(): String {
@@ -65,12 +70,12 @@ abstract class GenericBinaryPropCalculation<T, A, B>(val a: Prop<A>, val b: Prop
 
     init {
         a.listeners.add(object : PropListener<A> {
-            override fun changed(prop: Prop<A>) {
+            override fun dirty(prop: Prop<A>) {
                 changed()
             }
         })
         b.listeners.add(object : PropListener<B> {
-            override fun changed(prop: Prop<B>) {
+            override fun dirty(prop: Prop<B>) {
                 changed()
             }
         })
@@ -78,7 +83,7 @@ abstract class GenericBinaryPropCalculation<T, A, B>(val a: Prop<A>, val b: Prop
 
     fun changed() {
         dirty = true
-        listeners.forEach { it.changed(this) }
+        listeners.forEach { it.dirty(this) }
     }
 
 }
