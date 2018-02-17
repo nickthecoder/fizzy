@@ -68,14 +68,14 @@ class NewAngle : FunctionDouble("Angle") {
 
 fun degConversion(a: Prop<*>): Prop<*> {
     if (a.value is Double) {
-        return Prop<Angle>(Angle.degrees(a.value as Double))
+        return PropValue(Angle.degrees(a.value as Double))
     }
     return conversionExpected("Double", a)
 }
 
 fun radConversion(a: Prop<*>): Prop<*> {
     if (a.value is Double) {
-        return Prop<Angle>(Angle.radians(a.value as Double))
+        return PropValue(Angle.radians(a.value as Double))
     }
     return conversionExpected("Double", a)
 }

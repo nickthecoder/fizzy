@@ -2,7 +2,7 @@ package uk.co.nickthecoder.fizzy.prop
 
 abstract class PropCalculation<T>(initialValue: T)
 
-    : Prop<T>(initialValue) {
+    : AbstractProp<T>() {
 
     protected var dirty: Boolean = true
         set(v) {

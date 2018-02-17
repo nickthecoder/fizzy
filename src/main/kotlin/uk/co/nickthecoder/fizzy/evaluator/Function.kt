@@ -6,7 +6,8 @@ import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.prop.*
 
 
-abstract class Function(name: String) : Prop<String>(name) {
+abstract class Function(override val value: String) : AbstractProp<String>() {
+
     abstract fun call(args: Prop<*>): Prop<*>
 
     companion object {

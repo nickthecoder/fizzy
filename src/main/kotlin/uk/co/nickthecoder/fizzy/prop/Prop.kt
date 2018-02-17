@@ -8,19 +8,26 @@ package uk.co.nickthecoder.fizzy.prop
  * T should be an immutable type, so that the property value cannot change without the property's listeners being
  * notified.
  */
-open class Prop<T>(open val value: T) {
+interface Prop<T> {
 
-    val listeners = PropListeners<T>()
+    val value: T
 
-    override fun toString(): String = "Prop : $value"
+    val listeners: PropListeners<T>
 
     open fun dump(): String = value.toString()
+}
+
+abstract class AbstractProp<T> : Prop<T> {
+
+    override val listeners = PropListeners<T>()
+
+    override fun toString(): String = "Prop: $value"
 }
 
 /**
  * A property whose value can be changed (i.e. it is a var).
  */
-open class PropValue<T>(value: T) : Prop<T>(value) {
+open class PropValue<T>(value: T) : AbstractProp<T>() {
 
     override var value: T = value
         set(v) {
