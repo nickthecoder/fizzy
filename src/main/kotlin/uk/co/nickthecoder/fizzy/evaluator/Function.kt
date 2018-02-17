@@ -14,7 +14,7 @@ abstract class Function(override val value: String) : AbstractProp<String>() {
         val functions = mutableMapOf<String, Function>()
 
         init {
-            add(Sqrt(), NewVector2(), NewDimension2(), NewAngle(), Ratio())
+            add(Sqrt(), NewVector2(), NewDimension2(), Ratio())
         }
 
         fun find(name: String) = functions[name]

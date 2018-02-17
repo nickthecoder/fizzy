@@ -1,6 +1,5 @@
 package uk.co.nickthecoder.fizzy.prop
 
-import uk.co.nickthecoder.fizzy.evaluator.FunctionDouble
 import uk.co.nickthecoder.fizzy.model.Angle
 
 interface AngleProp : Prop<Angle>
@@ -9,11 +8,19 @@ class AngleConstant(value: Angle = Angle.ZERO)
     : AngleProp, PropConstant<Angle>(value) {
 
     companion object {
-        fun create(a: DoubleProp): AngleProp {
+        fun create(a: DoubleProp, degrees: Boolean): AngleProp {
             if (a is DoubleConstant) {
-                return AngleConstant(Angle.radians(a.value))
+                if (degrees) {
+                    return AngleConstant(Angle.degrees(a.value))
+                } else {
+                    return AngleConstant(Angle.radians(a.value))
+                }
             } else {
-                return AnglePropLinked(a)
+                if (degrees) {
+                    return AnglePropLinked(DoubleTimes(a, DoubleConstant(Math.PI / 180.0)))
+                } else {
+                    return AnglePropLinked(a)
+                }
             }
         }
     }
@@ -82,23 +89,16 @@ class AngleDivDouble(a: AngleProp, b: DoubleProp)
     }
 }
 
-
-class NewAngle : FunctionDouble("Angle") {
-    override fun callD(a: DoubleProp): Prop<*> {
-        return AngleConstant.create(a)
-    }
-}
-
 fun degConversion(a: Prop<*>): Prop<*> {
     if (a.value is Double) {
-        return AngleConstant(Angle.degrees(a.value as Double))
+        return AngleConstant.create(a as DoubleProp, degrees = true)
     }
     return throwExpectedType("Double", a)
 }
 
 fun radConversion(a: Prop<*>): Prop<*> {
     if (a.value is Double) {
-        return AngleConstant(Angle.radians(a.value as Double))
+        return AngleConstant.create(a as DoubleProp, degrees = false)
     }
     return throwExpectedType("Double", a)
 }
