@@ -26,6 +26,19 @@ abstract class PropCalculation<T : Any>
         }
 
     abstract fun eval()
+
+    /**
+     * Returns the value, or null if the value could not be calculated.
+     */
+    fun safeValue(): T? {
+        try {
+            return value
+        } catch (e: Exception) {
+            return null
+        }
+    }
+
+    override fun toString(): String = "${this.javaClass.simpleName}: ${safeValue()}"
 }
 
 abstract class UnaryPropCalculation<T : Any>(val a: Prop<T>)

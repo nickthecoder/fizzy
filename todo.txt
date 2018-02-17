@@ -1,15 +1,13 @@
 To Do
 =====
 
-Change Prop to an interface
-
-    Can PropCalculation use lateinit? (and therefore do away with the initialValue crap?
-
-
 Soon
 ----
 
+Rename LinkedXXX to XXXLink
+
 Implement properties getters in evaluator. Such as Vector2.x , Dimension2.x, Angle.degrees etc.
+
 
 Add an "EvaluationContext" to Evaluator, which will have a reference to the shape and the document.
     Use this to reference other parts of the Shape, or other shapes in the document.
@@ -22,7 +20,12 @@ Maybe
 Later
 -----
 
+Be able to "click" a part of an expression and get to the definition.
+    i.e. with : "shape3.geometry1[0].point"
+    shape3 and geometry1 and [0] and point should all be "links"
+
 Add trig functions sin cos etc.
+    Use FunctionAngle, or remove it!
     asin and acos Accept Dimension AND Double???
     atan2 should accept Dimension2. Also accept Vector2? AND Double,Double ??
 
@@ -39,6 +42,13 @@ Shape has an ID, which can be referenced by expressions in other Shapes.
     When Evaluator is run, any time a Shape's ID is used, add a listener to the Shape's ID
         The listener knows the position of the token, and so the expression can be updated ;-)
     Clear the listeners before evaluating the expression and/or when the expression is changed.
+
+If we ever check if a value is a constant using is PropValue, then this will NOT detect an expression like :
+    Dimension2( 2mm, 3mm )
+    Because it is a LinkedDimension2.
+    So maybe we should check if the args are constants, and if so, create a Dimension2Prop instead.
+    Similar for Vector2, Angle ...
+        Each class XXXProp should have a "create" companion method which either creates a XXXProp of a LinkedXXX
 
 Notes
 -----

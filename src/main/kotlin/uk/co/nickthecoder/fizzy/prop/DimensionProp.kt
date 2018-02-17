@@ -87,9 +87,9 @@ class DimensionRatio(a: Prop<Dimension>, b: Prop<Dimension>) : GenericBinaryProp
 
 fun dimensionConversion(a: Prop<*>, units: Dimension.Units, power: Double = 1.0): Prop<*> {
     if (a.value is Double) {
-        return PropValue(Dimension(a.value as Double, units, power))
+        return DimensionProp(Dimension(a.value as Double, units, power))
     }
-    return conversionExpected("Double", a)
+    return throwExpectedType("Double", a)
 }
 
 fun mmConversion(a: Prop<*>): Prop<*> = dimensionConversion(a, Dimension.Units.mm)

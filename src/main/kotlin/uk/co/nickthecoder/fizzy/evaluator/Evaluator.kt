@@ -244,8 +244,8 @@ class Evaluator(val text: CharSequence) {
 
     companion object {
         private val constants = mutableMapOf<String, Prop<*>>(
-                "PI" to AngleProp(Angle.radians(Math.PI)),
-                "TAU" to AngleProp(Angle.radians(Math.PI * 2)),
+                "PI" to AngleProp(Angle.PI),
+                "TAU" to AngleProp(Angle.TAU),
                 "E" to DoubleProp(Math.E),
                 "MAX_DOUBLE" to DoubleProp(Double.MAX_VALUE),
                 "MIN_DOUBLE" to DoubleProp(-Double.MAX_VALUE), // Note, this is NOT the same as the badly named Java Double.MIN_VALUE

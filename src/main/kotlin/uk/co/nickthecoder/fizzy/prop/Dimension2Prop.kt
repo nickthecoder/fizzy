@@ -1,6 +1,5 @@
 package uk.co.nickthecoder.fizzy.prop
 
-import uk.co.nickthecoder.fizzy.evaluator.Function2
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Vector2
@@ -85,22 +84,6 @@ class Dimension2DivDouble(a: Prop<Dimension2>, b: Prop<Double>) : GenericBinaryP
     override fun eval() {
         calculatedValue = a.value / b.value
     }
-}
-
-
-abstract class FunctionDimension2Dimension2(name: String)
-    : Function2(name) {
-
-    override fun call(a: Prop<*>, b: Prop<*>): Prop<*> {
-        if (a.value is Dimension && b.value is Dimension2) {
-            @Suppress("UNCHECKED_CAST")
-            return callD2D2(a as Prop<Dimension2>, b as Prop<Dimension2>)
-        } else {
-            throw RuntimeException("Expected arguments (Dimension2,Dimension2)")
-        }
-    }
-
-    abstract fun callD2D2(a: Prop<Dimension2>, b: Prop<Dimension2>): Prop<*>
 }
 
 class Dimension2Ratio(a: Prop<Dimension2>, b: Prop<Dimension2>) : GenericBinaryPropCalculation<Vector2, Dimension2, Dimension2>(a, b) {

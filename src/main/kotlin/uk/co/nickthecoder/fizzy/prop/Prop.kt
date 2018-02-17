@@ -14,7 +14,7 @@ interface Prop<T> {
 
     val listeners: PropListeners<T>
 
-    open fun dump(): String = value.toString()
+    fun dump(): String = value.toString()
 }
 
 abstract class AbstractProp<T> : Prop<T> {
@@ -24,20 +24,6 @@ abstract class AbstractProp<T> : Prop<T> {
     override fun toString(): String = "Prop: $value"
 }
 
-/**
- * A property whose value can be changed (i.e. it is a var).
- */
-open class PropValue<T>(value: T) : AbstractProp<T>() {
-
-    override var value: T = value
-        set(v) {
-            if (v != field) {
-                field = v
-                listeners.forEach { it.dirty(this) }
-            }
-        }
-}
-
-fun conversionExpected(type: String, found: Prop<*>): Prop<*> {
+fun throwExpectedType(type: String, found: Prop<*>): Prop<*> {
     throw RuntimeException("Expected a $type, but found ${found.value?.javaClass?.simpleName}")
 }
