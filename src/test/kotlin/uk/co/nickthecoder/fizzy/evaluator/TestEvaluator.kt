@@ -174,14 +174,6 @@ class TestEvaluator : TestCase() {
     }
 
     @Test
-    fun testCreateVector() {
-
-        val a = Evaluator("Vector2(1,2)").parse() as Prop<Vector2>
-        assertEquals(1.0, a.value.x, tiny)
-        assertEquals(2.0, a.value.y, tiny)
-    }
-
-    @Test
     fun testAngles() {
         assertEquals(2.0, Angle.radians(2.0).radians, tiny)
         assertEquals(2.0 / Math.PI * 180.0, Angle.radians(2.0).degrees, tiny)
@@ -276,7 +268,60 @@ class TestEvaluator : TestCase() {
     }
 
     @Test
+    fun testCreateVector() {
+
+        val a = Evaluator("Vector2(1,2)").parse() as Prop<Vector2>
+        assertEquals(1.0, a.value.x, tiny)
+        assertEquals(2.0, a.value.y, tiny)
+    }
+
+    @Test
     fun testVectorMaths() {
-        //val plus = Evaluator()
+        val a = Evaluator("Vector2(1,2) * 2").parse() as Prop<Vector2>
+        assertEquals(2.0, a.value.x, tiny)
+        assertEquals(4.0, a.value.y, tiny)
+
+        val b = Evaluator("Vector2(8,10) / 2").parse() as Prop<Vector2>
+        assertEquals(4.0, b.value.x, tiny)
+        assertEquals(5.0, b.value.y, tiny)
+
+        val c = Evaluator("10 * Vector2(8,10)").parse() as Prop<Vector2>
+        assertEquals(80.0, c.value.x, tiny)
+        assertEquals(100.0, c.value.y, tiny)
+
+        assertFailsAt(2) {
+            Evaluator("5 / Vector2(1.0,1.0)").parse()
+        }
+
+        assertFailsAt(2) {
+            Evaluator("5 + Vector2(1.0,1.0)").parse()
+        }
+        assertFailsAt(17) {
+            Evaluator("Vector2(1.0,1.0) + 5").parse()
+        }
+
+        assertFailsAt(2) {
+            Evaluator("5 - Vector2(1.0,1.0)").parse()
+        }
+        assertFailsAt(17) {
+            Evaluator("Vector2(1.0,1.0) - 5").parse()
+        }
+
+        val d = Evaluator("Vector2(1,2) + Vector2(8,10)").parse() as Prop<Vector2>
+        assertEquals(9.0, d.value.x, tiny)
+        assertEquals(12.0, d.value.y, tiny)
+
+        val e = Evaluator("Vector2(1,2) - Vector2(8,10)").parse() as Prop<Vector2>
+        assertEquals(-7.0, e.value.x, tiny)
+        assertEquals(-8.0, e.value.y, tiny)
+
+        val f = Evaluator("Vector2(3,2) * Vector2(8,10)").parse() as Prop<Vector2>
+        assertEquals(24.0, f.value.x, tiny)
+        assertEquals(20.0, f.value.y, tiny)
+
+        val g = Evaluator("-Vector2(3,2)").parse() as Prop<Vector2>
+        assertEquals(-3.0, g.value.x, tiny)
+        assertEquals(-2.0, g.value.y, tiny)
+
     }
 }

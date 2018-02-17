@@ -128,17 +128,24 @@ abstract class BinaryOperator(str: String, precedence: Int) : Operator(str, prec
 @Suppress("UNCHECKED_CAST")
 class PlusOperator(precedence: Int) : BinaryOperator("+", precedence) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+
         if (a.value is Double && b.value is Double) {
             return DoublePlus(a as Prop<Double>, b as Prop<Double>)
+
         } else if (a.value is Angle && b.value is Angle) {
             return AnglePlus(a as Prop<Angle>, b as Prop<Angle>)
+
         } else if (a.value is Dimension && b.value is Dimension) {
             return DimensionPlus(a as Prop<Dimension>, b as Prop<Dimension>)
+
         } else if (a.value is Vector2 && b.value is Vector2) {
             return Vector2Plus(a as Prop<Vector2>, b as Prop<Vector2>)
+
         } else if (a.value is String && b.value is String) {
             return StringPlus(a as Prop<String>, b as Prop<String>)
+
         }
+
         return cannotApply(a, b)
     }
 }
@@ -146,17 +153,22 @@ class PlusOperator(precedence: Int) : BinaryOperator("+", precedence) {
 @Suppress("UNCHECKED_CAST")
 class UnaryMinusOperator(precedence: Int) : UnaryOperator("-", precedence) {
     override fun apply(a: Prop<*>): Prop<*> {
+
         if (a.value is Double) {
             return DoubleMinus(DoubleProp(0.0), a as Prop<Double>)
+
         } else if (a.value is Angle) {
             return AngleUnaryMinus(a as Prop<Angle>)
+
         } else if (a.value is Dimension) {
             return DimensionUnaryMinus(a as Prop<Dimension>)
+
         } else if (a.value is Vector2) {
             return Vector2Minus(Vector2Prop(), a as Prop<Vector2>)
-        } else {
-            return cannotApply(a)
+
         }
+
+        return cannotApply(a)
     }
 
 }
@@ -191,11 +203,17 @@ class TimesOperator(precedence: Int) : BinaryOperator("*", precedence) {
         if (a.value is Double) {
             if (b.value is Double) {
                 return DoubleTimes(a as Prop<Double>, b as Prop<Double>)
+
+            } else if (b.value is Vector2) {
+                return Vector2TimesDouble(b as Prop<Vector2>, a as Prop<Double>)
+
             } else if (b.value is Angle) {
                 return AngleTimesDouble(b as Prop<Angle>, a as Prop<Double>)
+
             } else if (b.value is Dimension) {
                 return DimensionTimesDouble(b as Prop<Dimension>, a as Prop<Double>)
             }
+
         } else if (a.value is Angle && b.value is Double) {
             return AngleTimesDouble(a as Prop<Angle>, b as Prop<Double>)
 
@@ -226,18 +244,26 @@ class DivOperator(precedence: Int) : BinaryOperator("/", precedence) {
         } else if (a.value is Angle) {
             if (b.value is Double) {
                 return AngleDivDouble(a as Prop<Angle>, b as Prop<Double>)
+
             } else if (b.value is Angle) {
                 return AngleDiv(a as Prop<Angle>, b as Prop<Angle>)
             }
 
-        } else if (a.value is Dimension && b.value is Dimension) {
-            return DimensionDiv(a as Prop<Dimension>, b as Prop<Dimension>)
+        } else if (a.value is Dimension) {
+            if (b.value is Dimension) {
+                return DimensionDiv(a as Prop<Dimension>, b as Prop<Dimension>)
 
-        } else if (a.value is Dimension && b.value is Double) {
-            return DimensionDivDouble(a as Prop<Dimension>, b as Prop<Double>)
+            } else if (b.value is Double) {
+                return DimensionDivDouble(a as Prop<Dimension>, b as Prop<Double>)
+            }
 
-        } else if (a.value is Vector2 && b.value is Vector2) {
-            return Vector2Div(a as Prop<Vector2>, b as Prop<Vector2>)
+        } else if (a.value is Vector2) {
+            if (b.value is Vector2) {
+                return Vector2Div(a as Prop<Vector2>, b as Prop<Vector2>)
+
+            } else if (b.value is Double) {
+                return Vector2DivDouble(a as Prop<Vector2>, b as Prop<Double>)
+            }
 
         } else if (a.value is Vector2 && b.value is Double) {
             return Vector2Shrink(a as Prop<Vector2>, b as Prop<Double>)

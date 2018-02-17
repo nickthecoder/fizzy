@@ -1,20 +1,17 @@
+To Do
+=====
+
 Soon
 ----
 
-Change the PI and TAU constants to Angles.
+Add Vector maths tests, + -, unary minus etc to TestEvaluator
 
-Add Vector maths tests, + -, unary minus etc.
+Add new Dimension2 class, similar to Vector2, but with Dimensions rather than Doubles
+    Need Dimension2 and Vector2 to allow * and / (return Dimension2s)
+
 
 Maybe
 -----
-
-Consider changing Vector2 to have two Length objects instead of two Doubles.
-    This way, we can supply all geometry as Length objects which have UNITS
-
-    e.g. 10 mm + 10 m + 2 cm * 2
-
-    Note, we may want an Vector2 WITHOUT units, so rename Vector2. Maybe Dimension2
-        Or, we could later create DimensionlessVector2
 
 Add an "EvaluationContext" to Evaluator, which will have a reference to the shape and the document.
     Use this to reference other parts of the Shape, or other shapes in the document.
