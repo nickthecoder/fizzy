@@ -1,15 +1,26 @@
 To Do
 =====
 
+Add new Dimension2 class, similar to Vector2, but with Dimensions rather than Doubles
+    Need Dimension2 * Vector2  to return Dimension2s. Similar for D2 / V2 and V2 * D2
+
+    Dimension2 / Dimension2 will return a Dimension2, so do a trick to
+        coerce it to a Vector2 if the "powers" are zero. (in ExpressionProp).
+
 Soon
 ----
 
-Add Vector maths tests, + -, unary minus etc to TestEvaluator
+Add tests for ExpressionProp
+    Check some basic things, dynamically changed values and Dimension(power=0) coerced to Double.
+    Also Dimension2(power=0) coerced to Vector2
 
-Add new Dimension2 class, similar to Vector2, but with Dimensions rather than Doubles
-    Need Dimension2 and Vector2 to allow * and / (return Dimension2s)
+Add trig functions sin cos etc.
+    asin and acos Accept Dimension AND Double???
+    atan2 should accept Dimension2. Also accept Vector2? AND Double,Double ??
 
+Implement properties getters in evaluator. Such as Vector2.x , Dimension2.x, Angle.degrees etc.
 
+dirty props should only fire if they weren't previously dirty.
 Maybe
 -----
 

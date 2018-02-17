@@ -2,6 +2,7 @@ package uk.co.nickthecoder.fizzy.evaluator
 
 import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension
+import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Vector2
 import uk.co.nickthecoder.fizzy.prop.*
 
@@ -138,6 +139,9 @@ class PlusOperator(precedence: Int) : BinaryOperator("+", precedence) {
         } else if (a.value is Dimension && b.value is Dimension) {
             return DimensionPlus(a as Prop<Dimension>, b as Prop<Dimension>)
 
+        } else if (a.value is Dimension2 && b.value is Dimension2) {
+            return Dimension2Plus(a as Prop<Dimension2>, b as Prop<Dimension2>)
+
         } else if (a.value is Vector2 && b.value is Vector2) {
             return Vector2Plus(a as Prop<Vector2>, b as Prop<Vector2>)
 
@@ -163,6 +167,9 @@ class UnaryMinusOperator(precedence: Int) : UnaryOperator("-", precedence) {
         } else if (a.value is Dimension) {
             return DimensionUnaryMinus(a as Prop<Dimension>)
 
+        } else if (a.value is Dimension2) {
+            return Dimension2UnaryMinus(a as Prop<Dimension2>)
+
         } else if (a.value is Vector2) {
             return Vector2Minus(Vector2Prop(), a as Prop<Vector2>)
 
@@ -185,6 +192,9 @@ class MinusOperator(precedence: Int) : BinaryOperator("-", precedence) {
 
         } else if (a.value is Dimension && b.value is Dimension) {
             return DimensionMinus(a as Prop<Dimension>, b as Prop<Dimension>)
+
+        } else if (a.value is Dimension2 && b.value is Dimension2) {
+            return Dimension2Minus(a as Prop<Dimension2>, b as Prop<Dimension2>)
 
         } else if (a.value is Vector2 && b.value is Vector2) {
             return Vector2Minus(a as Prop<Vector2>, b as Prop<Vector2>)
@@ -212,6 +222,9 @@ class TimesOperator(precedence: Int) : BinaryOperator("*", precedence) {
 
             } else if (b.value is Dimension) {
                 return DimensionTimesDouble(b as Prop<Dimension>, a as Prop<Double>)
+
+            } else if (b.value is Dimension2) {
+                return Dimension2TimesDouble(b as Prop<Dimension2>, a as Prop<Double>)
             }
 
         } else if (a.value is Angle && b.value is Double) {
@@ -223,11 +236,17 @@ class TimesOperator(precedence: Int) : BinaryOperator("*", precedence) {
         } else if (a.value is Dimension && b.value is Double) {
             return DimensionTimesDouble(a as Prop<Dimension>, b as Prop<Double>)
 
+        } else if (a.value is Dimension2 && b.value is Dimension2) {
+            return Dimension2Times(a as Prop<Dimension2>, b as Prop<Dimension2>)
+
+        } else if (a.value is Dimension2 && b.value is Double) {
+            return Dimension2TimesDouble(a as Prop<Dimension2>, b as Prop<Double>)
+
         } else if (a.value is Vector2 && b.value is Vector2) {
             return Vector2Times(a as Prop<Vector2>, b as Prop<Vector2>)
 
         } else if (a.value is Vector2 && b.value is Double) {
-            return Vector2Scale(a as Prop<Vector2>, b as Prop<Double>)
+            return Vector2TimesDouble(a as Prop<Vector2>, b as Prop<Double>)
 
         }
 
@@ -257,6 +276,14 @@ class DivOperator(precedence: Int) : BinaryOperator("/", precedence) {
                 return DimensionDivDouble(a as Prop<Dimension>, b as Prop<Double>)
             }
 
+        } else if (a.value is Dimension2) {
+            if (b.value is Dimension2) {
+                return Dimension2Div(a as Prop<Dimension2>, b as Prop<Dimension2>)
+
+            } else if (b.value is Double) {
+                return Dimension2DivDouble(a as Prop<Dimension2>, b as Prop<Double>)
+            }
+
         } else if (a.value is Vector2) {
             if (b.value is Vector2) {
                 return Vector2Div(a as Prop<Vector2>, b as Prop<Vector2>)
@@ -264,9 +291,6 @@ class DivOperator(precedence: Int) : BinaryOperator("/", precedence) {
             } else if (b.value is Double) {
                 return Vector2DivDouble(a as Prop<Vector2>, b as Prop<Double>)
             }
-
-        } else if (a.value is Vector2 && b.value is Double) {
-            return Vector2Shrink(a as Prop<Vector2>, b as Prop<Double>)
 
         }
 

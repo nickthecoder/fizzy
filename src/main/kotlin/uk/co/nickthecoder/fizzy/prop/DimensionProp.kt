@@ -71,17 +71,11 @@ abstract class FunctionDimensionDimension(name: String)
             @Suppress("UNCHECKED_CAST")
             return callDD(a as Prop<Dimension>, b as Prop<Dimension>)
         } else {
-            throw RuntimeException("Expected arguments (Double,Double)")
+            throw RuntimeException("Expected arguments (Dimension,Dimension)")
         }
     }
 
     abstract fun callDD(a: Prop<Dimension>, b: Prop<Dimension>): Prop<*>
-}
-
-class DimensionRatioFunction : FunctionDimensionDimension("ratio") {
-    override fun callDD(a: Prop<Dimension>, b: Prop<Dimension>): Prop<*> {
-        return DimensionRatio(a, b)
-    }
 }
 
 class DimensionRatio(a: Prop<Dimension>, b: Prop<Dimension>) : GenericBinaryPropCalculation<Double, Dimension, Dimension>(a, b, 0.0) {

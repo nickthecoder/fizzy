@@ -35,20 +35,6 @@ class Vector2Minus(a: Prop<Vector2>, b: Prop<Vector2>) : BinaryPropCalculation<V
     }
 }
 
-class Vector2Scale(a: Prop<Vector2>, b: Prop<Double>) : GenericBinaryPropCalculation<Vector2, Vector2, Double>(a, b, Vector2.ZERO) {
-
-    override fun eval() {
-        calculatedValue = a.value * b.value
-    }
-}
-
-class Vector2Shrink(a: Prop<Vector2>, b: Prop<Double>) : GenericBinaryPropCalculation<Vector2, Vector2, Double>(a, b, Vector2.ZERO) {
-
-    override fun eval() {
-        calculatedValue = a.value / b.value
-    }
-}
-
 class Vector2Times(a: Prop<Vector2>, b: Prop<Vector2>) : BinaryPropCalculation<Vector2>(a, b, Vector2.ZERO) {
 
     override fun eval() {

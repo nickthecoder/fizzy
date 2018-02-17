@@ -6,9 +6,11 @@ abstract class PropCalculation<T>(initialValue: T)
 
     protected var dirty: Boolean = true
         set(v) {
-            field = v
-            if (v) {
-                listeners.forEach { it.dirty(this) }
+            if (field != v) {
+                field = v
+                if (v) {
+                    listeners.forEach { it.dirty(this) }
+                }
             }
         }
 

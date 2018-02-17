@@ -1,5 +1,10 @@
 package uk.co.nickthecoder.fizzy.model
 
+/**
+ * A unit-less 2 dimensional vector.
+ * When working with points and lines etc, it is better to use [Dimension2] so that the lengths can have
+ * arbitrary units (mm, cm, m, km etc).
+ */
 class Vector2(val x: Double, val y: Double) {
 
     operator fun plus(other: Vector2): Vector2 = Vector2(x + other.x, y + other.y)
