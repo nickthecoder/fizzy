@@ -7,11 +7,10 @@ import uk.co.nickthecoder.fizzy.model.Vector2
 interface Dimension2Prop : Prop<Dimension2>
 
 class Dimension2Constant(value: Dimension2 = Dimension2.ZERO)
-
     : Dimension2Prop, PropConstant<Dimension2>(value) {
 
     companion object {
-        fun create(a: Prop<Dimension>, b: Prop<Dimension>): Prop<Dimension2> {
+        fun create(a: Prop<Dimension>, b: Prop<Dimension>): Dimension2Prop {
             if (a is PropConstant<Dimension> && b is PropConstant<Dimension>) {
                 return Dimension2Constant(Dimension2(a.value, b.value))
             } else {
@@ -38,7 +37,7 @@ class Dimension2PropLinked(val x: Prop<Dimension>, val y: Prop<Dimension>)
     }
 }
 
-class Dimension2Plus(a: Prop<Dimension2>, b: Prop<Dimension2>)
+class Dimension2Plus(a: Dimension2Prop, b: Dimension2Prop)
     : Dimension2Prop, BinaryPropCalculation<Dimension2>(a, b) {
 
     override fun eval() {
@@ -46,7 +45,7 @@ class Dimension2Plus(a: Prop<Dimension2>, b: Prop<Dimension2>)
     }
 }
 
-class Dimension2Minus(a: Prop<Dimension2>, b: Prop<Dimension2>)
+class Dimension2Minus(a: Dimension2Prop, b: Dimension2Prop)
     : Dimension2Prop, BinaryPropCalculation<Dimension2>(a, b) {
 
     override fun eval() {
@@ -54,7 +53,7 @@ class Dimension2Minus(a: Prop<Dimension2>, b: Prop<Dimension2>)
     }
 }
 
-class Dimension2UnaryMinus(a: Prop<Dimension2>)
+class Dimension2UnaryMinus(a: Dimension2Prop)
     : Dimension2Prop, UnaryPropCalculation<Dimension2>(a) {
 
     override fun eval() {
@@ -62,7 +61,7 @@ class Dimension2UnaryMinus(a: Prop<Dimension2>)
     }
 }
 
-class Dimension2Times(a: Prop<Dimension2>, b: Prop<Dimension2>)
+class Dimension2Times(a: Dimension2Prop, b: Dimension2Prop)
     : Dimension2Prop, BinaryPropCalculation<Dimension2>(a, b) {
 
     override fun eval() {
@@ -70,7 +69,7 @@ class Dimension2Times(a: Prop<Dimension2>, b: Prop<Dimension2>)
     }
 }
 
-class Dimension2TimesDouble(a: Prop<Dimension2>, b: Prop<Double>)
+class Dimension2TimesDouble(a: Dimension2Prop, b: DoubleProp)
     : Dimension2Prop, GenericBinaryPropCalculation<Dimension2, Dimension2, Double>(a, b) {
 
     override fun eval() {
@@ -78,7 +77,7 @@ class Dimension2TimesDouble(a: Prop<Dimension2>, b: Prop<Double>)
     }
 }
 
-class Dimension2TimesVector2(a: Prop<Dimension2>, b: Prop<Vector2>)
+class Dimension2TimesVector2(a: Dimension2Prop, b: Vector2Prop)
     : Dimension2Prop, GenericBinaryPropCalculation<Dimension2, Dimension2, Vector2>(a, b) {
 
     override fun eval() {
@@ -86,7 +85,7 @@ class Dimension2TimesVector2(a: Prop<Dimension2>, b: Prop<Vector2>)
     }
 }
 
-class Dimension2Div(a: Prop<Dimension2>, b: Prop<Dimension2>)
+class Dimension2Div(a: Dimension2Prop, b: Dimension2Prop)
     : Dimension2Prop, BinaryPropCalculation<Dimension2>(a, b) {
 
     override fun eval() {
@@ -94,7 +93,7 @@ class Dimension2Div(a: Prop<Dimension2>, b: Prop<Dimension2>)
     }
 }
 
-class Dimension2DivVector2(a: Prop<Dimension2>, b: Prop<Vector2>)
+class Dimension2DivVector2(a: Dimension2Prop, b: Vector2Prop)
     : Dimension2Prop, GenericBinaryPropCalculation<Dimension2, Dimension2, Vector2>(a, b) {
 
     override fun eval() {
@@ -102,7 +101,7 @@ class Dimension2DivVector2(a: Prop<Dimension2>, b: Prop<Vector2>)
     }
 }
 
-class Dimension2DivDouble(a: Prop<Dimension2>, b: Prop<Double>)
+class Dimension2DivDouble(a: Dimension2Prop, b: DoubleProp)
     : Dimension2Prop, GenericBinaryPropCalculation<Dimension2, Dimension2, Double>(a, b) {
 
     override fun eval() {
@@ -110,7 +109,7 @@ class Dimension2DivDouble(a: Prop<Dimension2>, b: Prop<Double>)
     }
 }
 
-class Dimension2Ratio(a: Prop<Dimension2>, b: Prop<Dimension2>)
+class Dimension2Ratio(a: Dimension2Prop, b: Dimension2Prop)
     : Vector2Prop, GenericBinaryPropCalculation<Vector2, Dimension2, Dimension2>(a, b) {
     override fun eval() {
         assert(a.value.x.power == b.value.x.power)
@@ -123,7 +122,7 @@ class Dimension2Ratio(a: Prop<Dimension2>, b: Prop<Dimension2>)
 }
 
 class NewDimension2 : FunctionDimensionDimension("Dimension2") {
-    override fun callDD(a: Prop<Dimension>, b: Prop<Dimension>): Prop<*> {
+    override fun callDD(a: DimensionProp, b: DimensionProp): Prop<*> {
         return Dimension2Constant.create(a, b)
     }
 }

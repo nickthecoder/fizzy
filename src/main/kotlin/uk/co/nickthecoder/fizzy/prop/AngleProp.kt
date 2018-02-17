@@ -9,8 +9,8 @@ class AngleConstant(value: Angle = Angle.ZERO)
     : AngleProp, PropConstant<Angle>(value) {
 
     companion object {
-        fun create(a: Prop<Double>): Prop<Angle> {
-            if (a is PropConstant<Double>) {
+        fun create(a: DoubleProp): AngleProp {
+            if (a is DoubleConstant) {
                 return AngleConstant(Angle.radians(a.value))
             } else {
                 return AnglePropLinked(a)
@@ -19,7 +19,7 @@ class AngleConstant(value: Angle = Angle.ZERO)
     }
 }
 
-class AnglePropLinked(val radians: Prop<Double>)
+class AnglePropLinked(val radians: DoubleProp)
     : AngleProp, PropCalculation<Angle>(), PropListener<Double> {
 
     init {
@@ -35,7 +35,7 @@ class AnglePropLinked(val radians: Prop<Double>)
     }
 }
 
-class AnglePlus(a: Prop<Angle>, b: Prop<Angle>)
+class AnglePlus(a: AngleProp, b: AngleProp)
     : AngleProp, BinaryPropCalculation<Angle>(a, b) {
 
     override fun eval() {
@@ -43,7 +43,7 @@ class AnglePlus(a: Prop<Angle>, b: Prop<Angle>)
     }
 }
 
-class AngleMinus(a: Prop<Angle>, b: Prop<Angle>)
+class AngleMinus(a: AngleProp, b: AngleProp)
     : AngleProp, BinaryPropCalculation<Angle>(a, b) {
 
     override fun eval() {
@@ -51,7 +51,7 @@ class AngleMinus(a: Prop<Angle>, b: Prop<Angle>)
     }
 }
 
-class AngleUnaryMinus(a: Prop<Angle>)
+class AngleUnaryMinus(a: AngleProp)
     : AngleProp, UnaryPropCalculation<Angle>(a) {
 
     override fun eval() {
@@ -59,7 +59,7 @@ class AngleUnaryMinus(a: Prop<Angle>)
     }
 }
 
-class AngleTimesDouble(a: Prop<Angle>, b: Prop<Double>)
+class AngleTimesDouble(a: AngleProp, b: DoubleProp)
     : AngleProp, GenericBinaryPropCalculation<Angle, Angle, Double>(a, b) {
 
     override fun eval() {
@@ -67,7 +67,7 @@ class AngleTimesDouble(a: Prop<Angle>, b: Prop<Double>)
     }
 }
 
-class AngleDiv(a: Prop<Angle>, b: Prop<Angle>)
+class AngleDiv(a: AngleProp, b: AngleProp)
     : DoubleProp, GenericBinaryPropCalculation<Double, Angle, Angle>(a, b) {
 
     override fun eval() {
@@ -75,7 +75,7 @@ class AngleDiv(a: Prop<Angle>, b: Prop<Angle>)
     }
 }
 
-class AngleDivDouble(a: Prop<Angle>, b: Prop<Double>)
+class AngleDivDouble(a: AngleProp, b: DoubleProp)
     : AngleProp, GenericBinaryPropCalculation<Angle, Angle, Double>(a, b) {
     override fun eval() {
         calculatedValue = Angle.radians(a.value.radians / b.value)
@@ -84,7 +84,7 @@ class AngleDivDouble(a: Prop<Angle>, b: Prop<Double>)
 
 
 class NewAngle : FunctionDouble("Angle") {
-    override fun callD(a: Prop<Double>): Prop<*> {
+    override fun callD(a: DoubleProp): Prop<*> {
         return AngleConstant.create(a)
     }
 }

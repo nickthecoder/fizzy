@@ -17,7 +17,7 @@ AngleProp rad and deg conversions do NOT use AnglePropLinked, but sometimes they
 Rename XXXProp to XXXConstant and rename initialValue to value
 
 Create an interface for each property type, which extends Prop<XXX>
-Remove all Prop<Double> and replace with IDoubleProp
+Remove all DoubleProp and replace with IDoubleProp
     Ditto for all other property types.
 
 
