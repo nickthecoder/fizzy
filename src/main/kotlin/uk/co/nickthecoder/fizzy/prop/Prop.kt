@@ -2,8 +2,8 @@ package uk.co.nickthecoder.fizzy.prop
 
 /**
  * The base class for all properties. Properties which have a value which can be changed should subclass
- * [PropValue], whereas properties who's value changes dynamically (such as PropCalculation) do NOT
- * subclass [PropValue], and therefore the value is a val.
+ * [PropConstant], whereas properties who's value changes dynamically (such as PropCalculation) do NOT
+ * subclass [PropConstant], and therefore the value is a val.
  *
  * T should be an immutable type, so that the property value cannot change without the property's listeners being
  * notified.

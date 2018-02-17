@@ -7,11 +7,11 @@ class TestDoubleProp : TestCase() {
 
     val tiny = 0.000001
 
-    val zero = DoubleProp(0.0)
-    val unit = DoubleProp(1.0)
+    val zero = DoubleConstant(0.0)
+    val unit = DoubleConstant(1.0)
 
-    val a = DoubleProp(2.5)
-    val b = DoubleProp(0.5)
+    val a = DoubleConstant(2.5)
+    val b = DoubleConstant(0.5)
 
     @Test
     fun testValues() {
@@ -22,9 +22,9 @@ class TestDoubleProp : TestCase() {
     }
 
     fun testChainedPlus() {
-        val x = DoubleProp(1.0)
-        val y = DoubleProp(0.5)
-        val z = DoubleProp(0.25)
+        val x = DoubleConstant(1.0)
+        val y = DoubleConstant(0.5)
+        val z = DoubleConstant(0.25)
 
         val total = DoublePlus(x, DoublePlus(y, z))
         assertEquals(1.75, total.value, tiny)
@@ -41,9 +41,9 @@ class TestDoubleProp : TestCase() {
 
     @Test
     fun testChainedMinus() {
-        val x = DoubleProp(1.0)
-        val y = DoubleProp(0.5)
-        val z = DoubleProp(0.25)
+        val x = DoubleConstant(1.0)
+        val y = DoubleConstant(0.5)
+        val z = DoubleConstant(0.25)
 
         val total = DoubleMinus(DoubleMinus(x, y), z)
         assertEquals(0.25, total.value, tiny)

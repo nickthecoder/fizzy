@@ -3,7 +3,7 @@ package uk.co.nickthecoder.fizzy.prop
 /**
  * A property whose value can be changed (i.e. it is a var).
  */
-abstract class PropValue<T>(value: T) : AbstractProp<T>() {
+abstract class PropConstant<T>(value: T) : AbstractProp<T>() {
 
     override var value: T = value
         set(v) {

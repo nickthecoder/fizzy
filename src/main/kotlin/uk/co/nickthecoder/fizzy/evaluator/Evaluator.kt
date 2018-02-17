@@ -1,10 +1,10 @@
 package uk.co.nickthecoder.fizzy.evaluator
 
 import uk.co.nickthecoder.fizzy.model.Angle
-import uk.co.nickthecoder.fizzy.prop.AngleProp
-import uk.co.nickthecoder.fizzy.prop.DoubleProp
+import uk.co.nickthecoder.fizzy.prop.AngleConstant
+import uk.co.nickthecoder.fizzy.prop.DoubleConstant
 import uk.co.nickthecoder.fizzy.prop.Prop
-import uk.co.nickthecoder.fizzy.prop.StringValue
+import uk.co.nickthecoder.fizzy.prop.StringConstant
 
 class Evaluator(val text: CharSequence) {
 
@@ -185,14 +185,14 @@ class Evaluator(val text: CharSequence) {
     private fun pushNumber(token: Token) {
         try {
             val number = token.toDouble()
-            pushValue(DoubleProp(number))
+            pushValue(DoubleConstant(number))
         } catch (e: Exception) {
             throw EvaluationException("Not a valid number : ${token.text}", token.startIndex)
         }
     }
 
     private fun pushString(token: Token) {
-        pushValue(StringValue(token.text))
+        pushValue(StringConstant(token.text))
     }
 
     private fun pushIdentifier(token: Token) {
@@ -244,13 +244,13 @@ class Evaluator(val text: CharSequence) {
 
     companion object {
         private val constants = mutableMapOf<String, Prop<*>>(
-                "PI" to AngleProp(Angle.PI),
-                "TAU" to AngleProp(Angle.TAU),
-                "E" to DoubleProp(Math.E),
-                "MAX_DOUBLE" to DoubleProp(Double.MAX_VALUE),
-                "MIN_DOUBLE" to DoubleProp(-Double.MAX_VALUE), // Note, this is NOT the same as the badly named Java Double.MIN_VALUE
-                "SMALLEST_DOUBLE" to DoubleProp(Double.MIN_VALUE),
-                "NaN" to DoubleProp(Double.NaN)
+                "PI" to AngleConstant(Angle.PI),
+                "TAU" to AngleConstant(Angle.TAU),
+                "E" to DoubleConstant(Math.E),
+                "MAX_DOUBLE" to DoubleConstant(Double.MAX_VALUE),
+                "MIN_DOUBLE" to DoubleConstant(-Double.MAX_VALUE), // Note, this is NOT the same as the badly named Java Double.MIN_VALUE
+                "SMALLEST_DOUBLE" to DoubleConstant(Double.MIN_VALUE),
+                "NaN" to DoubleConstant(Double.NaN)
         )
     }
 }

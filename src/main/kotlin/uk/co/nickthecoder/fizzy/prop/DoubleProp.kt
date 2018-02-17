@@ -1,6 +1,8 @@
 package uk.co.nickthecoder.fizzy.prop
 
-class DoubleProp(initialValue: Double = 0.0) : PropValue<Double>(initialValue)
+interface DoubleProp : Prop<Double>
+
+class DoubleConstant(value: Double = 0.0) : PropConstant<Double>(value)
 
 class DoublePlus(a: Prop<Double>, b: Prop<Double>) : BinaryPropCalculation<Double>(a, b) {
 

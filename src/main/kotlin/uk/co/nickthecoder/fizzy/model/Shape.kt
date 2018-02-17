@@ -1,13 +1,13 @@
 package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.prop.ExpressionProp
-import uk.co.nickthecoder.fizzy.prop.StringValue
+import uk.co.nickthecoder.fizzy.prop.StringConstant
 
 open class Shape {
 
     var parent: Parent? = null
 
-    val id = StringValue(generateId())
+    val id = StringConstant(generateId())
 
     val position = ExpressionProp("Dimension2(0mm, 0mm)", Dimension2::class)
 

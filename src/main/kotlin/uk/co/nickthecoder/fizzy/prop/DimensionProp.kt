@@ -3,13 +3,13 @@ package uk.co.nickthecoder.fizzy.prop
 import uk.co.nickthecoder.fizzy.evaluator.Function2
 import uk.co.nickthecoder.fizzy.model.Dimension
 
-class DimensionProp(initialValue: Dimension = Dimension.ZERO_mm)
-    : PropValue<Dimension>(initialValue) {
+class DimensionConstant(value: Dimension = Dimension.ZERO_mm)
+    : PropConstant<Dimension>(value) {
 
     companion object {
         fun create(a: Prop<Double>, units: Dimension.Units, power: Double = 1.0): Prop<Dimension> {
-            if (a is PropValue<Double>) {
-                return DimensionProp(Dimension(a.value, units, power))
+            if (a is PropConstant<Double>) {
+                return DimensionConstant(Dimension(a.value, units, power))
             } else {
                 return DimensionPropLinked(a, units, power)
             }
@@ -115,7 +115,7 @@ class DimensionRatio(a: Prop<Dimension>, b: Prop<Dimension>) : GenericBinaryProp
 fun dimensionConversion(a: Prop<*>, units: Dimension.Units, power: Double = 1.0): Prop<*> {
     if (a.value is Double) {
         @Suppress("UNCHECKED_CAST")
-        return DimensionProp.create(a as Prop<Double>, units, power)
+        return DimensionConstant.create(a as Prop<Double>, units, power)
     }
     return throwExpectedType("Double", a)
 }
