@@ -246,7 +246,19 @@ class TestEvaluator : TestCase() {
         assertEquals(0.5, e.value.cm, tiny)
 
         assertFailsAt(2) {
-            Evaluator("5 / 2cm").parse()
+            Evaluator("1 / 1cm").parse()
+        }
+        assertFailsAt(2) {
+            Evaluator("1 + 1cm").parse()
+        }
+        assertFailsAt(4) {
+            Evaluator("1cm + 1").parse()
+        }
+        assertFailsAt(4) {
+            Evaluator("1cm - 1").parse()
+        }
+        assertFailsAt(2) {
+            Evaluator("1 - 1cm").parse()
         }
 
         val f = Evaluator("2mm * 8mm").parse() as Prop<Dimension>
@@ -387,6 +399,29 @@ class TestEvaluator : TestCase() {
         val g = Evaluator("-Dimension2(3mm,2mm)").parse() as Prop<Dimension2>
         assertEquals(-3.0, g.value.x.mm, tiny)
         assertEquals(-2.0, g.value.y.mm, tiny)
+
+    }
+
+    @Test
+    fun testVectorWithDimension() {
+        val a = Evaluator("Dimension2(3mm,2mm) * Vector2(2, 5)").parse() as Prop<Dimension2>
+        assertEquals(6.0, a.value.x.mm, tiny)
+        assertEquals(10.0, a.value.y.mm, tiny)
+
+        val b = Evaluator("Vector2(5, 2) * Dimension2(3mm,2mm)").parse() as Prop<Dimension2>
+        assertEquals(15.0, b.value.x.mm, tiny)
+        assertEquals(4.0, b.value.y.mm, tiny)
+
+        val c = Evaluator("Dimension2(6mm,3mm) / Vector2(2, 3)").parse() as Prop<Dimension2>
+        assertEquals(3.0, c.value.x.mm, tiny)
+        assertEquals(1.0, c.value.y.mm, tiny)
+
+        assertFailsAt(13) {
+            Evaluator("Vector2(1,1) + Dimension2(1m,1m)").parse()
+        }
+        assertFailsAt(13) {
+            Evaluator("Vector2(1,1) - Dimension2(1m,1m)").parse()
+        }
 
     }
 }

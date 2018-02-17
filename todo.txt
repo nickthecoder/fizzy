@@ -2,8 +2,6 @@ To Do
 =====
 
 Add new Dimension2 class, similar to Vector2, but with Dimensions rather than Doubles
-    Need Dimension2 * Vector2  to return Dimension2s. Similar for D2 / V2 and V2 * D2
-
     Dimension2 / Dimension2 will return a Dimension2, so do a trick to
         coerce it to a Vector2 if the "powers" are zero. (in ExpressionProp).
 
@@ -29,6 +27,11 @@ Add an "EvaluationContext" to Evaluator, which will have a reference to the shap
 
 Problems
 --------
+
+Should Dimension(power=0) + Double fail?
+    Ditto for Dimension2(power=0) + Vector2
+    It currently does. Using "ratio() instead of "/" would mitigate the problem.
+        But can we really not return EITHER Dimension or Double dynamically? (ditto for Vector2 or Dimension2).
 
 Shape has an ID, which can be referenced by expressions in other Shapes.
     How do we change the expression TEXT when the ID is changed?

@@ -98,7 +98,7 @@ abstract class UnaryOperator(str: String, precedence: Int) : Operator(str, prece
     }
 
     protected fun cannotApply(a: Prop<*>): Prop<*> {
-        throw RuntimeException("Cannot apply $str to $a")
+        throw RuntimeException("Cannot apply $str to ${a.value}")
     }
 
     abstract fun apply(a: Prop<*>): Prop<*>
@@ -119,7 +119,7 @@ abstract class BinaryOperator(str: String, precedence: Int) : Operator(str, prec
     }
 
     protected fun cannotApply(a: Prop<*>, b: Prop<*>): Prop<*> {
-        throw RuntimeException("Cannot apply $str to $a and $b")
+        throw RuntimeException("Cannot apply $str to ${a.value} and ${b.value}")
     }
 
     abstract fun apply(a: Prop<*>, b: Prop<*>): Prop<*>
@@ -230,23 +230,35 @@ class TimesOperator(precedence: Int) : BinaryOperator("*", precedence) {
         } else if (a.value is Angle && b.value is Double) {
             return AngleTimesDouble(a as Prop<Angle>, b as Prop<Double>)
 
-        } else if (a.value is Dimension && b.value is Dimension) {
-            return DimensionTimes(a as Prop<Dimension>, b as Prop<Dimension>)
+        } else if (a.value is Dimension) {
+            if (b.value is Dimension) {
+                return DimensionTimes(a as Prop<Dimension>, b as Prop<Dimension>)
 
-        } else if (a.value is Dimension && b.value is Double) {
-            return DimensionTimesDouble(a as Prop<Dimension>, b as Prop<Double>)
+            } else if (b.value is Double) {
+                return DimensionTimesDouble(a as Prop<Dimension>, b as Prop<Double>)
+            }
 
-        } else if (a.value is Dimension2 && b.value is Dimension2) {
-            return Dimension2Times(a as Prop<Dimension2>, b as Prop<Dimension2>)
+        } else if (a.value is Dimension2) {
+            if (b.value is Dimension2) {
+                return Dimension2Times(a as Prop<Dimension2>, b as Prop<Dimension2>)
 
-        } else if (a.value is Dimension2 && b.value is Double) {
-            return Dimension2TimesDouble(a as Prop<Dimension2>, b as Prop<Double>)
+            } else if (b.value is Double) {
+                return Dimension2TimesDouble(a as Prop<Dimension2>, b as Prop<Double>)
 
-        } else if (a.value is Vector2 && b.value is Vector2) {
-            return Vector2Times(a as Prop<Vector2>, b as Prop<Vector2>)
+            } else if (b.value is Vector2) {
+                return Dimension2TimesVector2(a as Prop<Dimension2>, b as Prop<Vector2>)
+            }
 
-        } else if (a.value is Vector2 && b.value is Double) {
-            return Vector2TimesDouble(a as Prop<Vector2>, b as Prop<Double>)
+        } else if (a.value is Vector2) {
+            if (b.value is Vector2) {
+                return Vector2Times(a as Prop<Vector2>, b as Prop<Vector2>)
+
+            } else if (b.value is Double) {
+                return Vector2TimesDouble(a as Prop<Vector2>, b as Prop<Double>)
+
+            } else if (b.value is Dimension2) {
+                return Dimension2TimesVector2(b as Prop<Dimension2>, a as Prop<Vector2>)
+            }
 
         }
 
@@ -282,6 +294,9 @@ class DivOperator(precedence: Int) : BinaryOperator("/", precedence) {
 
             } else if (b.value is Double) {
                 return Dimension2DivDouble(a as Prop<Dimension2>, b as Prop<Double>)
+
+            } else if (b.value is Vector2) {
+                return Dimension2DivVector2(a as Prop<Dimension2>, b as Prop<Vector2>)
             }
 
         } else if (a.value is Vector2) {

@@ -62,7 +62,21 @@ class Dimension2TimesDouble(a: Prop<Dimension2>, b: Prop<Double>) : GenericBinar
     }
 }
 
+class Dimension2TimesVector2(a: Prop<Dimension2>, b: Prop<Vector2>) : GenericBinaryPropCalculation<Dimension2, Dimension2, Vector2>(a, b, Dimension2.ZERO) {
+
+    override fun eval() {
+        calculatedValue = a.value * b.value
+    }
+}
+
 class Dimension2Div(a: Prop<Dimension2>, b: Prop<Dimension2>) : BinaryPropCalculation<Dimension2>(a, b, Dimension2.ZERO) {
+
+    override fun eval() {
+        calculatedValue = a.value / b.value
+    }
+}
+
+class Dimension2DivVector2(a: Prop<Dimension2>, b: Prop<Vector2>) : GenericBinaryPropCalculation<Dimension2, Dimension2, Vector2>(a, b, Dimension2.ZERO) {
 
     override fun eval() {
         calculatedValue = a.value / b.value

@@ -52,7 +52,7 @@ class Dimension(val number: Double, val units: Units, val power: Double = 1.0) {
         return if (power == 0.0) {
             "$number"
         } else {
-            "$number ${units.name} ${if (power == 1.0) "" else "^$power"}"
+            "$number ${units.name}${if (power == 1.0) "" else "^$power"}"
         }
     }
 

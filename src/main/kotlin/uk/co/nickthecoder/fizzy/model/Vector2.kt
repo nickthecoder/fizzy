@@ -15,10 +15,13 @@ class Vector2(val x: Double, val y: Double) {
 
     operator fun times(other: Vector2) = Vector2(x * other.x, y * other.y)
 
+    operator fun times(other: Dimension2) = Dimension2(other.x * x, other.y * y)
+
     operator fun div(scale: Double) = Vector2(x / scale, y / scale)
 
     operator fun div(other: Vector2) = Vector2(x / other.x, y / other.y)
 
+    override fun toString() = "Vector2($x , $y)"
 
     companion object {
         val ZERO = Vector2(0.0, 0.0)
