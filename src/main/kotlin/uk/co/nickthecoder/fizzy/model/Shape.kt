@@ -9,13 +9,13 @@ open class Shape {
 
     val id = StringValue(generateId())
 
-    val position = ExpressionProp("Vector2(0, 0)", Vector2::class, Vector2(0.0, 0.0))
+    val position = ExpressionProp("Dimension2(0mm, 0mm)", Dimension2::class, Dimension2.ZERO)
 
     val scale = ExpressionProp("Vector2(1, 1)", Vector2::class, Vector2(1.0, 1.0))
 
     val rotation = ExpressionProp("0 deg", Angle::class, Angle.ZERO)
 
-    val size = ExpressionProp("Vector2(1,1)", Vector2::class, Vector2.UNIT)
+    val size = ExpressionProp("Dimension2(1mm,1mm)", Dimension2::class, Dimension2.ZERO)
 
     companion object {
         private var previousId = 0

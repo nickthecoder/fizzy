@@ -17,12 +17,12 @@ private fun <T : Any> evaluate(expression: String, klass: KClass<T>): Prop<T> {
     // If we have a Dimension of power 0, then this can be coerced to a Double safely
     if (klass == Double::class && value is Dimension && value.power == 0.0) {
         @Suppress("UNCHECKED_CAST")
-        return DoubleProp(value.number) as Prop<T>
+        return DoubleProp(value.inDefaultUnits) as Prop<T>
 
         // Likewise, if we have a Dimension2 of power 0, then this can be coerced to a Vector2
     } else if (klass == Vector2::class && value is Dimension2 && value.x.power == 0.0 && value.y.power == 0.0) {
         @Suppress("UNCHECKED_CAST")
-        return Vector2Prop(Vector2(value.x.number, value.y.number)) as Prop<T>
+        return Vector2Prop(Vector2(value.x.inDefaultUnits, value.y.inDefaultUnits)) as Prop<T>
     }
 
     throw EvaluationException("Expected type ${klass.simpleName}, but found ${prop.value?.javaClass?.kotlin?.simpleName}", 0)

@@ -41,10 +41,7 @@ class Dimension2Minus(a: Prop<Dimension2>, b: Prop<Dimension2>) : BinaryPropCalc
 class Dimension2UnaryMinus(a: Prop<Dimension2>) : UnaryPropCalculation<Dimension2>(a, Dimension2.ZERO) {
 
     override fun eval() {
-        calculatedValue = Dimension2(
-                Dimension(-a.value.x.number, a.value.x.units, a.value.x.power),
-                Dimension(-a.value.y.number, a.value.y.units, a.value.y.power)
-        )
+        calculatedValue = Dimension2(-a.value.x, -a.value.y)
     }
 }
 
@@ -111,8 +108,8 @@ class Dimension2Ratio(a: Prop<Dimension2>, b: Prop<Dimension2>) : GenericBinaryP
         assert(a.value.x.power == b.value.x.power)
         assert(a.value.y.power == b.value.y.power)
         calculatedValue = Vector2(
-                a.value.x.number / b.value.x.inUnits(a.value.x.units),
-                a.value.y.number / b.value.y.inUnits(a.value.y.units)
+                a.value.x.inDefaultUnits / b.value.x.inDefaultUnits,
+                a.value.y.inDefaultUnits / b.value.y.inDefaultUnits
         )
     }
 }

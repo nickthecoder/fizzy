@@ -1,16 +1,11 @@
 To Do
 =====
 
-Add new Dimension2 class, similar to Vector2, but with Dimensions rather than Doubles
-    Dimension2 / Dimension2 will return a Dimension2, so do a trick to
-        coerce it to a Vector2 if the "powers" are zero. (in ExpressionProp).
-
 Soon
 ----
 
 Add tests for ExpressionProp
-    Check some basic things, dynamically changed values and Dimension(power=0) coerced to Double.
-    Also Dimension2(power=0) coerced to Vector2
+    Check some basic things, dynamically changed values
 
 Add trig functions sin cos etc.
     asin and acos Accept Dimension AND Double???
@@ -18,12 +13,18 @@ Add trig functions sin cos etc.
 
 Implement properties getters in evaluator. Such as Vector2.x , Dimension2.x, Angle.degrees etc.
 
-dirty props should only fire if they weren't previously dirty.
 Maybe
+-----
+
+Dimension should always store the value in a certain unit of measure. e.g. always store in mm.
+
+
+Later
 -----
 
 Add an "EvaluationContext" to Evaluator, which will have a reference to the shape and the document.
     Use this to reference other parts of the Shape, or other shapes in the document.
+
 
 Problems
 --------

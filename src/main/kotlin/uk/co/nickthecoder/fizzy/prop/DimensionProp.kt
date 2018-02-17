@@ -23,7 +23,7 @@ class DimensionMinus(a: Prop<Dimension>, b: Prop<Dimension>) : BinaryPropCalcula
 class DimensionUnaryMinus(a: Prop<Dimension>) : UnaryPropCalculation<Dimension>(a, Dimension.ZERO_mm) {
 
     override fun eval() {
-        calculatedValue = Dimension(-a.value.number, a.value.units, a.value.power)
+        calculatedValue = -a.value
     }
 }
 
@@ -59,7 +59,7 @@ class DimensionDivDouble(a: Prop<Dimension>, b: Prop<Double>) : GenericBinaryPro
 class DimensionSqrt(a: Prop<Dimension>) : UnaryPropCalculation<Dimension>(a, Dimension.ZERO_mm) {
 
     override fun eval() {
-        calculatedValue = Dimension(Math.sqrt(a.value.number), a.value.units, a.value.power / 2)
+        calculatedValue = Dimension(Math.sqrt(a.value.inUnits(a.value.units)), a.value.units, a.value.power / 2)
     }
 }
 
@@ -81,7 +81,7 @@ abstract class FunctionDimensionDimension(name: String)
 class DimensionRatio(a: Prop<Dimension>, b: Prop<Dimension>) : GenericBinaryPropCalculation<Double, Dimension, Dimension>(a, b, 0.0) {
     override fun eval() {
         assert(a.value.power == b.value.power)
-        calculatedValue = a.value.number / b.value.inUnits(a.value.units)
+        calculatedValue = a.value.inDefaultUnits / b.value.inDefaultUnits
     }
 }
 
