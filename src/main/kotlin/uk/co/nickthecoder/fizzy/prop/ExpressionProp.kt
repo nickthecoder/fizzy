@@ -28,9 +28,9 @@ private fun <T : Any> evaluate(expression: String, klass: KClass<T>): Prop<T> {
     throw EvaluationException("Expected type ${klass.simpleName}, but found ${prop.value?.javaClass?.kotlin?.simpleName}", 0)
 }
 
-class ExpressionProp<T : Any>(expression: String, val klass: KClass<T>, initialValue: T)
+class ExpressionProp<T : Any>(expression: String, val klass: KClass<T>)
 
-    : PropCalculation<T>(initialValue) {
+    : PropCalculation<T>() {
 
     var expression: String = expression
         set(v) {

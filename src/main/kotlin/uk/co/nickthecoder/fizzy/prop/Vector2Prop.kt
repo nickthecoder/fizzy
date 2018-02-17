@@ -5,7 +5,7 @@ import uk.co.nickthecoder.fizzy.model.Vector2
 class Vector2Prop(initialValue: Vector2 = Vector2.ZERO) : PropValue<Vector2>(initialValue)
 
 class LinkedVector2(val x: Prop<Double>, val y: Prop<Double>)
-    : PropCalculation<Vector2>(Vector2(x.value, y.value)), PropListener<Double> {
+    : PropCalculation<Vector2>(), PropListener<Double> {
 
     init {
         x.listeners.add(this)
@@ -21,35 +21,35 @@ class LinkedVector2(val x: Prop<Double>, val y: Prop<Double>)
     }
 }
 
-class Vector2Plus(a: Prop<Vector2>, b: Prop<Vector2>) : BinaryPropCalculation<Vector2>(a, b, Vector2.ZERO) {
+class Vector2Plus(a: Prop<Vector2>, b: Prop<Vector2>) : BinaryPropCalculation<Vector2>(a, b) {
 
     override fun eval() {
         calculatedValue = a.value + b.value
     }
 }
 
-class Vector2Minus(a: Prop<Vector2>, b: Prop<Vector2>) : BinaryPropCalculation<Vector2>(a, b, Vector2.ZERO) {
+class Vector2Minus(a: Prop<Vector2>, b: Prop<Vector2>) : BinaryPropCalculation<Vector2>(a, b) {
 
     override fun eval() {
         calculatedValue = a.value - b.value
     }
 }
 
-class Vector2Times(a: Prop<Vector2>, b: Prop<Vector2>) : BinaryPropCalculation<Vector2>(a, b, Vector2.ZERO) {
+class Vector2Times(a: Prop<Vector2>, b: Prop<Vector2>) : BinaryPropCalculation<Vector2>(a, b) {
 
     override fun eval() {
         calculatedValue = a.value * b.value
     }
 }
 
-class Vector2TimesDouble(a: Prop<Vector2>, b: Prop<Double>) : GenericBinaryPropCalculation<Vector2, Vector2, Double>(a, b, Vector2.ZERO) {
+class Vector2TimesDouble(a: Prop<Vector2>, b: Prop<Double>) : GenericBinaryPropCalculation<Vector2, Vector2, Double>(a, b) {
 
     override fun eval() {
         calculatedValue = a.value * b.value
     }
 }
 
-class Vector2Div(a: Prop<Vector2>, b: Prop<Vector2>) : BinaryPropCalculation<Vector2>(a, b, Vector2.ZERO) {
+class Vector2Div(a: Prop<Vector2>, b: Prop<Vector2>) : BinaryPropCalculation<Vector2>(a, b) {
 
     override fun eval() {
         calculatedValue = a.value / b.value
@@ -57,7 +57,7 @@ class Vector2Div(a: Prop<Vector2>, b: Prop<Vector2>) : BinaryPropCalculation<Vec
 }
 
 
-class Vector2DivDouble(a: Prop<Vector2>, b: Prop<Double>) : GenericBinaryPropCalculation<Vector2, Vector2, Double>(a, b, Vector2.ZERO) {
+class Vector2DivDouble(a: Prop<Vector2>, b: Prop<Double>) : GenericBinaryPropCalculation<Vector2, Vector2, Double>(a, b) {
 
     override fun eval() {
         calculatedValue = a.value / b.value

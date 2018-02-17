@@ -1,6 +1,6 @@
 package uk.co.nickthecoder.fizzy.prop
 
-abstract class PropCalculation<T>(initialValue: T)
+abstract class PropCalculation<T : Any>
 
     : AbstractProp<T>() {
 
@@ -14,7 +14,7 @@ abstract class PropCalculation<T>(initialValue: T)
             }
         }
 
-    protected var calculatedValue: T = initialValue
+    protected lateinit var calculatedValue: T
 
     override val value: T
         get() : T {
@@ -28,9 +28,9 @@ abstract class PropCalculation<T>(initialValue: T)
     abstract fun eval()
 }
 
-abstract class UnaryPropCalculation<T>(val a: Prop<T>, initialValue: T)
+abstract class UnaryPropCalculation<T : Any>(val a: Prop<T>)
 
-    : PropCalculation<T>(initialValue), PropListener<T> {
+    : PropCalculation<T>(), PropListener<T> {
 
     init {
         a.listeners.add(this)
@@ -47,9 +47,9 @@ abstract class UnaryPropCalculation<T>(val a: Prop<T>, initialValue: T)
 }
 
 
-abstract class BinaryPropCalculation<T>(val a: Prop<T>, val b: Prop<T>, initialValue: T)
+abstract class BinaryPropCalculation<T : Any>(val a: Prop<T>, val b: Prop<T>)
 
-    : PropCalculation<T>(initialValue), PropListener<T> {
+    : PropCalculation<T>(), PropListener<T> {
 
     init {
         a.listeners.add(this)
@@ -66,9 +66,9 @@ abstract class BinaryPropCalculation<T>(val a: Prop<T>, val b: Prop<T>, initialV
     }
 }
 
-abstract class GenericBinaryPropCalculation<T, A, B>(val a: Prop<A>, val b: Prop<B>, initialValue: T)
+abstract class GenericBinaryPropCalculation<T : Any, A, B>(val a: Prop<A>, val b: Prop<B>)
 
-    : PropCalculation<T>(initialValue) {
+    : PropCalculation<T>() {
 
     init {
         a.listeners.add(object : PropListener<A> {

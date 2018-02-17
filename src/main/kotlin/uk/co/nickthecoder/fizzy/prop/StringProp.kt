@@ -4,7 +4,7 @@ abstract class StringProp(initialValue: String = "") : PropValue<String>(initial
 
 class StringValue(initialValue: String = "") : StringProp(initialValue)
 
-class StringPlus(a: Prop<String>, b: Prop<String>) : BinaryPropCalculation<String>(a, b, "") {
+class StringPlus(a: Prop<String>, b: Prop<String>) : BinaryPropCalculation<String>(a, b) {
 
     override fun eval() {
         calculatedValue = a.value + b.value

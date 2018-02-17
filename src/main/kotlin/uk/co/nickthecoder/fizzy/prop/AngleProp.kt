@@ -6,7 +6,7 @@ import uk.co.nickthecoder.fizzy.model.Angle
 class AngleProp(initialValue: Angle = Angle.ZERO) : PropValue<Angle>(initialValue)
 
 class LinkedAngle(val radians: Prop<Double>)
-    : PropCalculation<Angle>(Angle.radians(radians.value)), PropListener<Double> {
+    : PropCalculation<Angle>(), PropListener<Double> {
 
     init {
         radians.listeners.add(this)
@@ -21,40 +21,40 @@ class LinkedAngle(val radians: Prop<Double>)
     }
 }
 
-class AnglePlus(a: Prop<Angle>, b: Prop<Angle>) : BinaryPropCalculation<Angle>(a, b, Angle.ZERO) {
+class AnglePlus(a: Prop<Angle>, b: Prop<Angle>) : BinaryPropCalculation<Angle>(a, b) {
 
     override fun eval() {
         calculatedValue = Angle.radians(a.value.radians + b.value.radians)
     }
 }
 
-class AngleMinus(a: Prop<Angle>, b: Prop<Angle>) : BinaryPropCalculation<Angle>(a, b, Angle.ZERO) {
+class AngleMinus(a: Prop<Angle>, b: Prop<Angle>) : BinaryPropCalculation<Angle>(a, b) {
 
     override fun eval() {
         calculatedValue = Angle.radians(a.value.radians - b.value.radians)
     }
 }
 
-class AngleUnaryMinus(a: Prop<Angle>) : UnaryPropCalculation<Angle>(a, Angle.ZERO) {
+class AngleUnaryMinus(a: Prop<Angle>) : UnaryPropCalculation<Angle>(a) {
 
     override fun eval() {
         calculatedValue = Angle.radians(-a.value.radians)
     }
 }
 
-class AngleTimesDouble(a: Prop<Angle>, b: Prop<Double>) : GenericBinaryPropCalculation<Angle, Angle, Double>(a, b, Angle.ZERO) {
+class AngleTimesDouble(a: Prop<Angle>, b: Prop<Double>) : GenericBinaryPropCalculation<Angle, Angle, Double>(a, b) {
     override fun eval() {
         calculatedValue = Angle.radians(a.value.radians * b.value)
     }
 }
 
-class AngleDiv(a: Prop<Angle>, b: Prop<Angle>) : GenericBinaryPropCalculation<Double, Angle, Angle>(a, b, 0.0) {
+class AngleDiv(a: Prop<Angle>, b: Prop<Angle>) : GenericBinaryPropCalculation<Double, Angle, Angle>(a, b) {
     override fun eval() {
         calculatedValue = a.value.radians / b.value.radians
     }
 }
 
-class AngleDivDouble(a: Prop<Angle>, b: Prop<Double>) : GenericBinaryPropCalculation<Angle, Angle, Double>(a, b, Angle.ZERO) {
+class AngleDivDouble(a: Prop<Angle>, b: Prop<Double>) : GenericBinaryPropCalculation<Angle, Angle, Double>(a, b) {
     override fun eval() {
         calculatedValue = Angle.radians(a.value.radians / b.value)
     }

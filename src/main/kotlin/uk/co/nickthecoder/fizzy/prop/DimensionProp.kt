@@ -6,35 +6,35 @@ import uk.co.nickthecoder.fizzy.model.Dimension
 class DimensionProp(initialValue: Dimension = Dimension.ZERO_mm) : PropValue<Dimension>(initialValue)
 
 
-class DimensionPlus(a: Prop<Dimension>, b: Prop<Dimension>) : BinaryPropCalculation<Dimension>(a, b, Dimension.ZERO_mm) {
+class DimensionPlus(a: Prop<Dimension>, b: Prop<Dimension>) : BinaryPropCalculation<Dimension>(a, b) {
 
     override fun eval() {
         calculatedValue = a.value + b.value
     }
 }
 
-class DimensionMinus(a: Prop<Dimension>, b: Prop<Dimension>) : BinaryPropCalculation<Dimension>(a, b, Dimension.ZERO_mm) {
+class DimensionMinus(a: Prop<Dimension>, b: Prop<Dimension>) : BinaryPropCalculation<Dimension>(a, b) {
 
     override fun eval() {
         calculatedValue = a.value - b.value
     }
 }
 
-class DimensionUnaryMinus(a: Prop<Dimension>) : UnaryPropCalculation<Dimension>(a, Dimension.ZERO_mm) {
+class DimensionUnaryMinus(a: Prop<Dimension>) : UnaryPropCalculation<Dimension>(a) {
 
     override fun eval() {
         calculatedValue = -a.value
     }
 }
 
-class DimensionTimes(a: Prop<Dimension>, b: Prop<Dimension>) : BinaryPropCalculation<Dimension>(a, b, Dimension.ZERO_mm) {
+class DimensionTimes(a: Prop<Dimension>, b: Prop<Dimension>) : BinaryPropCalculation<Dimension>(a, b) {
 
     override fun eval() {
         calculatedValue = a.value * b.value
     }
 }
 
-class DimensionTimesDouble(a: Prop<Dimension>, b: Prop<Double>) : GenericBinaryPropCalculation<Dimension, Dimension, Double>(a, b, Dimension.ZERO_mm) {
+class DimensionTimesDouble(a: Prop<Dimension>, b: Prop<Double>) : GenericBinaryPropCalculation<Dimension, Dimension, Double>(a, b) {
 
     override fun eval() {
         calculatedValue = a.value * b.value
@@ -42,21 +42,21 @@ class DimensionTimesDouble(a: Prop<Dimension>, b: Prop<Double>) : GenericBinaryP
 }
 
 
-class DimensionDiv(a: Prop<Dimension>, b: Prop<Dimension>) : BinaryPropCalculation<Dimension>(a, b, Dimension.ZERO_mm) {
+class DimensionDiv(a: Prop<Dimension>, b: Prop<Dimension>) : BinaryPropCalculation<Dimension>(a, b) {
 
     override fun eval() {
         calculatedValue = a.value / b.value
     }
 }
 
-class DimensionDivDouble(a: Prop<Dimension>, b: Prop<Double>) : GenericBinaryPropCalculation<Dimension, Dimension, Double>(a, b, Dimension.ZERO_mm) {
+class DimensionDivDouble(a: Prop<Dimension>, b: Prop<Double>) : GenericBinaryPropCalculation<Dimension, Dimension, Double>(a, b) {
 
     override fun eval() {
         calculatedValue = a.value / b.value
     }
 }
 
-class DimensionSqrt(a: Prop<Dimension>) : UnaryPropCalculation<Dimension>(a, Dimension.ZERO_mm) {
+class DimensionSqrt(a: Prop<Dimension>) : UnaryPropCalculation<Dimension>(a) {
 
     override fun eval() {
         calculatedValue = Dimension(Math.sqrt(a.value.inUnits(a.value.units)), a.value.units, a.value.power / 2)
@@ -78,7 +78,7 @@ abstract class FunctionDimensionDimension(name: String)
     abstract fun callDD(a: Prop<Dimension>, b: Prop<Dimension>): Prop<*>
 }
 
-class DimensionRatio(a: Prop<Dimension>, b: Prop<Dimension>) : GenericBinaryPropCalculation<Double, Dimension, Dimension>(a, b, 0.0) {
+class DimensionRatio(a: Prop<Dimension>, b: Prop<Dimension>) : GenericBinaryPropCalculation<Double, Dimension, Dimension>(a, b) {
     override fun eval() {
         assert(a.value.power == b.value.power)
         calculatedValue = a.value.inDefaultUnits / b.value.inDefaultUnits
