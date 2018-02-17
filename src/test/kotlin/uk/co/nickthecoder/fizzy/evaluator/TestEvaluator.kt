@@ -6,6 +6,7 @@ import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Vector2
+import uk.co.nickthecoder.fizzy.prop.ExpressionProp
 import uk.co.nickthecoder.fizzy.prop.Prop
 import java.lang.RuntimeException
 
@@ -423,5 +424,38 @@ class TestEvaluator : TestCase() {
             Evaluator("Vector2(1,1) - Dimension2(1m,1m)").parse()
         }
 
+    }
+
+    @Test
+    fun testCoercion() {
+        // Non coercion example (always a Double)
+        val a = ExpressionProp<Double>("4", Double::class, 0.0)
+        assertEquals(4.0, a.value, tiny)
+
+        // No attempt to coerce
+        val b = ExpressionProp<Dimension>("6mm / 2mm", Dimension::class, Dimension.ZERO_mm)
+        assertEquals(3.0, b.value.mm, tiny)
+        assertEquals(0.0, b.value.power, tiny)
+
+        // coerce from a Dimension to a Double
+        val c = ExpressionProp<Double>("6mm / 2mm", Double::class, 0.0)
+        assertEquals(3.0, c.value, tiny)
+
+        // Non coercion example (always a Vector)
+        val d = ExpressionProp<Vector2>("Vector2(2,3)", Vector2::class, Vector2.ZERO)
+        assertEquals(2.0, d.value.x, tiny)
+        assertEquals(3.0, d.value.y, tiny)
+
+        // Coerce from a Dimension2 to a Vector2
+        val e = ExpressionProp<Vector2>("Dimension2(10mm,8mm) / Dimension2(5mm,2mm)", Vector2::class, Vector2.ZERO)
+        assertEquals(2.0, e.value.x, tiny)
+        assertEquals(4.0, e.value.y, tiny)
+
+        // No attempt to coerce
+        val f = ExpressionProp<Dimension2>("Dimension2(10mm,8mm) / Dimension2(5mm,2mm)", Dimension2::class, Dimension2.ZERO)
+        assertEquals(2.0, f.value.x.mm, tiny)
+        assertEquals(4.0, f.value.y.mm, tiny)
+        assertEquals(0.0, f.value.x.power, tiny)
+        assertEquals(0.0, f.value.y.power, tiny)
     }
 }
