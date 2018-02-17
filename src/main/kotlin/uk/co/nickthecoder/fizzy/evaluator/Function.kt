@@ -118,9 +118,3 @@ abstract class FunctionDoubleDouble(name: String) : Function2(name) {
 
     abstract fun callDD(a: Prop<Double>, b: Prop<Double>): Prop<*>
 }
-
-class NewVector2 : FunctionDoubleDouble("Vector2") {
-    override fun callDD(a: Prop<Double>, b: Prop<Double>): Prop<*> {
-        return LinkedVector2(a, b)
-    }
-}

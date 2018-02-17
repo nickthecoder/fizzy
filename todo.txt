@@ -5,6 +5,23 @@ Soon
 ----
 
 Rename LinkedXXX to XXXLink
+If we ever check if a value is a constant using is PropValue, then this will NOT detect an expression like :
+    Dimension2( 2mm, 3mm )
+    Because it is a LinkedDimension2.
+    So maybe we should check if the args are constants, and if so, create a Dimension2Prop instead.
+    Similar for Vector2, Angle ...
+        Each class XXXProp should have a "create" companion method which either creates a XXXProp of a LinkedXXX
+
+AngleProp rad and deg conversions do NOT use AnglePropLinked, but sometimes they should (if the Double is not a constant).
+
+Rename XXXProp to XXXConstant and rename initialValue to value
+
+Create an interface for each property type, which extends Prop<XXX>
+Remove all Prop<Double> and replace with IDoubleProp
+    Ditto for all other property types.
+
+
+There is no DimensionPropLinked
 
 Implement properties getters in evaluator. Such as Vector2.x , Dimension2.x, Angle.degrees etc.
 
@@ -42,13 +59,6 @@ Shape has an ID, which can be referenced by expressions in other Shapes.
     When Evaluator is run, any time a Shape's ID is used, add a listener to the Shape's ID
         The listener knows the position of the token, and so the expression can be updated ;-)
     Clear the listeners before evaluating the expression and/or when the expression is changed.
-
-If we ever check if a value is a constant using is PropValue, then this will NOT detect an expression like :
-    Dimension2( 2mm, 3mm )
-    Because it is a LinkedDimension2.
-    So maybe we should check if the args are constants, and if so, create a Dimension2Prop instead.
-    Similar for Vector2, Angle ...
-        Each class XXXProp should have a "create" companion method which either creates a XXXProp of a LinkedXXX
 
 Notes
 -----

@@ -3,9 +3,21 @@ package uk.co.nickthecoder.fizzy.prop
 import uk.co.nickthecoder.fizzy.evaluator.FunctionDouble
 import uk.co.nickthecoder.fizzy.model.Angle
 
-class AngleProp(initialValue: Angle = Angle.ZERO) : PropValue<Angle>(initialValue)
+class AngleProp(initialValue: Angle = Angle.ZERO)
+    : PropValue<Angle>(initialValue) {
 
-class LinkedAngle(val radians: Prop<Double>)
+    companion object {
+        fun create(a: Prop<Double>): Prop<Angle> {
+            if (a is PropValue<Double>) {
+                return AngleProp(Angle.radians(a.value))
+            } else {
+                return AnglePropLinked(a)
+            }
+        }
+    }
+}
+
+class AnglePropLinked(val radians: Prop<Double>)
     : PropCalculation<Angle>(), PropListener<Double> {
 
     init {
@@ -62,7 +74,7 @@ class AngleDivDouble(a: Prop<Angle>, b: Prop<Double>) : GenericBinaryPropCalcula
 
 class NewAngle : FunctionDouble("Angle") {
     override fun callD(a: Prop<Double>): Prop<*> {
-        return LinkedAngle(a)
+        return AngleProp.create(a)
     }
 }
 

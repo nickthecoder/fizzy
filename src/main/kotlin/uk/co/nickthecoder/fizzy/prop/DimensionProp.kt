@@ -3,8 +3,35 @@ package uk.co.nickthecoder.fizzy.prop
 import uk.co.nickthecoder.fizzy.evaluator.Function2
 import uk.co.nickthecoder.fizzy.model.Dimension
 
-class DimensionProp(initialValue: Dimension = Dimension.ZERO_mm) : PropValue<Dimension>(initialValue)
+class DimensionProp(initialValue: Dimension = Dimension.ZERO_mm)
+    : PropValue<Dimension>(initialValue) {
 
+    companion object {
+        fun create(a: Prop<Double>, units: Dimension.Units, power: Double = 1.0): Prop<Dimension> {
+            if (a is PropValue<Double>) {
+                return DimensionProp(Dimension(a.value, units, power))
+            } else {
+                return DimensionPropLinked(a, units, power)
+            }
+        }
+    }
+}
+
+class DimensionPropLinked(val number: Prop<Double>, val units: Dimension.Units, val power: Double = 1.0)
+    : PropCalculation<Dimension>(), PropListener<Double> {
+
+    init {
+        number.listeners.add(this)
+    }
+
+    override fun eval() {
+        calculatedValue = Dimension(number.value, units, power)
+    }
+
+    override fun dirty(prop: Prop<Double>) {
+        dirty = true
+    }
+}
 
 class DimensionPlus(a: Prop<Dimension>, b: Prop<Dimension>) : BinaryPropCalculation<Dimension>(a, b) {
 
@@ -87,7 +114,8 @@ class DimensionRatio(a: Prop<Dimension>, b: Prop<Dimension>) : GenericBinaryProp
 
 fun dimensionConversion(a: Prop<*>, units: Dimension.Units, power: Double = 1.0): Prop<*> {
     if (a.value is Double) {
-        return DimensionProp(Dimension(a.value as Double, units, power))
+        @Suppress("UNCHECKED_CAST")
+        return DimensionProp.create(a as Prop<Double>, units, power)
     }
     return throwExpectedType("Double", a)
 }

@@ -4,9 +4,22 @@ import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Vector2
 
-class Dimension2Prop(initialValue: Dimension2 = Dimension2.ZERO) : PropValue<Dimension2>(initialValue)
+class Dimension2Prop(initialValue: Dimension2 = Dimension2.ZERO)
 
-class LinkedDimension2(val x: Prop<Dimension>, val y: Prop<Dimension>)
+    : PropValue<Dimension2>(initialValue) {
+
+    companion object {
+        fun create(a: Prop<Dimension>, b: Prop<Dimension>): Prop<Dimension2> {
+            if (a is PropValue<Dimension> && b is PropValue<Dimension>) {
+                return Dimension2Prop(Dimension2(a.value, b.value))
+            } else {
+                return Dimension2PropLinked(a, b)
+            }
+        }
+    }
+}
+
+class Dimension2PropLinked(val x: Prop<Dimension>, val y: Prop<Dimension>)
     : PropCalculation<Dimension2>(), PropListener<Dimension> {
 
     init {
@@ -97,9 +110,8 @@ class Dimension2Ratio(a: Prop<Dimension2>, b: Prop<Dimension2>) : GenericBinaryP
     }
 }
 
-
 class NewDimension2 : FunctionDimensionDimension("Dimension2") {
     override fun callDD(a: Prop<Dimension>, b: Prop<Dimension>): Prop<*> {
-        return LinkedDimension2(a, b)
+        return Dimension2Prop.create(a, b)
     }
 }
