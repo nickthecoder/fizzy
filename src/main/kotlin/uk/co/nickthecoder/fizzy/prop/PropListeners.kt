@@ -22,4 +22,13 @@ class PropListeners<T> : Iterable<PropListener<T>> {
         items.filter { it.get() === listener }.first()?.let { items.remove(it) }
     }
 
+    fun add(action: () -> Unit) {
+        add(object : PropListener<T> {
+            override fun dirty(prop: Prop<T>) {
+                action()
+            }
+        })
+    }
+
+    fun list(): String = items.map { it.get() }.filterNotNull().joinToString()
 }

@@ -1,12 +1,10 @@
 package uk.co.nickthecoder.fizzy.evaluator
 
-import uk.co.nickthecoder.fizzy.model.Angle
-import uk.co.nickthecoder.fizzy.prop.AngleConstant
 import uk.co.nickthecoder.fizzy.prop.DoubleConstant
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.StringConstant
 
-class Evaluator(val text: CharSequence) {
+class Evaluator(val text: CharSequence, val context: Context = constantsContext) {
 
     private var index = 0
 
@@ -131,7 +129,7 @@ class Evaluator(val text: CharSequence) {
     }
 
     private fun pushOperator(token: Token) {
-        var op = Operator.find(token.text) ?: throw EvaluationException("Unknown operator $text", token.startIndex)
+        var op = Operator.find(token.text) ?: throw EvaluationException("Unknown operator ${token.text}", token.startIndex)
 
         when (op) {
             is OpenBracketOperator -> {
@@ -196,18 +194,24 @@ class Evaluator(val text: CharSequence) {
     }
 
     private fun pushIdentifier(token: Token) {
-        if (expectValue || values.isEmpty()) {
-            // TODO If the top operator is ".", then push an identifier, and apply the "."
-            val function = Function.find(token.text)
-            if (function == null) {
-                val constant = constants[token.text]
-                if (constant == null) {
-                    throw EvaluationException("Unknown identifier ${token.text}", token.startIndex)
-                } else {
-                    pushValue(constant)
-                }
+        if (expectValue) {
+
+            if (peekOperator()?.operator is DotOperator) {
+                pushValue(FieldOrMethodName(token.text))
+
             } else {
-                pushValue(function)
+                val function = context.findFunction(token.text)
+                if (function == null) {
+                    val property = context.findProp(token.text)
+                    if (property == null) {
+                        throw EvaluationException("Unknown identifier ${token.text}", token.startIndex)
+                    } else {
+                        pushValue(property)
+                    }
+
+                } else {
+                    pushValue(function)
+                }
             }
         } else {
             val conversion = Conversions.find(token.text)
@@ -242,15 +246,4 @@ class Evaluator(val text: CharSequence) {
         }
     }
 
-    companion object {
-        private val constants = mutableMapOf<String, Prop<*>>(
-                "PI" to AngleConstant(Angle.PI),
-                "TAU" to AngleConstant(Angle.TAU),
-                "E" to DoubleConstant(Math.E),
-                "MAX_DOUBLE" to DoubleConstant(Double.MAX_VALUE),
-                "MIN_DOUBLE" to DoubleConstant(-Double.MAX_VALUE), // Note, this is NOT the same as the badly named Java Double.MIN_VALUE
-                "SMALLEST_DOUBLE" to DoubleConstant(Double.MIN_VALUE),
-                "NaN" to DoubleConstant(Double.NaN)
-        )
-    }
 }

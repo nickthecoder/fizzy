@@ -1,15 +1,25 @@
 package uk.co.nickthecoder.fizzy.prop
 
+import uk.co.nickthecoder.fizzy.evaluator.Context
 import uk.co.nickthecoder.fizzy.evaluator.Function2
+import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Dimension
+import uk.co.nickthecoder.fizzy.model.Dimension2
 
-interface DimensionProp : Prop<Dimension>
+interface DimensionProp : Prop<Dimension> {
+    override fun findField(name: String): Prop<*>? {
+        return null
+    }
+}
+
+class DimensionExpression(expression: String, context: Context = constantsContext)
+    : ExpressionProp<Dimension>(expression, Dimension::class, context), DimensionProp
 
 class DimensionConstant(value: Dimension = Dimension.ZERO_mm)
     : DimensionProp, PropConstant<Dimension>(value) {
 
     companion object {
-        fun create(a: DoubleProp, units: Dimension.Units, power: Double = 1.0): DimensionProp {
+        fun create(a: Prop<Double>, units: Dimension.Units, power: Double = 1.0): DimensionProp {
             if (a is DoubleConstant) {
                 return DimensionConstant(Dimension(a.value, units, power))
             } else {
@@ -19,115 +29,97 @@ class DimensionConstant(value: Dimension = Dimension.ZERO_mm)
     }
 }
 
-class DimensionPropLinked(val number: DoubleProp, val units: Dimension.Units, val power: Double = 1.0)
+class DimensionPropLinked(val number: Prop<Double>, val units: Dimension.Units, val power: Double = 1.0)
     : DimensionProp, PropCalculation<Dimension>(), PropListener<Double> {
 
     init {
         number.listeners.add(this)
     }
 
-    override fun eval() {
-        calculatedValue = Dimension(number.value, units, power)
-    }
+    override fun eval() = Dimension(number.value, units, power)
 
     override fun dirty(prop: Prop<Double>) {
         dirty = true
     }
 }
 
-class DimensionPlus(a: DimensionProp, b: DimensionProp)
+class DimensionPlus(a: Prop<Dimension>, b: Prop<Dimension>)
     : DimensionProp, BinaryPropCalculation<Dimension>(a, b) {
 
-    override fun eval() {
-        calculatedValue = a.value + b.value
-    }
+    override fun eval() = a.value + b.value
 }
 
-class DimensionMinus(a: DimensionProp, b: DimensionProp)
+class DimensionMinus(a: Prop<Dimension>, b: Prop<Dimension>)
     : DimensionProp, BinaryPropCalculation<Dimension>(a, b) {
 
-    override fun eval() {
-        calculatedValue = a.value - b.value
-    }
+    override fun eval() = a.value - b.value
 }
 
-class DimensionUnaryMinus(a: DimensionProp)
+class DimensionUnaryMinus(a: Prop<Dimension>)
     : DimensionProp, UnaryPropCalculation<Dimension>(a) {
 
-    override fun eval() {
-        calculatedValue = -a.value
-    }
+    override fun eval() = -a.value
 }
 
-class DimensionTimes(a: DimensionProp, b: DimensionProp)
+class DimensionTimes(a: Prop<Dimension>, b: Prop<Dimension>)
     : DimensionProp, BinaryPropCalculation<Dimension>(a, b) {
 
-    override fun eval() {
-        calculatedValue = a.value * b.value
-    }
+    override fun eval() = a.value * b.value
 }
 
-class DimensionTimesDouble(a: DimensionProp, b: DoubleProp)
+class DimensionTimesDouble(a: Prop<Dimension>, b: Prop<Double>)
     : DimensionProp, GenericBinaryPropCalculation<Dimension, Dimension, Double>(a, b) {
 
-    override fun eval() {
-        calculatedValue = a.value * b.value
-    }
+    override fun eval() = a.value * b.value
 }
 
 
-class DimensionDiv(a: DimensionProp, b: DimensionProp)
+class DimensionDiv(a: Prop<Dimension>, b: Prop<Dimension>)
     : DimensionProp, BinaryPropCalculation<Dimension>(a, b) {
 
-    override fun eval() {
-        calculatedValue = a.value / b.value
-    }
+    override fun eval() = a.value / b.value
 }
 
-class DimensionDivDouble(a: DimensionProp, b: DoubleProp)
+class DimensionDivDouble(a: Prop<Dimension>, b: Prop<Double>)
     : DimensionProp, GenericBinaryPropCalculation<Dimension, Dimension, Double>(a, b) {
 
-    override fun eval() {
-        calculatedValue = a.value / b.value
-    }
+    override fun eval() = a.value / b.value
 }
 
-class DimensionSqrt(a: DimensionProp)
+class DimensionSqrt(a: Prop<Dimension>)
     : DimensionProp, UnaryPropCalculation<Dimension>(a) {
 
-    override fun eval() {
-        calculatedValue = Dimension(Math.sqrt(a.value.inUnits(a.value.units)), a.value.units, a.value.power / 2)
-    }
+    override fun eval() = Dimension(Math.sqrt(a.value.inUnits(a.value.units)), a.value.units, a.value.power / 2)
 }
 
-abstract class FunctionDimensionDimension(name: String)
-    : Function2(name) {
+abstract class FunctionDimensionDimension()
+    : Function2() {
 
     override fun call(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (a.value is Dimension && b.value is Dimension) {
             @Suppress("UNCHECKED_CAST")
-            return callDD(a as DimensionProp, b as DimensionProp)
+            return callDD(a as Prop<Dimension>, b as Prop<Dimension>)
         } else {
             throw RuntimeException("Expected arguments (Dimension,Dimension)")
         }
     }
 
-    abstract fun callDD(a: DimensionProp, b: DimensionProp): Prop<*>
+    abstract fun callDD(a: Prop<Dimension>, b: Prop<Dimension>): Prop<*>
 }
 
-class DimensionRatio(a: DimensionProp, b: DimensionProp)
+class DimensionRatio(a: Prop<Dimension>, b: Prop<Dimension>)
     : DoubleProp, GenericBinaryPropCalculation<Double, Dimension, Dimension>(a, b) {
 
-    override fun eval() {
+    override fun eval(): Double {
         assert(a.value.power == b.value.power)
-        calculatedValue = a.value.inDefaultUnits / b.value.inDefaultUnits
+        return a.value.inDefaultUnits / b.value.inDefaultUnits
     }
 }
 
 fun dimensionConversion(a: Prop<*>, units: Dimension.Units, power: Double = 1.0): Prop<*> {
     if (a.value is Double) {
         @Suppress("UNCHECKED_CAST")
-        return DimensionConstant.create(a as DoubleProp, units, power)
+        return DimensionConstant.create(a as Prop<Double>, units, power)
     }
     return throwExpectedType("Double", a)
 }

@@ -1,22 +1,16 @@
 To Do
 =====
 
-Soon
-----
-
-AngleProp rad and deg conversions do NOT use AnglePropLinked, but sometimes they should (if the Double is not a constant).
-
-
 Implement properties getters in evaluator. Such as Vector2.x , Dimension2.x, Angle.degrees etc.
 
-
-Add an "EvaluationContext" to Evaluator, which will have a reference to the shape and the document.
-    Use this to reference other parts of the Shape, or other shapes in the document.
-    Add  basic tests, then dynamically changed values
+Soon
+----
 
 Maybe
 -----
 
+Consider replacing most/all calculated properties (such as Vector2TimesDouble) with instances of a generic
+    class with a lambda in the constructor.
 
 Later
 -----

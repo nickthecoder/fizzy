@@ -14,18 +14,18 @@ abstract class PropCalculation<T : Any>
             }
         }
 
-    protected lateinit var calculatedValue: T
+    private lateinit var calculatedValue: T
 
     override val value: T
         get() : T {
             if (dirty) {
-                eval()
+                calculatedValue = eval()
                 dirty = false
             }
             return calculatedValue
         }
 
-    abstract fun eval()
+    abstract fun eval(): T
 
     /**
      * Returns the value, or null if the value could not be calculated.
@@ -71,7 +71,6 @@ abstract class BinaryPropCalculation<T : Any>(val a: Prop<T>, val b: Prop<T>)
 
     override fun dirty(prop: Prop<T>) {
         dirty = true
-        listeners.forEach { it.dirty(this) }
     }
 
     override fun dump(): String {

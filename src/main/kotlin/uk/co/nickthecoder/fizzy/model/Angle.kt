@@ -15,4 +15,8 @@ class Angle private constructor(val radians: Double) {
         val PI = Angle(Math.PI)
         val TAU = Angle(Math.PI * 2.0)
     }
+
+    override fun equals(other: Any?): Boolean {
+        return other is Angle && other.radians == this.radians
+    }
 }

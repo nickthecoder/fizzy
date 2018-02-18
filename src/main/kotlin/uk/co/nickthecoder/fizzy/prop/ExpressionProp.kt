@@ -1,15 +1,19 @@
 package uk.co.nickthecoder.fizzy.prop
 
+import uk.co.nickthecoder.fizzy.evaluator.Context
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationException
 import uk.co.nickthecoder.fizzy.evaluator.Evaluator
+import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Vector2
 import kotlin.reflect.KClass
 
-private fun <T : Any> evaluate(expression: String, klass: KClass<T>): Prop<T> {
-    val prop = Evaluator(expression).parse()
+private fun <T : Any> evaluate(expression: String, klass: KClass<T>, context: Context): Prop<T> {
+
+    val prop = Evaluator(expression, context).parse()
     val value = prop.value
+
     if (klass.isInstance(value)) {
         @Suppress("UNCHECKED_CAST")
         return prop as Prop<T>
@@ -28,9 +32,9 @@ private fun <T : Any> evaluate(expression: String, klass: KClass<T>): Prop<T> {
     throw EvaluationException("Expected type ${klass.simpleName}, but found ${prop.value?.javaClass?.kotlin?.simpleName}", 0)
 }
 
-class ExpressionProp<T : Any>(expression: String, val klass: KClass<T>)
+abstract class ExpressionProp<T : Any>(expression: String, val klass: KClass<T>, val context: Context = constantsContext)
 
-    : PropCalculation<T>() {
+    : PropCalculation<T>(), PropListener<T> {
 
     var expression: String = expression
         set(v) {
@@ -38,7 +42,21 @@ class ExpressionProp<T : Any>(expression: String, val klass: KClass<T>)
             dirty = true
         }
 
-    override fun eval() {
-        calculatedValue = evaluate(expression, klass).value
+    var calculatedProperty: Prop<T>? = null
+
+    override fun eval(): T {
+        // TODO calculatedProperty?.listeners?.remove(this)
+        val cp = evaluate(expression, klass, context)
+        calculatedProperty = cp
+        cp.listeners.add(this)
+        return cp.value
+    }
+
+    override fun dirty(prop: Prop<T>) {
+        dirty = true
+    }
+
+    override fun dump(): String {
+        return "Expression : '$expression'"
     }
 }

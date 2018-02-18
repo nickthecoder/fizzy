@@ -1,46 +1,46 @@
 package uk.co.nickthecoder.fizzy.prop
 
-interface DoubleProp : Prop<Double>
+import uk.co.nickthecoder.fizzy.evaluator.Context
+import uk.co.nickthecoder.fizzy.evaluator.constantsContext
+
+interface DoubleProp : Prop<Double> {
+    override fun findField(name: String): Prop<*>? {
+        return null
+    }
+}
+
+class DoubleExpression(expression: String, context: Context = constantsContext)
+    : ExpressionProp<Double>(expression, Double::class, context), DoubleProp
 
 class DoubleConstant(value: Double = 0.0)
     : DoubleProp, PropConstant<Double>(value)
 
-class DoublePlus(a: DoubleProp, b: DoubleProp)
+class DoublePlus(a: Prop<Double>, b: Prop<Double>)
     : DoubleProp, BinaryPropCalculation<Double>(a, b) {
 
-    override fun eval() {
-        calculatedValue = a.value + b.value
-    }
+    override fun eval() = a.value + b.value
 }
 
-class DoubleMinus(a: DoubleProp, b: DoubleProp)
+class DoubleMinus(a: Prop<Double>, b: Prop<Double>)
     : DoubleProp, BinaryPropCalculation<Double>(a, b) {
 
-    override fun eval() {
-        calculatedValue = a.value - b.value
-    }
+    override fun eval() = a.value - b.value
 }
 
-class DoubleTimes(a: DoubleProp, b: DoubleProp)
+class DoubleTimes(a: Prop<Double>, b: Prop<Double>)
     : DoubleProp, BinaryPropCalculation<Double>(a, b) {
 
-    override fun eval() {
-        calculatedValue = a.value * b.value
-    }
+    override fun eval() = a.value * b.value
 }
 
-class DoubleDiv(a: DoubleProp, b: DoubleProp)
+class DoubleDiv(a: Prop<Double>, b: Prop<Double>)
     : DoubleProp, BinaryPropCalculation<Double>(a, b) {
 
-    override fun eval() {
-        calculatedValue = a.value / b.value
-    }
+    override fun eval() = a.value / b.value
 }
 
-class DoubleSqrt(a: DoubleProp)
+class DoubleSqrt(a: Prop<Double>)
     : DoubleProp, UnaryPropCalculation<Double>(a) {
 
-    override fun eval() {
-        calculatedValue = Math.sqrt(a.value)
-    }
+    override fun eval() = Math.sqrt(a.value)
 }

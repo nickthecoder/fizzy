@@ -12,4 +12,7 @@ abstract class PropConstant<T>(value: T) : AbstractProp<T>() {
                 listeners.forEach { it.dirty(this) }
             }
         }
+
+    override fun isConstant() = true
+
 }

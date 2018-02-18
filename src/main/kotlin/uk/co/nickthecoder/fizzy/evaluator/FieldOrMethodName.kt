@@ -3,14 +3,10 @@ package uk.co.nickthecoder.fizzy.evaluator
 import uk.co.nickthecoder.fizzy.prop.AbstractProp
 import uk.co.nickthecoder.fizzy.prop.Prop
 
-class ArgList : AbstractProp<MutableList<Prop<*>>>() {
+class FieldOrMethodName(name: String) : AbstractProp<String>() {
 
-    override val value = mutableListOf<Prop<*>>()
+    override val value = name
 
     override fun findField(name: String): Prop<*>? = null
-
-    override fun toString(): String {
-        return "ArgList: $value"
-    }
 
 }

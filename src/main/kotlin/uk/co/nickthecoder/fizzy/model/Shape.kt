@@ -1,7 +1,9 @@
 package uk.co.nickthecoder.fizzy.model
 
-import uk.co.nickthecoder.fizzy.prop.ExpressionProp
+import uk.co.nickthecoder.fizzy.prop.AngleExpression
+import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.StringConstant
+import uk.co.nickthecoder.fizzy.prop.Vector2Expression
 
 open class Shape {
 
@@ -9,13 +11,13 @@ open class Shape {
 
     val id = StringConstant(generateId())
 
-    val position = ExpressionProp("Dimension2(0mm, 0mm)", Dimension2::class)
+    val position = Dimension2Expression("Dimension2(0mm, 0mm)")
 
-    val scale = ExpressionProp("Vector2(1, 1)", Vector2::class)
+    val scale = Vector2Expression("Vector2(1, 1)")
 
-    val rotation = ExpressionProp("0 deg", Angle::class)
+    val rotation = AngleExpression("0 deg")
 
-    val size = ExpressionProp("Dimension2(1mm,1mm)", Dimension2::class)
+    val size = Dimension2Expression("Dimension2(1mm,1mm)")
 
     companion object {
         private var previousId = 0
