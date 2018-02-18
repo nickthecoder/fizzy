@@ -14,8 +14,6 @@ interface Prop<T> {
 
     val listeners: PropListeners<T>
 
-    fun findField(name: String): Prop<*>?
-
     fun dump(): String = value.toString()
 
     fun isConstant() = false

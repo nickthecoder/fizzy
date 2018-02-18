@@ -1,7 +1,9 @@
 To Do
 =====
 
-Implement properties getters in evaluator. Such as Vector2.x , Dimension2.x, Angle.degrees etc.
+Fields do not implement DoubleProp, AngleProp etc. and therefore Dimension2(2mm,2mm).x.cm will not work.
+
+Add methods
 
 Soon
 ----

@@ -6,12 +6,14 @@ import uk.co.nickthecoder.fizzy.evaluator.FunctionDoubleDouble
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Vector2
 
-interface Vector2Prop : Prop<Vector2> {
-    override fun findField(name: String): Prop<*>? {
+interface Vector2Prop : Prop<Vector2>
 
+class Vector2PropType : PropType<Vector2>(Vector2::class) {
+
+    override fun findField(prop: Prop<Vector2>, name: String): Prop<*>? {
         return when (name) {
-            "x" -> Field<Vector2, Double>(this) { value.x }
-            "y" -> Field<Vector2, Double>(this) { value.y }
+            "x" -> Field<Vector2, Double>(prop) { prop.value.x }
+            "y" -> Field<Vector2, Double>(prop) { prop.value.y }
             else -> null
         }
     }

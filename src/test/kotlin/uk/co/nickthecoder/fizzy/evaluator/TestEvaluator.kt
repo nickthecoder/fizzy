@@ -530,7 +530,6 @@ class TestEvaluator : TestCase() {
         assertEquals(0.000015, d.value, tiny)
     }
 
-
     @Test
     fun testDimension2Fields() {
         val a = Evaluator("Dimension2(15mm,10cm).x").parse() as Prop<Dimension>
@@ -538,6 +537,9 @@ class TestEvaluator : TestCase() {
 
         val b = Evaluator("Dimension2(15mm,10cm).y").parse() as Prop<Dimension>
         assertEquals(100.0, b.value.mm, tiny)
+
+        val c = Evaluator("Dimension2(15mm,10cm).y.mm").parse() as Prop<Double>
+        assertEquals(100.0, c.value, tiny)
     }
 
     @Test

@@ -7,12 +7,15 @@ import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Vector2
 
-interface Dimension2Prop : Prop<Dimension2> {
-    override fun findField(name: String): Prop<*>? {
+interface Dimension2Prop : Prop<Dimension2>
+
+class Dimension2PropType : PropType<Dimension2>(Dimension2::class) {
+
+    override fun findField(prop: Prop<Dimension2>, name: String): Prop<*>? {
 
         return when (name) {
-            "x" -> Field<Dimension2, Dimension>(this) { value.x }
-            "y" -> Field<Dimension2, Dimension>(this) { value.y }
+            "x" -> Field<Dimension2, Dimension>(prop) { prop.value.x }
+            "y" -> Field<Dimension2, Dimension>(prop) { prop.value.y }
             else -> null
         }
     }

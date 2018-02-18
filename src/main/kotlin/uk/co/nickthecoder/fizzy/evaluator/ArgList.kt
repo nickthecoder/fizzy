@@ -7,8 +7,6 @@ class ArgList : AbstractProp<MutableList<Prop<*>>>() {
 
     override val value = mutableListOf<Prop<*>>()
 
-    override fun findField(name: String): Prop<*>? = null
-
     override fun toString(): String {
         return "ArgList: $value"
     }

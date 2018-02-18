@@ -171,7 +171,7 @@ class Evaluator(val text: CharSequence, val context: Context = constantsContext)
                     }
                 }
 
-                while (peekOperator()?.operator?.precedence ?: -1 > op.precedence) {
+                while (peekOperator()?.operator?.precedence ?: -1 >= op.precedence) {
                     log("Applying ${peekOperator()} as it is higher than $op")
                     applyOperator()
                 }
@@ -197,6 +197,7 @@ class Evaluator(val text: CharSequence, val context: Context = constantsContext)
         if (expectValue) {
 
             if (peekOperator()?.operator is DotOperator) {
+                log("Looking for field ${token.text}")
                 pushValue(FieldOrMethodName(token.text))
 
             } else {

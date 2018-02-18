@@ -11,8 +11,6 @@ abstract class Function() : AbstractProp<String>() {
     override val value: String
         get() = javaClass.simpleName
 
-    override fun findField(name: String): Prop<*>? = null
-
     abstract fun call(args: Prop<*>): Prop<*>
 }
 

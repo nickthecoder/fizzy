@@ -88,7 +88,7 @@ class ApplyOperator(precedence: Int) : BinaryOperator("(", precedence), OpenBrac
 class DotOperator(precedence: Int) : BinaryOperator(".", precedence), OpenBracket {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (b is FieldOrMethodName) {
-            a.findField(b.value)?.let { field ->
+            PropType.field(a, b.value)?.let { field ->
                 return field
             }
         }

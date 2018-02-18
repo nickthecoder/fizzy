@@ -10,7 +10,9 @@ import uk.co.nickthecoder.fizzy.prop.PropCalculation
 class Field<T : Any, F : Any>(val prop: Prop<T>, val lambda: (Prop<T>) -> F)
     : PropCalculation<F>() {
 
-    override fun eval(): F = lambda(prop)
+    override fun toString(): String {
+        return "Field : $value"
+    }
 
-    override fun findField(name: String) = null
+    override fun eval(): F = lambda(prop)
 }

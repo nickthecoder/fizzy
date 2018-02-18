@@ -5,12 +5,14 @@ import uk.co.nickthecoder.fizzy.evaluator.Field
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Angle
 
-interface AngleProp : Prop<Angle> {
-    override fun findField(name: String): Prop<*>? {
+interface AngleProp : Prop<Angle>
 
+class AnglePropType : PropType<Angle>(Angle::class) {
+
+    override fun findField(prop: Prop<Angle>, name: String): Prop<*>? {
         return when (name) {
-            "degrees" -> Field<Angle, Double>(this) { value.degrees }
-            "radians" -> Field<Angle, Double>(this) { value.radians }
+            "degrees" -> Field<Angle, Double>(prop) { prop.value.degrees }
+            "radians" -> Field<Angle, Double>(prop) { prop.value.radians }
             else -> null
         }
     }
