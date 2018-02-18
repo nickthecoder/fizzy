@@ -515,6 +515,46 @@ class TestEvaluator : TestCase() {
         assertEquals(Math.PI, c.value, tiny)
     }
 
+    @Test
+    fun testDimensionFields() {
+        val a = Evaluator("15mm.mm").parse() as Prop<Double>
+        assertEquals(15.0, a.value, tiny)
+
+        val b = Evaluator("15mm.cm").parse() as Prop<Double>
+        assertEquals(1.5, b.value, tiny)
+
+        val c = Evaluator("15mm.m").parse() as Prop<Double>
+        assertEquals(0.015, c.value, tiny)
+
+        val d = Evaluator("15mm.km").parse() as Prop<Double>
+        assertEquals(0.000015, d.value, tiny)
+    }
+
+
+    @Test
+    fun testDimension2Fields() {
+        val a = Evaluator("Dimension2(15mm,10cm).x").parse() as Prop<Dimension>
+        assertEquals(15.0, a.value.mm, tiny)
+
+        val b = Evaluator("Dimension2(15mm,10cm).y").parse() as Prop<Dimension>
+        assertEquals(100.0, b.value.mm, tiny)
+    }
+
+    @Test
+    fun testVector2Fields() {
+        val a = Evaluator("Vector2(15,10).x").parse() as Prop<Double>
+        assertEquals(15.0, a.value, tiny)
+
+        val b = Evaluator("Vector2(15,10).y").parse() as Prop<Double>
+        assertEquals(10.0, b.value, tiny)
+    }
+
+    @Test
+    fun testString2Fields() {
+        val a = Evaluator("\"Hello\".length").parse() as Prop<Double>
+        assertEquals(5.0, a.value, tiny)
+    }
+
     //variables.putProp("angle1", ExpressionProp("value1 degrees", Angle::class, context))
 
 }

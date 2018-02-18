@@ -1,6 +1,7 @@
 package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.evaluator.Context
+import uk.co.nickthecoder.fizzy.evaluator.Field
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
@@ -8,7 +9,12 @@ import uk.co.nickthecoder.fizzy.model.Vector2
 
 interface Dimension2Prop : Prop<Dimension2> {
     override fun findField(name: String): Prop<*>? {
-        return null
+
+        return when (name) {
+            "x" -> Field<Dimension2, Dimension>(this) { value.x }
+            "y" -> Field<Dimension2, Dimension>(this) { value.y }
+            else -> null
+        }
     }
 }
 

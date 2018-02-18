@@ -1,13 +1,19 @@
 package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.evaluator.Context
+import uk.co.nickthecoder.fizzy.evaluator.Field
 import uk.co.nickthecoder.fizzy.evaluator.FunctionDoubleDouble
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Vector2
 
 interface Vector2Prop : Prop<Vector2> {
     override fun findField(name: String): Prop<*>? {
-        return null
+
+        return when (name) {
+            "x" -> Field<Vector2, Double>(this) { value.x }
+            "y" -> Field<Vector2, Double>(this) { value.y }
+            else -> null
+        }
     }
 }
 

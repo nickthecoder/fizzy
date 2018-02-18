@@ -1,8 +1,13 @@
 package uk.co.nickthecoder.fizzy.prop
 
+import uk.co.nickthecoder.fizzy.evaluator.Field
+
 interface StringProp : Prop<String> {
     override fun findField(name: String): Prop<*>? {
-        return null
+        return when (name) {
+            "length" -> Field<String, Double>(this) { value.length.toDouble() }
+            else -> null
+        }
     }
 }
 
