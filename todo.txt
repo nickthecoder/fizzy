@@ -3,31 +3,6 @@ To Do
 
 Add methods
 
-4 .abs()
-
-push 4
-put DotOperator
-push FieldOrMethodName "abs"
-found ApplyOperator. As the top operator is a DotOperator and the top value is a FieldOrMethod name
-    pop 4
-    pop FieldOrMethodName
-    pop DotOperator
-    Find the method based on Double (from 4's class) and the field or method name.
-    push the Method (which includes the 4)
-found ")", but valueExpected and top operator is a Method, therefore must be an empty argument list
-    pop the Method
-    call it using a new ArgList size zero.
-    push the result.
-
-
-"Hello".get(1)
-
-See PropMethod todo comment.
-    Remove the T from PropListener?
-    Maybe even remove the prop, as I never use it!!!
-
-NOTE. Function cannot currently handle zero arguments.
-
 Soon
 ----
 
@@ -52,6 +27,11 @@ Add trig functions sin cos etc.
 Problems
 --------
 
+Currently sqrt is a Function, whereas abs is a Method of Prop<Double>
+    Choose one form or the other (or both!)
+
+The current design does not all for method overloading with different number or types of arguments.
+
 Should Dimension(power=0) + Double fail?
     Ditto for Dimension2(power=0) + Vector2
     It currently does. Using "ratio() instead of "/" would mitigate the problem.
@@ -62,6 +42,7 @@ Shape has an ID, which can be referenced by expressions in other Shapes.
     When Evaluator is run, any time a Shape's ID is used, add a listener to the Shape's ID
         The listener knows the position of the token, and so the expression can be updated ;-)
     Clear the listeners before evaluating the expression and/or when the expression is changed.
+    Are ShapeIDs unique to the whole document, or can a Shape inside a group share an ID with a Shape within a different group?
 
 Notes
 -----

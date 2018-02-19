@@ -18,14 +18,18 @@ class Dimension2PropType : PropType<Dimension2>(Dimension2::class) {
     }
 
     override fun findMethod(prop: Prop<Dimension2>, name: String): PropMethod<Dimension2, *>? {
-        return null
+        return when (name) {
+            "length" -> PropMethod0(prop) { prop.value.length() }
+            "normalise" -> PropMethod0(prop) { prop.value.normalise() }
+            else -> null
+        }
     }
 }
 
 class Dimension2Expression(expression: String, context: Context = constantsContext)
     : PropExpression<Dimension2>(expression, Dimension2::class, context)
 
-class Dimension2Constant(value: Dimension2 = Dimension2.ZERO)
+class Dimension2Constant(value: Dimension2 = Dimension2.ZERO_mm)
     : PropConstant<Dimension2>(value) {
 
     companion object {

@@ -38,9 +38,9 @@ abstract class Operator(val str: String, val precedence: Int) {
         val TIMES = TimesOperator(5)
         val DIV = DivOperator(5)
 
-        val UNARY_MINUS = UnaryMinusOperator(6)
-        val CLOSE_BRACKET = CloseBracketOperator(7)
-        val DOT = DotOperator(8)
+        val CLOSE_BRACKET = CloseBracketOperator(6)
+        val DOT = DotOperator(7)
+        val UNARY_MINUS = UnaryMinusOperator(8)
 
         fun add(vararg ops: Operator) {
             ops.forEach { operators.put(it.str, it) }
@@ -80,6 +80,9 @@ class ApplyOperator(precedence: Int) : BinaryOperator("(", precedence), OpenBrac
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (a is Function) {
             return a.call(b)
+        } else if (a is PropMethod<*, *>) {
+            a.applyArgs(b)
+            return a
         } else {
             return cannotApply(a, b)
         }

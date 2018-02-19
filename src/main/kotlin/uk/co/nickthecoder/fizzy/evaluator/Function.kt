@@ -12,7 +12,6 @@ import uk.co.nickthecoder.fizzy.prop.*
  *
  * A function always works on single [Prop] as its argument. A function which takes more than one argument uses
  * a [ArgList] to hold all of the arguments.
- * Currently, a function with NO arguments isn't supported.
  *
  * Parsing "sqrt( 4 )" first pushes the [Sqrt] Function onto the values stack.
  * Then [ApplyOperator] "(" is pushed onto the operators stack, then "4" onto the values stack, and finally

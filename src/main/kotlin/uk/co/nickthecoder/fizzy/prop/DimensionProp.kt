@@ -94,7 +94,7 @@ class DimensionDivDouble(a: Prop<Dimension>, b: Prop<Double>)
 class DimensionSqrt(a: Prop<Dimension>)
     : UnaryPropCalculation<Dimension>(a) {
 
-    override fun eval() = Dimension(Math.sqrt(a.value.inUnits(a.value.units)), a.value.units, a.value.power / 2)
+    override fun eval() = a.value.sqrt()
 }
 
 abstract class FunctionDimensionDimension()

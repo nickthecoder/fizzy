@@ -10,7 +10,15 @@ class StringPropType : PropType<String>(String::class) {
     }
 
     override fun findMethod(prop: Prop<String>, name: String): PropMethod<String, *>? {
-        return null
+        return when (name) {
+            "head" -> PropMethodDouble(prop) { a -> prop.value.substring(0, a.toInt()) }
+            "tail" -> PropMethodDouble(prop) { a ->
+                val l = prop.value.length
+                prop.value.substring(l - a.toInt(), l)
+            }
+            "substring" -> PropMethodDoubleDouble(prop) { a, b -> prop.value.substring(a.toInt(), b.toInt()) }
+            else -> null
+        }
     }
 }
 

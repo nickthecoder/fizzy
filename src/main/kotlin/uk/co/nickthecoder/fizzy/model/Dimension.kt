@@ -89,6 +89,10 @@ class Dimension {
         return Dimension(inUnits(units) / b.inUnits(units), units, power - b.power)
     }
 
+    fun sqrt(): Dimension {
+        return Dimension(Math.sqrt(inUnits(units)), units, power / 2)
+    }
+
     override fun toString(): String {
         return if (power == 0.0) {
             "$inDefaultUnits"

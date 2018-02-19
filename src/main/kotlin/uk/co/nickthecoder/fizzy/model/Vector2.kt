@@ -21,6 +21,16 @@ class Vector2(val x: Double, val y: Double) {
 
     operator fun div(other: Vector2) = Vector2(x / other.x, y / other.y)
 
+    fun length() = Math.sqrt(x * x + y * y)
+
+    /**
+     * Create a Vector of length 1 pointing in the same direction as this.
+     */
+    fun normalise(): Vector2 {
+        val l = length()
+        return Vector2(x / l, y / l)
+    }
+
     override fun toString() = "Vector2($x , $y)"
 
     companion object {

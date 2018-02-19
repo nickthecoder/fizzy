@@ -501,6 +501,12 @@ class TestEvaluator : TestCase() {
         assertEquals(100.0, a.value.degrees, tiny)
         value1.expression = "100"
         assertEquals(80.0, a.value.degrees, tiny)
+
+
+        val b = Evaluator("angle1.degrees", context).parse() as Prop<Double>
+        assertEquals(100.0, b.value, tiny)
+        value1.expression = "80"
+        assertEquals(80.0, b.value, tiny)
     }
 
     @Test
@@ -557,6 +563,46 @@ class TestEvaluator : TestCase() {
         assertEquals(5.0, a.value, tiny)
     }
 
+    @Test
+    fun testStringMethods() {
+        val a = Evaluator("\"Hello\".substring(2,5)").parse() as Prop<String>
+        assertEquals("llo", a.value)
+
+        val b = Evaluator("\"Hello\".head(2)").parse() as Prop<String>
+        assertEquals("He", b.value)
+
+        val c = Evaluator("\"Hello\".tail(2)").parse() as Prop<String>
+        assertEquals("lo", c.value)
+    }
+
+    @Test
+    fun testDoubleMethods() {
+        val a = Evaluator("(0-2) .abs()").parse() as Prop<Double>
+        assertEquals(2.0, a.value, tiny)
+
+        val b = Evaluator("-3 .abs()").parse() as Prop<Double>
+        assertEquals(3.0, b.value, tiny)
+    }
+
+    @Test
+    fun testVectorMethods() {
+        val a = Evaluator("Vector2(3,4).length()").parse() as Prop<Double>
+        assertEquals(5.0, a.value, tiny)
+
+        val b = Evaluator("Vector2(3,4).normalise()").parse() as Prop<Vector2>
+        assertEquals(3.0 / 5.0, b.value.x, tiny)
+        assertEquals(4.0 / 5.0, b.value.y, tiny)
+    }
+
+    @Test
+    fun testDimension2Methods() {
+        val a = Evaluator("Dimension2(3m,4m).length()").parse() as Prop<Dimension>
+        assertEquals(5.0, a.value.m, tiny)
+
+        val b = Evaluator("Dimension2(3m,4m).normalise()").parse() as Prop<Vector2>
+        assertEquals(3.0 / 5.0, b.value.x, tiny)
+        assertEquals(4.0 / 5.0, b.value.y, tiny)
+    }
     //variables.putProp("angle1", ExpressionProp("value1 degrees", Angle::class, context))
 
 }

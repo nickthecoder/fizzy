@@ -16,7 +16,11 @@ class Vector2PropType : PropType<Vector2>(Vector2::class) {
     }
 
     override fun findMethod(prop: Prop<Vector2>, name: String): PropMethod<Vector2, *>? {
-        return null
+        return when (name) {
+            "length" -> PropMethod0(prop) { prop.value.length() }
+            "normalise" -> PropMethod0(prop) { prop.value.normalise() }
+            else -> null
+        }
     }
 }
 

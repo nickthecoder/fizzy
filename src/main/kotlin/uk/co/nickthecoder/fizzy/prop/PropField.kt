@@ -9,6 +9,10 @@ package uk.co.nickthecoder.fizzy.prop
 class PropField<T : Any, F : Any>(val prop: Prop<T>, val lambda: (Prop<T>) -> F)
     : PropCalculation<F>() {
 
+    init {
+        prop.listeners.add(this)
+    }
+
     override fun eval(): F = lambda(prop)
 
     override fun toString(): String {

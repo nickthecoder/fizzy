@@ -73,6 +73,7 @@ abstract class BinaryPropCalculation<T : Any>(val a: Prop<T>, val b: Prop<T>)
         b.listeners.add(this)
     }
 
+
     override fun dump(): String {
         return "( ${a.dump()} ${this.javaClass.simpleName} ${b.dump()} )"
     }

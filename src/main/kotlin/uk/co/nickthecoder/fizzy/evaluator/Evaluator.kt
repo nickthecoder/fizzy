@@ -161,8 +161,8 @@ class Evaluator(val text: CharSequence, val context: Context = constantsContext)
                         val method = PropType.method(prop, methodName) ?:
                                 throw EvaluationException("Couldn't find method $methodName", token.startIndex)
 
-                        pushOperator(token, Operator.APPLY)
                         pushValue(method)
+                        pushOperator(token, Operator.APPLY)
 
                     } else {
                         val name = peekValue()
@@ -175,7 +175,13 @@ class Evaluator(val text: CharSequence, val context: Context = constantsContext)
                 }
             }
             is CloseBracketOperator -> {
-                log("Close bracket")
+                log("Close bracket. ExpectValue ? ${expectValue}")
+                // If we have : foo(), then no value has been pushed on the stack after the "(", so lets add
+                // an empty argument list.
+                if (expectValue) {
+                    log("Adding empty argument list")
+                    pushValue(ArgList())
+                }
                 while (operators.lastOrNull()?.operator !is OpenBracket) {
                     applyOperator()
                 }
@@ -184,7 +190,7 @@ class Evaluator(val text: CharSequence, val context: Context = constantsContext)
                 when (open) {
                     is OpenBracketOperator -> popOperator()
                     is ApplyOperator -> {
-                        log("Applying function")
+                        log("Applying method/function")
                         applyOperator()
                     }
                     else -> throw EvaluationException("Unmatched ')'", token.startIndex)
