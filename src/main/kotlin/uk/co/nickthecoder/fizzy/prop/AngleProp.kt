@@ -6,13 +6,18 @@ import uk.co.nickthecoder.fizzy.model.Angle
 
 class AnglePropType : PropType<Angle>(Angle::class) {
 
-    override fun findField(prop: Prop<Angle>, name: String): Prop<*>? {
+    override fun findField(prop: Prop<Angle>, name: String): PropField<Angle, *>? {
         return when (name) {
             "degrees" -> PropField<Angle, Double>(prop) { prop.value.degrees }
             "radians" -> PropField<Angle, Double>(prop) { prop.value.radians }
             else -> null
         }
     }
+
+    override fun findMethod(prop: Prop<Angle>, name: String): PropMethod<Angle, *>? {
+        return null
+    }
+
 }
 
 
@@ -42,17 +47,13 @@ class AngleConstant(value: Angle = Angle.ZERO)
 }
 
 class AnglePropLinked(val radians: Prop<Double>)
-    : PropCalculation<Angle>(), PropListener<Double> {
+    : PropCalculation<Angle>() {
 
     init {
         radians.listeners.add(this)
     }
 
     override fun eval() = Angle.radians(radians.value)
-
-    override fun dirty(prop: Prop<Double>) {
-        dirty = true
-    }
 }
 
 class AnglePlus(a: Prop<Angle>, b: Prop<Angle>)

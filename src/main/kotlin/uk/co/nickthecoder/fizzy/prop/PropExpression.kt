@@ -34,7 +34,7 @@ private fun <T : Any> evaluate(expression: String, klass: KClass<T>, context: Co
 
 abstract class PropExpression<T : Any>(expression: String, val klass: KClass<T>, val context: Context = constantsContext)
 
-    : PropCalculation<T>(), PropListener<T> {
+    : PropCalculation<T>() {
 
     var expression: String = expression
         set(v) {
@@ -50,10 +50,6 @@ abstract class PropExpression<T : Any>(expression: String, val klass: KClass<T>,
         calculatedProperty = cp
         cp.listeners.add(this)
         return cp.value
-    }
-
-    override fun dirty(prop: Prop<T>) {
-        dirty = true
     }
 
     override fun dump(): String {

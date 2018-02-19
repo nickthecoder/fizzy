@@ -8,13 +8,17 @@ import uk.co.nickthecoder.fizzy.model.Vector2
 
 class Dimension2PropType : PropType<Dimension2>(Dimension2::class) {
 
-    override fun findField(prop: Prop<Dimension2>, name: String): Prop<*>? {
+    override fun findField(prop: Prop<Dimension2>, name: String): PropField<Dimension2, *>? {
 
         return when (name) {
             "x" -> PropField<Dimension2, Dimension>(prop) { prop.value.x }
             "y" -> PropField<Dimension2, Dimension>(prop) { prop.value.y }
             else -> null
         }
+    }
+
+    override fun findMethod(prop: Prop<Dimension2>, name: String): PropMethod<Dimension2, *>? {
+        return null
     }
 }
 
@@ -36,7 +40,7 @@ class Dimension2Constant(value: Dimension2 = Dimension2.ZERO)
 }
 
 class Dimension2PropLinked(val x: Prop<Dimension>, val y: Prop<Dimension>)
-    : PropCalculation<Dimension2>(), PropListener<Dimension> {
+    : PropCalculation<Dimension2>() {
 
     init {
         x.listeners.add(this)
@@ -44,10 +48,6 @@ class Dimension2PropLinked(val x: Prop<Dimension>, val y: Prop<Dimension>)
     }
 
     override fun eval() = Dimension2(x.value, y.value)
-
-    override fun dirty(prop: Prop<Dimension>) {
-        dirty = true
-    }
 }
 
 class Dimension2Plus(a: Prop<Dimension2>, b: Prop<Dimension2>)

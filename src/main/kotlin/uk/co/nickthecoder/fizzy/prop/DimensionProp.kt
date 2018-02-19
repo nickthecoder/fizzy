@@ -7,7 +7,7 @@ import uk.co.nickthecoder.fizzy.model.Dimension
 
 class DimensionPropType : PropType<Dimension>(Dimension::class) {
 
-    override fun findField(prop: Prop<Dimension>, name: String): Prop<*>? {
+    override fun findField(prop: Prop<Dimension>, name: String): PropField<Dimension, *>? {
         return when (name) {
             "mm" -> PropField<Dimension, Double>(prop) { prop.value.mm }
             "cm" -> PropField<Dimension, Double>(prop) { prop.value.cm }
@@ -15,6 +15,10 @@ class DimensionPropType : PropType<Dimension>(Dimension::class) {
             "km" -> PropField<Dimension, Double>(prop) { prop.value.km }
             else -> null
         }
+    }
+
+    override fun findMethod(prop: Prop<Dimension>, name: String): PropMethod<Dimension, *>? {
+        return null
     }
 }
 
@@ -36,17 +40,13 @@ class DimensionConstant(value: Dimension = Dimension.ZERO_mm)
 }
 
 class DimensionPropLinked(val number: Prop<Double>, val units: Dimension.Units, val power: Double = 1.0)
-    : PropCalculation<Dimension>(), PropListener<Double> {
+    : PropCalculation<Dimension>() {
 
     init {
         number.listeners.add(this)
     }
 
     override fun eval() = Dimension(number.value, units, power)
-
-    override fun dirty(prop: Prop<Double>) {
-        dirty = true
-    }
 }
 
 class DimensionPlus(a: Prop<Dimension>, b: Prop<Dimension>)

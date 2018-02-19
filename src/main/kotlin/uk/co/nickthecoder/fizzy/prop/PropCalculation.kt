@@ -2,7 +2,7 @@ package uk.co.nickthecoder.fizzy.prop
 
 abstract class PropCalculation<T : Any>
 
-    : AbstractProp<T>() {
+    : AbstractProp<T>(), PropListener {
 
     protected var dirty: Boolean = true
         set(v) {
@@ -15,6 +15,10 @@ abstract class PropCalculation<T : Any>
         }
 
     private lateinit var calculatedValue: T
+
+    override fun dirty(prop: Prop<*>) {
+        dirty = true
+    }
 
     override val value: T
         get() : T {
@@ -43,13 +47,13 @@ abstract class PropCalculation<T : Any>
 
 abstract class UnaryPropCalculation<T : Any>(val a: Prop<T>)
 
-    : PropCalculation<T>(), PropListener<T> {
+    : PropCalculation<T>() {
 
     init {
         a.listeners.add(this)
     }
 
-    override fun dirty(prop: Prop<T>) {
+    override fun dirty(prop: Prop<*>) {
         dirty = true
         listeners.forEach { it.dirty(this) }
     }
@@ -62,15 +66,11 @@ abstract class UnaryPropCalculation<T : Any>(val a: Prop<T>)
 
 abstract class BinaryPropCalculation<T : Any>(val a: Prop<T>, val b: Prop<T>)
 
-    : PropCalculation<T>(), PropListener<T> {
+    : PropCalculation<T>() {
 
     init {
         a.listeners.add(this)
         b.listeners.add(this)
-    }
-
-    override fun dirty(prop: Prop<T>) {
-        dirty = true
     }
 
     override fun dump(): String {
@@ -83,21 +83,7 @@ abstract class GenericBinaryPropCalculation<T : Any, A, B>(val a: Prop<A>, val b
     : PropCalculation<T>() {
 
     init {
-        a.listeners.add(object : PropListener<A> {
-            override fun dirty(prop: Prop<A>) {
-                changed()
-            }
-        })
-        b.listeners.add(object : PropListener<B> {
-            override fun dirty(prop: Prop<B>) {
-                changed()
-            }
-        })
+        a.listeners.add(this)
+        b.listeners.add(this)
     }
-
-    fun changed() {
-        dirty = true
-        listeners.forEach { it.dirty(this) }
-    }
-
 }

@@ -1,9 +1,30 @@
 To Do
 =====
 
-Remove XXXProp, because they don't do anything!
-
 Add methods
+
+4 .abs()
+
+push 4
+put DotOperator
+push FieldOrMethodName "abs"
+found ApplyOperator. As the top operator is a DotOperator and the top value is a FieldOrMethod name
+    pop 4
+    pop FieldOrMethodName
+    pop DotOperator
+    Find the method based on Double (from 4's class) and the field or method name.
+    push the Method (which includes the 4)
+found ")", but valueExpected and top operator is a Method, therefore must be an empty argument list
+    pop the Method
+    call it using a new ArgList size zero.
+    push the result.
+
+
+"Hello".get(1)
+
+See PropMethod todo comment.
+    Remove the T from PropListener?
+    Maybe even remove the prop, as I never use it!!!
 
 NOTE. Function cannot currently handle zero arguments.
 

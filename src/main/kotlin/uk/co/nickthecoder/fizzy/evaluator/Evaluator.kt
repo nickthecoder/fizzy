@@ -1,9 +1,6 @@
 package uk.co.nickthecoder.fizzy.evaluator
 
-import uk.co.nickthecoder.fizzy.prop.DoubleConstant
-import uk.co.nickthecoder.fizzy.prop.DoublePlus
-import uk.co.nickthecoder.fizzy.prop.Prop
-import uk.co.nickthecoder.fizzy.prop.StringConstant
+import uk.co.nickthecoder.fizzy.prop.*
 
 /**
  * Parses a expression (a [CharSequence]), converting it into a single [Prop].
@@ -152,11 +149,28 @@ class Evaluator(val text: CharSequence, val context: Context = constantsContext)
                 if (expectValue) {
                     pushOperator(token, op)
                 } else {
-                    val name = peekValue()
-                    if (name is Function) {
+                    if (peekOperator()?.operator is DotOperator && peekValue() is FieldOrMethodName) {
+                        popOperator()
+                        val methodName = (popValue() as FieldOrMethodName).value
+                        if (values.size == 0) {
+                            // I don't think this can ever happen.
+                            throw EvaluationException("No value to apply method $methodName", token.startIndex)
+                        }
+                        val prop = popValue()
+                        log("Looking for method $methodName for $prop")
+                        val method = PropType.method(prop, methodName) ?:
+                                throw EvaluationException("Couldn't find method $methodName", token.startIndex)
+
                         pushOperator(token, Operator.APPLY)
+                        pushValue(method)
+
                     } else {
-                        throw EvaluationException("Expected function name before '('", token.startIndex)
+                        val name = peekValue()
+                        if (name is Function) {
+                            pushOperator(token, Operator.APPLY)
+                        } else {
+                            throw EvaluationException("Expected function name before '('", token.startIndex)
+                        }
                     }
                 }
             }

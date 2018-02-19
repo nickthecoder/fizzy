@@ -5,7 +5,11 @@ import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 
 class DoublePropType : PropType<Double>(Double::class) {
 
-    override fun findField(prop: Prop<Double>, name: String): Prop<*>? {
+    override fun findField(prop: Prop<Double>, name: String): PropField<Double, *>? {
+        return null
+    }
+
+    override fun findMethod(prop: Prop<Double>, name: String): PropMethod<Double, *>? {
         return null
     }
 }
