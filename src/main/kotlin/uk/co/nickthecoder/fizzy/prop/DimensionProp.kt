@@ -1,7 +1,6 @@
 package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.evaluator.Context
-import uk.co.nickthecoder.fizzy.evaluator.Field
 import uk.co.nickthecoder.fizzy.evaluator.Function2
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Dimension
@@ -10,10 +9,10 @@ class DimensionPropType : PropType<Dimension>(Dimension::class) {
 
     override fun findField(prop: Prop<Dimension>, name: String): Prop<*>? {
         return when (name) {
-            "mm" -> Field<Dimension, Double>(prop) { prop.value.mm }
-            "cm" -> Field<Dimension, Double>(prop) { prop.value.cm }
-            "m" -> Field<Dimension, Double>(prop) { prop.value.m }
-            "km" -> Field<Dimension, Double>(prop) { prop.value.km }
+            "mm" -> PropField<Dimension, Double>(prop) { prop.value.mm }
+            "cm" -> PropField<Dimension, Double>(prop) { prop.value.cm }
+            "m" -> PropField<Dimension, Double>(prop) { prop.value.m }
+            "km" -> PropField<Dimension, Double>(prop) { prop.value.km }
             else -> null
         }
     }

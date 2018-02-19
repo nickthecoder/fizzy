@@ -7,6 +7,7 @@ import uk.co.nickthecoder.fizzy.model.Vector2
 import uk.co.nickthecoder.fizzy.prop.*
 
 abstract class Operator(val str: String, val precedence: Int) {
+
     abstract fun apply(values: MutableList<Prop<*>>): Prop<*>
 
     /**

@@ -1,7 +1,6 @@
 package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.evaluator.Context
-import uk.co.nickthecoder.fizzy.evaluator.Field
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Angle
 
@@ -9,8 +8,8 @@ class AnglePropType : PropType<Angle>(Angle::class) {
 
     override fun findField(prop: Prop<Angle>, name: String): Prop<*>? {
         return when (name) {
-            "degrees" -> Field<Angle, Double>(prop) { prop.value.degrees }
-            "radians" -> Field<Angle, Double>(prop) { prop.value.radians }
+            "degrees" -> PropField<Angle, Double>(prop) { prop.value.degrees }
+            "radians" -> PropField<Angle, Double>(prop) { prop.value.radians }
             else -> null
         }
     }

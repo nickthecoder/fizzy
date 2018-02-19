@@ -1,9 +1,25 @@
 package uk.co.nickthecoder.fizzy.evaluator
 
 import uk.co.nickthecoder.fizzy.prop.DoubleConstant
+import uk.co.nickthecoder.fizzy.prop.DoublePlus
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.StringConstant
 
+/**
+ * Parses a expression (a [CharSequence]), converting it into a single [Prop].
+ *
+ * Note that parsing is NOT the same as evaluating, and therefore parsing "2+2" does NOT return 4.
+ * Instead, it will return a [DoublePlus] object. It will only be evaluated when [Prop.value] is first referenced.
+ * The value 4 will then be cached by the [DoublePlus] object so that subsequent references to [Prop.value] will
+ * NOT re-evaluated. If either of [DoublePlus]'s arguments are changed (or made 'dirty'), then referencing
+ * [Prop.value] will cause a re-evaluation. In this simple example of "2+2", this won't happen because "2" is a constant,
+ * and therefore the [DoublePlus] will never need re-evaluating.
+ *
+ * During parsing, there are two stacks, the [values] stack and the [operators] stack. As parsing progresses
+ * an operator and its corresponding values are popped off the stacks, and the result of the operation is pushed onto
+ * the [values] stack. At the end of the parsing, the [operators] stacks should both be empty, and the [values] stack
+ * should contain a single value, which is returned from [parse].
+ */
 class Evaluator(val text: CharSequence, val context: Context = constantsContext) {
 
     private var index = 0
@@ -197,7 +213,7 @@ class Evaluator(val text: CharSequence, val context: Context = constantsContext)
         if (expectValue) {
 
             if (peekOperator()?.operator is DotOperator) {
-                log("Looking for field ${token.text}")
+                log("Field of method name : ${token.text}")
                 pushValue(FieldOrMethodName(token.text))
 
             } else {

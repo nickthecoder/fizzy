@@ -1,6 +1,16 @@
 package uk.co.nickthecoder.fizzy.evaluator
 
-
+/**
+ * A [Token] is a consecutive sequence of characters from the string being parsed by the [Evaluator].
+ * There are different types of Token (see [TokenType]).
+ *
+ * Identifiers start with a letter of an underscore, and can contain letters, underscores and digits.
+ *
+ * Operators contain symbols only, such as .()+-*
+ *
+ * Strings are and characters within double quotes. Strings can also contain escaped characters using the
+ * backslash. e.g. \n is newline \" is a literal double quote, \t is a tab character.
+ */
 class Token(val startIndex: Int) {
 
     private val buffer = StringBuffer()

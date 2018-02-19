@@ -5,6 +5,8 @@ Remove XXXProp, because they don't do anything!
 
 Add methods
 
+NOTE. Function cannot currently handle zero arguments.
+
 Soon
 ----
 

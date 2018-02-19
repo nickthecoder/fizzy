@@ -5,9 +5,27 @@ import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.prop.*
 
+/**
+ * Top-level functions, such as "sqrt", "ratio" etc.
+ * The Functions are intermediate objects, and do NOT form part of the final evaluation; they are only
+ * used while an expression is being parsed.
+ *
+ * A function always works on single [Prop] as its argument. A function which takes more than one argument uses
+ * a [ArgList] to hold all of the arguments.
+ * Currently, a function with NO arguments isn't supported.
+ *
+ * Parsing "sqrt( 4 )" first pushes the [Sqrt] Function onto the values stack.
+ * Then [ApplyOperator] "(" is pushed onto the operators stack, then "4" onto the values stack, and finally
+ * the [CloseBracketOperator] ")" will cause the [ApplyOperator] tobe applied.
+ * Finally the [ApplyOperator] and the 4 are popped off the stacks and the [ApplyOperator] invokes the
+ * [Function.call] method. The result is pushed onto the values stack.
+ */
+abstract class Function : AbstractProp<String>() {
 
-abstract class Function() : AbstractProp<String>() {
-
+    /**
+     * As all items placed onto the values stack must be of type [Prop], so we need a value.
+     * The name of the class is a suitable value, but isn't actually used by anything.
+     */
     override val value: String
         get() = javaClass.simpleName
 
