@@ -50,7 +50,7 @@ class PropMethod0<T : Any, R : Any>(prop: Prop<T>, val lambda: () -> R)
     }
 }
 
-abstract class PropMethod1<T : Any, A : Any, R : Any>(prop: Prop<T>, val klassA: KClass<A>, val lambda: (A) -> R)
+class PropMethod1<T : Any, A : Any, R : Any>(prop: Prop<T>, val klassA: KClass<A>, val lambda: (A) -> R)
     : PropMethod<T, R>(prop) {
 
     override fun eval(arg: Prop<*>): R {
@@ -62,7 +62,7 @@ abstract class PropMethod1<T : Any, A : Any, R : Any>(prop: Prop<T>, val klassA:
     }
 }
 
-abstract class PropMethod2<T : Any, A : Any, B : Any, R : Any>(prop: Prop<T>, val klassA: KClass<A>, val klassB: KClass<A>, val lambda: (A, B) -> R)
+class PropMethod2<T : Any, A : Any, B : Any, R : Any>(prop: Prop<T>, val klassA: KClass<A>, val klassB: KClass<B>, val lambda: (A, B) -> R)
     : PropMethod<T, R>(prop) {
 
     override fun eval(arg: Prop<*>): R {
@@ -79,10 +79,3 @@ abstract class PropMethod2<T : Any, A : Any, B : Any, R : Any>(prop: Prop<T>, va
         throw RuntimeException("Expected an arguments (${klassA.simpleName}, ${klassB.simpleName}), but found $arg")
     }
 }
-
-
-class PropMethodDouble<T : Any, R : Any>(prop: Prop<T>, lambda: (Double) -> R)
-    : PropMethod1<T, Double, R>(prop, Double::class, lambda)
-
-class PropMethodDoubleDouble<T : Any, R : Any>(prop: Prop<T>, lambda: (Double, Double) -> R)
-    : PropMethod2<T, Double, Double, R>(prop, Double::class, Double::class, lambda)
