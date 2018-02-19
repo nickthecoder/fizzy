@@ -1,7 +1,7 @@
 To Do
 =====
 
-Fields do not implement DoubleProp, AngleProp etc. and therefore Dimension2(2mm,2mm).x.cm will not work.
+Remove XXXProp, because they don't do anything!
 
 Add methods
 

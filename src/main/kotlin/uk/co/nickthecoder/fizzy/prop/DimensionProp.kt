@@ -6,8 +6,6 @@ import uk.co.nickthecoder.fizzy.evaluator.Function2
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Dimension
 
-interface DimensionProp : Prop<Dimension>
-
 class DimensionPropType : PropType<Dimension>(Dimension::class) {
 
     override fun findField(prop: Prop<Dimension>, name: String): Prop<*>? {
@@ -22,13 +20,13 @@ class DimensionPropType : PropType<Dimension>(Dimension::class) {
 }
 
 class DimensionExpression(expression: String, context: Context = constantsContext)
-    : ExpressionProp<Dimension>(expression, Dimension::class, context), DimensionProp
+    : ExpressionProp<Dimension>(expression, Dimension::class, context)
 
 class DimensionConstant(value: Dimension = Dimension.ZERO_mm)
-    : DimensionProp, PropConstant<Dimension>(value) {
+    : PropConstant<Dimension>(value) {
 
     companion object {
-        fun create(a: Prop<Double>, units: Dimension.Units, power: Double = 1.0): DimensionProp {
+        fun create(a: Prop<Double>, units: Dimension.Units, power: Double = 1.0): Prop<Dimension> {
             if (a is DoubleConstant) {
                 return DimensionConstant(Dimension(a.value, units, power))
             } else {
@@ -39,7 +37,7 @@ class DimensionConstant(value: Dimension = Dimension.ZERO_mm)
 }
 
 class DimensionPropLinked(val number: Prop<Double>, val units: Dimension.Units, val power: Double = 1.0)
-    : DimensionProp, PropCalculation<Dimension>(), PropListener<Double> {
+    : PropCalculation<Dimension>(), PropListener<Double> {
 
     init {
         number.listeners.add(this)
@@ -53,50 +51,49 @@ class DimensionPropLinked(val number: Prop<Double>, val units: Dimension.Units, 
 }
 
 class DimensionPlus(a: Prop<Dimension>, b: Prop<Dimension>)
-    : DimensionProp, BinaryPropCalculation<Dimension>(a, b) {
+    : BinaryPropCalculation<Dimension>(a, b) {
 
     override fun eval() = a.value + b.value
 }
 
 class DimensionMinus(a: Prop<Dimension>, b: Prop<Dimension>)
-    : DimensionProp, BinaryPropCalculation<Dimension>(a, b) {
+    : BinaryPropCalculation<Dimension>(a, b) {
 
     override fun eval() = a.value - b.value
 }
 
 class DimensionUnaryMinus(a: Prop<Dimension>)
-    : DimensionProp, UnaryPropCalculation<Dimension>(a) {
+    : UnaryPropCalculation<Dimension>(a) {
 
     override fun eval() = -a.value
 }
 
 class DimensionTimes(a: Prop<Dimension>, b: Prop<Dimension>)
-    : DimensionProp, BinaryPropCalculation<Dimension>(a, b) {
+    : BinaryPropCalculation<Dimension>(a, b) {
 
     override fun eval() = a.value * b.value
 }
 
 class DimensionTimesDouble(a: Prop<Dimension>, b: Prop<Double>)
-    : DimensionProp, GenericBinaryPropCalculation<Dimension, Dimension, Double>(a, b) {
+    : GenericBinaryPropCalculation<Dimension, Dimension, Double>(a, b) {
 
     override fun eval() = a.value * b.value
 }
 
-
 class DimensionDiv(a: Prop<Dimension>, b: Prop<Dimension>)
-    : DimensionProp, BinaryPropCalculation<Dimension>(a, b) {
+    : BinaryPropCalculation<Dimension>(a, b) {
 
     override fun eval() = a.value / b.value
 }
 
 class DimensionDivDouble(a: Prop<Dimension>, b: Prop<Double>)
-    : DimensionProp, GenericBinaryPropCalculation<Dimension, Dimension, Double>(a, b) {
+    : GenericBinaryPropCalculation<Dimension, Dimension, Double>(a, b) {
 
     override fun eval() = a.value / b.value
 }
 
 class DimensionSqrt(a: Prop<Dimension>)
-    : DimensionProp, UnaryPropCalculation<Dimension>(a) {
+    : UnaryPropCalculation<Dimension>(a) {
 
     override fun eval() = Dimension(Math.sqrt(a.value.inUnits(a.value.units)), a.value.units, a.value.power / 2)
 }
@@ -117,7 +114,7 @@ abstract class FunctionDimensionDimension()
 }
 
 class DimensionRatio(a: Prop<Dimension>, b: Prop<Dimension>)
-    : DoubleProp, GenericBinaryPropCalculation<Double, Dimension, Dimension>(a, b) {
+    : GenericBinaryPropCalculation<Double, Dimension, Dimension>(a, b) {
 
     override fun eval(): Double {
         assert(a.value.power == b.value.power)
