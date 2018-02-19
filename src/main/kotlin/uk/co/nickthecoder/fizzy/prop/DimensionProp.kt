@@ -20,7 +20,7 @@ class DimensionPropType : PropType<Dimension>(Dimension::class) {
 }
 
 class DimensionExpression(expression: String, context: Context = constantsContext)
-    : ExpressionProp<Dimension>(expression, Dimension::class, context)
+    : PropExpression<Dimension>(expression, Dimension::class, context)
 
 class DimensionConstant(value: Dimension = Dimension.ZERO_mm)
     : PropConstant<Dimension>(value) {

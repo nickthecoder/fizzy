@@ -20,7 +20,7 @@ class Dimension2PropType : PropType<Dimension2>(Dimension2::class) {
 }
 
 class Dimension2Expression(expression: String, context: Context = constantsContext)
-    : ExpressionProp<Dimension2>(expression, Dimension2::class, context)
+    : PropExpression<Dimension2>(expression, Dimension2::class, context)
 
 class Dimension2Constant(value: Dimension2 = Dimension2.ZERO)
     : PropConstant<Dimension2>(value) {

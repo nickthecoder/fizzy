@@ -18,7 +18,7 @@ class Vector2PropType : PropType<Vector2>(Vector2::class) {
 }
 
 class Vector2Expression(expression: String, context: Context = constantsContext)
-    : ExpressionProp<Vector2>(expression, Vector2::class, context)
+    : PropExpression<Vector2>(expression, Vector2::class, context)
 
 class Vector2Constant(value: Vector2 = Vector2.ZERO)
     : PropConstant<Vector2>(value) {

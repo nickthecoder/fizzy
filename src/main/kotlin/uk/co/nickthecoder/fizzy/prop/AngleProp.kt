@@ -18,7 +18,7 @@ class AnglePropType : PropType<Angle>(Angle::class) {
 
 
 class AngleExpression(expression: String, context: Context = constantsContext)
-    : ExpressionProp<Angle>(expression, Angle::class, context)
+    : PropExpression<Angle>(expression, Angle::class, context)
 
 class AngleConstant(value: Angle = Angle.ZERO)
     : PropConstant<Angle>(value) {

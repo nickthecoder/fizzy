@@ -475,7 +475,7 @@ class TestEvaluator : TestCase() {
         variables.putProp("height", DimensionExpression("y cm", context))
 
         val a = Evaluator("width + height", context).parse() as Prop<Dimension>
-        val x = variables.findProp("x") as ExpressionProp<Double>
+        val x = variables.findProp("x") as PropExpression<Double>
 
         assertEquals(43.0, a.value.mm, tiny)
         x.expression = "5"
@@ -496,7 +496,7 @@ class TestEvaluator : TestCase() {
         assertEquals(Angle.degrees(80.0), variables.findProp("angle1")?.value)
 
         val a = Evaluator("angle2 - angle1", context).parse() as Prop<Angle>
-        val value1 = variables.findProp("value1") as ExpressionProp<Double>
+        val value1 = variables.findProp("value1") as PropExpression<Double>
 
         assertEquals(100.0, a.value.degrees, tiny)
         value1.expression = "100"
