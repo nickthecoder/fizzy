@@ -37,7 +37,7 @@ class AngleConstant(value: Angle = Angle.ZERO)
                 }
             } else {
                 if (degrees) {
-                    return AnglePropLinked(DoubleTimes(a, DoubleConstant(Math.PI / 180.0)))
+                    return AnglePropLinked(PropCalculation2<Double, Double, Double>(a, DoubleConstant(Math.PI / 180.0)) { av, bv -> av * bv })
                 } else {
                     return AnglePropLinked(a)
                 }
@@ -54,42 +54,6 @@ class AnglePropLinked(val radians: Prop<Double>)
     }
 
     override fun eval() = Angle.radians(radians.value)
-}
-
-class AnglePlus(a: Prop<Angle>, b: Prop<Angle>)
-    : BinaryPropCalculation<Angle>(a, b) {
-
-    override fun eval() = Angle.radians(a.value.radians + b.value.radians)
-}
-
-class AngleMinus(a: Prop<Angle>, b: Prop<Angle>)
-    : BinaryPropCalculation<Angle>(a, b) {
-
-    override fun eval() = Angle.radians(a.value.radians - b.value.radians)
-}
-
-class AngleUnaryMinus(a: Prop<Angle>)
-    : UnaryPropCalculation<Angle>(a) {
-
-    override fun eval() = Angle.radians(-a.value.radians)
-}
-
-class AngleTimesDouble(a: Prop<Angle>, b: Prop<Double>)
-    : GenericBinaryPropCalculation<Angle, Angle, Double>(a, b) {
-
-    override fun eval() = Angle.radians(a.value.radians * b.value)
-}
-
-class AngleDiv(a: Prop<Angle>, b: Prop<Angle>)
-    : GenericBinaryPropCalculation<Double, Angle, Angle>(a, b) {
-
-    override fun eval() = a.value.radians / b.value.radians
-}
-
-
-class AngleDivDouble(a: Prop<Angle>, b: Prop<Double>)
-    : GenericBinaryPropCalculation<Angle, Angle, Double>(a, b) {
-    override fun eval() = Angle.radians(a.value.radians / b.value)
 }
 
 fun degConversion(a: Prop<*>): Prop<*> {

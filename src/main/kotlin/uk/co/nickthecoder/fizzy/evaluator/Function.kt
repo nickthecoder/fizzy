@@ -3,7 +3,11 @@ package uk.co.nickthecoder.fizzy.evaluator
 import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
-import uk.co.nickthecoder.fizzy.prop.*
+import uk.co.nickthecoder.fizzy.model.Vector2
+import uk.co.nickthecoder.fizzy.prop.AbstractProp
+import uk.co.nickthecoder.fizzy.prop.Prop
+import uk.co.nickthecoder.fizzy.prop.PropCalculation1
+import uk.co.nickthecoder.fizzy.prop.PropCalculation2
 
 /**
  * Top-level functions, such as "sqrt", "ratio" etc.
@@ -35,12 +39,12 @@ class Sqrt : Function() {
     override fun call(args: Prop<*>): Prop<*> {
         if (args.value is Double) {
             @Suppress("UNCHECKED_CAST")
-            return DoubleSqrt(args as Prop<Double>)
+            return PropCalculation1<Double, Double>(args as Prop<Double>) { Math.sqrt(it) }
         } else if (args.value is Dimension) {
             @Suppress("UNCHECKED_CAST")
-            return DimensionSqrt(args as Prop<Dimension>)
+            return PropCalculation1<Dimension, Dimension>(args as Prop<Dimension>) { it.sqrt() }
         } else {
-            throw RuntimeException("Expected Double, Angle or Dimension but found ${args.value?.javaClass}")
+            throw RuntimeException("Expected Double or Dimension but found ${args.value?.javaClass}")
         }
     }
 }
@@ -54,11 +58,11 @@ class Ratio : Function() {
 
             if (a.value is Dimension && b.value is Dimension) {
                 @Suppress("UNCHECKED_CAST")
-                return DimensionRatio(a as Prop<Dimension>, b as Prop<Dimension>)
+                return PropCalculation2<Double, Dimension, Dimension>(a as Prop<Dimension>, b as Prop<Dimension>) { av, bv -> av.ratio(bv) }
 
             } else if (a.value is Dimension2 && b.value is Dimension2) {
                 @Suppress("UNCHECKED_CAST")
-                return Dimension2Ratio(a as Prop<Dimension2>, b as Prop<Dimension2>)
+                return PropCalculation2<Vector2, Dimension2, Dimension2>(a as Prop<Dimension2>, b as Prop<Dimension2>) { av, bv -> av.ratio(bv) }
             }
         }
         throw RuntimeException("Expected (Dimension, Dimension) or (Dimension2, Dimension2)")

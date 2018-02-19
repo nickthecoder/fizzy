@@ -6,6 +6,8 @@ class Dimension2(val x: Dimension, val y: Dimension) {
 
     operator fun minus(other: Dimension2) = Dimension2(x - other.x, y - other.y)
 
+    operator fun unaryMinus() = Dimension2(-x, -y)
+
     operator fun times(scale: Double) = Dimension2(x * scale, y * scale)
 
     operator fun times(other: Dimension2) = Dimension2(x * other.x, y * other.y)
@@ -17,6 +19,16 @@ class Dimension2(val x: Dimension, val y: Dimension) {
     operator fun div(other: Dimension2) = Dimension2(x / other.x, y / other.y)
 
     operator fun div(other: Vector2) = Dimension2(x / other.x, y / other.y)
+
+    fun ratio(other: Dimension2): Vector2 {
+        assert(x.power == other.x.power)
+        assert(y.power == other.y.power)
+
+        return Vector2(
+                x.inDefaultUnits / other.x.inDefaultUnits,
+                y.inDefaultUnits / other.y.inDefaultUnits
+        )
+    }
 
     /**
      * Finds the length of the 2D Dimension. It is assumed that x and y are both power 1, otherwise the result will make no sense.

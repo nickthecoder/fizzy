@@ -147,22 +147,22 @@ class PlusOperator(precedence: Int) : BinaryOperator("+", precedence) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
 
         if (a.value is Double && b.value is Double) {
-            return DoublePlus(a as Prop<Double>, b as Prop<Double>)
+            return PropCalculation2(a as Prop<Double>, b as Prop<Double>) { av, bv -> av + bv }
 
         } else if (a.value is Angle && b.value is Angle) {
-            return AnglePlus(a as Prop<Angle>, b as Prop<Angle>)
+            return PropCalculation2(a as Prop<Angle>, b as Prop<Angle>) { av, bv -> av + bv }
 
         } else if (a.value is Dimension && b.value is Dimension) {
-            return DimensionPlus(a as Prop<Dimension>, b as Prop<Dimension>)
+            return PropCalculation2(a as Prop<Dimension>, b as Prop<Dimension>) { av, bv -> av + bv }
 
         } else if (a.value is Dimension2 && b.value is Dimension2) {
-            return Dimension2Plus(a as Prop<Dimension2>, b as Prop<Dimension2>)
+            return PropCalculation2(a as Prop<Dimension2>, b as Prop<Dimension2>) { av, bv -> av + bv }
 
         } else if (a.value is Vector2 && b.value is Vector2) {
-            return Vector2Plus(a as Prop<Vector2>, b as Prop<Vector2>)
+            return PropCalculation2(a as Prop<Vector2>, b as Prop<Vector2>) { av, bv -> av + bv }
 
         } else if (a.value is String && b.value is String) {
-            return StringPlus(a as Prop<String>, b as Prop<String>)
+            return PropCalculation2(a as Prop<String>, b as Prop<String>) { av, bv -> av + bv }
 
         }
 
@@ -175,19 +175,19 @@ class UnaryMinusOperator(precedence: Int) : UnaryOperator("-", precedence) {
     override fun apply(a: Prop<*>): Prop<*> {
 
         if (a.value is Double) {
-            return DoubleMinus(DoubleConstant(0.0), a as Prop<Double>)
+            return PropCalculation1<Double, Double>(a as Prop<Double>) { -it }
 
         } else if (a.value is Angle) {
-            return AngleUnaryMinus(a as Prop<Angle>)
+            return PropCalculation1(a as Prop<Angle>) { -it }
 
         } else if (a.value is Dimension) {
-            return DimensionUnaryMinus(a as Prop<Dimension>)
+            return PropCalculation1(a as Prop<Dimension>) { -it }
 
         } else if (a.value is Dimension2) {
-            return Dimension2UnaryMinus(a as Prop<Dimension2>)
+            return PropCalculation1(a as Prop<Dimension2>) { -it }
 
         } else if (a.value is Vector2) {
-            return Vector2Minus(Vector2Constant(), a as Prop<Vector2>)
+            return PropCalculation1(a as Prop<Vector2>) { -it }
 
         }
 
@@ -201,19 +201,19 @@ class MinusOperator(precedence: Int) : BinaryOperator("-", precedence) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
 
         if (a.value is Double && b.value is Double) {
-            return DoubleMinus(a as Prop<Double>, b as Prop<Double>)
+            return PropCalculation2(a as Prop<Double>, b as Prop<Double>) { av, bv -> av - bv }
 
         } else if (a.value is Angle && b.value is Angle) {
-            return AngleMinus(a as Prop<Angle>, b as Prop<Angle>)
+            return PropCalculation2(a as Prop<Angle>, b as Prop<Angle>) { av, bv -> av - bv }
 
         } else if (a.value is Dimension && b.value is Dimension) {
-            return DimensionMinus(a as Prop<Dimension>, b as Prop<Dimension>)
+            return PropCalculation2(a as Prop<Dimension>, b as Prop<Dimension>) { av, bv -> av - bv }
 
         } else if (a.value is Dimension2 && b.value is Dimension2) {
-            return Dimension2Minus(a as Prop<Dimension2>, b as Prop<Dimension2>)
+            return PropCalculation2(a as Prop<Dimension2>, b as Prop<Dimension2>) { av, bv -> av - bv }
 
         } else if (a.value is Vector2 && b.value is Vector2) {
-            return Vector2Minus(a as Prop<Vector2>, b as Prop<Vector2>)
+            return PropCalculation2(a as Prop<Vector2>, b as Prop<Vector2>) { av, bv -> av - bv }
 
         }
         return cannotApply(a, b)
@@ -228,52 +228,52 @@ class TimesOperator(precedence: Int) : BinaryOperator("*", precedence) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (a.value is Double) {
             if (b.value is Double) {
-                return DoubleTimes(a as Prop<Double>, b as Prop<Double>)
+                return PropCalculation2(a as Prop<Double>, b as Prop<Double>) { av, bv -> av * bv }
 
             } else if (b.value is Vector2) {
-                return Vector2TimesDouble(b as Prop<Vector2>, a as Prop<Double>)
+                return PropCalculation2(b as Prop<Vector2>, a as Prop<Double>) { av, bv -> av * bv }
 
             } else if (b.value is Angle) {
-                return AngleTimesDouble(b as Prop<Angle>, a as Prop<Double>)
+                return PropCalculation2(b as Prop<Angle>, a as Prop<Double>) { av, bv -> av * bv }
 
             } else if (b.value is Dimension) {
-                return DimensionTimesDouble(b as Prop<Dimension>, a as Prop<Double>)
+                return PropCalculation2(b as Prop<Dimension>, a as Prop<Double>) { av, bv -> av * bv }
 
             } else if (b.value is Dimension2) {
-                return Dimension2TimesDouble(b as Prop<Dimension2>, a as Prop<Double>)
+                return PropCalculation2(b as Prop<Dimension2>, a as Prop<Double>) { av, bv -> av * bv }
             }
 
         } else if (a.value is Angle && b.value is Double) {
-            return AngleTimesDouble(a as Prop<Angle>, b as Prop<Double>)
+            return PropCalculation2(a as Prop<Angle>, b as Prop<Double>) { av, bv -> av * bv }
 
         } else if (a.value is Dimension) {
             if (b.value is Dimension) {
-                return DimensionTimes(a as Prop<Dimension>, b as Prop<Dimension>)
+                return PropCalculation2(a as Prop<Dimension>, b as Prop<Dimension>) { av, bv -> av * bv }
 
             } else if (b.value is Double) {
-                return DimensionTimesDouble(a as Prop<Dimension>, b as Prop<Double>)
+                return PropCalculation2(a as Prop<Dimension>, b as Prop<Double>) { av, bv -> av * bv }
             }
 
         } else if (a.value is Dimension2) {
             if (b.value is Dimension2) {
-                return Dimension2Times(a as Prop<Dimension2>, b as Prop<Dimension2>)
+                return PropCalculation2(a as Prop<Dimension2>, b as Prop<Dimension2>) { av, bv -> av * bv }
 
             } else if (b.value is Double) {
-                return Dimension2TimesDouble(a as Prop<Dimension2>, b as Prop<Double>)
+                return PropCalculation2(a as Prop<Dimension2>, b as Prop<Double>) { av, bv -> av * bv }
 
             } else if (b.value is Vector2) {
-                return Dimension2TimesVector2(a as Prop<Dimension2>, b as Prop<Vector2>)
+                return PropCalculation2(a as Prop<Dimension2>, b as Prop<Vector2>) { av, bv -> av * bv }
             }
 
         } else if (a.value is Vector2) {
             if (b.value is Vector2) {
-                return Vector2Times(a as Prop<Vector2>, b as Prop<Vector2>)
+                return PropCalculation2(a as Prop<Vector2>, b as Prop<Vector2>) { av, bv -> av * bv }
 
             } else if (b.value is Double) {
-                return Vector2TimesDouble(a as Prop<Vector2>, b as Prop<Double>)
+                return PropCalculation2(a as Prop<Vector2>, b as Prop<Double>) { av, bv -> av * bv }
 
             } else if (b.value is Dimension2) {
-                return Dimension2TimesVector2(b as Prop<Dimension2>, a as Prop<Vector2>)
+                return PropCalculation2(b as Prop<Dimension2>, a as Prop<Vector2>) { av, bv -> av * bv }
             }
 
         }
@@ -286,41 +286,41 @@ class TimesOperator(precedence: Int) : BinaryOperator("*", precedence) {
 class DivOperator(precedence: Int) : BinaryOperator("/", precedence) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (a.value is Double && b.value is Double) {
-            return DoubleDiv(a as Prop<Double>, b as Prop<Double>)
+            return PropCalculation2(a as Prop<Double>, b as Prop<Double>) { av, bv -> av / bv }
 
         } else if (a.value is Angle) {
             if (b.value is Double) {
-                return AngleDivDouble(a as Prop<Angle>, b as Prop<Double>)
+                return PropCalculation2(a as Prop<Angle>, b as Prop<Double>) { av, bv -> av / bv }
 
             } else if (b.value is Angle) {
-                return AngleDiv(a as Prop<Angle>, b as Prop<Angle>)
+                return PropCalculation2(a as Prop<Angle>, b as Prop<Angle>) { av, bv -> av / bv }
             }
 
         } else if (a.value is Dimension) {
             if (b.value is Dimension) {
-                return DimensionDiv(a as Prop<Dimension>, b as Prop<Dimension>)
+                return PropCalculation2(a as Prop<Dimension>, b as Prop<Dimension>) { av, bv -> av / bv }
 
             } else if (b.value is Double) {
-                return DimensionDivDouble(a as Prop<Dimension>, b as Prop<Double>)
+                return PropCalculation2(a as Prop<Dimension>, b as Prop<Double>) { av, bv -> av / bv }
             }
 
         } else if (a.value is Dimension2) {
             if (b.value is Dimension2) {
-                return Dimension2Div(a as Prop<Dimension2>, b as Prop<Dimension2>)
+                return PropCalculation2(a as Prop<Dimension2>, b as Prop<Dimension2>) { av, bv -> av / bv }
 
             } else if (b.value is Double) {
-                return Dimension2DivDouble(a as Prop<Dimension2>, b as Prop<Double>)
+                return PropCalculation2(a as Prop<Dimension2>, b as Prop<Double>) { av, bv -> av / bv }
 
             } else if (b.value is Vector2) {
-                return Dimension2DivVector2(a as Prop<Dimension2>, b as Prop<Vector2>)
+                return PropCalculation2(a as Prop<Dimension2>, b as Prop<Vector2>) { av, bv -> av / bv }
             }
 
         } else if (a.value is Vector2) {
             if (b.value is Vector2) {
-                return Vector2Div(a as Prop<Vector2>, b as Prop<Vector2>)
+                return PropCalculation2(a as Prop<Vector2>, b as Prop<Vector2>) { av, bv -> av / bv }
 
             } else if (b.value is Double) {
-                return Vector2DivDouble(a as Prop<Vector2>, b as Prop<Double>)
+                return PropCalculation2(a as Prop<Vector2>, b as Prop<Double>) { av, bv -> av / bv }
             }
 
         }

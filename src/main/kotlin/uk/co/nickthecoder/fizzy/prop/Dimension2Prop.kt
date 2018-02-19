@@ -4,7 +4,6 @@ import uk.co.nickthecoder.fizzy.evaluator.Context
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
-import uk.co.nickthecoder.fizzy.model.Vector2
 
 class Dimension2PropType : PropType<Dimension2>(Dimension2::class) {
 
@@ -52,72 +51,6 @@ class Dimension2PropLinked(val x: Prop<Dimension>, val y: Prop<Dimension>)
     }
 
     override fun eval() = Dimension2(x.value, y.value)
-}
-
-class Dimension2Plus(a: Prop<Dimension2>, b: Prop<Dimension2>)
-    : BinaryPropCalculation<Dimension2>(a, b) {
-
-    override fun eval() = a.value + b.value
-}
-
-class Dimension2Minus(a: Prop<Dimension2>, b: Prop<Dimension2>)
-    : BinaryPropCalculation<Dimension2>(a, b) {
-
-    override fun eval() = a.value - b.value
-}
-
-class Dimension2UnaryMinus(a: Prop<Dimension2>)
-    : UnaryPropCalculation<Dimension2>(a) {
-
-    override fun eval() = Dimension2(-a.value.x, -a.value.y)
-}
-
-class Dimension2Times(a: Prop<Dimension2>, b: Prop<Dimension2>)
-    : BinaryPropCalculation<Dimension2>(a, b) {
-
-    override fun eval() = a.value * b.value
-}
-
-class Dimension2TimesDouble(a: Prop<Dimension2>, b: Prop<Double>)
-    : GenericBinaryPropCalculation<Dimension2, Dimension2, Double>(a, b) {
-
-    override fun eval() = a.value * b.value
-}
-
-class Dimension2TimesVector2(a: Prop<Dimension2>, b: Prop<Vector2>)
-    : GenericBinaryPropCalculation<Dimension2, Dimension2, Vector2>(a, b) {
-
-    override fun eval() = a.value * b.value
-}
-
-class Dimension2Div(a: Prop<Dimension2>, b: Prop<Dimension2>)
-    : BinaryPropCalculation<Dimension2>(a, b) {
-
-    override fun eval() = a.value / b.value
-}
-
-class Dimension2DivVector2(a: Prop<Dimension2>, b: Prop<Vector2>)
-    : GenericBinaryPropCalculation<Dimension2, Dimension2, Vector2>(a, b) {
-
-    override fun eval() = a.value / b.value
-}
-
-class Dimension2DivDouble(a: Prop<Dimension2>, b: Prop<Double>)
-    : GenericBinaryPropCalculation<Dimension2, Dimension2, Double>(a, b) {
-
-    override fun eval() = a.value / b.value
-}
-
-class Dimension2Ratio(a: Prop<Dimension2>, b: Prop<Dimension2>)
-    : GenericBinaryPropCalculation<Vector2, Dimension2, Dimension2>(a, b) {
-    override fun eval(): Vector2 {
-        assert(a.value.x.power == b.value.x.power)
-        assert(a.value.y.power == b.value.y.power)
-        return Vector2(
-                a.value.x.inDefaultUnits / b.value.x.inDefaultUnits,
-                a.value.y.inDefaultUnits / b.value.y.inDefaultUnits
-        )
-    }
 }
 
 class NewDimension2 : FunctionDimensionDimension() {

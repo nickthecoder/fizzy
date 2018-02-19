@@ -52,42 +52,6 @@ class Vector2PropLinked(val x: Prop<Double>, val y: Prop<Double>)
     override fun eval() = Vector2(x.value, y.value)
 }
 
-class Vector2Plus(a: Prop<Vector2>, b: Prop<Vector2>)
-    : BinaryPropCalculation<Vector2>(a, b) {
-
-    override fun eval() = a.value + b.value
-}
-
-class Vector2Minus(a: Prop<Vector2>, b: Prop<Vector2>)
-    : BinaryPropCalculation<Vector2>(a, b) {
-
-    override fun eval() = a.value - b.value
-}
-
-class Vector2Times(a: Prop<Vector2>, b: Prop<Vector2>)
-    : BinaryPropCalculation<Vector2>(a, b) {
-
-    override fun eval() = a.value * b.value
-}
-
-class Vector2TimesDouble(a: Prop<Vector2>, b: Prop<Double>)
-    : GenericBinaryPropCalculation<Vector2, Vector2, Double>(a, b) {
-
-    override fun eval() = a.value * b.value
-}
-
-class Vector2Div(a: Prop<Vector2>, b: Prop<Vector2>)
-    : BinaryPropCalculation<Vector2>(a, b) {
-
-    override fun eval() = a.value / b.value
-}
-
-class Vector2DivDouble(a: Prop<Vector2>, b: Prop<Double>)
-    : GenericBinaryPropCalculation<Vector2, Vector2, Double>(a, b) {
-
-    override fun eval() = a.value / b.value
-}
-
 class NewVector2 : FunctionDoubleDouble() {
     override fun callDD(a: Prop<Double>, b: Prop<Double>): Prop<*> {
         return Vector2Constant.create(a, b)

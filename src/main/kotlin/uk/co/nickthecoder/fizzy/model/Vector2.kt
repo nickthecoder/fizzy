@@ -11,6 +11,8 @@ class Vector2(val x: Double, val y: Double) {
 
     operator fun minus(other: Vector2) = Vector2(x - other.x, y - other.y)
 
+    operator fun unaryMinus() = Vector2(-x, -y)
+
     operator fun times(scale: Double) = Vector2(x * scale, y * scale)
 
     operator fun times(other: Vector2) = Vector2(x * other.x, y * other.y)

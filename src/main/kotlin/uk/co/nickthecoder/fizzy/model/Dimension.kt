@@ -89,6 +89,11 @@ class Dimension {
         return Dimension(inUnits(units) / b.inUnits(units), units, power - b.power)
     }
 
+    fun ratio(b: Dimension): Double {
+        assert(power == b.power)
+        return inDefaultUnits / b.inDefaultUnits
+    }
+
     fun sqrt(): Dimension {
         return Dimension(Math.sqrt(inUnits(units)), units, power / 2)
     }

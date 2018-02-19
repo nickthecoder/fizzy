@@ -45,46 +45,23 @@ abstract class PropCalculation<T : Any>
     override fun toString(): String = "${this.javaClass.simpleName}: ${safeValue()}"
 }
 
-abstract class UnaryPropCalculation<T : Any>(val a: Prop<T>)
-
+class PropCalculation1<T : Any, A>(val a: Prop<A>, val lambda: (A) -> T)
     : PropCalculation<T>() {
 
     init {
-        a.listeners.add(this)
+        if (!a.isConstant()) a.listeners.add(this)
     }
 
-    override fun dirty(prop: Prop<*>) {
-        dirty = true
-        listeners.forEach { it.dirty(this) }
-    }
-
-    override fun dump(): String {
-        return "${this.javaClass.simpleName}( ${a.dump()} )"
-    }
+    override fun eval(): T = lambda(a.value)
 }
 
-
-abstract class BinaryPropCalculation<T : Any>(val a: Prop<T>, val b: Prop<T>)
-
+class PropCalculation2<T : Any, A, B>(val a: Prop<A>, val b: Prop<B>, val lambda: (A, B) -> T)
     : PropCalculation<T>() {
 
     init {
-        a.listeners.add(this)
-        b.listeners.add(this)
+        if (!a.isConstant()) a.listeners.add(this)
+        if (!b.isConstant()) b.listeners.add(this)
     }
 
-
-    override fun dump(): String {
-        return "( ${a.dump()} ${this.javaClass.simpleName} ${b.dump()} )"
-    }
-}
-
-abstract class GenericBinaryPropCalculation<T : Any, A, B>(val a: Prop<A>, val b: Prop<B>)
-
-    : PropCalculation<T>() {
-
-    init {
-        a.listeners.add(this)
-        b.listeners.add(this)
-    }
+    override fun eval(): T = lambda(a.value, b.value)
 }

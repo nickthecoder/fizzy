@@ -49,54 +49,6 @@ class DimensionPropLinked(val number: Prop<Double>, val units: Dimension.Units, 
     override fun eval() = Dimension(number.value, units, power)
 }
 
-class DimensionPlus(a: Prop<Dimension>, b: Prop<Dimension>)
-    : BinaryPropCalculation<Dimension>(a, b) {
-
-    override fun eval() = a.value + b.value
-}
-
-class DimensionMinus(a: Prop<Dimension>, b: Prop<Dimension>)
-    : BinaryPropCalculation<Dimension>(a, b) {
-
-    override fun eval() = a.value - b.value
-}
-
-class DimensionUnaryMinus(a: Prop<Dimension>)
-    : UnaryPropCalculation<Dimension>(a) {
-
-    override fun eval() = -a.value
-}
-
-class DimensionTimes(a: Prop<Dimension>, b: Prop<Dimension>)
-    : BinaryPropCalculation<Dimension>(a, b) {
-
-    override fun eval() = a.value * b.value
-}
-
-class DimensionTimesDouble(a: Prop<Dimension>, b: Prop<Double>)
-    : GenericBinaryPropCalculation<Dimension, Dimension, Double>(a, b) {
-
-    override fun eval() = a.value * b.value
-}
-
-class DimensionDiv(a: Prop<Dimension>, b: Prop<Dimension>)
-    : BinaryPropCalculation<Dimension>(a, b) {
-
-    override fun eval() = a.value / b.value
-}
-
-class DimensionDivDouble(a: Prop<Dimension>, b: Prop<Double>)
-    : GenericBinaryPropCalculation<Dimension, Dimension, Double>(a, b) {
-
-    override fun eval() = a.value / b.value
-}
-
-class DimensionSqrt(a: Prop<Dimension>)
-    : UnaryPropCalculation<Dimension>(a) {
-
-    override fun eval() = a.value.sqrt()
-}
-
 abstract class FunctionDimensionDimension()
     : Function2() {
 
@@ -110,15 +62,6 @@ abstract class FunctionDimensionDimension()
     }
 
     abstract fun callDD(a: Prop<Dimension>, b: Prop<Dimension>): Prop<*>
-}
-
-class DimensionRatio(a: Prop<Dimension>, b: Prop<Dimension>)
-    : GenericBinaryPropCalculation<Double, Dimension, Dimension>(a, b) {
-
-    override fun eval(): Double {
-        assert(a.value.power == b.value.power)
-        return a.value.inDefaultUnits / b.value.inDefaultUnits
-    }
 }
 
 fun dimensionConversion(a: Prop<*>, units: Dimension.Units, power: Double = 1.0): Prop<*> {

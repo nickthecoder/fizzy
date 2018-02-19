@@ -1,8 +1,6 @@
 To Do
 =====
 
-Add methods
-
 Soon
 ----
 
@@ -11,6 +9,8 @@ Maybe
 
 Consider replacing most/all calculated properties (such as Vector2TimesDouble) with instances of a generic
     class with a lambda in the constructor.
+    Similar to PropMethod.
+        In fact, can they share the same code?
 
 Later
 -----
@@ -27,10 +27,12 @@ Add trig functions sin cos etc.
 Problems
 --------
 
+Should Prop<String>'s head and tail methods be safe? i.e. should they error if the string is too short?
+
 Currently sqrt is a Function, whereas abs is a Method of Prop<Double>
     Choose one form or the other (or both!)
 
-The current design does not all for method overloading with different number or types of arguments.
+The current design does not allow for method overloading with different number (or types) of arguments.
 
 Should Dimension(power=0) + Double fail?
     Ditto for Dimension2(power=0) + Vector2
