@@ -37,6 +37,7 @@ abstract class Operator(val str: String, val precedence: Int) {
 
         val TIMES = TimesOperator(5)
         val DIV = DivOperator(5)
+        val RATIO = RatioOperator(5)
 
         val POW = PowerOperator(6)
 
@@ -51,7 +52,7 @@ abstract class Operator(val str: String, val precedence: Int) {
         }
 
         init {
-            add(OPEN_BRACKET, COMMA, PLUS, MINUS, TIMES, DIV, POW, CLOSE_BRACKET, DOT)
+            add(OPEN_BRACKET, COMMA, PLUS, MINUS, TIMES, DIV, RATIO, POW, CLOSE_BRACKET, DOT)
         }
 
         fun find(str: String): Operator? = operators[str]
@@ -300,9 +301,27 @@ class TimesOperator(precedence: Int) : BinaryOperator("*", precedence) {
     }
 }
 
-@Suppress("UNCHECKED_CAST")
-class DivOperator(precedence: Int) : BinaryOperator("/", precedence) {
+class RatioOperator(precedence: Int) : BinaryOperator("%", precedence) {
+
+    @Suppress("UNCHECKED_CAST")
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+
+        if (a.value is Dimension && b.value is Dimension) {
+            return PropCalculation2(a as Prop<Dimension>, b as Prop<Dimension>) { av, bv -> av.ratio(bv) }
+
+        } else if (a.value is Dimension2 && b.value is Dimension2) {
+            return PropCalculation2(a as Prop<Dimension2>, b as Prop<Dimension2>) { av, bv -> av.ratio(bv) }
+        }
+
+        return cannotApply(a, b)
+    }
+}
+
+class DivOperator(precedence: Int) : BinaryOperator("/", precedence) {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+
         if (a.value is Double && b.value is Double) {
             return PropCalculation2(a as Prop<Double>, b as Prop<Double>) { av, bv -> av / bv }
 

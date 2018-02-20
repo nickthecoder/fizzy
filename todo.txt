@@ -14,20 +14,10 @@ Be able to "click" a part of an expression and get to the definition.
     i.e. with : "shape3.geometry1[0].point"
     shape3 and geometry1 and [0] and point should all be "links"
 
-Add trig functions sin cos etc.
-    Use FunctionAngle, or remove it!
-    asin and acos Accept Dimension AND Double???
-    atan2 should accept Dimension2. Also accept Vector2? AND Double,Double ??
-
 Problems
 --------
 
 Should Prop<String>'s head and tail methods be safe? i.e. should they error if the string is too short?
-
-Currently sqrt is a Function, whereas abs is a Method of Prop<Double>
-    Choose one form or the other (or both!)
-
-The current design does not allow for method overloading with different number (or types) of arguments.
 
 Should Dimension(power=0) + Double fail?
     Ditto for Dimension2(power=0) + Vector2
@@ -50,3 +40,6 @@ For example, a line width and line color which many shapes all share.
 When a stencil is dragged to a document, should it reference the stencil's document properties or the
     actual document's properties?
 Could make the document reference the stencil, then the user can choose to break the link, and redefine the value.
+
+Visio clip :
+https://www.youtube.com/watch?v=9Kyv48e22LQ

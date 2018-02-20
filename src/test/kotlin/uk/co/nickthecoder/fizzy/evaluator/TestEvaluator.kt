@@ -289,12 +289,18 @@ class TestEvaluator : TestCase() {
 
         val g = Evaluator("10mm.ratio(2mm)").parse() as Prop<Double>
         assertEquals(5.0, g.value, tiny)
+        val g2 = Evaluator("10mm % 2mm").parse() as Prop<Double>
+        assertEquals(5.0, g2.value, tiny)
 
         val i = Evaluator("(20cm * 20cm).ratio(200cm * 4cm)").parse() as Prop<Double>
         assertEquals(0.5, i.value, tiny)
+        val i2 = Evaluator("(20cm * 20cm) % (200cm * 4cm)").parse() as Prop<Double>
+        assertEquals(0.5, i2.value, tiny)
 
         val j = Evaluator("(0.2m * 0.2m).ratio(200cm * 4cm)").parse() as Prop<Double>
         assertEquals(0.5, j.value, tiny)
+        val j2 = Evaluator("(0.2m * 0.2m) % (200cm * 4cm)").parse() as Prop<Double>
+        assertEquals(0.5, j2.value, tiny)
 
     }
 
@@ -421,6 +427,21 @@ class TestEvaluator : TestCase() {
         assertEquals(-3.0, h.value.x.mm, tiny)
         assertEquals(-2.0, h.value.y.mm, tiny)
 
+        val i = Evaluator("Dimension2(6mm,2mm).ratio( Dimension2(3mm, 2mm) )").parse() as Prop<Vector2>
+        assertEquals(2.0, i.value.x, tiny)
+        assertEquals(1.0, i.value.y, tiny)
+        val i2 = Evaluator("Dimension2(6mm,2mm) % Dimension2(3mm, 2mm)").parse() as Prop<Vector2>
+        assertEquals(2.0, i2.value.x, tiny)
+        assertEquals(1.0, i2.value.y, tiny)
+        val i3 = Evaluator("Dimension2(6m,2m) / Dimension2(3m, 2m)").parse() as Prop<Dimension2>
+        assertEquals(2.0, i3.value.x.inDefaultUnits, tiny)
+        assertEquals(1.0, i3.value.y.inDefaultUnits, tiny)
+        assertEquals(0.0, i3.value.x.power, tiny)
+        assertEquals(0.0, i3.value.y.power, tiny)
+
+        val j = Evaluator("Dimension2(6m,2m) / 2").parse() as Prop<Dimension2>
+        assertEquals(3.0, j.value.x.m, tiny)
+        assertEquals(1.0, j.value.y.m, tiny)
     }
 
     @Test
