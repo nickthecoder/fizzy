@@ -7,11 +7,6 @@ Soon
 Maybe
 -----
 
-Consider replacing most/all calculated properties (such as Vector2TimesDouble) with instances of a generic
-    class with a lambda in the constructor.
-    Similar to PropMethod.
-        In fact, can they share the same code?
-
 Later
 -----
 

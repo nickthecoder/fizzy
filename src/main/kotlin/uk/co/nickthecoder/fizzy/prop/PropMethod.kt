@@ -35,6 +35,9 @@ abstract class PropMethod<T : Any, R : Any>(val prop: Prop<T>)
     abstract fun eval(arg: Prop<*>): R
 
     override fun toString(): String {
+        if (arg == null) {
+            return "Method (arguments not supplied yet)"
+        }
         return "Method value=${safeValue()}"
     }
 }
@@ -50,7 +53,7 @@ class PropMethod0<T : Any, R : Any>(prop: Prop<T>, val lambda: () -> R)
     }
 }
 
-class PropMethod1<T : Any, A : Any, R : Any>(prop: Prop<T>, val klassA: KClass<A>, val lambda: (A) -> R)
+open class PropMethod1<T : Any, A : Any, R : Any>(prop: Prop<T>, val klassA: KClass<A>, val lambda: (A) -> R)
     : PropMethod<T, R>(prop) {
 
     override fun eval(arg: Prop<*>): R {
@@ -62,7 +65,7 @@ class PropMethod1<T : Any, A : Any, R : Any>(prop: Prop<T>, val klassA: KClass<A
     }
 }
 
-class PropMethod2<T : Any, A : Any, B : Any, R : Any>(prop: Prop<T>, val klassA: KClass<A>, val klassB: KClass<B>, val lambda: (A, B) -> R)
+open class PropMethod2<T : Any, A : Any, B : Any, R : Any>(prop: Prop<T>, val klassA: KClass<A>, val klassB: KClass<B>, val lambda: (A, B) -> R)
     : PropMethod<T, R>(prop) {
 
     override fun eval(arg: Prop<*>): R {
@@ -76,6 +79,6 @@ class PropMethod2<T : Any, A : Any, B : Any, R : Any>(prop: Prop<T>, val klassA:
             }
 
         }
-        throw RuntimeException("Expected an arguments (${klassA.simpleName}, ${klassB.simpleName}), but found $arg")
+        throw RuntimeException("Expected arguments (${klassA.simpleName}, ${klassB.simpleName}), but found $arg")
     }
 }

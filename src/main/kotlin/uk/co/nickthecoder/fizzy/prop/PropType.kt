@@ -34,6 +34,7 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
         }
 
         init {
+            put(DummyPropType()) // Functions
             put(AnglePropType())
             put(Dimension2PropType())
             put(DimensionPropType())

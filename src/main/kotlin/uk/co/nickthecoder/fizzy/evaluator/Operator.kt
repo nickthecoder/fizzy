@@ -78,10 +78,11 @@ class CloseBracketOperator(precedence: Int) : Operator(")", precedence) {
 
 class ApplyOperator(precedence: Int) : BinaryOperator("(", precedence), OpenBracket {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
-        if (a is Function) {
-            return a.call(b)
-        } else if (a is PropMethod<*, *>) {
+        if (a is PropMethod<*, *>) {
             a.applyArgs(b)
+            // Make sure that the value can be evaluated, so that if it fails, then the error is reported at
+            // the correct place.
+            a.value
             return a
         } else {
             return cannotApply(a, b)
@@ -89,7 +90,7 @@ class ApplyOperator(precedence: Int) : BinaryOperator("(", precedence), OpenBrac
     }
 }
 
-class DotOperator(precedence: Int) : BinaryOperator(".", precedence), OpenBracket {
+class DotOperator(precedence: Int) : BinaryOperator(".", precedence) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (b is FieldOrMethodName) {
             PropType.field(a, b.value)?.let { field ->

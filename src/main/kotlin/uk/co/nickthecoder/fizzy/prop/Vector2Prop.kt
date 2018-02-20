@@ -1,7 +1,6 @@
 package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.evaluator.Context
-import uk.co.nickthecoder.fizzy.evaluator.FunctionDoubleDouble
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Vector2
 
@@ -50,10 +49,4 @@ class Vector2PropLinked(val x: Prop<Double>, val y: Prop<Double>)
     }
 
     override fun eval() = Vector2(x.value, y.value)
-}
-
-class NewVector2 : FunctionDoubleDouble() {
-    override fun callDD(a: Prop<Double>, b: Prop<Double>): Prop<*> {
-        return Vector2Constant.create(a, b)
-    }
 }

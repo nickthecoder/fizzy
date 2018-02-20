@@ -1,7 +1,6 @@
 package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.evaluator.Context
-import uk.co.nickthecoder.fizzy.evaluator.Function2
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Dimension
 
@@ -18,7 +17,10 @@ class DimensionPropType : PropType<Dimension>(Dimension::class) {
     }
 
     override fun findMethod(prop: Prop<Dimension>, name: String): PropMethod<Dimension, *>? {
-        return null
+        return when (name) {
+            "ratio" -> PropMethod1(prop, Dimension::class) { prop.value.ratio(it) }
+            else -> null
+        }
     }
 }
 
@@ -47,21 +49,6 @@ class DimensionPropLinked(val number: Prop<Double>, val units: Dimension.Units, 
     }
 
     override fun eval() = Dimension(number.value, units, power)
-}
-
-abstract class FunctionDimensionDimension()
-    : Function2() {
-
-    override fun call(a: Prop<*>, b: Prop<*>): Prop<*> {
-        if (a.value is Dimension && b.value is Dimension) {
-            @Suppress("UNCHECKED_CAST")
-            return callDD(a as Prop<Dimension>, b as Prop<Dimension>)
-        } else {
-            throw RuntimeException("Expected arguments (Dimension,Dimension)")
-        }
-    }
-
-    abstract fun callDD(a: Prop<Dimension>, b: Prop<Dimension>): Prop<*>
 }
 
 fun dimensionConversion(a: Prop<*>, units: Dimension.Units, power: Double = 1.0): Prop<*> {

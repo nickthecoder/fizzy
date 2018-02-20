@@ -20,6 +20,7 @@ class Dimension2PropType : PropType<Dimension2>(Dimension2::class) {
         return when (name) {
             "length" -> PropMethod0(prop) { prop.value.length() }
             "normalise" -> PropMethod0(prop) { prop.value.normalise() }
+            "ratio" -> PropMethod1(prop, Dimension2::class) { prop.value.ratio(it) }
             else -> null
         }
     }
@@ -51,10 +52,4 @@ class Dimension2PropLinked(val x: Prop<Dimension>, val y: Prop<Dimension>)
     }
 
     override fun eval() = Dimension2(x.value, y.value)
-}
-
-class NewDimension2 : FunctionDimensionDimension() {
-    override fun callDD(a: Prop<Dimension>, b: Prop<Dimension>): Prop<*> {
-        return Dimension2Constant.create(a, b)
-    }
 }

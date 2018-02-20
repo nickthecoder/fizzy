@@ -145,14 +145,17 @@ class Evaluator(val text: CharSequence, val context: Context = constantsContext)
         var op = Operator.find(token.text) ?: throw EvaluationException("Unknown operator ${token.text}", token.startIndex)
 
         when (op) {
-            is OpenBracketOperator -> {
+            is OpenBracket -> {
                 if (expectValue) {
+                    log("Pushing Simple (")
                     pushOperator(token, op)
                 } else {
                     if (peekOperator()?.operator is DotOperator && peekValue() is FieldOrMethodName) {
                         popOperator()
                         val methodName = (popValue() as FieldOrMethodName).value
                         if (values.size == 0) {
+                            println("### B2")
+
                             // I don't think this can ever happen.
                             throw EvaluationException("No value to apply method $methodName", token.startIndex)
                         }
@@ -162,15 +165,15 @@ class Evaluator(val text: CharSequence, val context: Context = constantsContext)
                                 throw EvaluationException("Couldn't find method $methodName", token.startIndex)
 
                         pushValue(method)
+                        log("Pushing Apply for method")
+                        pushOperator(token, Operator.APPLY)
+
+                    } else if (peekValue() is PropMethod<*, *>) {
+                        log("Pushing APPLY for function call")
                         pushOperator(token, Operator.APPLY)
 
                     } else {
-                        val name = peekValue()
-                        if (name is Function) {
-                            pushOperator(token, Operator.APPLY)
-                        } else {
-                            throw EvaluationException("Expected function name before '('", token.startIndex)
-                        }
+                        throw EvaluationException("( not expected", token.startIndex)
                     }
                 }
             }
@@ -182,11 +185,8 @@ class Evaluator(val text: CharSequence, val context: Context = constantsContext)
                     log("Adding empty argument list")
                     pushValue(ArgList())
                 }
-                while (operators.lastOrNull()?.operator !is OpenBracket) {
-                    applyOperator()
-                }
 
-                val open = peekOperator()?.operator
+                val open = lookingForOpenBracket(token)
                 when (open) {
                     is OpenBracketOperator -> popOperator()
                     is ApplyOperator -> {
@@ -216,6 +216,20 @@ class Evaluator(val text: CharSequence, val context: Context = constantsContext)
         }
     }
 
+    private fun lookingForOpenBracket(close: Token): Operator {
+        var op = peekOperator()
+        do {
+            if (op == null) {
+                throw EvaluationException("Unmatched close bracket", close.startIndex)
+            }
+            if (op.operator is OpenBracket) {
+                return op.operator
+            }
+            applyOperator()
+            op = peekOperator()
+        } while (true)
+    }
+
     private fun pushNumber(token: Token) {
         try {
             val number = token.toDouble()
@@ -237,17 +251,17 @@ class Evaluator(val text: CharSequence, val context: Context = constantsContext)
                 pushValue(FieldOrMethodName(token.text))
 
             } else {
-                val function = context.findFunction(token.text)
-                if (function == null) {
-                    val property = context.findProp(token.text)
-                    if (property == null) {
-                        throw EvaluationException("Unknown identifier ${token.text}", token.startIndex)
-                    } else {
-                        pushValue(property)
-                    }
+                val property = context.findProp(token.text)
+                if (property == null) {
 
+                    val func = PropType.method(dummyInstance, token.text)
+                    if (func == null) {
+                        throw EvaluationException("Identifier ${token.text} not found.", token.startIndex)
+                    } else {
+                        pushValue(func)
+                    }
                 } else {
-                    pushValue(function)
+                    pushValue(property)
                 }
             }
         } else {

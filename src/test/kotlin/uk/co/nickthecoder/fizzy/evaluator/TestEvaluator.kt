@@ -25,6 +25,14 @@ class TestEvaluator : TestCase() {
         }
     }
 
+    /**
+     * I use this for single ad-hoc tests, and then when the test passes, I move it somewhere else, so
+     * this test ends up being empty most of the time.
+     */
+    @Test
+    fun testQuick() {
+    }
+
     @Test
     fun testConstant() {
         val one = Evaluator("1").parse() as Prop<Double>
@@ -270,17 +278,13 @@ class TestEvaluator : TestCase() {
         assertEquals(16.0, f.value.mm, tiny)
         assertEquals(2.0, f.value.power)
 
-        val g = Evaluator("sqrt(2mm * 8mm)").parse() as Prop<Dimension>
-        assertEquals(4.0, g.value.mm, tiny)
-        assertEquals(1.0, g.value.power)
+        val g = Evaluator("10mm.ratio(2mm)").parse() as Prop<Double>
+        assertEquals(5.0, g.value, tiny)
 
-        val h = Evaluator("ratio(10mm, 2mm)").parse() as Prop<Double>
-        assertEquals(5.0, h.value, tiny)
-
-        val i = Evaluator("ratio(20cm * 20cm, 200cm * 4cm)").parse() as Prop<Double>
+        val i = Evaluator("(20cm * 20cm).ratio(200cm * 4cm)").parse() as Prop<Double>
         assertEquals(0.5, i.value, tiny)
 
-        val j = Evaluator("ratio(0.2m * 0.2m, 200cm * 4cm)").parse() as Prop<Double>
+        val j = Evaluator("(0.2m * 0.2m).ratio(200cm * 4cm)").parse() as Prop<Double>
         assertEquals(0.5, j.value, tiny)
 
     }
@@ -400,9 +404,13 @@ class TestEvaluator : TestCase() {
         assertEquals(24.0, f.value.x.mm, tiny)
         assertEquals(20.0, f.value.y.mm, tiny)
 
-        val g = Evaluator("-Dimension2(3mm,2mm)").parse() as Prop<Dimension2>
+        val g = Evaluator("-(Dimension2(3mm,2mm))").parse() as Prop<Dimension2>
         assertEquals(-3.0, g.value.x.mm, tiny)
         assertEquals(-2.0, g.value.y.mm, tiny)
+
+        val h = Evaluator("-Dimension2(3mm,2mm)").parse() as Prop<Dimension2>
+        assertEquals(-3.0, h.value.x.mm, tiny)
+        assertEquals(-2.0, h.value.y.mm, tiny)
 
     }
 
