@@ -3,7 +3,7 @@ package uk.co.nickthecoder.fizzy.model
 class Angle private constructor(val radians: Double) {
 
     val degrees: Double
-        get() = radians / Math.PI * 180.0
+        get() = Math.toDegrees(radians)
 
     operator fun plus(other: Angle) = Angle.radians(radians + other.radians)
 
@@ -17,9 +17,11 @@ class Angle private constructor(val radians: Double) {
 
     operator fun div(other: Angle) = radians / other.radians
 
+    fun unitVector(): Vector2 = Vector2(1.0, 0.0).rotate(this)
+
     companion object {
 
-        fun degrees(d: Double) = Angle(d / 180.0 * Math.PI)
+        fun degrees(d: Double) = Angle(Math.toRadians(d))
 
         fun radians(r: Double) = Angle(r)
 

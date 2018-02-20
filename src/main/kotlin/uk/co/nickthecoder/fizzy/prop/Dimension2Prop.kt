@@ -2,6 +2,7 @@ package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.evaluator.Context
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
+import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 
@@ -21,6 +22,8 @@ class Dimension2PropType : PropType<Dimension2>(Dimension2::class) {
             "length" -> PropMethod0(prop) { prop.value.length() }
             "normalise" -> PropMethod0(prop) { prop.value.normalise() }
             "ratio" -> PropMethod1(prop, Dimension2::class) { prop.value.ratio(it) }
+            "angle" -> PropMethod0(prop) { prop.value.angle() }
+            "rotate" -> PropMethod1(prop, Angle::class) { prop.value.rotate(it) }
             else -> null
         }
     }

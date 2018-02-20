@@ -22,7 +22,14 @@ class DummyPropType : PropType<Dummy>(Dummy::class) {
 
     override fun findMethod(prop: Prop<Dummy>, name: String): PropMethod<Dummy, *>? {
         return when (name) {
+            "abs" -> PropFunction1(Double::class) { Math.abs(it) }
+            "ceil" -> PropFunction1(Double::class) { Math.ceil(it) }
+            "floor" -> PropFunction1(Double::class) { Math.floor(it) }
+            "exp" -> PropFunction1(Double::class) { Math.exp(it) }
+            "ln" -> PropFunction1(Double::class) { Math.log(it) }
+            "log" -> PropFunction1(Double::class) { Math.log10(it) }
             "sqrt" -> PropFunction1(Double::class) { Math.sqrt(it) }
+
             "Vector2" -> PropFunction2(Double::class, Double::class) { x, y -> Vector2(x, y) }
             "Dimension2" -> PropFunction2(Dimension::class, Dimension::class) { x, y -> Dimension2(x, y) }
             else -> null

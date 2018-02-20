@@ -48,6 +48,37 @@ class Dimension2(val x: Dimension, val y: Dimension) {
         return Vector2(x.inDefaultUnits / l, y.inDefaultUnits / l)
     }
 
+    /**
+     * The angle of the vector. 0° is along the x axis, and +ve values are anticlockwise if the y axis is pointing upwards.
+     *
+     * It assumes that the power for x and y is 1. The result makes no sense for other powers, as it is only sensible for lengths.
+     */
+    fun angle(): Angle = Angle.radians(Math.atan2(y.inDefaultUnits, x.inDefaultUnits))
+
+    /**
+     * Rotates anticlockwise about the origin.
+     *
+     * The units of both x and y will be in the units of x. i.e. if x is in cm and y is in m,
+     * then the result will be in cm for both x and y
+     *
+     * It assumes that the power for x and y is 1. The result makes no sense for other powers, as it is only sensible for lengths.
+     */
+    fun rotate(angle: Angle) = rotate(angle.radians)
+
+    /**
+     * Rotates anticlockwise about the origin.
+     *
+     * The units of both x and y will be in the units of x. i.e. if x is in cm and y is in m,
+     * then the result will be in cm for both x and y
+     *
+     * It assumes that the power for x and y is 1. The result makes no sense for other powers, as it is only sensible for lengths.
+     */
+    fun rotate(radians: Double): Dimension2 {
+        val sin = Math.sin(radians)
+        val cos = Math.cos(radians)
+        return Dimension2(x * cos - y * sin, x * sin + y * cos)
+    }
+
     override fun toString() = "Dimension2($x , $y)"
 
     companion object {

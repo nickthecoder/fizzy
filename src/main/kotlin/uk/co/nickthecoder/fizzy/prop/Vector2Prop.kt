@@ -2,6 +2,7 @@ package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.evaluator.Context
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
+import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Vector2
 
 class Vector2PropType : PropType<Vector2>(Vector2::class) {
@@ -18,6 +19,8 @@ class Vector2PropType : PropType<Vector2>(Vector2::class) {
         return when (name) {
             "length" -> PropMethod0(prop) { prop.value.length() }
             "normalise" -> PropMethod0(prop) { prop.value.normalise() }
+            "angle" -> PropMethod0(prop) { prop.value.angle() }
+            "rotate" -> PropMethod1(prop, Angle::class) { prop.value.rotate(it) }
             else -> null
         }
     }

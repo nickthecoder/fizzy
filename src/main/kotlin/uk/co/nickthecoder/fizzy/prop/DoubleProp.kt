@@ -10,10 +10,7 @@ class DoublePropType : PropType<Double>(Double::class) {
     }
 
     override fun findMethod(prop: Prop<Double>, name: String): PropMethod<Double, *>? {
-        return when (name) {
-            "abs" -> PropMethod0(prop) { Math.abs(prop.value) }
-            else -> null
-        }
+        return null
     }
 }
 

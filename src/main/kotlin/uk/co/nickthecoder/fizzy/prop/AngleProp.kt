@@ -15,7 +15,16 @@ class AnglePropType : PropType<Angle>(Angle::class) {
     }
 
     override fun findMethod(prop: Prop<Angle>, name: String): PropMethod<Angle, *>? {
-        return null
+        return when (name) {
+            "sin" -> PropMethod0(prop) { Math.sin(prop.value.radians) }
+            "cos" -> PropMethod0(prop) { Math.cos(prop.value.radians) }
+            "tan" -> PropMethod0(prop) { Math.tan(prop.value.radians) }
+
+            "sinh" -> PropMethod0(prop) { Math.sinh(prop.value.radians) }
+            "cosh" -> PropMethod0(prop) { Math.cosh(prop.value.radians) }
+            "tanh" -> PropMethod0(prop) { Math.tanh(prop.value.radians) }
+            else -> null
+        }
     }
 
 }

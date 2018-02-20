@@ -58,6 +58,9 @@ class TestEvaluator : TestCase() {
 
         val threeDivTwo = Evaluator("3 / 2").parse() as Prop<Double>
         assertEquals(1.5, threeDivTwo.value, tiny)
+
+        val pow = Evaluator("3 ^ 2").parse() as Prop<Double>
+        assertEquals(9.0, pow.value, tiny)
     }
 
     @Test
@@ -185,6 +188,12 @@ class TestEvaluator : TestCase() {
     fun testFunctions() {
         val sqrt = Evaluator("sqrt(4)").parse() as Prop<Double>
         assertEquals(2.0, sqrt.value, tiny)
+
+        val a = Evaluator("abs(0-2)").parse() as Prop<Double>
+        assertEquals(2.0, a.value, tiny)
+
+        val b = Evaluator("abs(-3)").parse() as Prop<Double>
+        assertEquals(3.0, b.value, tiny)
     }
 
     @Test
@@ -584,15 +593,6 @@ class TestEvaluator : TestCase() {
     }
 
     @Test
-    fun testDoubleMethods() {
-        val a = Evaluator("(0-2) .abs()").parse() as Prop<Double>
-        assertEquals(2.0, a.value, tiny)
-
-        val b = Evaluator("-3 .abs()").parse() as Prop<Double>
-        assertEquals(3.0, b.value, tiny)
-    }
-
-    @Test
     fun testVectorMethods() {
         val a = Evaluator("Vector2(3,4).length()").parse() as Prop<Double>
         assertEquals(5.0, a.value, tiny)
@@ -611,6 +611,56 @@ class TestEvaluator : TestCase() {
         assertEquals(3.0 / 5.0, b.value.x, tiny)
         assertEquals(4.0 / 5.0, b.value.y, tiny)
     }
+
+    @Test
+    fun testTrig() {
+
+        val a1 = Evaluator("Vector2(2, 2).angle()").parse() as Prop<Angle>
+        assertEquals(45.0, a1.value.degrees, tiny)
+
+        val a2 = Evaluator("Vector2(-2,2).angle()").parse() as Prop<Angle>
+        assertEquals(135.0, a2.value.degrees, tiny)
+
+        val a3 = Evaluator("Vector2(2,-2).angle()").parse() as Prop<Angle>
+        assertEquals(-45.0, a3.value.degrees, tiny)
+
+        val a4 = Evaluator("Vector2(-2,-2).angle()").parse() as Prop<Angle>
+        assertEquals(-135.0, a4.value.degrees, tiny)
+
+        val a5 = Evaluator("Vector2(2,0).angle()").parse() as Prop<Angle>
+        assertEquals(0.0, a5.value.degrees, tiny)
+
+        for (angle in -170..170 step 20) {
+            val b1 = Evaluator("$angle deg.sin()").parse() as Prop<Double>
+            assertEquals(Math.sin(Math.toRadians(angle.toDouble())), b1.value, tiny)
+
+            val b2 = Evaluator("$angle deg.cos()").parse() as Prop<Double>
+            assertEquals(Math.cos(Math.toRadians(angle.toDouble())), b2.value, tiny)
+
+            val b3 = Evaluator("$angle deg.tan()").parse() as Prop<Double>
+            assertEquals(Math.tan(Math.toRadians(angle.toDouble())), b3.value, tiny)
+
+            // Tests Vector2.rotate method (but not well,  because y is always 0)
+            val b4 = Evaluator("Vector2(1.3,0).rotate($angle deg).angle()").parse() as Prop<Angle>
+            assertEquals(angle.toDouble(), b4.value.degrees, tiny)
+
+            // Tests Vector2.rotate method
+            val b5 = Evaluator("Vector2(1.3,0).rotate(4 deg).rotate($angle deg).angle()").parse() as Prop<Angle>
+            assertEquals(angle.toDouble() + 4, b5.value.degrees, tiny)
+
+            // Tests Dimension2.rotate method
+            val b6 = Evaluator("Dimension2(1.3m,0m).rotate(4 deg).rotate($angle deg).angle()").parse() as Prop<Angle>
+            assertEquals(angle.toDouble() + 4, b6.value.degrees, tiny)
+
+        }
+
+        val c = Evaluator("Dimension2(1m,50cm).rotate(20 deg)").parse() as Prop<Dimension2>
+        assertEquals(1.0, c.value.x.power, tiny)
+        assertEquals(1.0, c.value.y.power, tiny)
+        assertEquals(Dimension.Units.m, c.value.x.units)
+        assertEquals(Dimension.Units.m, c.value.y.units)
+    }
+
     //variables.putProp("angle1", ExpressionProp("value1 degrees", Angle::class, context))
 
 }

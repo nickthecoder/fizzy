@@ -33,6 +33,27 @@ class Vector2(val x: Double, val y: Double) {
         return Vector2(x / l, y / l)
     }
 
+    /**
+     * The angle of the vector. 0° is along the x axis, and +ve values are anticlockwise if the y axis is pointing upwards.
+     */
+    fun angle(): Angle {
+        return Angle.radians(Math.atan2(y, x))
+    }
+
+    /**
+     * Rotates the vector about the origin. The rotation is anticlockwise if the y axis points upwards.
+     */
+    fun rotate(angle: Angle) = rotate(angle.radians)
+
+    /**
+     * Rotates the vector about the origin. The rotation is anticlockwise if the y axis points upwards.
+     */
+    fun rotate(radians: Double): Vector2 {
+        val sin = Math.sin(radians)
+        val cos = Math.cos(radians)
+        return Vector2(cos * x - sin * y, sin * x + cos * y)
+    }
+
     override fun toString() = "Vector2($x , $y)"
 
     companion object {

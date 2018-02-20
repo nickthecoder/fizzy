@@ -38,16 +38,20 @@ abstract class Operator(val str: String, val precedence: Int) {
         val TIMES = TimesOperator(5)
         val DIV = DivOperator(5)
 
-        val CLOSE_BRACKET = CloseBracketOperator(6)
-        val DOT = DotOperator(7)
-        val UNARY_MINUS = UnaryMinusOperator(8)
+        val POW = PowerOperator(6)
+
+        val CLOSE_BRACKET = CloseBracketOperator(7)
+
+        val DOT = DotOperator(8)
+
+        val UNARY_MINUS = UnaryMinusOperator(9)
 
         fun add(vararg ops: Operator) {
             ops.forEach { operators.put(it.str, it) }
         }
 
         init {
-            add(OPEN_BRACKET, COMMA, PLUS, MINUS, TIMES, DIV, CLOSE_BRACKET, DOT)
+            add(OPEN_BRACKET, COMMA, PLUS, MINUS, TIMES, DIV, POW, CLOSE_BRACKET, DOT)
         }
 
         fun find(str: String): Operator? = operators[str]
@@ -143,8 +147,21 @@ abstract class BinaryOperator(str: String, precedence: Int) : Operator(str, prec
 
 }
 
-@Suppress("UNCHECKED_CAST")
+class PowerOperator(precedence: Int) : BinaryOperator("^", precedence) {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+        if (a.value is Double && b.value is Double) {
+            return PropCalculation2(a as Prop<Double>, b as Prop<Double>) { av, bv -> Math.pow(av, bv) }
+        }
+
+        return cannotApply(a, b)
+    }
+}
+
 class PlusOperator(precedence: Int) : BinaryOperator("+", precedence) {
+
+    @Suppress("UNCHECKED_CAST")
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
 
         if (a.value is Double && b.value is Double) {
