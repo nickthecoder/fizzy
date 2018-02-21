@@ -4,7 +4,11 @@ To Do
 Soon
 ----
 
-The Shape's context should allow for "this" to be omitted, i.e. just refer to "geometry" rather than "this.geometry"
+Allow for multiple geometries???
+
+Rename Page to Document?
+
+Create a JavaFX application drawing pre-created shapes.
 
 ShapeGroupPropType - "children" field won't work correctly.
 
@@ -16,6 +20,8 @@ Evaluating "Dimension2(1m,1m) and "Vector2(1,1)" don't produce PropConstants.
 
 Later
 -----
+
+Allow FList items to be MOVED, so that listeners don't hear a REMOVE and an ADD event, just a single MOVED?/CHANGED? event..
 
 Be able to "click" a part of an expression and get to the definition.
     i.e. with : "shape3.geometry1[0].point"
