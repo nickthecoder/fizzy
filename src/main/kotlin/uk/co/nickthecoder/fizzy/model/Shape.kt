@@ -10,7 +10,7 @@ import uk.co.nickthecoder.fizzy.prop.StringConstant
 import uk.co.nickthecoder.fizzy.util.runLater
 
 open class Shape(var parent: Parent)
-    : PropListener {
+    : PropListener, HasChangeListeners<Shape> {
 
     var id = StringConstant(parent.page().generateId())
 
@@ -20,7 +20,7 @@ open class Shape(var parent: Parent)
             "page" to PropConstant<Page>(parent.page())
     ))))
 
-    var listeners = ChangeListeners<Shape>()
+    override var listeners = ChangeListeners<Shape>()
 
     val geometry = Geometry(this)
 
