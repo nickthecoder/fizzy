@@ -4,7 +4,8 @@ import uk.co.nickthecoder.fizzy.evaluator.Context
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Angle
 
-class AnglePropType : PropType<Angle>(Angle::class) {
+class AnglePropType private constructor()
+    : PropType<Angle>(Angle::class) {
 
     override fun findField(prop: Prop<Angle>, name: String): PropField<Angle, *>? {
         return when (name) {
@@ -28,6 +29,8 @@ class AnglePropType : PropType<Angle>(Angle::class) {
     }
 
     companion object {
+        val instance = AnglePropType()
+
         fun create(a: Prop<Double>, degrees: Boolean): Prop<Angle> {
             if (a.isConstant()) {
                 if (degrees) {

@@ -4,16 +4,15 @@ To Do
 Soon
 ----
 
-Test that Dimension2( x, y ) and Vector2( x, y ) and "n deg" create either a constant of a PropCalculation
-    based on whether the arguments themselves are constant.
+The Shape's context should allow for "this" to be omitted, i.e. just refer to "geometry" rather than "this.geometry"
 
-The Shape's context should be aware all for "this" to be omitted, i.e. just refer to "geometry" rather than "this.geometry"
-
+ShapeGroupPropType - "children" field won't work correctly.
 
 Maybe
 -----
 
-Evaluating "Vector2(1,1)" doesn't produce a PropConstant.
+Evaluating "Dimension2(1m,1m) and "Vector2(1,1)" don't produce PropConstants.
+	Also consider "1+1" creating a PropConstant too. etc.
 
 Later
 -----
@@ -26,11 +25,6 @@ Problems
 --------
 
 Should Prop<String>'s head and tail methods be safe? i.e. should they error if the string is too short?
-
-Should Dimension(power=0) + Double fail?
-    Ditto for Dimension2(power=0) + Vector2
-    It currently does. Using "ratio() instead of "/" would mitigate the problem.
-        But can we really not return EITHER Dimension or Double dynamically? (ditto for Vector2 or Dimension2).
 
 Shape has an ID, which can be referenced by expressions in other Shapes.
     How do we change the expression TEXT when the ID is changed?
@@ -65,8 +59,6 @@ Notes
 A Document should have a set of custom properties / styles that its Shapes can reference.
 For example, a line width and line color which many shapes all share.
     These can be expressions, and therefore can reference other custom properties.
-When a master shape is dragged to a document, should it reference the stencil's document properties or the
-    actual document's properties?
 
 When a compound object such as Dimension2 is shown in the spreadsheet, we need to be able to edit is as a whole,
     or by its constituent parts.

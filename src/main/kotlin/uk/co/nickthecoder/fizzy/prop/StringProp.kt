@@ -1,6 +1,7 @@
 package uk.co.nickthecoder.fizzy.prop
 
-class StringPropType : PropType<String>(String::class) {
+class StringPropType private constructor()
+    : PropType<String>(String::class) {
 
     override fun findField(prop: Prop<String>, name: String): PropField<String, *>? {
         return when (name) {
@@ -19,5 +20,9 @@ class StringPropType : PropType<String>(String::class) {
             "substring" -> PropMethod2(prop, Double::class, Double::class) { a, b -> prop.value.substring(a.toInt(), b.toInt()) }
             else -> null
         }
+    }
+
+    companion object {
+        val instance = StringPropType()
     }
 }

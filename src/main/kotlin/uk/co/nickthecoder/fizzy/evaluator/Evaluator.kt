@@ -303,4 +303,18 @@ class Evaluator(val text: CharSequence, val context: Context = constantsContext)
         }
     }
 
+    companion object {
+        init {
+            PropType.put(AnglePropType.instance)
+            PropType.put(Dimension2PropType.instance)
+            PropType.put(Dimension2PropType.instance)
+            PropType.put(DoublePropType.instance)
+            PropType.put(DummyPropType.instance)
+            PropType.put(Shape1dPropType.instance)
+            PropType.put(Shape2dPropType.instance)
+            PropType.put(ShapeGroupPropType.instance)
+            PropType.put(StringPropType.instance)
+            PropType.put(Vector2PropType.instance)
+        }
+    }
 }

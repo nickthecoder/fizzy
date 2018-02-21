@@ -14,7 +14,8 @@ class Dummy
  * Functions are implemented by the same mechanism as methods, where the [Prop] that the methods refers to is of type
  * Prop<[Dummy]> (and is is just ignored!
  */
-class DummyPropType : PropType<Dummy>(Dummy::class) {
+class DummyPropType private constructor()
+    : PropType<Dummy>(Dummy::class) {
 
     override fun findField(prop: Prop<Dummy>, name: String): PropField<Dummy, *>? {
         return null
@@ -34,6 +35,10 @@ class DummyPropType : PropType<Dummy>(Dummy::class) {
             "Dimension2" -> PropFunction2(Dimension::class, Dimension::class) { x, y -> Dimension2(x, y) }
             else -> null
         }
+    }
+
+    companion object {
+        val instance = DummyPropType()
     }
 }
 

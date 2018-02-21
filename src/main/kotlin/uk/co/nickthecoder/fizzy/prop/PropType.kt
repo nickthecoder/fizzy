@@ -32,18 +32,5 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
         fun put(propertyType: PropType<*>) {
             propertyTypes.put(propertyType.klass, propertyType)
         }
-
-        init {
-            put(DummyPropType()) // Functions
-            put(AnglePropType())
-            put(Dimension2PropType())
-            put(DimensionPropType())
-            put(DoublePropType())
-            put(StringPropType())
-            put(Vector2PropType())
-
-            put(Shape1dPropType())
-            put(Shape2dPropType())
-        }
     }
 }

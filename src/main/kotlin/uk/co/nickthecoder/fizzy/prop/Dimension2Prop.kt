@@ -6,7 +6,8 @@ import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 
-class Dimension2PropType : PropType<Dimension2>(Dimension2::class) {
+class Dimension2PropType private constructor()
+    : PropType<Dimension2>(Dimension2::class) {
 
     override fun findField(prop: Prop<Dimension2>, name: String): PropField<Dimension2, *>? {
 
@@ -26,6 +27,10 @@ class Dimension2PropType : PropType<Dimension2>(Dimension2::class) {
             "rotate" -> PropMethod1(prop, Angle::class) { prop.value.rotate(it) }
             else -> null
         }
+    }
+
+    companion object {
+        val instance = Dimension2PropType()
     }
 }
 

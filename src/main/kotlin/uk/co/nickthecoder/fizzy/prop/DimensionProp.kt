@@ -4,7 +4,8 @@ import uk.co.nickthecoder.fizzy.evaluator.Context
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Dimension
 
-class DimensionPropType : PropType<Dimension>(Dimension::class) {
+class DimensionPropType private constructor()
+    : PropType<Dimension>(Dimension::class) {
 
     override fun findField(prop: Prop<Dimension>, name: String): PropField<Dimension, *>? {
         return when (name) {
@@ -24,6 +25,12 @@ class DimensionPropType : PropType<Dimension>(Dimension::class) {
     }
 
     companion object {
+        val instance = DimensionPropType()
+
+        init {
+            PropType.put(instance)
+        }
+
         fun create(a: Prop<Double>, units: Dimension.Units, power: Double = 1.0): Prop<Dimension> {
             if (a.isConstant()) {
                 return PropConstant(Dimension(a.value, units, power))

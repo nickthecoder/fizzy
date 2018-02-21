@@ -5,7 +5,7 @@ import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Vector2
 
-class Vector2PropType : PropType<Vector2>(Vector2::class) {
+class Vector2PropType private constructor() : PropType<Vector2>(Vector2::class) {
 
     override fun findField(prop: Prop<Vector2>, name: String): PropField<Vector2, *>? {
         return when (name) {
@@ -26,6 +26,8 @@ class Vector2PropType : PropType<Vector2>(Vector2::class) {
     }
 
     companion object {
+        val instance = Vector2PropType()
+
         fun create(a: Prop<Double>, b: Prop<Double>): Prop<Vector2> {
             if (a.isConstant() && b.isConstant()) {
                 return PropConstant(Vector2(a.value, b.value))

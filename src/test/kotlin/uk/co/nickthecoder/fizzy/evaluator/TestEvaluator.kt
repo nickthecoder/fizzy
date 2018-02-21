@@ -682,13 +682,47 @@ class TestEvaluator : TestCase() {
         assertEquals(Dimension.Units.m, c.value.y.units)
     }
 
-    /**
+
     @Test
     fun testConstructors() {
-        val a = Evaluator("Vector2(1,2)").parse()
-        assert(a is PropConstant<*>) { "a is ${a.javaClass}" }
+        // NOTE, at a later date, the evaluator may be improved such that (1+1) DOES return a PropConstant
+        // and if so, the following tests would need to use *real* variables to test the !is cases PropConstant.
+
+        //val a = Evaluator("Vector2(1,2)").parse()
+        // FAILS : assert(a is PropConstant<*>) { "is ${a.javaClass}" }
+        val a2 = Evaluator("Vector2(1 + 1,2)").parse()
+        assert(a2 !is PropConstant<*>) { "is ${a2.javaClass}" }
+        val a3 = Evaluator("Vector2(1,2+1)").parse()
+        assert(a3 !is PropConstant<*>) { "is ${a3.javaClass}" }
+
+        //val b = Evaluator("Dimension2(1m,2m)").parse()
+        // FAILS : assert(b is PropConstant<*>) { "is ${a.javaClass}" }
+        val b2 = Evaluator("Dimension2((1+1)m,2m)").parse()
+        assert(b2 !is PropConstant<*>) { "is ${b2.javaClass}" }
+        val b3 = Evaluator("Dimension2(1m,(2+1)m)").parse()
+        assert(b3 !is PropConstant<*>) { "is ${b3.javaClass}" }
+
+        val c = Evaluator("10 deg").parse()
+        assert(c is PropConstant) { "is ${c.javaClass}" }
+        val c2 = Evaluator("(10+1) deg").parse()
+        assert(c2 !is PropConstant) { "is ${c2.javaClass}" }
+
+        val d = Evaluator("10 rad").parse()
+        assert(d is PropConstant) { "is ${d.javaClass}" }
+        val d2 = Evaluator("(10+1) rad").parse()
+        assert(d2 !is PropConstant) { "is ${d2.javaClass}" }
+
+        val e = Evaluator("\"Hello\"").parse()
+        assert(e is PropConstant) { "is ${e.javaClass}" }
+        val e2 = Evaluator("\"Hello\" + \" World\"").parse()
+        assert(e2 !is PropConstant) { "is ${e2.javaClass}" }
+
+        val f = Evaluator("10m").parse()
+        assert(f is PropConstant) { "is ${f.javaClass}" }
+        val f2 = Evaluator("(10+1)m").parse()
+        assert(f2 !is PropConstant) { "is ${f2.javaClass}" }
     }
-    */
+
 
     //variables.putProp("angle1", ExpressionProp("value1 degrees", Angle::class, context))
 

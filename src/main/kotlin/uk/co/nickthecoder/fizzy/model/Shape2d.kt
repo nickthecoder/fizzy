@@ -1,11 +1,15 @@
 package uk.co.nickthecoder.fizzy.model
 
-import uk.co.nickthecoder.fizzy.prop.AngleExpression
-import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
-import uk.co.nickthecoder.fizzy.prop.Vector2Expression
+import uk.co.nickthecoder.fizzy.evaluator.CompoundContext
+import uk.co.nickthecoder.fizzy.evaluator.ThisContext
+import uk.co.nickthecoder.fizzy.evaluator.constantsContext
+import uk.co.nickthecoder.fizzy.prop.*
 
 class Shape2d(parent: Parent)
     : Shape(parent) {
+
+    override val context = CompoundContext(listOf(
+            constantsContext, ThisContext(PropConstant(this), Shape2dPropType.instance)))
 
     /**
      * The position of this object relative to the parent (which is either a Group, or a Document).
@@ -18,7 +22,7 @@ class Shape2d(parent: Parent)
      * (0,0) would be the top-left of the shape, and [size] would be the bottom right.
      * The default value is [size] / 2, which is the center of the shape.
      */
-    val localPosition = Dimension2Expression("this.size / 2", context)
+    val localPosition = Dimension2Expression("size / 2", context)
 
     val size = Dimension2Expression("Dimension2(1mm,1mm)")
 

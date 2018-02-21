@@ -3,6 +3,7 @@ package uk.co.nickthecoder.fizzy.evaluator
 import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropConstant
+import uk.co.nickthecoder.fizzy.prop.PropType
 
 interface Context {
 
@@ -37,6 +38,20 @@ class SimpleContext(properties: Map<String, Prop<*>> = emptyMap())
 
     fun putProp(name: String, prop: Prop<*>) {
         properties.put(name, prop)
+    }
+}
+
+/**
+ * All fields from a given property [me] are exposed as top-level properties.
+ *
+ * This is used by Shape, so that its expressions can reference part of the Shape
+ * without the need for "this.".
+ */
+class ThisContext<T : Any>(val me: Prop<T>, val type: PropType<T>)
+    : Context {
+
+    override fun findProp(name: String): Prop<*>? {
+        return type.findField(me, name)
     }
 }
 
