@@ -46,23 +46,13 @@ class AngleConstant(value: Angle = Angle.ZERO)
                 }
             } else {
                 if (degrees) {
-                    return AnglePropLinked(PropCalculation2<Double, Double, Double>(a, DoubleConstant(Math.PI / 180.0)) { av, bv -> av * bv })
+                    return PropCalculation1(a) { av -> Angle.degrees(av) }
                 } else {
-                    return AnglePropLinked(a)
+                    return PropCalculation1(a) { av -> Angle.radians(av) }
                 }
             }
         }
     }
-}
-
-class AnglePropLinked(val radians: Prop<Double>)
-    : PropCalculation<Angle>() {
-
-    init {
-        radians.listeners.add(this)
-    }
-
-    override fun eval() = Angle.radians(radians.value)
 }
 
 fun degConversion(a: Prop<*>): Prop<*> {

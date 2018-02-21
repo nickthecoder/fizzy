@@ -31,28 +31,3 @@ class Dimension2PropType : PropType<Dimension2>(Dimension2::class) {
 
 class Dimension2Expression(expression: String, context: Context = constantsContext)
     : PropExpression<Dimension2>(expression, Dimension2::class, context)
-
-class Dimension2Constant(value: Dimension2 = Dimension2.ZERO_mm)
-    : PropConstant<Dimension2>(value) {
-
-    companion object {
-        fun create(a: Prop<Dimension>, b: Prop<Dimension>): Prop<Dimension2> {
-            if (a is PropConstant<Dimension> && b is PropConstant<Dimension>) {
-                return Dimension2Constant(Dimension2(a.value, b.value))
-            } else {
-                return Dimension2PropLinked(a, b)
-            }
-        }
-    }
-}
-
-class Dimension2PropLinked(val x: Prop<Dimension>, val y: Prop<Dimension>)
-    : PropCalculation<Dimension2>() {
-
-    init {
-        x.listeners.add(this)
-        y.listeners.add(this)
-    }
-
-    override fun eval() = Dimension2(x.value, y.value)
-}

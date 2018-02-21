@@ -22,7 +22,12 @@ class Geometry(val shape: Shape)
     private val geometryPartsListener = object : ChangeAndCollectionListener<Geometry, GeometryPart>(this, parts) {
         override fun added(collection: FCollection<GeometryPart>, item: GeometryPart) {
             super.added(collection, item)
-            item.parent = parent
+            item.geometry = parent
+        }
+
+        override fun removed(collection: FCollection<GeometryPart>, item: GeometryPart) {
+            super.removed(collection, item)
+            item.geometry = null
         }
     }
 }
@@ -31,7 +36,7 @@ abstract class GeometryPart()
 
     : HasChangeListeners<GeometryPart>, PropListener {
 
-    internal var parent: Geometry? = null
+    internal var geometry: Geometry? = null
         set(v) {
             field = v
             if (v == null) {

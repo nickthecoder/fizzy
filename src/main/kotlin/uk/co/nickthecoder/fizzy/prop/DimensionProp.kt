@@ -35,20 +35,10 @@ class DimensionConstant(value: Dimension = Dimension.ZERO_mm)
             if (a is DoubleConstant) {
                 return DimensionConstant(Dimension(a.value, units, power))
             } else {
-                return DimensionPropLinked(a, units, power)
+                return PropCalculation1(a) { av -> Dimension(av, units, power) }
             }
         }
     }
-}
-
-class DimensionPropLinked(val number: Prop<Double>, val units: Dimension.Units, val power: Double = 1.0)
-    : PropCalculation<Dimension>() {
-
-    init {
-        number.listeners.add(this)
-    }
-
-    override fun eval() = Dimension(number.value, units, power)
 }
 
 fun dimensionConversion(a: Prop<*>, units: Dimension.Units, power: Double = 1.0): Prop<*> {

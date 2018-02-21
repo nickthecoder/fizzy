@@ -1,13 +1,13 @@
 To Do
 =====
 
-Use the same pattern for "parent" that Geometry has with Shape with other classes, and build in the setting of parent when the collection is
-added to / removed from in ChangeAndCollectionListener. Also rename it!
+The likes of AnglePropLinked looks weird - I think this was pre lambda stuff, and can be simplified with a lambda???
 
 Soon
 ----
 
-The likes of AnglePropLinked looks weird - I think this was pre lambda stuff, and can be simplified with a lambda???
+Test that Dimension2( x, y ) and Vector2( x, y ) and "n deg" create either a constant of a PropCalculation
+    based on whether the arguments themselves are constant.
 
 Maybe
 -----

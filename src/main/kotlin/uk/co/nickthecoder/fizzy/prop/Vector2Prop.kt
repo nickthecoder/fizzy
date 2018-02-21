@@ -31,25 +31,4 @@ class Vector2Expression(expression: String, context: Context = constantsContext)
 
 class Vector2Constant(value: Vector2 = Vector2.ZERO)
     : PropConstant<Vector2>(value) {
-
-    companion object {
-        fun create(x: Prop<Double>, y: Prop<Double>): Prop<Vector2> {
-            if (x is DoubleConstant && y is DoubleConstant) {
-                return Vector2Constant(Vector2(x.value, y.value))
-            } else {
-                return Vector2PropLinked(x, y)
-            }
-        }
-    }
-}
-
-class Vector2PropLinked(val x: Prop<Double>, val y: Prop<Double>)
-    : PropCalculation<Vector2>() {
-
-    init {
-        x.listeners.add(this)
-        y.listeners.add(this)
-    }
-
-    override fun eval() = Vector2(x.value, y.value)
 }
