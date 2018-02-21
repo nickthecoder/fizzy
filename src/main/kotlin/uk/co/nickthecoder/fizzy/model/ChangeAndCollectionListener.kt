@@ -17,7 +17,7 @@ import uk.co.nickthecoder.fizzy.collection.FCollection
  * When an item in the collection changes, the parent's [ChangeListener]s are notified by firing a
  * [ChangeListener.changed].
  */
-class ChangeAndCollectionListener<P : HasChangeListeners<P>, C : HasChangeListeners<C>>(
+open class ChangeAndCollectionListener<P : HasChangeListeners<P>, C : HasChangeListeners<C>>(
         val parent: P,
         child: FCollection<C>)
 

@@ -1,6 +1,9 @@
 package uk.co.nickthecoder.fizzy.model
 
+import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.collection.MutableFList
+import uk.co.nickthecoder.fizzy.evaluator.Context
+import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.DimensionExpression
 import uk.co.nickthecoder.fizzy.prop.Prop
@@ -16,12 +19,29 @@ class Geometry(val shape: Shape)
 
     val lineWidth = DimensionExpression("1mm")
 
-    private val geometryPartsListener = ChangeAndCollectionListener(this, parts)
+    private val geometryPartsListener = object : ChangeAndCollectionListener<Geometry, GeometryPart>(this, parts) {
+        override fun added(collection: FCollection<GeometryPart>, item: GeometryPart) {
+            super.added(collection, item)
+            item.parent = parent
+        }
+    }
 }
 
-abstract class GeometryPart(val geometry: Geometry)
+abstract class GeometryPart()
 
     : HasChangeListeners<GeometryPart>, PropListener {
+
+    internal var parent: Geometry? = null
+        set(v) {
+            field = v
+            if (v == null) {
+                setContext(constantsContext)
+            } else {
+                setContext(v.shape.context)
+            }
+        }
+
+    protected abstract fun setContext(context: Context)
 
     override val listeners = ChangeListeners<GeometryPart>()
 
@@ -30,20 +50,32 @@ abstract class GeometryPart(val geometry: Geometry)
     }
 }
 
-class MoveTo(geometry: Geometry)
+class MoveTo()
 
-    : GeometryPart(geometry) {
+    : GeometryPart() {
 
-    val point = Dimension2Expression("Dimension2(0mm, 0mm)", geometry.shape.context)
+    val point = Dimension2Expression("Dimension2(0mm, 0mm)")
 
     init {
         point.listeners.add(this)
     }
+
+    override fun setContext(context: Context) {
+        point.context = context
+    }
 }
 
-class LineTo(geometry: Geometry)
+class LineTo()
 
-    : GeometryPart(geometry) {
+    : GeometryPart() {
 
     val point = Dimension2Expression("Dimension2(0mm, 0mm)")
+
+    init {
+        point.listeners.add(this)
+    }
+
+    override fun setContext(context: Context) {
+        point.context = context
+    }
 }

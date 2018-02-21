@@ -1,6 +1,9 @@
 To Do
 =====
 
+Use the same pattern for "parent" that Geometry has with Shape with other classes, and build in the setting of parent when the collection is
+added to / removed from in ChangeAndCollectionListener. Also rename it!
+
 Soon
 ----
 

@@ -32,7 +32,7 @@ private fun <T : Any> evaluate(expression: String, klass: KClass<T>, context: Co
     throw EvaluationException("Expected type ${klass.simpleName}, but found ${prop.value?.javaClass?.kotlin?.simpleName}", 0)
 }
 
-abstract class PropExpression<T : Any>(expression: String, val klass: KClass<T>, val context: Context = constantsContext)
+abstract class PropExpression<T : Any>(expression: String, val klass: KClass<T>, var context: Context = constantsContext)
 
     : PropCalculation<T>() {
 

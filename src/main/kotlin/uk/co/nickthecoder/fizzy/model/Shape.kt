@@ -31,6 +31,7 @@ open class Shape(var parent: Parent)
     }
 
     init {
+        id.listeners.add(this)
         parent.children.add(this)
         geometry.listeners.add(geometryListener)
     }
@@ -41,7 +42,7 @@ open class Shape(var parent: Parent)
                 field = v
                 if (v) {
                     runLater {
-                        field = false
+                        dirty = false
                         listeners.fireChanged(this)
                     }
                 }

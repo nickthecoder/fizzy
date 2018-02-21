@@ -11,7 +11,7 @@ class TestListeners : TestCase() {
     val layer2 = Layer(page)
 
     val shape1a = Shape2d(layer1)
-    val shape1b = Shape2d(layer1)
+    val shape1b = Shape1d(layer1)
 
     var pageChanged = 0
     var layer1Changed = 0
@@ -56,20 +56,26 @@ class TestListeners : TestCase() {
 
     @Test
     fun testSize() {
-        shape1a.size.value // Ensure not dirty
+        shape1a.size.value // Ensure not dirty - without this, no change would be fired.
         shape1a.size.expression = "Dimension2(1mm,1mm)"
-        shape1a.size.value // Ensure not dirty
         assertEquals(1, shape1aChanged)
         assertEquals(0, shape1bChanged)
         assertEquals(1, layer1Changed)
         assertEquals(0, layer2Changed)
         assertEquals(1, pageChanged)
+
+        shape1a.size.value // Ensure not dirty
+        assertEquals(1, shape1aChanged) // Make sure the line above doesn't fire a change.
+
+        // Change it for a 2nd time.
         shape1a.size.expression = "Dimension2(1m,1m)"
         assertEquals(2, shape1aChanged)
         assertEquals(2, layer1Changed)
         assertEquals(2, pageChanged)
+
+        // Change it for a 3rd time.
+        // But as it is already dirty, no additional change events should be fired.
         shape1a.size.expression = "Dimension2(1cm,1cm)"
-        // As we haven't caused the expression to be re-evaluated, no more change events should be fired.
         assertEquals(2, shape1aChanged)
         assertEquals(2, layer1Changed)
         assertEquals(2, pageChanged)
@@ -80,7 +86,6 @@ class TestListeners : TestCase() {
     fun testPosition() {
         shape1a.position.value // Ensure not dirty
         shape1a.position.expression = "Dimension2(1mm,1mm)"
-        shape1a.position.value // Ensure not dirty
         assertEquals(1, shape1aChanged)
         assertEquals(0, shape1bChanged)
         assertEquals(1, layer1Changed)
@@ -92,9 +97,81 @@ class TestListeners : TestCase() {
     fun testLocalPosition() {
         shape1a.localPosition.value // Ensure not dirty
         shape1a.localPosition.expression = "Dimension2(1mm,1mm)"
-        shape1a.localPosition.value // Ensure not dirty
         assertEquals(1, shape1aChanged)
         assertEquals(1, layer1Changed)
         assertEquals(1, pageChanged)
+    }
+
+    @Test
+    fun testScale() {
+        shape1a.scale.value // Ensure not dirty
+        shape1a.scale.expression = "Vector2(1,)"
+        assertEquals(1, shape1aChanged)
+        assertEquals(1, layer1Changed)
+        assertEquals(1, pageChanged)
+    }
+
+    @Test
+    fun testRotation() {
+        shape1a.rotation.value // Ensure not dirty
+        shape1a.rotation.expression = "30 deg"
+        assertEquals(1, shape1aChanged)
+        assertEquals(1, layer1Changed)
+        assertEquals(1, pageChanged)
+    }
+
+    @Test
+    fun testStart() {
+        shape1b.start.value // Ensure not dirty
+        shape1b.start.expression = "Dimension2(3m,2m)"
+        assertEquals(1, shape1bChanged)
+        assertEquals(1, layer1Changed)
+        assertEquals(1, pageChanged)
+    }
+
+    @Test
+    fun testEnd() {
+        shape1b.start.value // Ensure not dirty
+        shape1b.start.expression = "Dimension2(3m,2m)"
+        assertEquals(1, shape1bChanged)
+        assertEquals(1, layer1Changed)
+        assertEquals(1, pageChanged)
+    }
+
+    @Test
+    fun testId() {
+        shape1a.id.value // Ensure not dirty
+        shape1b.id.value // Ensure not dirty
+
+        shape1a.id.value = "Shape1A"
+        assertEquals(1, shape1aChanged)
+        assertEquals(0, shape1bChanged)
+        assertEquals(1, layer1Changed)
+        assertEquals(1, pageChanged)
+
+        shape1b.id.value = "Shape1B"
+        assertEquals(1, shape1aChanged)
+        assertEquals(1, shape1bChanged)
+        assertEquals(2, layer1Changed)
+        assertEquals(2, pageChanged)
+    }
+
+    @Test
+    fun testGeometry() {
+        val mt = MoveTo()
+        shape1a.geometry.parts.add(mt)
+        println("shape1aChanged count = ${shape1aChanged}")
+        assertEquals(1, shape1aChanged)
+        assertEquals(0, shape1bChanged)
+        assertEquals(1, layer1Changed)
+        assertEquals(1, pageChanged)
+
+        val lt = LineTo()
+        shape1a.geometry.parts.add(lt)
+        assertEquals(2, shape1aChanged)
+        assertEquals(0, shape1bChanged)
+        assertEquals(2, layer1Changed)
+        assertEquals(2, pageChanged)
+
     }
 }
