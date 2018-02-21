@@ -4,6 +4,8 @@ To Do
 Soon
 ----
 
+The likes of AnglePropLinked looks weird - I think this was pre lambda stuff, and can be simplified with a lambda???
+
 Maybe
 -----
 
@@ -31,15 +33,48 @@ Shape has an ID, which can be referenced by expressions in other Shapes.
     Clear the listeners before evaluating the expression and/or when the expression is changed.
     Are ShapeIDs unique to the whole document, or can a Shape inside a group share an ID with a Shape within a different group?
 
+How are 2 shapes combined into one?
+    Maybe the size is forced to a new constant, and each geometry item is recreated, so that the values stay the same, but the calculation is based on the new size.
+
+How does a line join to two boxes at their edges?
+    Instead of trying to head directly from each box center, snap to the edge, remembering the ratio.
+    So you can snap to the middle of the edge with a ratio of 0.5, and the left with a ratio of 0.
+        Then each end of the line can be independent.
+    i.e. we don't snap to a BOX, but instead snap to a LINE
+    We could also snap to an ellipse (with the option of setting the start and end angle of the curve.
+
+How should text be stored?
+    Maybe every shape can (optionally) have a single piece of text associated with it.
+        Except groups???
+        Maybe only Shape2d has text
+    Should the text have independent rotation?
+    The text is often a "property" of the top-level shape, in which case, how is the text edited from the
+        properties dialog AND the GUI?
+        Using the GUI : If text is editable AND the expression is a simple link, then edit the item the link points to.
+            Could generalise this behaviour for other purposes.
+
 Notes
 -----
 
-A Document should have a set of custom properties that its Shapes can reference.
+A Document should have a set of custom properties / styles that its Shapes can reference.
 For example, a line width and line color which many shapes all share.
     These can be expressions, and therefore can reference other custom properties.
-When a stencil is dragged to a document, should it reference the stencil's document properties or the
+When a master shape is dragged to a document, should it reference the stencil's document properties or the
     actual document's properties?
-Could make the document reference the stencil, then the user can choose to break the link, and redefine the value.
+
+When a compound object such as Dimension2 is shown in the spreadsheet, we need to be able to edit is as a whole,
+    or by its constituent parts.
+    Show split whenever possible?
+
+    OR any compound objects have TWO implementations of Expression, split and un-split.
+        Split has two separate expression strings.
+        In this way the GUI always shows in the way it was designed.
+            We can still have a split/un-split button
+
+    NOTE. Is is always possible to split an expression by duplicating the expression, and added "(blah).x" and "(blah).y"
+        but if we then un-split it, it will give a horrible mess, but we could use a simple regex to see if
+        merging can be done nicely without making a mess (i.e. check that both expressions are " *( *blah *).x"
+        or " *blah *.x" where blah doesn't have any operators.
 
 Visio clip :
 https://www.youtube.com/watch?v=9Kyv48e22LQ

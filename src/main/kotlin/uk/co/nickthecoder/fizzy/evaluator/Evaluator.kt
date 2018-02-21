@@ -216,6 +216,12 @@ class Evaluator(val text: CharSequence, val context: Context = constantsContext)
         }
     }
 
+    /**
+     * Applies any non-open brackets on the stack.
+     * If an open bracket is not found, then an expection is throw.
+     * Otherwise the open bracket is returned, but it is NOT popped off the stack, and the top-most item on the
+     * stack will be the open bracket.
+     */
     private fun lookingForOpenBracket(close: Token): Operator {
         var op = peekOperator()
         do {

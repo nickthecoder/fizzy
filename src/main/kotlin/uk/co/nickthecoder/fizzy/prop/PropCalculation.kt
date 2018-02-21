@@ -9,7 +9,7 @@ abstract class PropCalculation<T : Any>
             if (field != v) {
                 field = v
                 if (v) {
-                    listeners.forEach { it.dirty(this) }
+                    listeners.fireDirty(this)
                 }
             }
         }

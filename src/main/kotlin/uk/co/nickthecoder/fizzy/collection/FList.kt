@@ -1,4 +1,4 @@
-package uk.co.nickthecoder.fizzy.list
+package uk.co.nickthecoder.fizzy.collection
 
 open class FList<T>(override val backing: List<T> = listOf<T>())
 
@@ -40,7 +40,7 @@ open class MutableFList<T>(override val backing: MutableList<T> = mutableListOf<
 
     override fun add(index: Int, element: T) {
         backing.add(index, element)
-        listeners.forEach { it.added(this, element) }
+        listeners.fireAdded(this,element)
     }
 
     override fun addAll(index: Int, elements: Collection<T>): Boolean {
@@ -49,7 +49,7 @@ open class MutableFList<T>(override val backing: MutableList<T> = mutableListOf<
         elements.forEach { ele ->
             backing.add(i, ele)
             added = true
-            listeners.forEach { it.added(this, ele) }
+            listeners.fireAdded(this, ele)
             i++
         }
         return added
@@ -58,15 +58,15 @@ open class MutableFList<T>(override val backing: MutableList<T> = mutableListOf<
     override fun removeAt(index: Int): T {
         val result = backing.removeAt(index)
         if (result != null) {
-            listeners.forEach { it.removed(this, result) }
+            listeners.fireRemoved(this,result)
         }
         return result
     }
 
     override fun set(index: Int, element: T): T {
         val result = backing.set(index, element)
-        listeners.forEach { it.removed(this, result) }
-        listeners.forEach { it.added(this, element) }
+        listeners.fireRemoved(this,result)
+        listeners.fireAdded(this,element)
 
         return result
     }

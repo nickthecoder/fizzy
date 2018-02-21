@@ -1,9 +1,9 @@
-package uk.co.nickthecoder.fizzy.list
+package uk.co.nickthecoder.fizzy.collection
 
 interface FCollection<T>
     : Collection<T> {
 
-    val listeners : CollectionListeners<T>
+    val listeners: CollectionListeners<T>
 
     val backing: Collection<T>
 
@@ -29,7 +29,7 @@ interface MutableFCollection<T>
 
     override fun add(element: T): Boolean {
         if (backing.add(element)) {
-            listeners.forEach { it.added(this, element) }
+            listeners.fireAdded(this, element)
             return true
         }
         return false
@@ -40,7 +40,7 @@ interface MutableFCollection<T>
         elements.forEach { ele ->
             if (backing.add(ele)) {
                 added = true
-                listeners.forEach { it.added(this, ele) }
+                listeners.fireAdded(this, ele)
             }
         }
         return added
@@ -48,14 +48,14 @@ interface MutableFCollection<T>
 
     override fun clear() {
         backing.forEach { item ->
-            listeners.forEach { it.removed(this, item) }
+            listeners.fireRemoved(this, item)
         }
         backing.clear()
     }
 
     override fun remove(element: T): Boolean {
         if (backing.remove(element)) {
-            listeners.forEach { it.removed(this, element) }
+            listeners.fireRemoved(this, element)
             return true
         }
         return false
@@ -76,11 +76,10 @@ interface MutableFCollection<T>
         val result = backing.retainAll(elements)
         oldList.forEach { old ->
             if (!backing.contains(old)) {
-                listeners.forEach { it.removed(this, old) }
+                listeners.fireRemoved(this, old)
             }
         }
         return result
     }
 
 }
-

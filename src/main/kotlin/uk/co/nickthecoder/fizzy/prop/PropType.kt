@@ -4,9 +4,9 @@ import kotlin.reflect.KClass
 
 abstract class PropType<T : Any>(val klass: KClass<*>) {
 
-    abstract fun findField(prop: Prop<T>, name: String): PropField<T, *>?
+    abstract fun findField(prop: Prop<T>, name: String): Prop<*>?
 
-    private fun findField2(prop: Prop<*>, name: String): PropField<T, *>? {
+    private fun findField2(prop: Prop<*>, name: String): Prop<*>? {
         @Suppress("UNCHECKED_CAST")
         return findField(prop as Prop<T>, name)
     }
@@ -21,7 +21,7 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
     companion object {
         val propertyTypes = mutableMapOf<KClass<*>, PropType<*>>()
 
-        fun field(prop: Prop<*>, fieldName: String): PropField<*, *>? {
+        fun field(prop: Prop<*>, fieldName: String): Prop<*>? {
             return propertyTypes[prop.value?.javaClass!!.kotlin]?.findField2(prop, fieldName)
         }
 
@@ -41,6 +41,9 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
             put(DoublePropType())
             put(StringPropType())
             put(Vector2PropType())
+
+            put(Shape1dPropType())
+            put(Shape2dPropType())
         }
     }
 }

@@ -4,32 +4,37 @@ import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 
-class Group(parent: Parent)
+class Layer(val page: Page)
+    : Parent {
 
-    : Shape(parent), Parent {
+    val listeners = ChangeListeners<Layer>()
 
     override var children = MutableFList<Shape>()
 
-
-    private val shapeListener = object : ChangeListener<Shape>, CollectionListener<Shape> {
+    private val shapeListener = object : CollectionListener<Shape>, ChangeListener<Shape> {
 
         override fun changed(item: Shape, changeType: ChangeType, obj: Any?) {
-            listeners.fireChanged(this@Group)
+            listeners.fireChanged(this@Layer, changeType, item)
         }
 
         override fun added(collection: FCollection<Shape>, item: Shape) {
-            listeners.fireChanged(this@Group)
+            listeners.fireChanged(this@Layer, ChangeType.ADD, item)
             item.listeners.add(this)
         }
 
         override fun removed(collection: FCollection<Shape>, item: Shape) {
-            listeners.fireChanged(this@Group)
-            item.listeners.add(this)
+            listeners.fireChanged(this@Layer, ChangeType.REMOVE, item)
+            item.listeners.remove(this)
         }
     }
 
     init {
+        page.layers.add(this)
         children.listeners.add(shapeListener)
     }
+
+    override fun page() = page
+
+    override fun layer() = this
 
 }
