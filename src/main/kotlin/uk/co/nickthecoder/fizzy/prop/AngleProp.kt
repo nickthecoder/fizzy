@@ -27,22 +27,13 @@ class AnglePropType : PropType<Angle>(Angle::class) {
         }
     }
 
-}
-
-
-class AngleExpression(expression: String, context: Context = constantsContext)
-    : PropExpression<Angle>(expression, Angle::class, context)
-
-class AngleConstant(value: Angle = Angle.ZERO)
-    : PropConstant<Angle>(value) {
-
     companion object {
         fun create(a: Prop<Double>, degrees: Boolean): Prop<Angle> {
-            if (a is DoubleConstant) {
+            if (a.isConstant()) {
                 if (degrees) {
-                    return AngleConstant(Angle.degrees(a.value))
+                    return PropConstant(Angle.degrees(a.value))
                 } else {
-                    return AngleConstant(Angle.radians(a.value))
+                    return PropConstant(Angle.radians(a.value))
                 }
             } else {
                 if (degrees) {
@@ -55,10 +46,14 @@ class AngleConstant(value: Angle = Angle.ZERO)
     }
 }
 
+
+class AngleExpression(expression: String, context: Context = constantsContext)
+    : PropExpression<Angle>(expression, Angle::class, context)
+
 fun degConversion(a: Prop<*>): Prop<*> {
     if (a.value is Double) {
         @Suppress("UNCHECKED_CAST")
-        return AngleConstant.create(a as Prop<Double>, degrees = true)
+        return AnglePropType.create(a as Prop<Double>, degrees = true)
     }
     return throwExpectedType("Double", a)
 }
@@ -66,7 +61,7 @@ fun degConversion(a: Prop<*>): Prop<*> {
 fun radConversion(a: Prop<*>): Prop<*> {
     if (a.value is Double) {
         @Suppress("UNCHECKED_CAST")
-        return AngleConstant.create(a as Prop<Double>, degrees = false)
+        return AnglePropType.create(a as Prop<Double>, degrees = false)
     }
     return throwExpectedType("Double", a)
 }

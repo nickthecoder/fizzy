@@ -239,14 +239,14 @@ class Evaluator(val text: CharSequence, val context: Context = constantsContext)
     private fun pushNumber(token: Token) {
         try {
             val number = token.toDouble()
-            pushValue(DoubleConstant(number))
+            pushValue(PropConstant(number))
         } catch (e: Exception) {
             throw EvaluationException("Not a valid number : ${token.text}", token.startIndex)
         }
     }
 
     private fun pushString(token: Token) {
-        pushValue(StringConstant(token.text))
+        pushValue(PropConstant(token.text))
     }
 
     private fun pushIdentifier(token: Token) {

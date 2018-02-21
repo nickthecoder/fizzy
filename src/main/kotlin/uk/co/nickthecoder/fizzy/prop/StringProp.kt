@@ -21,6 +21,3 @@ class StringPropType : PropType<String>(String::class) {
         }
     }
 }
-
-class StringConstant(value: String = "")
-    : PropConstant<String>(value)

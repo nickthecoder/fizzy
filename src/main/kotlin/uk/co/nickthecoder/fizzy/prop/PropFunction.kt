@@ -37,13 +37,11 @@ class DummyPropType : PropType<Dummy>(Dummy::class) {
     }
 }
 
-class DummyConstant : PropConstant<Dummy>(Dummy())
-
 /**
  * The one and only instance of a [DummyConstant] used as the [PropMethod]'s value when the 'method' is really a
  * function (and applies to nothing).
  */
-val dummyInstance = DummyConstant()
+val dummyInstance = PropConstant(Dummy())
 
 class PropFunction1<A : Any, R : Any>(klassA: KClass<A>, lambda: (A) -> R)
     : PropMethod1<Dummy, A, R>(dummyInstance, klassA, lambda)

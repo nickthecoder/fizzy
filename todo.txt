@@ -1,16 +1,19 @@
 To Do
 =====
 
-The likes of AnglePropLinked looks weird - I think this was pre lambda stuff, and can be simplified with a lambda???
-
 Soon
 ----
 
 Test that Dimension2( x, y ) and Vector2( x, y ) and "n deg" create either a constant of a PropCalculation
     based on whether the arguments themselves are constant.
 
+The Shape's context should be aware all for "this" to be omitted, i.e. just refer to "geometry" rather than "this.geometry"
+
+
 Maybe
 -----
+
+Evaluating "Vector2(1,1)" doesn't produce a PropConstant.
 
 Later
 -----

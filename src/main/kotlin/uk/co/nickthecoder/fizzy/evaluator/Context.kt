@@ -1,9 +1,8 @@
 package uk.co.nickthecoder.fizzy.evaluator
 
 import uk.co.nickthecoder.fizzy.model.Angle
-import uk.co.nickthecoder.fizzy.prop.AngleConstant
-import uk.co.nickthecoder.fizzy.prop.DoubleConstant
 import uk.co.nickthecoder.fizzy.prop.Prop
+import uk.co.nickthecoder.fizzy.prop.PropConstant
 
 interface Context {
 
@@ -43,12 +42,12 @@ class SimpleContext(properties: Map<String, Prop<*>> = emptyMap())
 
 val constantsContext = SimpleContext(
         mapOf(
-                "PI" to AngleConstant(Angle.PI),
-                "TAU" to AngleConstant(Angle.TAU),
-                "E" to DoubleConstant(Math.E),
-                "MAX_DOUBLE" to DoubleConstant(Double.MAX_VALUE),
-                "MIN_DOUBLE" to DoubleConstant(-Double.MAX_VALUE), // Note, this is NOT the same as the badly named Java Double.MIN_VALUE
-                "SMALLEST_DOUBLE" to DoubleConstant(Double.MIN_VALUE),
-                "NaN" to DoubleConstant(Double.NaN)
+                "PI" to PropConstant(Angle.PI),
+                "TAU" to PropConstant(Angle.TAU),
+                "E" to PropConstant(Math.E),
+                "MAX_DOUBLE" to PropConstant(Double.MAX_VALUE),
+                "MIN_DOUBLE" to PropConstant(-Double.MAX_VALUE), // Note, this is NOT the same as the badly named Java Double.MIN_VALUE
+                "SMALLEST_DOUBLE" to PropConstant(Double.MIN_VALUE),
+                "NaN" to PropConstant(Double.NaN)
         )
 )

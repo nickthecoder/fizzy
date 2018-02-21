@@ -682,6 +682,14 @@ class TestEvaluator : TestCase() {
         assertEquals(Dimension.Units.m, c.value.y.units)
     }
 
+    /**
+    @Test
+    fun testConstructors() {
+        val a = Evaluator("Vector2(1,2)").parse()
+        assert(a is PropConstant<*>) { "a is ${a.javaClass}" }
+    }
+    */
+
     //variables.putProp("angle1", ExpressionProp("value1 degrees", Angle::class, context))
 
 }

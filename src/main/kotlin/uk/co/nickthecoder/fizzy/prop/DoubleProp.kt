@@ -16,6 +16,3 @@ class DoublePropType : PropType<Double>(Double::class) {
 
 class DoubleExpression(expression: String, context: Context = constantsContext)
     : PropExpression<Double>(expression, Double::class, context)
-
-class DoubleConstant(value: Double = 0.0)
-    : PropConstant<Double>(value)

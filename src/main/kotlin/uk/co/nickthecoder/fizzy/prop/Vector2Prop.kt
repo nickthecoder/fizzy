@@ -24,11 +24,17 @@ class Vector2PropType : PropType<Vector2>(Vector2::class) {
             else -> null
         }
     }
+
+    companion object {
+        fun create(a: Prop<Double>, b: Prop<Double>): Prop<Vector2> {
+            if (a.isConstant() && b.isConstant()) {
+                return PropConstant(Vector2(a.value, b.value))
+            } else {
+                return PropCalculation2(a, b) { av, bv -> Vector2(av, bv) }
+            }
+        }
+    }
 }
 
 class Vector2Expression(expression: String, context: Context = constantsContext)
     : PropExpression<Vector2>(expression, Vector2::class, context)
-
-class Vector2Constant(value: Vector2 = Vector2.ZERO)
-    : PropConstant<Vector2>(value) {
-}

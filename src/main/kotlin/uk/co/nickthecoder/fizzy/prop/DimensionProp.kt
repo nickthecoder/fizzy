@@ -22,18 +22,11 @@ class DimensionPropType : PropType<Dimension>(Dimension::class) {
             else -> null
         }
     }
-}
-
-class DimensionExpression(expression: String, context: Context = constantsContext)
-    : PropExpression<Dimension>(expression, Dimension::class, context)
-
-class DimensionConstant(value: Dimension = Dimension.ZERO_mm)
-    : PropConstant<Dimension>(value) {
 
     companion object {
         fun create(a: Prop<Double>, units: Dimension.Units, power: Double = 1.0): Prop<Dimension> {
-            if (a is DoubleConstant) {
-                return DimensionConstant(Dimension(a.value, units, power))
+            if (a.isConstant()) {
+                return PropConstant(Dimension(a.value, units, power))
             } else {
                 return PropCalculation1(a) { av -> Dimension(av, units, power) }
             }
@@ -41,10 +34,13 @@ class DimensionConstant(value: Dimension = Dimension.ZERO_mm)
     }
 }
 
+class DimensionExpression(expression: String, context: Context = constantsContext)
+    : PropExpression<Dimension>(expression, Dimension::class, context)
+
 fun dimensionConversion(a: Prop<*>, units: Dimension.Units, power: Double = 1.0): Prop<*> {
     if (a.value is Double) {
         @Suppress("UNCHECKED_CAST")
-        return DimensionConstant.create(a as Prop<Double>, units, power)
+        return DimensionPropType.create(a as Prop<Double>, units, power)
     }
     return throwExpectedType("Double", a)
 }

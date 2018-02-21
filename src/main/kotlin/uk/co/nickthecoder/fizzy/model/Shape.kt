@@ -6,13 +6,12 @@ import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.prop.PropListener
-import uk.co.nickthecoder.fizzy.prop.StringConstant
 import uk.co.nickthecoder.fizzy.util.runLater
 
 open class Shape(var parent: Parent)
     : PropListener, HasChangeListeners<Shape> {
 
-    var id = StringConstant(parent.page().generateId())
+    var id = PropConstant(parent.page().generateId())
 
     val context = CompoundContext(listOf(constantsContext, SimpleContext(mapOf(
             "this" to PropConstant<Shape>(this),
