@@ -20,7 +20,6 @@ package uk.co.nickthecoder.fizzy.evaluator
 
 import junit.framework.TestCase
 import org.junit.Test
-import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
@@ -522,8 +521,8 @@ class TestEvaluator : TestCase() {
     @Test
     fun testDynamicDimensions() {
 
-        val variables = SimpleContext()
-        val context = CompoundContext(listOf(constantsContext, variables))
+        val variables = SimpleEvaluationContext()
+        val context = CompoundEvaluationContext(listOf(constantsContext, variables))
 
         variables.putProp("x", DoubleExpression("3", context))
         variables.putProp("y", DoubleExpression("4", context))
@@ -542,8 +541,8 @@ class TestEvaluator : TestCase() {
     @Test
     fun testDynamicAngles() {
 
-        val variables = SimpleContext()
-        val context = CompoundContext(listOf(constantsContext, variables))
+        val variables = SimpleEvaluationContext()
+        val context = CompoundEvaluationContext(listOf(constantsContext, variables))
 
         variables.putProp("value1", DoubleExpression("80", context))
         variables.putProp("angle1", AngleExpression("value1 deg", context))

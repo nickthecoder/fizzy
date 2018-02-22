@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-import uk.co.nickthecoder.fizzy.evaluator.Context
+import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationException
 import uk.co.nickthecoder.fizzy.evaluator.Evaluator
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
@@ -27,7 +27,7 @@ import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Vector2
 import kotlin.reflect.KClass
 
-private fun <T : Any> evaluate(expression: String, klass: KClass<T>, context: Context): Prop<T> {
+private fun <T : Any> evaluate(expression: String, klass: KClass<T>, context: EvaluationContext): Prop<T> {
 
     val prop = Evaluator(expression, context).parse()
     val value = prop.value
@@ -50,7 +50,7 @@ private fun <T : Any> evaluate(expression: String, klass: KClass<T>, context: Co
     throw EvaluationException("Expected type ${klass.simpleName}, but found ${prop.value?.javaClass?.kotlin?.simpleName}", 0)
 }
 
-abstract class PropExpression<T : Any>(expression: String, val klass: KClass<T>, var context: Context = constantsContext)
+abstract class PropExpression<T : Any>(expression: String, val klass: KClass<T>, var context: EvaluationContext = constantsContext)
 
     : PropCalculation<T>() {
 

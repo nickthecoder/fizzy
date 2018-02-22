@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
-import uk.co.nickthecoder.fizzy.evaluator.CompoundContext
+import uk.co.nickthecoder.fizzy.evaluator.CompoundEvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
@@ -28,7 +28,7 @@ import uk.co.nickthecoder.fizzy.prop.Shape1dPropType
 class Shape1d(parent: Parent)
     : RealShape(parent) {
 
-    override val context = CompoundContext(listOf(
+    override val context = CompoundEvaluationContext(listOf(
             constantsContext, ThisContext(PropConstant(this), Shape1dPropType.instance)))
 
     val start = Dimension2Expression("Dimension2(0mm,0mm)", context)

@@ -21,7 +21,7 @@ package uk.co.nickthecoder.fizzy.model
 import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.collection.MutableFList
-import uk.co.nickthecoder.fizzy.evaluator.CompoundContext
+import uk.co.nickthecoder.fizzy.evaluator.CompoundEvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.prop.PropConstant
@@ -33,7 +33,7 @@ class ShapeGroup(parent: Parent)
 
     override val transform = ShapeTransform(this)
 
-    override val context = CompoundContext(listOf(
+    override val context = CompoundEvaluationContext(listOf(
             constantsContext, ThisContext(PropConstant(this), ShapeGroupPropType.instance)))
 
     override var children = MutableFList<Shape>()

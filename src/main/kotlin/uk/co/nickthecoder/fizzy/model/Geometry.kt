@@ -20,7 +20,7 @@ package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.collection.MutableFList
-import uk.co.nickthecoder.fizzy.evaluator.Context
+import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.DimensionExpression
@@ -72,7 +72,7 @@ abstract class GeometryPart
             }
         }
 
-    internal abstract fun setContext(context: Context)
+    internal abstract fun setContext(context: EvaluationContext)
 
     override val listeners = ChangeListeners<GeometryPart>()
 
@@ -91,7 +91,7 @@ class MoveTo()
         point.listeners.add(this)
     }
 
-    override fun setContext(context: Context) {
+    override fun setContext(context: EvaluationContext) {
         point.context = context
     }
 }
@@ -106,7 +106,7 @@ class LineTo()
         point.listeners.add(this)
     }
 
-    override fun setContext(context: Context) {
+    override fun setContext(context: EvaluationContext) {
         point.context = context
     }
 }

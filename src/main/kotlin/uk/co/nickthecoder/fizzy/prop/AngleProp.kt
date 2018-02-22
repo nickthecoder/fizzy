@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-import uk.co.nickthecoder.fizzy.evaluator.Context
+import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Angle
 
@@ -68,7 +68,7 @@ class AnglePropType private constructor()
 }
 
 
-class AngleExpression(expression: String, context: Context = constantsContext)
+class AngleExpression(expression: String, context: EvaluationContext = constantsContext)
     : PropExpression<Angle>(expression, Angle::class, context)
 
 fun degConversion(a: Prop<*>): Prop<*> {

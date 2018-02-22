@@ -35,7 +35,7 @@ import uk.co.nickthecoder.fizzy.prop.*
  * the [values] stack. At the end of the parsing, the [operators] stacks should both be empty, and the [values] stack
  * should contain a single value, which is returned from [parse].
  */
-class Evaluator(val text: CharSequence, val context: Context = constantsContext) {
+class Evaluator(val text: CharSequence, val context: EvaluationContext = constantsContext) {
 
     private var index = 0
 

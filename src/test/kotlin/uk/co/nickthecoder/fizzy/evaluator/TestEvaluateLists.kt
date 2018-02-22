@@ -62,7 +62,7 @@ class TestEvaluateLists : TestCase() {
     fun testLists() {
         PropType.put(FooPropType())
         val foo = Foo(FList(listOf(Angle.degrees(45.0), Angle.degrees(90.0))))
-        val context = SimpleContext(mapOf("foo" to PropConstant(foo)))
+        val context = SimpleEvaluationContext(mapOf("foo" to PropConstant(foo)))
 
         val a = Evaluator("foo.angles1.degrees", context).parse() as Prop<Double>
         assertEquals(45.0, a.value, tiny)

@@ -20,7 +20,7 @@ package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.collection.MutableFList
-import uk.co.nickthecoder.fizzy.evaluator.Context
+import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.prop.PropListener
@@ -31,7 +31,7 @@ abstract class Shape(var parent: Parent)
 
     var id = PropConstant(parent.page().generateId())
 
-    abstract val context: Context
+    abstract val context: EvaluationContext
 
     override var listeners = ChangeListeners<Shape>()
 

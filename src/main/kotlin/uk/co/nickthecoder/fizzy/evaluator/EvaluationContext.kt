@@ -23,13 +23,13 @@ import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.prop.PropType
 
-interface Context {
+interface EvaluationContext {
 
     fun findProp(name: String): Prop<*>?
 
 }
 
-class CompoundContext(val children: List<Context>) : Context {
+class CompoundEvaluationContext(val children: List<EvaluationContext>) : EvaluationContext {
 
     override fun findProp(name: String): Prop<*>? {
         children.forEach {
@@ -42,9 +42,9 @@ class CompoundContext(val children: List<Context>) : Context {
     }
 }
 
-class SimpleContext(properties: Map<String, Prop<*>> = emptyMap())
+class SimpleEvaluationContext(properties: Map<String, Prop<*>> = emptyMap())
 
-    : Context {
+    : EvaluationContext {
 
     val properties = mutableMapOf<String, Prop<*>>()
 
@@ -66,14 +66,14 @@ class SimpleContext(properties: Map<String, Prop<*>> = emptyMap())
  * without the need for "this.".
  */
 class ThisContext<T : Any>(val me: Prop<T>, val type: PropType<T>)
-    : Context {
+    : EvaluationContext {
 
     override fun findProp(name: String): Prop<*>? {
         return type.findField(me, name)
     }
 }
 
-val constantsContext = SimpleContext(
+val constantsContext = SimpleEvaluationContext(
         mapOf(
                 "PI" to PropConstant(Angle.PI),
                 "TAU" to PropConstant(Angle.TAU),

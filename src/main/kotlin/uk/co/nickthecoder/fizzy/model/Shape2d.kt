@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
-import uk.co.nickthecoder.fizzy.evaluator.CompoundContext
+import uk.co.nickthecoder.fizzy.evaluator.CompoundEvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.prop.PropConstant
@@ -27,7 +27,7 @@ import uk.co.nickthecoder.fizzy.prop.Shape2dPropType
 class Shape2d(parent: Parent)
     : RealShape(parent), HasShapeTransform {
 
-    override val context = CompoundContext(listOf(
+    override val context = CompoundEvaluationContext(listOf(
             constantsContext, ThisContext(PropConstant(this), Shape2dPropType.instance)))
 
     override val transform = ShapeTransform(this)

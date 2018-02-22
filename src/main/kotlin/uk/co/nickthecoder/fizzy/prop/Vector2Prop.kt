@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-import uk.co.nickthecoder.fizzy.evaluator.Context
+import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Vector2
@@ -56,5 +56,5 @@ class Vector2PropType private constructor() : PropType<Vector2>(Vector2::class) 
     }
 }
 
-class Vector2Expression(expression: String, context: Context = constantsContext)
+class Vector2Expression(expression: String, context: EvaluationContext = constantsContext)
     : PropExpression<Vector2>(expression, Vector2::class, context)
