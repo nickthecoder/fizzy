@@ -74,26 +74,26 @@ class TestListeners : MyTestCase() {
 
     @Test
     fun testSize() {
-        shape1a.transform.size.value // Ensure not dirty - without this, no change would be fired.
-        shape1a.transform.size.expression = "Dimension2(1mm,1mm)"
+        shape1a.size.value // Ensure not dirty - without this, no change would be fired.
+        shape1a.size.expression = "Dimension2(1mm,1mm)"
         assertEquals(1, shape1aChanged)
         assertEquals(0, shape1bChanged)
         assertEquals(1, layer1Changed)
         assertEquals(0, layer2Changed)
         assertEquals(1, pageChanged)
 
-        shape1a.transform.size.value // Ensure not dirty
+        shape1a.size.value // Ensure not dirty
         assertEquals(1, shape1aChanged) // Make sure the line above doesn't fire a change.
 
         // Change it for a 2nd time.
-        shape1a.transform.size.expression = "Dimension2(1m,1m)"
+        shape1a.size.expression = "Dimension2(1m,1m)"
         assertEquals(2, shape1aChanged)
         assertEquals(2, layer1Changed)
         assertEquals(2, pageChanged)
 
         // Change it for a 3rd time.
         // But as it is already dirty, no additional change events should be fired.
-        shape1a.transform.size.expression = "Dimension2(1cm,1cm)"
+        shape1a.size.expression = "Dimension2(1cm,1cm)"
         assertEquals(2, shape1aChanged)
         assertEquals(2, layer1Changed)
         assertEquals(2, pageChanged)

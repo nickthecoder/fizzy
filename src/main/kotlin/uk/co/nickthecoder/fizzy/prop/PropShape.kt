@@ -83,7 +83,7 @@ class Shape2dPropType private constructor()
 
     override fun findField(prop: Prop<Shape2d>, name: String): Prop<*>? {
         return when (name) {
-            "size" -> prop.value.transform.size
+            "size" -> prop.value.size
             "position" -> prop.value.transform.position
             "localPosition" -> prop.value.transform.localPosition
             "rotation" -> prop.value.transform.rotation

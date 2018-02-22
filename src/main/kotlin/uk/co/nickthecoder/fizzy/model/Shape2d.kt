@@ -21,6 +21,7 @@ package uk.co.nickthecoder.fizzy.model
 import uk.co.nickthecoder.fizzy.evaluator.CompoundEvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
+import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.prop.Shape2dPropType
 
@@ -32,4 +33,9 @@ class Shape2d(parent: Parent)
 
     override val transform = ShapeTransform(this)
 
+    val size = Dimension2Expression("Dimension2(1mm,1mm)")
+
+    init {
+        size.listeners.add(this)
+    }
 }

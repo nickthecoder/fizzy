@@ -42,8 +42,6 @@ class ShapeTransform(val shape: Shape) {
      */
     val localPosition = Dimension2Expression("size / 2", shape.context)
 
-    val size = Dimension2Expression("Dimension2(1mm,1mm)")
-
     // Should we have a scale? A scale would scale the line widths, the fonts etc
     val scale = Vector2Expression("Vector2(1, 1)", shape.context)
 
@@ -52,7 +50,6 @@ class ShapeTransform(val shape: Shape) {
     init {
         position.listeners.add(shape)
         localPosition.listeners.add(shape)
-        size.listeners.add(shape)
         scale.listeners.add(shape)
         rotation.listeners.add(shape)
     }

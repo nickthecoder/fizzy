@@ -15,7 +15,7 @@ class TestShape : MyTestCase() {
     @Test
     fun testGeometry() {
         // Make a box 60mm x 40mm. centered at (40mm,120mm)
-        box.transform.size.expression = "Dimension2(60mm,120mm)"
+        box.size.expression = "Dimension2(60mm,120mm)"
         box.transform.position.expression = "Dimension2(40mmx60mm)"
         val geometry = Geometry()
         box.geometries.add(geometry)
@@ -49,6 +49,14 @@ class TestShape : MyTestCase() {
         assertEquals(-60.0, (geometry.parts[1] as LineTo).point.value.y.mm)
         assertEquals(-30.0, (geometry.parts[3] as LineTo).point.value.x.mm)
         assertEquals(60.0, (geometry.parts[3] as LineTo).point.value.y.mm)
+
+        // Now move the top left corner inwards
+        val topLeft = geometry.parts[0] as MoveTo
+        topLeft.point.expression = "size * Vector2(0, -0.5)"
+        assertEquals(0.0, (geometry.parts[0] as MoveTo).point.value.x.mm)
+        assertEquals(-60.0, (geometry.parts[0] as MoveTo).point.value.y.mm) // Unchanged
+        assertEquals(0.0, (geometry.parts[4] as LineTo).point.value.x.mm)
+        assertEquals(-60.0, (geometry.parts[4] as LineTo).point.value.y.mm) // Unchanged
 
     }
 }
