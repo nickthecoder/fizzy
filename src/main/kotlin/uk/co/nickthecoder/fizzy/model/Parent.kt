@@ -26,6 +26,6 @@ interface Parent {
 
     fun layer(): Layer
 
-    fun page(): Page
+    fun document(): Document
 
 }

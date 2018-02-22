@@ -20,7 +20,7 @@ package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 
-class Layer(val page: Page)
+class Layer(val document: Document)
     : Parent, HasChangeListeners<Layer> {
 
     override val listeners = ChangeListeners<Layer>()
@@ -30,10 +30,10 @@ class Layer(val page: Page)
     private val shapesListener = ChangeAndCollectionListener(this, children)
 
     init {
-        page.layers.add(this)
+        document.layers.add(this)
     }
 
-    override fun page() = page
+    override fun document() = document
 
     override fun layer() = this
 

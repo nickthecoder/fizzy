@@ -23,7 +23,7 @@ import org.junit.Test
 
 class TestListeners : TestCase() {
 
-    val page = Page()
+    val page = Document()
 
     val layer1 = Layer(page)
     val layer2 = Layer(page)

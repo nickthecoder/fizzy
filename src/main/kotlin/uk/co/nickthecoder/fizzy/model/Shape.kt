@@ -30,7 +30,7 @@ import uk.co.nickthecoder.fizzy.util.runLater
 abstract class Shape(var parent: Parent)
     : PropListener, HasChangeListeners<Shape> {
 
-    var id = PropConstant(parent.page().generateId())
+    var id = PropConstant(parent.document().generateId())
 
     abstract val context: EvaluationContext
 
@@ -79,7 +79,7 @@ abstract class Shape(var parent: Parent)
         dirty = true
     }
 
-    fun page(): Page = parent.page()
+    fun document(): Document = parent.document()
 
     fun layer(): Layer = parent.layer()
 

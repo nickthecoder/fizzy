@@ -20,9 +20,9 @@ package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 
-class Page : HasChangeListeners<Page> {
+class Document : HasChangeListeners<Document> {
 
-    override val listeners = ChangeListeners<Page>()
+    override val listeners = ChangeListeners<Document>()
 
     var layers = MutableFList<Layer>()
 
