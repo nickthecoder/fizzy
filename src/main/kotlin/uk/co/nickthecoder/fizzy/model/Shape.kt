@@ -61,6 +61,8 @@ abstract class Shape(var parent: Parent)
 
     fun layer(): Layer = parent.layer()
 
+    abstract fun findShape(id: String): Shape?
+
     override fun toString(): String = "Shape ${id.value}"
 
 }
@@ -83,4 +85,6 @@ abstract class RealShape(parent: Parent) : Shape(parent) {
             item.shape = null
         }
     }
+
+    override fun findShape(id: String): Shape? = if (id == this.id.value) this else null
 }

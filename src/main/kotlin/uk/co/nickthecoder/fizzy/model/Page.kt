@@ -31,6 +31,15 @@ class Page : HasChangeListeners<Page> {
 
     private val layersListener = ChangeAndCollectionListener(this, layers)
 
+    fun findShape(id: String): Shape? {
+        layers.forEach { layer ->
+            val found = layer.findShape(id)
+            if (found != null) {
+                return found
+            }
+        }
+        return null
+    }
 
     fun generateId(): String {
         previousId++

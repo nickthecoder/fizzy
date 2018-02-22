@@ -56,6 +56,16 @@ class ShapeGroup(parent: Parent)
         }
     }
 
+    override fun findShape(id: String): Shape? {
+        if (id == this.id.value) return this
+
+        children.forEach { child ->
+            val found = child.findShape(id)
+            if (found != null) return found
+        }
+        return null
+    }
+
     init {
         children.listeners.add(shapeListener)
     }

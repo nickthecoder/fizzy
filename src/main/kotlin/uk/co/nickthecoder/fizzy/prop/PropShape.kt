@@ -29,7 +29,11 @@ abstract class ShapePropType<T : Shape>(klass: KClass<in T>)
         return when (name) {
             "page" -> PropConstant(prop.value.page())
             "layer" -> PropConstant(prop.value.layer())
-            else -> super.findField(prop, name)
+            else -> {
+                val page = prop.value.page()
+
+                super.findField(prop, name)
+            }
         }
     }
 

@@ -24,8 +24,8 @@ class Layer(val page: Page)
     : Parent, HasChangeListeners<Layer> {
 
     override val listeners = ChangeListeners<Layer>()
-
-    override var children = MutableFList<Shape>()
+    
+    override val children = MutableFList<Shape>()
 
     private val shapesListener = ChangeAndCollectionListener(this, children)
 
@@ -37,4 +37,11 @@ class Layer(val page: Page)
 
     override fun layer() = this
 
+    fun findShape(id: String): Shape? {
+        children.forEach { layer ->
+            val found = layer.findShape(id)
+            if (found != null) return found
+        }
+        return null
+    }
 }
