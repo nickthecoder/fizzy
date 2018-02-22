@@ -29,9 +29,14 @@ abstract class ShapePropType<T : Shape>(klass: KClass<in T>)
         return when (name) {
             "page" -> PropConstant(prop.value.page())
             "layer" -> PropConstant(prop.value.layer())
+            "children" -> FListProp(prop.value.children)
             else -> {
+                // Allow the name of any shape on the page to be addresses as a top-level item
                 val page = prop.value.page()
-
+                val shape = page.findShape(name)
+                if (shape != null) {
+                    return PropConstant(shape)
+                }
                 super.findField(prop, name)
             }
         }
@@ -101,7 +106,6 @@ class ShapeGroupPropType private constructor()
 
     override fun findField(prop: Prop<ShapeGroup>, name: String): Prop<*>? {
         return when (name) {
-            "children" -> FListProp(prop.value.children)
             else -> super.findField(prop, name)
         }
     }

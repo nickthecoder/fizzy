@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
+import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
@@ -35,8 +36,29 @@ abstract class Shape(var parent: Parent)
 
     override var listeners = ChangeListeners<Shape>()
 
+    val children = MutableFList<Shape>()
+
+
+    private val shapeListener = object : ChangeListener<Shape>, CollectionListener<Shape> {
+
+        override fun changed(item: Shape, changeType: ChangeType, obj: Any?) {
+            listeners.fireChanged(this@Shape)
+        }
+
+        override fun added(collection: FCollection<Shape>, item: Shape) {
+            listeners.fireChanged(this@Shape)
+            item.listeners.add(this)
+        }
+
+        override fun removed(collection: FCollection<Shape>, item: Shape) {
+            listeners.fireChanged(this@Shape)
+            item.listeners.add(this)
+        }
+    }
+
     init {
         id.listeners.add(this)
+        children.listeners.add(shapeListener)
         parent.children.add(this)
     }
 
@@ -61,7 +83,15 @@ abstract class Shape(var parent: Parent)
 
     fun layer(): Layer = parent.layer()
 
-    abstract fun findShape(id: String): Shape?
+    fun findShape(id: String): Shape? {
+        if (id == this.id.value) return this
+
+        children.forEach { child ->
+            val found = child.findShape(id)
+            if (found != null) return found
+        }
+        return null
+    }
 
     override fun toString(): String = "Shape ${id.value}"
 
@@ -85,6 +115,4 @@ abstract class RealShape(parent: Parent) : Shape(parent) {
             item.shape = null
         }
     }
-
-    override fun findShape(id: String): Shape? = if (id == this.id.value) this else null
 }

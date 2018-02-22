@@ -18,9 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
-import uk.co.nickthecoder.fizzy.collection.CollectionListener
-import uk.co.nickthecoder.fizzy.collection.FCollection
-import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.evaluator.CompoundEvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
@@ -36,38 +33,5 @@ class ShapeGroup(parent: Parent)
     override val context = CompoundEvaluationContext(listOf(
             constantsContext, ThisContext(PropConstant(this), ShapeGroupPropType.instance)))
 
-    override var children = MutableFList<Shape>()
-
-
-    private val shapeListener = object : ChangeListener<Shape>, CollectionListener<Shape> {
-
-        override fun changed(item: Shape, changeType: ChangeType, obj: Any?) {
-            listeners.fireChanged(this@ShapeGroup)
-        }
-
-        override fun added(collection: FCollection<Shape>, item: Shape) {
-            listeners.fireChanged(this@ShapeGroup)
-            item.listeners.add(this)
-        }
-
-        override fun removed(collection: FCollection<Shape>, item: Shape) {
-            listeners.fireChanged(this@ShapeGroup)
-            item.listeners.add(this)
-        }
-    }
-
-    override fun findShape(id: String): Shape? {
-        if (id == this.id.value) return this
-
-        children.forEach { child ->
-            val found = child.findShape(id)
-            if (found != null) return found
-        }
-        return null
-    }
-
-    init {
-        children.listeners.add(shapeListener)
-    }
 
 }
