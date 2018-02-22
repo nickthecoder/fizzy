@@ -25,11 +25,11 @@ import uk.co.nickthecoder.fizzy.model.Vector2
 
 class Vector2PropType private constructor() : PropType<Vector2>(Vector2::class) {
 
-    override fun findField(prop: Prop<Vector2>, name: String): PropField<Vector2, *>? {
+    override fun findField(prop: Prop<Vector2>, name: String): Prop<*>? {
         return when (name) {
             "x" -> PropField<Vector2, Double>(prop) { prop.value.x }
             "y" -> PropField<Vector2, Double>(prop) { prop.value.y }
-            else -> null
+            else -> super.findField(prop, name)
         }
     }
 

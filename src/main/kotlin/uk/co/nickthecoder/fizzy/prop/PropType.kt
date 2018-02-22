@@ -18,11 +18,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
+import uk.co.nickthecoder.fizzy.collection.FList
+import java.util.regex.Pattern
 import kotlin.reflect.KClass
 
 abstract class PropType<T : Any>(val klass: KClass<*>) {
 
-    abstract fun findField(prop: Prop<T>, name: String): Prop<*>?
+    open fun findField(prop: Prop<T>, name: String): Prop<*>? {
+
+        // To make accessing items in an array easier, we can reference a property "Foo" of an item in the list using :
+        // "myListProp.FooN" where N is the index into the list with base 1 (i.e. the 0th item is N=1).
+        val matcher = nameNumber.matcher(name)
+        if (matcher.matches()) {
+            val fieldName = matcher.group(1)
+            val index = matcher.group(2).toInt()
+
+            val field = prop.field(fieldName)
+            if (field != null) {
+                val fieldValue = field.value
+                if (fieldValue is FList<*>) {
+                    if (index > 0 && index <= fieldValue.size) {
+                        val itemProp = PropCalculation1(prop) { fieldValue[index - 1]!! }
+                        return itemProp
+                    }
+                }
+            }
+        }
+
+        return null
+    }
 
     private fun findField2(prop: Prop<*>, name: String): Prop<*>? {
         @Suppress("UNCHECKED_CAST")
@@ -38,6 +62,8 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
 
     companion object {
         val propertyTypes = mutableMapOf<KClass<*>, PropType<*>>()
+
+        private val nameNumber = Pattern.compile("(.*)([0-9])+")
 
         fun field(prop: Prop<*>, fieldName: String): Prop<*>? {
             return propertyTypes[prop.value?.javaClass!!.kotlin]?.findField2(prop, fieldName)

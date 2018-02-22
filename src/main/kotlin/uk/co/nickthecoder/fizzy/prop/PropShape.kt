@@ -18,20 +18,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-import uk.co.nickthecoder.fizzy.model.Shape
-import uk.co.nickthecoder.fizzy.model.Shape1d
-import uk.co.nickthecoder.fizzy.model.Shape2d
-import uk.co.nickthecoder.fizzy.model.ShapeGroup
+import uk.co.nickthecoder.fizzy.model.*
 import kotlin.reflect.KClass
 
 
-abstract class ShapePropType<T : Shape>(klass: KClass<T>) : PropType<T>(klass) {
+abstract class ShapePropType<T : Shape>(klass: KClass<in T>)
+    : PropType<T>(klass) {
 
     override fun findField(prop: Prop<T>, name: String): Prop<*>? {
         return when (name) {
             "page" -> PropConstant(prop.value.page())
             "layer" -> PropConstant(prop.value.layer())
-            else -> null
+            else -> super.findField(prop, name)
         }
     }
 
@@ -40,8 +38,19 @@ abstract class ShapePropType<T : Shape>(klass: KClass<T>) : PropType<T>(klass) {
     }
 }
 
+abstract class RealShapePropType<T : RealShape>(klass: KClass<in T>)
+    : ShapePropType<T>(klass) {
+
+    override fun findField(prop: Prop<T>, name: String): Prop<*>? {
+        if (name == "geometry") {
+            return PropCalculation1(prop) { v -> v.geometries }
+        }
+        return super.findField(prop, name)
+    }
+}
+
 class Shape1dPropType private constructor()
-    : ShapePropType<Shape1d>(Shape1d::class) {
+    : RealShapePropType<Shape1d>(Shape1d::class) {
 
     override fun findField(prop: Prop<Shape1d>, name: String): Prop<*>? {
         return when (name) {
@@ -61,7 +70,7 @@ class Shape1dPropType private constructor()
 }
 
 class Shape2dPropType private constructor()
-    : ShapePropType<Shape2d>(Shape2d::class) {
+    : RealShapePropType<Shape2d>(Shape2d::class) {
 
     override fun findField(prop: Prop<Shape2d>, name: String): Prop<*>? {
         return when (name) {
@@ -88,7 +97,7 @@ class ShapeGroupPropType private constructor()
 
     override fun findField(prop: Prop<ShapeGroup>, name: String): Prop<*>? {
         return when (name) {
-            "children" -> FCollectionProp(prop.value.children)
+            "children" -> FListProp(prop.value.children)
             else -> super.findField(prop, name)
         }
     }

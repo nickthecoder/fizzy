@@ -4,10 +4,15 @@ import uk.co.nickthecoder.fizzy.prop.AngleExpression
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.Vector2Expression
 
-class ShapeTransform( val shape : Shape ) {
+/**
+ * Holds the position of a shape within a parent (which is either a [ShapeGroup] or a [Layer].
+ *
+ * Used by [Shape2d] and [ShapeGroup].
+ */
+class ShapeTransform(val shape: Shape) {
 
     /**
-     * The position of this object relative to the parent (which is either a Group, or a Document).
+     * The position of this object relative to the parent (which is either a [ShapeGroup] or a [Layer]).
      */
     val position = Dimension2Expression("Dimension2(0mm, 0mm)", shape.context)
 

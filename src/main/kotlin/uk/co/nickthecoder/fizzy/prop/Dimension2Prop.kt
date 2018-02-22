@@ -27,12 +27,12 @@ import uk.co.nickthecoder.fizzy.model.Dimension2
 class Dimension2PropType private constructor()
     : PropType<Dimension2>(Dimension2::class) {
 
-    override fun findField(prop: Prop<Dimension2>, name: String): PropField<Dimension2, *>? {
+    override fun findField(prop: Prop<Dimension2>, name: String): Prop<*>? {
 
         return when (name) {
             "x" -> PropField<Dimension2, Dimension>(prop) { prop.value.x }
             "y" -> PropField<Dimension2, Dimension>(prop) { prop.value.y }
-            else -> null
+            else -> return super.findField(prop, name)
         }
     }
 

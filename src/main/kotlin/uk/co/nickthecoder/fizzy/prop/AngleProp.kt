@@ -25,11 +25,11 @@ import uk.co.nickthecoder.fizzy.model.Angle
 class AnglePropType private constructor()
     : PropType<Angle>(Angle::class) {
 
-    override fun findField(prop: Prop<Angle>, name: String): PropField<Angle, *>? {
+    override fun findField(prop: Prop<Angle>, name: String): Prop<*>? {
         return when (name) {
             "degrees" -> PropField<Angle, Double>(prop) { prop.value.degrees }
             "radians" -> PropField<Angle, Double>(prop) { prop.value.radians }
-            else -> null
+            else -> super.findField(prop, name)
         }
     }
 

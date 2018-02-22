@@ -24,8 +24,8 @@ import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 class DoublePropType private constructor()
     : PropType<Double>(Double::class) {
 
-    override fun findField(prop: Prop<Double>, name: String): PropField<Double, *>? {
-        return null
+    override fun findField(prop: Prop<Double>, name: String): Prop<*>? {
+        return super.findField(prop, name)
     }
 
     override fun findMethod(prop: Prop<Double>, name: String): PropMethod<Double, *>? {

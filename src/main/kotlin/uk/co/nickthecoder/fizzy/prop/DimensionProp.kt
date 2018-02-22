@@ -25,13 +25,13 @@ import uk.co.nickthecoder.fizzy.model.Dimension
 class DimensionPropType private constructor()
     : PropType<Dimension>(Dimension::class) {
 
-    override fun findField(prop: Prop<Dimension>, name: String): PropField<Dimension, *>? {
+    override fun findField(prop: Prop<Dimension>, name: String): Prop<*>? {
         return when (name) {
             "mm" -> PropField<Dimension, Double>(prop) { prop.value.mm }
             "cm" -> PropField<Dimension, Double>(prop) { prop.value.cm }
             "m" -> PropField<Dimension, Double>(prop) { prop.value.m }
             "km" -> PropField<Dimension, Double>(prop) { prop.value.km }
-            else -> null
+            else -> return super.findField(prop, name)
         }
     }
 

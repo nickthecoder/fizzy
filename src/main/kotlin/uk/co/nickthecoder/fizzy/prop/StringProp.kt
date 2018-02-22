@@ -21,10 +21,10 @@ package uk.co.nickthecoder.fizzy.prop
 class StringPropType private constructor()
     : PropType<String>(String::class) {
 
-    override fun findField(prop: Prop<String>, name: String): PropField<String, *>? {
+    override fun findField(prop: Prop<String>, name: String): Prop<*>? {
         return when (name) {
             "length" -> PropField<String, Double>(prop) { prop.value.length.toDouble() }
-            else -> null
+            else -> return super.findField(prop, name)
         }
     }
 

@@ -1,12 +1,6 @@
 To Do
 =====
 
-Allow for multiple geometries???
-Allow access using Geometry1, Geometry2 etc
-    In PropTypeCollection's field, if the name ends in a number, split it off,
-        then use the number as a 1-index into the array, and use the name part to on the element.
-
-
 Allow access to other shapes, e.g. for linking a Shape1d end.
 
 Create tests for realistic Shapes

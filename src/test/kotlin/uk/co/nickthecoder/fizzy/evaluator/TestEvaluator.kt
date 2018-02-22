@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.evaluator
 
 import junit.framework.TestCase
 import org.junit.Test
+import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
@@ -740,7 +741,6 @@ class TestEvaluator : TestCase() {
         val f2 = Evaluator("(10+1)m").parse()
         assert(f2 !is PropConstant) { "is ${f2.javaClass}" }
     }
-
 
     //variables.putProp("angle1", ExpressionProp("value1 degrees", Angle::class, context))
 

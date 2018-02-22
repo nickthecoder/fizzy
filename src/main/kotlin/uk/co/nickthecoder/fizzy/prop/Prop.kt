@@ -35,6 +35,10 @@ interface Prop<T> {
     fun dump(): String = value.toString()
 
     fun isConstant() = false
+
+    fun field(name: String): Prop<*>? = PropType.field(this, name)
+
+    fun method(name: String): Prop<*>? = PropType.method(this, name)
 }
 
 abstract class AbstractProp<T> : Prop<T> {
