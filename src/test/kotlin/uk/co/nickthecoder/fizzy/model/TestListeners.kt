@@ -176,20 +176,27 @@ class TestListeners : TestCase() {
 
     @Test
     fun testGeometry() {
-        val mt = MoveTo()
-        shape1a.geometry.parts.add(mt)
-        println("shape1aChanged count = ${shape1aChanged}")
+        val geometry = Geometry()
+        shape1a.geometries.add(geometry)
         assertEquals(1, shape1aChanged)
         assertEquals(0, shape1bChanged)
         assertEquals(1, layer1Changed)
         assertEquals(1, pageChanged)
 
-        val lt = LineTo()
-        shape1a.geometry.parts.add(lt)
+        val mt = MoveTo()
+        geometry.parts.add(mt)
+        println("shape1aChanged count = ${shape1aChanged}")
         assertEquals(2, shape1aChanged)
         assertEquals(0, shape1bChanged)
         assertEquals(2, layer1Changed)
         assertEquals(2, pageChanged)
+
+        val lt = LineTo()
+        geometry.parts.add(lt)
+        assertEquals(3, shape1aChanged)
+        assertEquals(0, shape1bChanged)
+        assertEquals(3, layer1Changed)
+        assertEquals(3, pageChanged)
 
     }
 }

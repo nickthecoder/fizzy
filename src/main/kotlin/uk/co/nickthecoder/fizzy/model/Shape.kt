@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
+import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.evaluator.Context
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropConstant
@@ -33,18 +35,23 @@ abstract class Shape(var parent: Parent)
 
     override var listeners = ChangeListeners<Shape>()
 
-    val geometry = Geometry(this)
+    val geometries = MutableFList<Geometry>()
 
-    val geometryListener = object : ChangeListener<Geometry> {
-        override fun changed(item: Geometry, changeType: ChangeType, obj: Any?) {
-            dirty = true
+    private val geometriesListener = object : ChangeAndCollectionListener<Shape,Geometry>(this, geometries) {
+        override fun added(collection: FCollection<Geometry>, item: Geometry) {
+            super.added(collection, item)
+            item.shape = this@Shape
+        }
+
+        override fun removed(collection: FCollection<Geometry>, item: Geometry) {
+            super.removed(collection, item)
+            item.shape = null
         }
     }
 
     init {
         id.listeners.add(this)
         parent.children.add(this)
-        geometry.listeners.add(geometryListener)
     }
 
     private var dirty = false

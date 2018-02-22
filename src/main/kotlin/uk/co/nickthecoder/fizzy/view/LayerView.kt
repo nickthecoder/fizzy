@@ -58,15 +58,17 @@ class LayerView(val layer: Layer, val dc: DrawContext)
                 dc.translate(-shape.localPosition.value.x, -shape.localPosition.value.y)
             }
 
-            dc.lineWidth(shape.geometry.lineWidth.value)
-            dc.beginPath()
-            shape.geometry.parts.forEach { part ->
-                when (part) {
-                    is MoveTo -> dc.moveTo(part.point.value)
-                    is LineTo -> dc.lineTo(part.point.value)
+            shape.geometries.forEach { geometry ->
+                dc.lineWidth(geometry.lineWidth.value)
+                dc.beginPath()
+                geometry.parts.forEach { part ->
+                    when (part) {
+                        is MoveTo -> dc.moveTo(part.point.value)
+                        is LineTo -> dc.lineTo(part.point.value)
+                    }
                 }
+                dc.endPath()
             }
-            dc.endPath()
         }
     }
 

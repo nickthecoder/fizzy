@@ -27,11 +27,19 @@ import uk.co.nickthecoder.fizzy.prop.DimensionExpression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
 
-class Geometry(val shape: Shape)
+class Geometry()
 
     : HasChangeListeners<Geometry> {
 
     override val listeners = ChangeListeners<Geometry>()
+
+    var shape: Shape? = null
+        set(v) {
+            field = v
+            parts.forEach { part ->
+                part.setContext(v?.context ?: constantsContext)
+            }
+        }
 
     var parts = MutableFList<GeometryPart>()
 
@@ -50,7 +58,7 @@ class Geometry(val shape: Shape)
     }
 }
 
-abstract class GeometryPart()
+abstract class GeometryPart
 
     : HasChangeListeners<GeometryPart>, PropListener {
 
@@ -60,11 +68,11 @@ abstract class GeometryPart()
             if (v == null) {
                 setContext(constantsContext)
             } else {
-                setContext(v.shape.context)
+                v.shape?.let { setContext(it.context) }
             }
         }
 
-    protected abstract fun setContext(context: Context)
+    internal abstract fun setContext(context: Context)
 
     override val listeners = ChangeListeners<GeometryPart>()
 

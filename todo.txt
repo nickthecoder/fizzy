@@ -1,14 +1,31 @@
 To Do
 =====
 
+Allow for multiple geometries???
+Allow access using Geometry1, Geometry2 etc
+    In PropTypeCollection's field, if the name ends in a number, split it off,
+        then use the number as a 1-index into the array, and use the name part to on the element.
+
+
+Allow access to other shapes, e.g. for linking a Shape1d end.
+
+Create tests for realistic Shapes
+    Create expressions for each geometry.
+    Link a line from one shape to another, then move the shape.
+
+Create a mock DrawContext, which logs the output
+    Use it to test the drawing of shapes, including in groups, scaled, rotated etc.
+
 Soon
 ----
 
-Allow for multiple geometries???
+Create a JavaFX application drawing pre-created shapes.
+    Add a Glass canvas to highlight the currently selected shape
+    Handles section : Points which can be dragged by the user
+    Snap section : Places that line ends can snap to
+
 
 Rename Page to Document?
-
-Create a JavaFX application drawing pre-created shapes.
 
 ShapeGroupPropType - "children" field won't work correctly.
 
