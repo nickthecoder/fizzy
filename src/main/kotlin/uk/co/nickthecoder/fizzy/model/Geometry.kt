@@ -33,7 +33,7 @@ class Geometry()
 
     override val listeners = ChangeListeners<Geometry>()
 
-    var shape: Shape? = null
+    var shape: RealShape? = null
         set(v) {
             field = v
             parts.forEach { part ->

@@ -29,7 +29,9 @@ import uk.co.nickthecoder.fizzy.prop.ShapeGroupPropType
 
 class ShapeGroup(parent: Parent)
 
-    : Shape(parent), Parent {
+    : Shape(parent), Parent, HasShapeTransform {
+
+    override val transform = ShapeTransform(this)
 
     override val context = CompoundContext(listOf(
             constantsContext, ThisContext(PropConstant(this), ShapeGroupPropType.instance)))

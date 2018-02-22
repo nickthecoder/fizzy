@@ -51,23 +51,29 @@ class LayerView(val layer: Layer, val dc: DrawContext)
 
     fun drawShape(shape: Shape) {
         dc.use {
-            if (shape is Shape2d) {
-                dc.translate(shape.position.value)
-                dc.rotate(shape.rotation.value)
-                dc.scale(shape.scale.value)
-                dc.translate(-shape.localPosition.value.x, -shape.localPosition.value.y)
+
+            if (shape is HasShapeTransform) {
+                dc.translate(shape.transform.position.value)
+                dc.rotate(shape.transform.rotation.value)
+                dc.scale(shape.transform.scale.value)
+                dc.translate(-shape.transform.localPosition.value.x, -shape.transform.localPosition.value.y)
             }
 
-            shape.geometries.forEach { geometry ->
-                dc.lineWidth(geometry.lineWidth.value)
-                dc.beginPath()
-                geometry.parts.forEach { part ->
-                    when (part) {
-                        is MoveTo -> dc.moveTo(part.point.value)
-                        is LineTo -> dc.lineTo(part.point.value)
+            if (shape is RealShape) {
+
+                shape.geometries.forEach { geometry ->
+                    dc.lineWidth(geometry.lineWidth.value)
+                    dc.beginPath()
+                    geometry.parts.forEach { part ->
+                        when (part) {
+                            is MoveTo -> dc.moveTo(part.point.value)
+                            is LineTo -> dc.lineTo(part.point.value)
+                        }
                     }
+                    dc.endPath()
                 }
-                dc.endPath()
+            } else if (shape is ShapeGroup) {
+                // TODO
             }
         }
     }

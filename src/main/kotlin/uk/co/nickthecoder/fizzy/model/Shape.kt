@@ -35,20 +35,6 @@ abstract class Shape(var parent: Parent)
 
     override var listeners = ChangeListeners<Shape>()
 
-    val geometries = MutableFList<Geometry>()
-
-    private val geometriesListener = object : ChangeAndCollectionListener<Shape,Geometry>(this, geometries) {
-        override fun added(collection: FCollection<Geometry>, item: Geometry) {
-            super.added(collection, item)
-            item.shape = this@Shape
-        }
-
-        override fun removed(collection: FCollection<Geometry>, item: Geometry) {
-            super.removed(collection, item)
-            item.shape = null
-        }
-    }
-
     init {
         id.listeners.add(this)
         parent.children.add(this)
@@ -77,4 +63,24 @@ abstract class Shape(var parent: Parent)
 
     override fun toString(): String = "Shape ${id.value}"
 
+}
+
+/**
+ * The basis for Shape1d and Shape2d, i.e. the type of Shapes which have their own Geometries.
+ */
+abstract class RealShape(parent: Parent) : Shape(parent) {
+
+    val geometries = MutableFList<Geometry>()
+
+    private val geometriesListener = object : ChangeAndCollectionListener<Shape, Geometry>(this, geometries) {
+        override fun added(collection: FCollection<Geometry>, item: Geometry) {
+            super.added(collection, item)
+            item.shape = this@RealShape
+        }
+
+        override fun removed(collection: FCollection<Geometry>, item: Geometry) {
+            super.removed(collection, item)
+            item.shape = null
+        }
+    }
 }

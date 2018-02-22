@@ -26,7 +26,7 @@ import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.prop.Shape1dPropType
 
 class Shape1d(parent: Parent)
-    : Shape(parent) {
+    : RealShape(parent) {
 
     override val context = CompoundContext(listOf(
             constantsContext, ThisContext(PropConstant(this), Shape1dPropType.instance)))

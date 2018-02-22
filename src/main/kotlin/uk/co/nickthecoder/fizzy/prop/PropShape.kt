@@ -65,11 +65,11 @@ class Shape2dPropType private constructor()
 
     override fun findField(prop: Prop<Shape2d>, name: String): Prop<*>? {
         return when (name) {
-            "size" -> prop.value.size
-            "position" -> prop.value.position
-            "localPosition" -> prop.value.localPosition
-            "rotation" -> prop.value.rotation
-            "scale" -> prop.value.scale
+            "size" -> prop.value.transform.size
+            "position" -> prop.value.transform.position
+            "localPosition" -> prop.value.transform.localPosition
+            "rotation" -> prop.value.transform.rotation
+            "scale" -> prop.value.transform.scale
             else -> super.findField(prop, name)
         }
     }
@@ -88,8 +88,7 @@ class ShapeGroupPropType private constructor()
 
     override fun findField(prop: Prop<ShapeGroup>, name: String): Prop<*>? {
         return when (name) {
-        // TODO This won't work, because changes to the list won't make this "dirty"
-            "children" -> PropCalculation1(prop) { prop.value.children }
+            "children" -> FCollectionProp(prop.value.children)
             else -> super.findField(prop, name)
         }
     }
