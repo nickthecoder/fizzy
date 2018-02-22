@@ -18,30 +18,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.evaluator
 
-import junit.framework.TestCase
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Vector2
 import uk.co.nickthecoder.fizzy.prop.*
-import java.lang.RuntimeException
+import uk.co.nickthecoder.fizzy.util.MyTestCase
 
 @Suppress("UNCHECKED_CAST")
-class TestEvaluator : TestCase() {
-
-    val tiny = 0.000001
-
-    fun assertFailsAt(position: Int, expression: () -> Any) {
-        try {
-            expression()
-            throw RuntimeException("Expected an EvaluationException")
-        } catch (e: EvaluationException) {
-            if (position != e.index) {
-                throw RuntimeException("Expected an EvaluationException at $position, but found one at ${e.index}", e)
-            }
-        }
-    }
+class TestEvaluator : MyTestCase() {
 
     /**
      * I use this for single ad-hoc tests, and then when the test passes, I move it somewhere else, so

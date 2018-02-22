@@ -18,13 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-import junit.framework.TestCase
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.model.Vector2
+import uk.co.nickthecoder.fizzy.util.MyTestCase
 
-class TestVector2 : TestCase() {
-
-    val tiny = 0.000001
+class TestVector2 : MyTestCase() {
 
     val zero = Vector2(0.0, 0.0)
     val unit = Vector2(1.0, 1.0)

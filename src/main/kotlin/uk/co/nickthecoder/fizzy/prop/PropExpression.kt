@@ -73,4 +73,7 @@ abstract class PropExpression<T : Any>(expression: String, val klass: KClass<T>,
     override fun dump(): String {
         return "Expression : '$expression'"
     }
+
+    override fun toString() = "='$expression'"
+
 }

@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.evaluator
 
+import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.prop.*
 
 /**
@@ -329,6 +330,10 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
             PropType.put(DoublePropType.instance)
             PropType.put(DummyPropType.instance)
             PropType.put(FListPropType.instance)
+            PropType.put(FListPropType.instance, MutableFList::class)
+            PropType.put(GeometryPropType.instance)
+            PropType.put(LineToPropType.instance)
+            PropType.put(MoveToPropType.instance)
             PropType.put(Shape1dPropType.instance)
             PropType.put(Shape2dPropType.instance)
             PropType.put(ShapeGroupPropType.instance)

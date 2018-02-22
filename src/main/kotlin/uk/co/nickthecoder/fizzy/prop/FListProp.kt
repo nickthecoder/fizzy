@@ -21,16 +21,16 @@ package uk.co.nickthecoder.fizzy.prop
 import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.collection.FList
+import java.util.regex.Pattern
 
 
 class FListPropType private constructor()
     : PropType<FList<out Any>>(FList::class) {
 
     override fun findField(prop: Prop<FList<out Any>>, name: String): Prop<*>? {
-
         return when (name) {
             "size" -> PropCalculation1(prop) { v -> v.size }
-            else -> return super.findField(prop, name)
+            else -> return findField(prop.value, name) ?: super.findField(prop, name)
         }
     }
 
@@ -38,8 +38,34 @@ class FListPropType private constructor()
         return null
     }
 
+    fun findField(list: FList<*>, name: String): Prop<*>? {
+
+        // To make accessing items in an array easier, we can reference a property "Foo" of an item in the list using :
+        // "myListProp.FooN" where N is the index into the list with base 1 (i.e. the 0th item is N=1).
+        val matcher = nameNumber.matcher(name)
+        if (matcher.matches()) {
+            val fieldName = matcher.group(1)
+            val index = matcher.group(2).toInt()
+
+            if (index > 0 && index <= list.size) {
+                list [index - 1]?.let { item ->
+
+                    // TODO This cannot be a constant!
+                    val field = PropType.field(PropConstant(item), fieldName)
+                    if (field != null) {
+                        return field
+                    }
+                }
+            }
+        }
+
+        return null
+    }
+
     companion object {
         val instance = FListPropType()
+
+        private val nameNumber = Pattern.compile("(.*)([0-9])+")
     }
 }
 

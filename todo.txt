@@ -19,8 +19,6 @@ Create a JavaFX application drawing pre-created shapes.
     Snap section : Places that line ends can snap to
 
 
-Rename Page to Document?
-
 ShapeGroupPropType - "children" field won't work correctly.
 
 Maybe

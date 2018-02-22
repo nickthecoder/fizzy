@@ -81,11 +81,10 @@ abstract class GeometryPart
     }
 }
 
-class MoveTo()
-
+class MoveTo(expression: String = "Dimension2(0mm, 0mm)")
     : GeometryPart() {
 
-    val point = Dimension2Expression("Dimension2(0mm, 0mm)")
+    val point = Dimension2Expression(expression)
 
     init {
         point.listeners.add(this)
@@ -94,13 +93,15 @@ class MoveTo()
     override fun setContext(context: EvaluationContext) {
         point.context = context
     }
+
+    override fun toString() = "MoveTo point=$point"
 }
 
-class LineTo()
+class LineTo(expression: String = "Dimension2(0mm, 0mm)")
 
     : GeometryPart() {
 
-    val point = Dimension2Expression("Dimension2(0mm, 0mm)")
+    val point = Dimension2Expression(expression)
 
     init {
         point.listeners.add(this)
@@ -109,4 +110,6 @@ class LineTo()
     override fun setContext(context: EvaluationContext) {
         point.context = context
     }
+
+    override fun toString() = "LineTo point=$point"
 }

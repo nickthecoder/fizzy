@@ -104,16 +104,6 @@ class Shape2dPropType private constructor()
 class ShapeGroupPropType private constructor()
     : ShapePropType<ShapeGroup>(ShapeGroup::class) {
 
-    override fun findField(prop: Prop<ShapeGroup>, name: String): Prop<*>? {
-        return when (name) {
-            else -> super.findField(prop, name)
-        }
-    }
-
-    override fun findMethod(prop: Prop<ShapeGroup>, name: String): PropMethod<ShapeGroup, *>? {
-        return super.findMethod(prop, name)
-    }
-
     companion object {
         val instance = ShapeGroupPropType()
     }

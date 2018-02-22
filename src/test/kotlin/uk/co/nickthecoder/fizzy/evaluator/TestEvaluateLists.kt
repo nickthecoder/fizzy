@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.evaluator
 
-import junit.framework.TestCase
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.model.Angle
@@ -26,23 +25,10 @@ import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.prop.PropMethod
 import uk.co.nickthecoder.fizzy.prop.PropType
-import java.lang.RuntimeException
+import uk.co.nickthecoder.fizzy.util.MyTestCase
 
 @Suppress("UNCHECKED_CAST")
-class TestEvaluateLists : TestCase() {
-
-    val tiny = 0.000001
-
-    fun assertFailsAt(position: Int, expression: () -> Any) {
-        try {
-            expression()
-            throw RuntimeException("Expected an EvaluationException")
-        } catch (e: EvaluationException) {
-            if (position != e.index) {
-                throw RuntimeException("Expected an EvaluationException at $position, but found one at ${e.index}", e)
-            }
-        }
-    }
+class TestEvaluateLists : MyTestCase() {
 
     private class Foo(val angles: FList<Angle>)
 

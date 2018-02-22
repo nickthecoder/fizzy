@@ -18,13 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-import junit.framework.TestCase
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.model.Dimension
+import uk.co.nickthecoder.fizzy.util.MyTestCase
 
-class TestDimension : TestCase() {
-
-    val tiny = 0.000001
+class TestDimension : MyTestCase() {
 
     val two_mm = Dimension(2.0, "mm")
     val three_mm = Dimension(3.0, "mm")

@@ -18,15 +18,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
-import junit.framework.TestCase
 import org.junit.Test
+import uk.co.nickthecoder.fizzy.util.MyTestCase
 
-class TestListeners : TestCase() {
+class TestListeners : MyTestCase() {
 
-    val page = Document()
+    val document = Document()
 
-    val layer1 = Layer(page)
-    val layer2 = Layer(page)
+    val layer1 = Layer(document)
+    val layer2 = Layer(document)
 
     val shape1a = Shape2d(layer1)
     val shape1b = Shape1d(layer1)
@@ -61,7 +61,7 @@ class TestListeners : TestCase() {
         shape1aChanged = 0
         shape1bChanged = 0
 
-        page.listeners.add(changeListener { pageChanged++ })
+        document.listeners.add(changeListener { pageChanged++ })
         layer1.listeners.add(changeListener { layer1Changed++ })
         layer2.listeners.add(changeListener { layer2Changed++ })
         shape1a.listeners.add(changeListener { shape1aChanged++ })
