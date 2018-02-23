@@ -39,7 +39,7 @@ class DummyPropType private constructor()
         return null
     }
 
-    override fun findMethod(prop: Prop<Dummy>, name: String): PropMethod<Dummy, *>? {
+    override fun findMethod(prop: Prop<Dummy>, name: String): PropMethod<Dummy>? {
         return when (name) {
             "abs" -> PropFunction1(Double::class) { Math.abs(it) }
             "ceil" -> PropFunction1(Double::class) { Math.ceil(it) }
@@ -66,8 +66,8 @@ class DummyPropType private constructor()
  */
 val dummyInstance = PropConstant(Dummy())
 
-class PropFunction1<A : Any, R : Any>(klassA: KClass<A>, lambda: (A) -> R)
-    : PropMethod1<Dummy, A, R>(dummyInstance, klassA, lambda)
+class PropFunction1<A : Any>(klassA: KClass<A>, lambda: (A) -> Any)
+    : PropMethod1<Dummy, A>(dummyInstance, klassA, lambda)
 
-class PropFunction2<A : Any, B : Any, R : Any>(klassA: KClass<A>, klassB: KClass<B>, lambda: (A, B) -> R)
-    : PropMethod2<Dummy, A, B, R>(dummyInstance, klassA, klassB, lambda)
+class PropFunction2<A : Any, B : Any>(klassA: KClass<A>, klassB: KClass<B>, lambda: (A, B) -> Any)
+    : PropMethod2<Dummy, A, B>(dummyInstance, klassA, klassB, lambda)

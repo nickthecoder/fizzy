@@ -41,7 +41,7 @@ abstract class ShapePropType<T : Shape>(klass: KClass<in T>)
         }
     }
 
-    override fun findMethod(prop: Prop<T>, name: String): PropMethod<T, *>? {
+    override fun findMethod(prop: Prop<T>, name: String): PropMethod<T>? {
         return null
     }
 }
@@ -68,7 +68,7 @@ class Shape1dPropType private constructor()
         }
     }
 
-    override fun findMethod(prop: Prop<Shape1d>, name: String): PropMethod<Shape1d, *>? {
+    override fun findMethod(prop: Prop<Shape1d>, name: String): PropMethod<Shape1d>? {
         return super.findMethod(prop, name)
     }
 
@@ -91,7 +91,7 @@ class Shape2dPropType private constructor()
         }
     }
 
-    override fun findMethod(prop: Prop<Shape2d>, name: String): PropMethod<Shape2d, *>? {
+    override fun findMethod(prop: Prop<Shape2d>, name: String): PropMethod<Shape2d>? {
         return super.findMethod(prop, name)
     }
 

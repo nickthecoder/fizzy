@@ -41,7 +41,7 @@ class TestLists : MyTestCase() {
             return super.findField(prop, name)
         }
 
-        override fun findMethod(prop: Prop<Foo>, name: String): PropMethod<Foo, *>? = null
+        override fun findMethod(prop: Prop<Foo>, name: String): PropMethod<Foo>? = null
     }
 
     @Test

@@ -37,7 +37,7 @@ class Dimension2PropType private constructor()
         }
     }
 
-    override fun findMethod(prop: Prop<Dimension2>, name: String): PropMethod<Dimension2, *>? {
+    override fun findMethod(prop: Prop<Dimension2>, name: String): PropMethod<Dimension2>? {
         return when (name) {
             "normalise" -> PropMethod0(prop) { prop.value.normalise() }
             "rotate" -> PropMethod1(prop, Angle::class) { prop.value.rotate(it) }

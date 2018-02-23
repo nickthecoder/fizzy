@@ -28,7 +28,7 @@ class StringPropType private constructor()
         }
     }
 
-    override fun findMethod(prop: Prop<String>, name: String): PropMethod<String, *>? {
+    override fun findMethod(prop: Prop<String>, name: String): PropMethod<String>? {
         return when (name) {
             "head" -> PropMethod1(prop, Double::class) { a ->
                 val intA = a.toInt()

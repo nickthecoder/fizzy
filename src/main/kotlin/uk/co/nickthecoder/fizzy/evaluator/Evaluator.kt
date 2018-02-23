@@ -217,7 +217,7 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
                         log("Pushing Apply for method")
                         pushOperator(token, Operator.APPLY)
 
-                    } else if (peekValue() is PropMethod<*, *>) {
+                    } else if (peekValue() is PropMethod<*>) {
                         log("Pushing APPLY for function call")
                         pushOperator(token, Operator.APPLY)
 

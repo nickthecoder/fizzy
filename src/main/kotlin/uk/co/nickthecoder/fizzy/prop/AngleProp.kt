@@ -33,7 +33,7 @@ class AnglePropType private constructor()
         }
     }
 
-    override fun findMethod(prop: Prop<Angle>, name: String): PropMethod<Angle, *>? {
+    override fun findMethod(prop: Prop<Angle>, name: String): PropMethod<Angle>? {
         return when (name) {
             "sin" -> PropMethod0(prop) { Math.sin(prop.value.radians) }
             "cos" -> PropMethod0(prop) { Math.cos(prop.value.radians) }

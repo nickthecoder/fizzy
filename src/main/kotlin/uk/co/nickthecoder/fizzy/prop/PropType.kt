@@ -53,9 +53,9 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
         return findField(prop as Prop<T>, name)
     }
 
-    open fun findMethod(prop: Prop<T>, name: String): PropMethod<T, *>? = null
+    open fun findMethod(prop: Prop<T>, name: String): PropMethod<T>? = null
 
-    private fun findMethod2(prop: Prop<*>, name: String): PropMethod<T, *>? {
+    private fun findMethod2(prop: Prop<*>, name: String): PropMethod<T>? {
         @Suppress("UNCHECKED_CAST")
         return findMethod(prop as Prop<T>, name)
     }
@@ -69,7 +69,7 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
             return propertyTypes[prop.value?.javaClass!!.kotlin]?.findField2(prop, fieldName)
         }
 
-        fun method(prop: Prop<*>, methodName: String): PropMethod<*, *>? {
+        fun method(prop: Prop<*>, methodName: String): PropMethod<*>? {
             return propertyTypes[prop.value?.javaClass!!.kotlin]?.findMethod2(prop, methodName)
         }
 

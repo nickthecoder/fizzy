@@ -21,8 +21,8 @@ package uk.co.nickthecoder.fizzy.prop
 import uk.co.nickthecoder.fizzy.evaluator.ArgList
 import kotlin.reflect.KClass
 
-abstract class PropMethod<T : Any, R : Any>(val prop: Prop<T>)
-    : PropCalculation<R>() {
+abstract class PropMethod<T : Any>(val prop: Prop<T>)
+    : PropCalculation<Any>() {
 
     init {
         prop.listeners.add(this)
@@ -43,14 +43,14 @@ abstract class PropMethod<T : Any, R : Any>(val prop: Prop<T>)
         }
     }
 
-    override fun eval(): R {
+    override fun eval(): Any {
         arg?.let {
             return eval(it)
         }
         throw RuntimeException("Arguments not supplied")
     }
 
-    abstract fun eval(arg: Prop<*>): R
+    abstract fun eval(arg: Prop<*>): Any
 
     override fun toString(): String {
         if (arg == null) {
@@ -60,10 +60,10 @@ abstract class PropMethod<T : Any, R : Any>(val prop: Prop<T>)
     }
 }
 
-class PropMethod0<T : Any, R : Any>(prop: Prop<T>, val lambda: () -> R)
-    : PropMethod<T, R>(prop) {
+class PropMethod0<T : Any>(prop: Prop<T>, val lambda: () -> Any)
+    : PropMethod<T>(prop) {
 
-    override fun eval(arg: Prop<*>): R {
+    override fun eval(arg: Prop<*>): Any {
         if (arg is ArgList && arg.value.size == 0) {
             return lambda()
         }
@@ -71,10 +71,10 @@ class PropMethod0<T : Any, R : Any>(prop: Prop<T>, val lambda: () -> R)
     }
 }
 
-open class PropMethod1<T : Any, A : Any, R : Any>(prop: Prop<T>, val klassA: KClass<A>, val lambda: (A) -> R)
-    : PropMethod<T, R>(prop) {
+open class PropMethod1<T : Any, A : Any>(prop: Prop<T>, val klassA: KClass<A>, val lambda: (A) -> Any)
+    : PropMethod<T>(prop) {
 
-    override fun eval(arg: Prop<*>): R {
+    override fun eval(arg: Prop<*>): Any {
         if (klassA.isInstance(arg.value)) {
             @Suppress("UNCHECKED_CAST")
             return lambda(arg.value as A)
@@ -83,10 +83,10 @@ open class PropMethod1<T : Any, A : Any, R : Any>(prop: Prop<T>, val klassA: KCl
     }
 }
 
-open class PropMethod2<T : Any, A : Any, B : Any, R : Any>(prop: Prop<T>, val klassA: KClass<A>, val klassB: KClass<B>, val lambda: (A, B) -> R)
-    : PropMethod<T, R>(prop) {
+open class PropMethod2<T : Any, A : Any, B : Any>(prop: Prop<T>, val klassA: KClass<A>, val klassB: KClass<B>, val lambda: (A, B) -> Any)
+    : PropMethod<T>(prop) {
 
-    override fun eval(arg: Prop<*>): R {
+    override fun eval(arg: Prop<*>): Any {
         if (arg is ArgList && arg.value.size == 2) {
             val a = arg.value[0]
             val b = arg.value[1]

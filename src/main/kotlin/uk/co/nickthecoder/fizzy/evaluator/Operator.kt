@@ -110,7 +110,7 @@ class CloseBracketOperator(precedence: Int) : Operator(")", precedence) {
 
 class ApplyOperator(precedence: Int) : BinaryOperator("(", precedence), OpenBracket {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
-        if (a is PropMethod<*, *>) {
+        if (a is PropMethod<*>) {
             a.applyArgs(b)
             // Make sure that the value can be evaluated, so that if it fails, then the error is reported at
             // the correct place.

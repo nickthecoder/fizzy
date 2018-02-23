@@ -35,7 +35,7 @@ class Vector2PropType private constructor() : PropType<Vector2>(Vector2::class) 
         }
     }
 
-    override fun findMethod(prop: Prop<Vector2>, name: String): PropMethod<Vector2, *>? {
+    override fun findMethod(prop: Prop<Vector2>, name: String): PropMethod<Vector2>? {
         return when (name) {
             "normalise" -> PropMethod0(prop) { prop.value.normalise() }
             "rotate" -> PropMethod1(prop, Angle::class) { prop.value.rotate(it) }
