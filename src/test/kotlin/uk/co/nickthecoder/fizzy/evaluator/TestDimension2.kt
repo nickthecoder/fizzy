@@ -23,7 +23,6 @@ import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Vector2
 import uk.co.nickthecoder.fizzy.prop.Prop
-import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
 @Suppress("UNCHECKED_CAST")
@@ -40,17 +39,33 @@ class TestDimension2 : MyTestCase() {
     @Test
     fun testIsConstant() {
 
-        val b = Evaluator("Dimension2(1m,2m)").parse()
-        assert(b.isConstant()) { "is ${b.javaClass}" }
-        assertEquals(true, b.isConstant())
+        val a = Evaluator("Dimension2(1m,2m)").parse()
+        assert(a.isConstant()) { "$a" }
+        assertEquals(true, a.isConstant())
 
-        val b2 = Evaluator("Dimension2((1+1)m,2m)").parse()
-        assert(b2 !is PropConstant<*>) { "is ${b2.javaClass}" }
-        assertEquals(false, b2.isConstant())
+        val b1 = Evaluator("Dimension2(1m,2m).X").parse()
+        assert(b1.isConstant()) { "$b1" }
+        val b2 = Evaluator("Dimension2(1m,2m).Y").parse()
+        assert(b2.isConstant()) { "$b2" }
 
-        val b3 = Evaluator("Dimension2(1m,(2+1)m)").parse()
-        assert(b3 !is PropConstant<*>) { "is ${b3.javaClass}" }
-        assertEquals(false, b3.isConstant())
+        val c1 = Evaluator("Dimension2(1m + 1m,2m)").parse()
+        assert(!c1.isConstant()) { "$c1" }
+        val c2 = Evaluator("Dimension2(1m,2m+1m)").parse()
+        assert(!c2.isConstant()) { "$c2" }
+        val c3 = Evaluator("Dimension2(1m + 1m,2m).X").parse()
+        assert(!c3.isConstant()) { "$c3" }
+        val c4 = Evaluator("Dimension2(1m + 1m,2m).Y").parse()
+        assert(!c4.isConstant()) { "$c4" }
+
+
+        val d = Evaluator("Dimension2(1m,1m).Angle").parse()
+        assert(d.isConstant()) { "$d" }
+
+        val e = Evaluator("Dimension2(1m,1m).Length").parse()
+        assert(e.isConstant()) { "$e" }
+
+        val f = Evaluator("Dimension2(1m,1m).normalise()").parse()
+        assert(f.isConstant()) { "$f" }
     }
 
     @Test

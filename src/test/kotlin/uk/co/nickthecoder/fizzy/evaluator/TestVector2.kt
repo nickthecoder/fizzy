@@ -21,7 +21,6 @@ package uk.co.nickthecoder.fizzy.evaluator
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.model.Vector2
 import uk.co.nickthecoder.fizzy.prop.Prop
-import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
 @Suppress("UNCHECKED_CAST")
@@ -88,13 +87,31 @@ class TestVector2 : MyTestCase() {
     @Test
     fun testIsConstant() {
 
-        val b = Evaluator("Vector2(1,2)").parse()
-        assert(b.isConstant()) { "is ${b.javaClass} : $b" }
+        val a = Evaluator("Vector2(1,2)").parse()
+        assert(a.isConstant()) { "$a" }
+        val b1 = Evaluator("Vector2(1,2).X").parse()
+        assert(b1.isConstant()) { "$b1" }
+        val b2 = Evaluator("Vector2(1,2).Y").parse()
+        assert(b2.isConstant()) { "$b2" }
 
-        val a2 = Evaluator("Vector2(1 + 1,2)").parse()
-        assert(a2 !is PropConstant<*>) { "is ${a2.javaClass}" }
-        val a3 = Evaluator("Vector2(1,2+1)").parse()
-        assert(a3 !is PropConstant<*>) { "is ${a3.javaClass}" }
+        val c1 = Evaluator("Vector2(1 + 1,2)").parse()
+        assert(!c1.isConstant()) { "$c1" }
+        val c2 = Evaluator("Vector2(1,2+1)").parse()
+        assert(!c2.isConstant()) { "$c2" }
+        val c3 = Evaluator("Vector2(1 + 1,2).X").parse()
+        assert(!c3.isConstant()) { "$c3" }
+        val c4 = Evaluator("Vector2(1 + 1,2).Y").parse()
+        assert(!c4.isConstant()) { "$c4" }
+
+        val d = Evaluator("Vector2(1,1).Angle").parse()
+        assert(d.isConstant()) { "$d" }
+
+        val e = Evaluator("Vector2(1,1).Length").parse()
+        assert(e.isConstant()) { "$e" }
+
+        val f = Evaluator("Vector2(1,1).normalise()").parse()
+        assert(f.isConstant()) { "$f" }
+
     }
 
     @Test

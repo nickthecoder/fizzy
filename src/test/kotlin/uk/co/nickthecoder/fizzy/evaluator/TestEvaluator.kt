@@ -197,5 +197,6 @@ class TestEvaluator : MyTestCase() {
     }
 
     //variables.putProp("angle1", ExpressionProp("value1 degrees", Angle::class, context))
+    //        val d = Evaluator("Dimension2(1,1).Angle").parse()
 
 }
