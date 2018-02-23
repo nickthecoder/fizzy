@@ -105,12 +105,18 @@ class TestVector2 : MyTestCase() {
 
         val d = Evaluator("Vector2(1,1).Angle").parse()
         assert(d.isConstant()) { "$d" }
+        val d2 = Evaluator("Vector2(1+1,1).Angle").parse()
+        assert(!d2.isConstant()) { "$d2" }
 
         val e = Evaluator("Vector2(1,1).Length").parse()
         assert(e.isConstant()) { "$e" }
+        val e2 = Evaluator("Vector2(1+1,1).Length").parse()
+        assert(!e2.isConstant()) { "$e2" }
 
         val f = Evaluator("Vector2(1,1).normalise()").parse()
         assert(f.isConstant()) { "$f" }
+        val f2 = Evaluator("Vector2(1+1,1).normalise()").parse()
+        assert(!f2.isConstant()) { "$f2" }
 
     }
 
