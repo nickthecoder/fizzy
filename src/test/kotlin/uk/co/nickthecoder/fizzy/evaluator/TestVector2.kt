@@ -88,8 +88,9 @@ class TestVector2 : MyTestCase() {
     @Test
     fun testIsConstant() {
 
-        //val b = Evaluator("Vector2(1,2)").parse()
-        // FAILS : assert(b is PropConstant<*>) { "is ${a.javaClass}" }
+        val b = Evaluator("Vector2(1,2)").parse()
+        assert(b.isConstant()) { "is ${b.javaClass} : $b" }
+
         val a2 = Evaluator("Vector2(1 + 1,2)").parse()
         assert(a2 !is PropConstant<*>) { "is ${a2.javaClass}" }
         val a3 = Evaluator("Vector2(1,2+1)").parse()

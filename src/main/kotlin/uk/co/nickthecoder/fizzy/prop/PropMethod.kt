@@ -27,9 +27,13 @@ import kotlin.reflect.KClass
 abstract class PropMethod<T : Any>(val prop: Prop<T>)
     : PropCalculation<Any>() {
 
+    protected var _isConstant = false
+
     init {
         prop.listeners.add(this)
     }
+
+    override fun isConstant() = _isConstant
 
     protected var arg: Prop<*>? = null
 
@@ -54,13 +58,6 @@ abstract class PropMethod<T : Any>(val prop: Prop<T>)
     }
 
     abstract fun eval(arg: Prop<*>): Any
-
-    override fun toString(): String {
-        if (arg == null) {
-            return "Method (arguments not supplied yet)"
-        }
-        return "Method value=${safeValue()}"
-    }
 }
 
 /**
@@ -74,6 +71,8 @@ class PropMethod0<T : Any>(
     : PropMethod<T>(prop) {
 
     override fun eval(arg: Prop<*>): Any {
+        _isConstant = prop.isConstant()
+
         if (arg is ArgList && arg.value.size == 0) {
             return lambda()
         }
@@ -93,6 +92,9 @@ open class PropMethod1<T : Any, A : Any>(
     : PropMethod<T>(prop) {
 
     override fun eval(arg: Prop<*>): Any {
+
+        _isConstant = prop.isConstant() && arg.isConstant()
+
         if (klassA.isInstance(arg.value)) {
             @Suppress("UNCHECKED_CAST")
             return lambda(arg.value as A)
@@ -117,6 +119,8 @@ open class PropMethod2<T : Any, A : Any, B : Any>(
         if (arg is ArgList && arg.value.size == 2) {
             val a = arg.value[0]
             val b = arg.value[1]
+
+            _isConstant = prop.isConstant() && a.isConstant() && b.isConstant()
 
             if (klassA.isInstance(a.value) && klassB.isInstance(b.value)) {
                 @Suppress("UNCHECKED_CAST")

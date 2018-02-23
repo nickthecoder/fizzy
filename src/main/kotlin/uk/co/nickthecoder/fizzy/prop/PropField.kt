@@ -33,9 +33,11 @@ class PropField<T : Any>(
         prop.listeners.add(this)
     }
 
+    override fun isConstant() = prop.isConstant()
+
     override fun eval(): Any = lambda(prop)
 
     override fun toString(): String {
-        return "Field value=${safeValue()}"
+        return "Field"
     }
 }

@@ -40,13 +40,14 @@ class TestDimension2 : MyTestCase() {
     @Test
     fun testIsConstant() {
 
-        //val b = Evaluator("Dimension2(1m,2m)").parse()
-        // FAILS : assert(b is PropConstant<*>) { "is ${a.javaClass}" }
-        // FAILS : assertEquals(true, b.isConstant())
+        val b = Evaluator("Dimension2(1m,2m)").parse()
+        assert(b.isConstant()) { "is ${b.javaClass}" }
+        assertEquals(true, b.isConstant())
 
         val b2 = Evaluator("Dimension2((1+1)m,2m)").parse()
         assert(b2 !is PropConstant<*>) { "is ${b2.javaClass}" }
         assertEquals(false, b2.isConstant())
+
         val b3 = Evaluator("Dimension2(1m,(2+1)m)").parse()
         assert(b3 !is PropConstant<*>) { "is ${b3.javaClass}" }
         assertEquals(false, b3.isConstant())
