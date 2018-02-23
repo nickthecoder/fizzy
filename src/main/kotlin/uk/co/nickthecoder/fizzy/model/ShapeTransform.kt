@@ -47,6 +47,8 @@ class ShapeTransform(val shape: Shape) {
 
     val rotation = AngleExpression("0 deg", shape.context)
 
+    // TODO Add flipX and flipY (we don't have Boolean properties yet!)
+
     init {
         position.listeners.add(shape)
         localPosition.listeners.add(shape)

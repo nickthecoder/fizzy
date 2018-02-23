@@ -28,7 +28,7 @@ import uk.co.nickthecoder.fizzy.prop.PropType
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
 @Suppress("UNCHECKED_CAST")
-class TestEvaluateLists : MyTestCase() {
+class TestLists : MyTestCase() {
 
     private class Foo(val angles: FList<Angle>)
 

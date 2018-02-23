@@ -9,11 +9,10 @@ class TestShape : MyTestCase() {
 
     val layer1 = Layer(document)
 
-    val box = Shape2d(layer1)
     val line = Shape1d(layer1)
 
-    @Test
-    fun testGeometry() {
+    fun createBox(): Shape2d {
+        val box = Shape2d(layer1)
         // Make a box 60mm x 40mm. centered at (40mm,120mm)
         box.size.expression = "Dimension2(60mm,120mm)"
         box.transform.position.expression = "Dimension2(40mmx60mm)"
@@ -25,6 +24,15 @@ class TestShape : MyTestCase() {
         geometry.parts.add(LineTo("size * 0.5"))
         geometry.parts.add(LineTo("size * Vector2(-0.5, 0.5)"))
         geometry.parts.add(LineTo("geometry1.point1"))
+
+        return box
+    }
+
+    @Test
+    fun testGeometry() {
+
+        val box = createBox()
+        val geometry = box.geometries[0]
 
         // The top left should be (-30,-60)
         assertEquals(-30.0, (geometry.parts[0] as MoveTo).point.value.x.mm)

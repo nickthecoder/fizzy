@@ -1,7 +1,8 @@
 To Do
 =====
 
-Allow access to other shapes, e.g. for linking a Shape1d end.
+Allow access to other shapes, e.g. for linking a Shape1d end. Use syntax : page@shapeName or page->shapeName ???
+    Don't use Visio's "!" operator, because I'll use that for "not" when booleans are implemented.
 
 Create tests for realistic Shapes
     Create expressions for each geometry.
@@ -21,14 +22,21 @@ Create a JavaFX application drawing pre-created shapes.
 Maybe
 -----
 
-Should size be on ShapeTransform? Maybe on Shape2d only.
-	i.e. Does ShapeGroup have a size? I think NOT!
-
 Evaluating "Dimension2(1m,1m) and "Vector2(1,1)" don't produce PropConstants.
 	Also consider "1+1" creating a PropConstant too. etc.
 
 Later
 -----
+
+Create an SVGDrawContext to convert to SVG.
+    This can be used to in the unit tests ;-)
+
+When designing the Glass view, allow actions from JUnit tests
+    e.g. mouseDownAt( x,y ), mouseMove( x,y )
+    in this way, I can test most functionality without starting JavaFX.
+    In fact, I could have a view without ANY JavaFX code (including mouse events or canvases)
+    Could even split the JavaFX stuff into a separate module.
+
 
 Shape to have a list of Sections
     Geometry and ShapeTransform being sections.
@@ -40,10 +48,19 @@ Be able to "click" a part of an expression and get to the definition.
     i.e. with : "shape3.geometry1[0].point"
     shape3 and geometry1 and [0] and point should all be "links"
 
-Create an SVGDrawContext to convert to SVG.
 
 Problems
 --------
+
+Font sizes and Real-World sizes
+    Creating floor plans, the Dimensions are LARGE, but the page size is small.
+        i.e. the Shape's dimensions are scaled when drawing
+    So how are Text sizes defined?
+        We could use pseudo font sizes (even if we call them points), and the document defines the size of a pseudo point.
+        i.e. for "normal" diagrams a point is 1/90th of an inch (or whatever the stardard is),
+        but for a scaled diagram, such as a floor plan, it becomes something else.
+        Units cannot be an enum, because "point" would be defined differently.
+        The EvaluationContext can have this special unit (and the corresponding "Conversion" within it).
 
 How is a line end (or a control point???) joined to another Shape's value?
     Using a special Join( shape, point ), where point is in a value relative to the shape's coordinates.
@@ -70,6 +87,22 @@ How does a line join to two boxes at their edges?
     i.e. we don't snap to a BOX, but instead snap to a LINE
     We could also snap to an ellipse (with the option of setting the start and end angle of the curve.
 
+    Snap points should also contain direction(s) of entry, so that lines can intelligently connect.
+        e.g. a horizontal resistor has a 0deg on the left and 180deg on the right.
+
+    Could also snap to a Geometry section.
+        e.g. a box have 4 lines, so a ratio of 1/8th would be half way along the 1st line.
+        Each GeometryPart has an "end point" (which is just the "point" for LineTo and MoveTo)
+        Geometry can have an "along(n)" method, which calculates the snap point for a given "along" value.
+            Would be constrained to 0..1
+        Each GeometryPart has an along( from : Dimenion, n ) where from will be the previous part's end point.
+        Note. GraphicsContext's arcTo and bezierCurveTo do use the previous point in the path :-)
+
+Can a zig-zag connecting line have any number of segments?
+    Joining two components, the zig zag can head out and in using the snap points' directions, but we may want many "way points".
+    Could just rely on "magic" which allows Fizzy to generate additional Geometry parts of pre-defined expressions.
+    For snapping along the lines, it could refer to a Geometry section instead of (or as an alternative to) a pair of points.
+
 How should text be stored?
     Maybe every shape can (optionally) have a single piece of text associated with it.
         Except groups???
@@ -79,9 +112,30 @@ How should text be stored?
         properties dialog AND the GUI?
         Using the GUI : If text is editable AND the expression is a simple link, then edit the item the link points to.
             Could generalise this behaviour for other purposes.
+    Any RealShape can have a Text section
+	Double click the shape to start editing the text.
 
 Notes
 -----
+
+Snapping
+    SnapX (or Y)
+    Dragging any shape with a SnapX will also move other objects using the same SnapX.
+    Could even have non-rectangular snapping, either as a one-off, or as a grid (e.g. a hex grid)
+
+    This only applies to shapes on the same level (i.e. it is the PARENT that holds the snap data).
+
+    Each shape can define a set of snapXs, snapYs and snapPoints (in their own coordinates) that can be used to snap ITSELF
+    Not to be confused with a set of CONNECTIONS (control points, lines and geometries) that other shapes can snap to.
+        (Maybe only allow ONE geometry, which is used when dragging from the shape).
+        What about rotations and scale etc?
+            Could have a read-only calculated property for a shape's edges. (Axis aligned bounding box) that these can use.
+
+    A shape2d's position is NOT an expression, but a SpecialDimension2Prop.
+        the x and y Dimensions are either a constant or a Join.
+
+    Likewise for a Shape1d's start and end points.
+
 
 A Document should have a set of custom properties / styles that its Shapes can reference.
 For example, a line width and line color which many shapes all share.
