@@ -160,12 +160,28 @@ class TestDimension2 : MyTestCase() {
 
         val c = Evaluator("Dimension2(15mm,10cm).Y.mm").parse() as Prop<Double>
         assertEquals(100.0, c.value, tiny)
+
+        val d = Evaluator("Dimension2(3m,4m).Length").parse() as Prop<Dimension>
+        assertEquals(5.0, d.value.m, tiny)
+
     }
 
     @Test
     fun testMethods() {
-        val a = Evaluator("Dimension2(3m,4m).Length").parse() as Prop<Dimension>
-        assertEquals(5.0, a.value.m, tiny)
+        val a = Evaluator("Dimension2(3m,4m).rotate(90 deg)").parse() as Prop<Dimension2>
+        assertEquals(-4.0, a.value.x.m, tiny)
+        assertEquals(3.0, a.value.y.m, tiny)
+
+        val a2 = Evaluator("Dimension2(3m,4m).rotate(-90 deg)").parse() as Prop<Dimension2>
+        assertEquals(4.0, a2.value.x.m, tiny)
+        assertEquals(-3.0, a2.value.y.m, tiny)
+
+        // The x and y units of the results should be from the source's x.
+        val a3 = Evaluator("Dimension2(3m,400cm).rotate(-90 deg)").parse() as Prop<Dimension2>
+        assertEquals(Dimension.Units.m, a3.value.x.units)
+        assertEquals(Dimension.Units.m, a3.value.y.units)
+        assertEquals(4.0, a2.value.x.m, tiny)
+        assertEquals(-3.0, a2.value.y.m, tiny)
 
         val b = Evaluator("Dimension2(3m,4m).normalise()").parse() as Prop<Vector2>
         assertEquals(3.0 / 5.0, b.value.x, tiny)

@@ -1,24 +1,6 @@
 To Do
 =====
 
-Decide, and implement a naming convension (constants, constructor, methods, fields, shapeIDs : start with upper case?)
-    1st Lower case
-        Conversions : mm, deg
-        Methods : rotate, normalise
-        Functions : sin, abs
-    1st Upper case
-        Constructors : Vector2, Dimension2
-        Fields Simple : Length
-        Section parts : Point (of LineTo)
-        Section Names : Geometry
-    All Upper Case :
-        Constants : PI, E
-    Undecided : 
-        Backwards Conversions  : mm, Degrees (implemented as fields)
-        Shape IDs (these may be just fixed numbers)
-
-Test String.Head, Tail, SubString
-
 Test Dimension2 Normalise etc.
 
 Implement operators
@@ -190,3 +172,13 @@ When a compound object such as Dimension2 is shown in the spreadsheet, we need t
 
 Visio clip :
 https://www.youtube.com/watch?v=9Kyv48e22LQ
+
+Much Later
+----------
+
+Add a Groovy based REPL to manipulate the data structures programatically.
+
+Split the project into core and app, so that headless tools can manipulate Fizzy documents.
+Create a separate project for useful tools, such as batch converting to SVG.
+    Use paratask to parse the commands.
+
