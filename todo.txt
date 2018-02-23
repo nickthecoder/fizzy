@@ -1,14 +1,32 @@
 To Do
 =====
 
-Implement BooleanPropType and boolean operators ! && || ^
-    == != ~=
-    ? :
+Decide, and implement a naming convension (constants, constructor, methods, fields, shapeIDs : start with upper case?)
+    1st Lower case
+        Conversions : mm, deg
+        Methods : rotate, normalise
+        Functions : sin, abs
+    1st Upper case
+        Constructors : Vector2, Dimension2
+        Fields Simple : Length
+        Section parts : Point (of LineTo)
+        Section Names : Geometry
+    All Upper Case :
+        Constants : PI, E
+    Undecided : 
+        Backwards Conversions  : mm, Degrees (implemented as fields)
+        Shape IDs (these may be just fixed numbers)
+
+Test String.Head, Tail, SubString
+
+Test Dimension2 Normalise etc.
+
+Implement operators
+    < > <= >=  and ? :
 
 Allow access to other shapes, e.g. for linking a Shape1d end. Use syntax : page@shapeName or page->shapeName ???
     Don't use Visio's "!" operator, because I'll use that for "not" when booleans are implemented.
 
-Decide, and implement a naming convension (constants, constructor, methods, fields, shapeIDs : start with upper case?)
 
 Create tests for realistic Shapes
     Create expressions for each geometry.
@@ -19,6 +37,8 @@ Create a mock DrawContext, which logs the output
 
 Soon
 ----
+
+Add class Page between Document and Layer?
 
 Create a JavaFX application drawing pre-created shapes.
     Add a Glass canvas to highlight the currently selected shape
@@ -33,6 +53,10 @@ Evaluating "Dimension2(1m,1m) and "Vector2(1,1)" don't produce PropConstants.
 
 Later
 -----
+
+NOTE. Visio has line width on Shape, not geometry. Why?
+    What are multiple Geometries for?
+    I'll use a Geometry for snapping, so perhaps I should follow.
 
 Create an SVGDrawContext to convert to SVG.
     This can be used to in the unit tests ;-)
@@ -53,6 +77,9 @@ Allow FList items to be MOVED, so that listeners don't hear a REMOVE and an ADD 
 Be able to "click" a part of an expression and get to the definition.
     i.e. with : "shape3.geometry1[0].point"
     shape3 and geometry1 and [0] and point should all be "links"
+
+Consider a "isNear" method for Angle, Double, Dimension, Dimension2 and Vector (takes a 2nd parameter for the closeness). 
+    Add a TINY (double) constant. Use TINY mm for a dimension??? (or just SHORT)
 
 
 Problems

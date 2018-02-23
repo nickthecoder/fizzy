@@ -1,3 +1,21 @@
+/*
+Fizzy
+Copyright (C) 2018 Nick Robinson
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
 package uk.co.nickthecoder.fizzy.evaluator
 
 import org.junit.Test
@@ -73,12 +91,9 @@ class TestDimension2 : MyTestCase() {
         assertEquals(-3.0, h.value.x.mm, tiny)
         assertEquals(-2.0, h.value.y.mm, tiny)
 
-        val i = Evaluator("Dimension2(6mm,2mm).ratio( Dimension2(3mm, 2mm) )").parse() as Prop<Vector2>
+        val i = Evaluator("Dimension2(6mm,2mm) % Dimension2(3mm, 2mm)").parse() as Prop<Vector2>
         assertEquals(2.0, i.value.x, tiny)
         assertEquals(1.0, i.value.y, tiny)
-        val i2 = Evaluator("Dimension2(6mm,2mm) % Dimension2(3mm, 2mm)").parse() as Prop<Vector2>
-        assertEquals(2.0, i2.value.x, tiny)
-        assertEquals(1.0, i2.value.y, tiny)
         val i3 = Evaluator("Dimension2(6m,2m) / Dimension2(3m, 2m)").parse() as Prop<Dimension2>
         assertEquals(2.0, i3.value.x.inDefaultUnits, tiny)
         assertEquals(1.0, i3.value.y.inDefaultUnits, tiny)
@@ -137,19 +152,19 @@ class TestDimension2 : MyTestCase() {
 
     @Test
     fun testFields() {
-        val a = Evaluator("Dimension2(15mm,10cm).x").parse() as Prop<Dimension>
+        val a = Evaluator("Dimension2(15mm,10cm).X").parse() as Prop<Dimension>
         assertEquals(15.0, a.value.mm, tiny)
 
-        val b = Evaluator("Dimension2(15mm,10cm).y").parse() as Prop<Dimension>
+        val b = Evaluator("Dimension2(15mm,10cm).Y").parse() as Prop<Dimension>
         assertEquals(100.0, b.value.mm, tiny)
 
-        val c = Evaluator("Dimension2(15mm,10cm).y.mm").parse() as Prop<Double>
+        val c = Evaluator("Dimension2(15mm,10cm).Y.mm").parse() as Prop<Double>
         assertEquals(100.0, c.value, tiny)
     }
 
     @Test
     fun testMethods() {
-        val a = Evaluator("Dimension2(3m,4m).length()").parse() as Prop<Dimension>
+        val a = Evaluator("Dimension2(3m,4m).Length").parse() as Prop<Dimension>
         assertEquals(5.0, a.value.m, tiny)
 
         val b = Evaluator("Dimension2(3m,4m).normalise()").parse() as Prop<Vector2>

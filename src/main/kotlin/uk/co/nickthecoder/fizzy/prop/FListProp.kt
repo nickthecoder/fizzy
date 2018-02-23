@@ -29,13 +29,9 @@ class FListPropType private constructor()
 
     override fun findField(prop: Prop<FList<out Any>>, name: String): Prop<*>? {
         return when (name) {
-            "size" -> PropCalculation1(prop) { v -> v.size }
+            "Size" -> PropCalculation1(prop) { v -> v.size }
             else -> return findField(prop.value, name) ?: super.findField(prop, name)
         }
-    }
-
-    override fun findMethod(prop: Prop<FList<out Any>>, name: String): PropMethod<FList<out Any>, *>? {
-        return null
     }
 
     fun findField(list: FList<*>, name: String): Prop<*>? {
@@ -50,7 +46,6 @@ class FListPropType private constructor()
             if (index > 0 && index <= list.size) {
                 list [index - 1]?.let { item ->
 
-                    // TODO This cannot be a constant!
                     val field = PropType.field(PropConstant(item), fieldName)
                     if (field != null) {
                         return field

@@ -66,9 +66,6 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
         private val nameNumber = Pattern.compile("(.*)([0-9])+")
 
         fun field(prop: Prop<*>, fieldName: String): Prop<*>? {
-            if (propertyTypes[prop.value?.javaClass!!.kotlin] == null) {
-                println("*** Class ${prop.value?.javaClass!!.kotlin} not in the PropType list")
-            }
             return propertyTypes[prop.value?.javaClass!!.kotlin]?.findField2(prop, fieldName)
         }
 

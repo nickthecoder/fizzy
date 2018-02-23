@@ -50,17 +50,17 @@ class TestLists : MyTestCase() {
         val foo = Foo(FList(listOf(Angle.degrees(45.0), Angle.degrees(90.0))))
         val context = SimpleEvaluationContext(mapOf("foo" to PropConstant(foo)))
 
-        val a = Evaluator("foo.angles1.degrees", context).parse() as Prop<Double>
+        val a = Evaluator("foo.angles1.Degrees", context).parse() as Prop<Double>
         assertEquals(45.0, a.value, tiny)
 
-        val b = Evaluator("foo.angles2.degrees", context).parse() as Prop<Double>
+        val b = Evaluator("foo.angles2.Degrees", context).parse() as Prop<Double>
         assertEquals(90.0, b.value, tiny)
 
         assertFailsAt(3) {
-            Evaluator("foo.angles0.degrees", context).parse()
+            Evaluator("foo.angles0.Degrees", context).parse()
         }
         assertFailsAt(3) {
-            Evaluator("foo.angles3.degrees", context).parse()
+            Evaluator("foo.angles3.Degrees", context).parse()
         }
 
     }

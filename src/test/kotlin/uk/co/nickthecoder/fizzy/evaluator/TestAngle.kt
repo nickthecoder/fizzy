@@ -1,3 +1,21 @@
+/*
+Fizzy
+Copyright (C) 2018 Nick Robinson
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
 package uk.co.nickthecoder.fizzy.evaluator
 
 import org.junit.Test
@@ -101,7 +119,7 @@ class TestAngle : MyTestCase() {
         assertEquals(80.0, a.value.degrees, tiny)
 
 
-        val b = Evaluator("angle1.degrees", context).parse() as Prop<Double>
+        val b = Evaluator("angle1.Degrees", context).parse() as Prop<Double>
         assertEquals(100.0, b.value, tiny)
         value1.expression = "80"
         assertEquals(80.0, b.value, tiny)
@@ -109,13 +127,13 @@ class TestAngle : MyTestCase() {
 
     @Test
     fun testFields() {
-        val a = Evaluator("90 deg.degrees").parse() as Prop<Double>
+        val a = Evaluator("90 deg.Degrees").parse() as Prop<Double>
         assertEquals(90.0, a.value, tiny)
 
-        val b = Evaluator("PI.degrees").parse() as Prop<Double>
+        val b = Evaluator("PI.Degrees").parse() as Prop<Double>
         assertEquals(180.0, b.value, tiny)
 
-        val c = Evaluator("PI.radians").parse() as Prop<Double>
+        val c = Evaluator("PI.Radians").parse() as Prop<Double>
         assertEquals(Math.PI, c.value, tiny)
     }
 
@@ -123,19 +141,19 @@ class TestAngle : MyTestCase() {
     @Test
     fun testTrig() {
 
-        val a1 = Evaluator("Vector2(2, 2).angle()").parse() as Prop<Angle>
+        val a1 = Evaluator("Vector2(2, 2).Angle").parse() as Prop<Angle>
         assertEquals(45.0, a1.value.degrees, tiny)
 
-        val a2 = Evaluator("Vector2(-2,2).angle()").parse() as Prop<Angle>
+        val a2 = Evaluator("Vector2(-2,2).Angle").parse() as Prop<Angle>
         assertEquals(135.0, a2.value.degrees, tiny)
 
-        val a3 = Evaluator("Vector2(2,-2).angle()").parse() as Prop<Angle>
+        val a3 = Evaluator("Vector2(2,-2).Angle").parse() as Prop<Angle>
         assertEquals(-45.0, a3.value.degrees, tiny)
 
-        val a4 = Evaluator("Vector2(-2,-2).angle()").parse() as Prop<Angle>
+        val a4 = Evaluator("Vector2(-2,-2).Angle").parse() as Prop<Angle>
         assertEquals(-135.0, a4.value.degrees, tiny)
 
-        val a5 = Evaluator("Vector2(2,0).angle()").parse() as Prop<Angle>
+        val a5 = Evaluator("Vector2(2,0).Angle").parse() as Prop<Angle>
         assertEquals(0.0, a5.value.degrees, tiny)
 
         for (angle in -170..170 step 20) {
@@ -149,15 +167,15 @@ class TestAngle : MyTestCase() {
             assertEquals(Math.tan(Math.toRadians(angle.toDouble())), b3.value, tiny)
 
             // Tests Vector2.rotate method (but not well,  because y is always 0)
-            val b4 = Evaluator("Vector2(1.3,0).rotate($angle deg).angle()").parse() as Prop<Angle>
+            val b4 = Evaluator("Vector2(1.3,0).rotate($angle deg).Angle").parse() as Prop<Angle>
             assertEquals(angle.toDouble(), b4.value.degrees, tiny)
 
             // Tests Vector2.rotate method
-            val b5 = Evaluator("Vector2(1.3,0).rotate(4 deg).rotate($angle deg).angle()").parse() as Prop<Angle>
+            val b5 = Evaluator("Vector2(1.3,0).rotate(4 deg).rotate($angle deg).Angle").parse() as Prop<Angle>
             assertEquals(angle.toDouble() + 4, b5.value.degrees, tiny)
 
             // Tests Dimension2.rotate method
-            val b6 = Evaluator("Dimension2(1.3m,0m).rotate(4 deg).rotate($angle deg).angle()").parse() as Prop<Angle>
+            val b6 = Evaluator("Dimension2(1.3m,0m).rotate(4 deg).rotate($angle deg).Angle").parse() as Prop<Angle>
             assertEquals(angle.toDouble() + 4, b6.value.degrees, tiny)
 
         }

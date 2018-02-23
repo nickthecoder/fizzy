@@ -53,16 +53,15 @@ class LayerView(val layer: Layer, val dc: DrawContext)
         dc.use {
 
             if (shape is HasShapeTransform) {
-                dc.translate(shape.transform.position.value)
+                dc.translate(shape.transform.pin.value)
                 dc.rotate(shape.transform.rotation.value)
                 dc.scale(shape.transform.scale.value)
-                dc.translate(-shape.transform.localPosition.value.x, -shape.transform.localPosition.value.y)
+                dc.translate(-shape.transform.locPin.value.x, -shape.transform.locPin.value.y)
             }
 
             if (shape is RealShape) {
 
                 shape.geometries.forEach { geometry ->
-                    dc.lineWidth(geometry.lineWidth.value)
                     dc.beginPath()
                     geometry.parts.forEach { part ->
                         when (part) {
@@ -72,8 +71,10 @@ class LayerView(val layer: Layer, val dc: DrawContext)
                     }
                     dc.endPath()
                 }
-            } else if (shape is ShapeGroup) {
-                // TODO
+            }
+
+            shape.children.forEach { child ->
+                drawShape(child)
             }
         }
     }

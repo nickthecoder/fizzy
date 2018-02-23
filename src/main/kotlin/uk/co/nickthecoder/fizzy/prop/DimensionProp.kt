@@ -35,13 +35,6 @@ class DimensionPropType private constructor()
         }
     }
 
-    override fun findMethod(prop: Prop<Dimension>, name: String): PropMethod<Dimension, *>? {
-        return when (name) {
-            "ratio" -> PropMethod1(prop, Dimension::class) { prop.value.ratio(it) }
-            else -> null
-        }
-    }
-
     companion object {
         val instance = DimensionPropType()
 

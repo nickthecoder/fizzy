@@ -27,9 +27,8 @@ abstract class ShapePropType<T : Shape>(klass: KClass<in T>)
 
     override fun findField(prop: Prop<T>, name: String): Prop<*>? {
         return when (name) {
-            "document" -> PropConstant(prop.value.document())
-            "layer" -> PropConstant(prop.value.layer())
-            "children" -> FListProp(prop.value.children)
+            "Document" -> PropConstant(prop.value.document())
+            "Layer" -> PropConstant(prop.value.layer())
             else -> {
                 // Allow the name of any shape on the document to be addresses as a top-level item
                 val document = prop.value.document()
@@ -51,7 +50,7 @@ abstract class RealShapePropType<T : RealShape>(klass: KClass<in T>)
     : ShapePropType<T>(klass) {
 
     override fun findField(prop: Prop<T>, name: String): Prop<*>? {
-        if (name == "geometry") {
+        if (name == "Geometry") {
             return PropCalculation1(prop) { v -> v.geometries }
         }
         return super.findField(prop, name)
@@ -63,8 +62,8 @@ class Shape1dPropType private constructor()
 
     override fun findField(prop: Prop<Shape1d>, name: String): Prop<*>? {
         return when (name) {
-            "start" -> prop.value.start
-            "end" -> prop.value.end
+            "Start" -> prop.value.start
+            "End" -> prop.value.end
             else -> super.findField(prop, name)
         }
     }
@@ -83,11 +82,11 @@ class Shape2dPropType private constructor()
 
     override fun findField(prop: Prop<Shape2d>, name: String): Prop<*>? {
         return when (name) {
-            "size" -> prop.value.size
-            "position" -> prop.value.transform.position
-            "localPosition" -> prop.value.transform.localPosition
-            "rotation" -> prop.value.transform.rotation
-            "scale" -> prop.value.transform.scale
+            "Size" -> prop.value.size
+            "Pin" -> prop.value.transform.pin
+            "LocPin" -> prop.value.transform.locPin
+            "Rotation" -> prop.value.transform.rotation
+            "Scale" -> prop.value.transform.scale
             else -> super.findField(prop, name)
         }
     }

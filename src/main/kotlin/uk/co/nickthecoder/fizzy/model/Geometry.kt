@@ -23,7 +23,6 @@ import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
-import uk.co.nickthecoder.fizzy.prop.DimensionExpression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
 
@@ -43,7 +42,7 @@ class Geometry()
 
     var parts = MutableFList<GeometryPart>()
 
-    val lineWidth = DimensionExpression("1mm")
+    // TODO Add fill and line booleans
 
     private val geometryPartsListener = object : ChangeAndCollectionListener<Geometry, GeometryPart>(this, parts) {
         override fun added(collection: FCollection<GeometryPart>, item: GeometryPart) {

@@ -42,7 +42,7 @@ class Angle private constructor(val radians: Double) {
     override fun equals(other: Any?): Boolean {
         return other is Angle && other.radians == this.radians
     }
-    
+
     override fun toString(): String = "$degrees°"
 
     companion object {

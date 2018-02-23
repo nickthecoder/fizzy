@@ -32,15 +32,15 @@ class ShapeTransform(val shape: Shape) {
     /**
      * The position of this object relative to the parent (which is either a [ShapeGroup] or a [Layer]).
      */
-    val position = Dimension2Expression("Dimension2(0mm, 0mm)", shape.context)
+    val pin = Dimension2Expression("Dimension2(0mm, 0mm)", shape.context)
 
     /**
-     * The local position of this object, which corresponds to the [position] within the parent.
+     * The local position of this object, which corresponds to the [pin] within the parent.
      * It is also used as the center of rotation.
-     * (0,0) would be the top-left of the shape, and [size] would be the bottom right.
-     * The default value is [size] / 2, which is the center of the shape.
+     * (0,0) would be the top-left of the shape, and [Shape2d.size] would be the bottom right.
+     * The default value is [Shape2d.size] / 2, which is the center of the shape.
      */
-    val localPosition = Dimension2Expression("size / 2", shape.context)
+    val locPin = Dimension2Expression("Size / 2", shape.context)
 
     // Should we have a scale? A scale would scale the line widths, the fonts etc
     val scale = Vector2Expression("Vector2(1, 1)", shape.context)
@@ -50,8 +50,8 @@ class ShapeTransform(val shape: Shape) {
     // TODO Add flipX and flipY (we don't have Boolean properties yet!)
 
     init {
-        position.listeners.add(shape)
-        localPosition.listeners.add(shape)
+        pin.listeners.add(shape)
+        locPin.listeners.add(shape)
         scale.listeners.add(shape)
         rotation.listeners.add(shape)
     }

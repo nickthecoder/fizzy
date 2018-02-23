@@ -1,3 +1,21 @@
+/*
+Fizzy
+Copyright (C) 2018 Nick Robinson
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
 package uk.co.nickthecoder.fizzy.evaluator
 
 import org.junit.Test
@@ -48,20 +66,14 @@ class TestDimension : MyTestCase() {
         assertEquals(16.0, f.value.mm, tiny)
         assertEquals(2.0, f.value.power)
 
-        val g = Evaluator("10mm.ratio(2mm)").parse() as Prop<Double>
+        val g = Evaluator("10mm % 2mm").parse() as Prop<Double>
         assertEquals(5.0, g.value, tiny)
-        val g2 = Evaluator("10mm % 2mm").parse() as Prop<Double>
-        assertEquals(5.0, g2.value, tiny)
 
-        val i = Evaluator("(20cm * 20cm).ratio(200cm * 4cm)").parse() as Prop<Double>
+        val i = Evaluator("(20cm * 20cm) % (200cm * 4cm)").parse() as Prop<Double>
         assertEquals(0.5, i.value, tiny)
-        val i2 = Evaluator("(20cm * 20cm) % (200cm * 4cm)").parse() as Prop<Double>
-        assertEquals(0.5, i2.value, tiny)
 
-        val j = Evaluator("(0.2m * 0.2m).ratio(200cm * 4cm)").parse() as Prop<Double>
+        val j = Evaluator("(0.2m * 0.2m) % (200cm * 4cm)").parse() as Prop<Double>
         assertEquals(0.5, j.value, tiny)
-        val j2 = Evaluator("(0.2m * 0.2m) % (200cm * 4cm)").parse() as Prop<Double>
-        assertEquals(0.5, j2.value, tiny)
 
     }
 

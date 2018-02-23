@@ -102,8 +102,8 @@ class TestListeners : MyTestCase() {
 
     @Test
     fun testPosition() {
-        shape1a.transform.position.value // Ensure not dirty
-        shape1a.transform.position.expression = "Dimension2(1mm,1mm)"
+        shape1a.transform.pin.value // Ensure not dirty
+        shape1a.transform.pin.expression = "Dimension2(1mm,1mm)"
         assertEquals(1, shape1aChanged)
         assertEquals(0, shape1bChanged)
         assertEquals(1, layer1Changed)
@@ -113,8 +113,8 @@ class TestListeners : MyTestCase() {
 
     @Test
     fun testLocalPosition() {
-        shape1a.transform.localPosition.value // Ensure not dirty
-        shape1a.transform.localPosition.expression = "Dimension2(1mm,1mm)"
+        shape1a.transform.locPin.value // Ensure not dirty
+        shape1a.transform.locPin.expression = "Dimension2(1mm,1mm)"
         assertEquals(1, shape1aChanged)
         assertEquals(1, layer1Changed)
         assertEquals(1, pageChanged)
@@ -185,7 +185,6 @@ class TestListeners : MyTestCase() {
 
         val mt = MoveTo()
         geometry.parts.add(mt)
-        println("shape1aChanged count = ${shape1aChanged}")
         assertEquals(2, shape1aChanged)
         assertEquals(0, shape1bChanged)
         assertEquals(2, layer1Changed)
