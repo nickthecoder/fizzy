@@ -30,12 +30,44 @@ class StringPropType private constructor()
 
     override fun findMethod(prop: Prop<String>, name: String): PropMethod<String, *>? {
         return when (name) {
-            "head" -> PropMethod1(prop, Double::class) { a -> prop.value.substring(0, a.toInt()) }
-            "tail" -> PropMethod1(prop, Double::class) { a ->
-                val l = prop.value.length
-                prop.value.substring(l - a.toInt(), l)
+            "head" -> PropMethod1(prop, Double::class) { a ->
+                val intA = a.toInt()
+                if (prop.value.length <= intA) {
+                    prop.value
+                } else {
+                    prop.value.substring(0, a.toInt())
+                }
             }
-            "substring" -> PropMethod2(prop, Double::class, Double::class) { a, b -> prop.value.substring(a.toInt(), b.toInt()) }
+            "tail" -> PropMethod1(prop, Double::class) { a ->
+                val length = prop.value.length
+                val intA = a.toInt()
+                if (length <= intA) {
+                    prop.value
+                } else {
+                    prop.value.substring(length - intA, length)
+                }
+            }
+            "substring" -> PropMethod2(prop, Double::class, Double::class) { a, b ->
+                var intA = a.toInt()
+                val intB = b.toInt()
+                val length = prop.value.length
+                if (intA >= intB) {
+                    ""
+                } else {
+                    if (intA < 0) {
+                        intA = 0
+                    }
+                    if (intA >= length || intB < 0) {
+                        ""
+                    } else {
+                        if (intA + intB >= length) {
+                            prop.value.substring(intA)
+                        } else {
+                            prop.value.substring(intA, intB)
+                        }
+                    }
+                }
+            }
             else -> null
         }
     }

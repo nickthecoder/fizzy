@@ -88,6 +88,35 @@ class TestString : MyTestCase() {
 
         val c = Evaluator("\"Hello\".tail(2)").parse() as Prop<String>
         assertEquals("lo", c.value)
+
+        val d = Evaluator("\"Hello\".head(20)").parse() as Prop<String>
+        assertEquals("Hello", d.value)
+
+        val e = Evaluator("\"Hello\".tail(20)").parse() as Prop<String>
+        assertEquals("Hello", e.value)
+
+        val f1 = Evaluator("\"Hello\".substring(3,5)").parse() as Prop<String>
+        assertEquals("lo", f1.value)
+        val f2 = Evaluator("\"Hello\".substring(4,6)").parse() as Prop<String>
+        assertEquals("o", f2.value)
+        val f3 = Evaluator("\"Hello\".substring(5,7)").parse() as Prop<String>
+        assertEquals("", f3.value)
+        val f4 = Evaluator("\"Hello\".substring(6,8)").parse() as Prop<String>
+        assertEquals("", f4.value)
+        val f5 = Evaluator("\"Hello\".substring(20,22)").parse() as Prop<String>
+        assertEquals("", f5.value)
+
+        val g1 = Evaluator("\"Hello\".substring(0,2)").parse() as Prop<String>
+        assertEquals("He", g1.value)
+        val g2 = Evaluator("\"Hello\".substring(-1,1)").parse() as Prop<String>
+        assertEquals("H", g2.value)
+        val g3 = Evaluator("\"Hello\".substring(-2,0)").parse() as Prop<String>
+        assertEquals("", g3.value)
+        val g4 = Evaluator("\"Hello\".substring(-3,-1)").parse() as Prop<String>
+        assertEquals("", g4.value)
+
+        val h4 = Evaluator("\"Hello\".substring(2,1)").parse() as Prop<String>
+        assertEquals("", g4.value)
     }
 
 }
