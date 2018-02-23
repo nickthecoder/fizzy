@@ -27,8 +27,8 @@ class AnglePropType private constructor()
 
     override fun findField(prop: Prop<Angle>, name: String): Prop<*>? {
         return when (name) {
-            "Degrees" -> PropField<Angle, Double>(prop) { prop.value.degrees }
-            "Radians" -> PropField<Angle, Double>(prop) { prop.value.radians }
+            "Degrees" -> PropField(prop) { prop.value.degrees }
+            "Radians" -> PropField(prop) { prop.value.radians }
             else -> super.findField(prop, name)
         }
     }

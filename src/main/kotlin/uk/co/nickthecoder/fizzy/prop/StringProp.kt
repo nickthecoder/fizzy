@@ -23,7 +23,7 @@ class StringPropType private constructor()
 
     override fun findField(prop: Prop<String>, name: String): Prop<*>? {
         return when (name) {
-            "Length" -> PropField<String, Double>(prop) { prop.value.length.toDouble() }
+            "Length" -> PropField(prop) { prop.value.length.toDouble() }
             else -> return super.findField(prop, name)
         }
     }

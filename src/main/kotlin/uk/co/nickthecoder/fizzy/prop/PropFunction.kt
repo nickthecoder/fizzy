@@ -35,7 +35,7 @@ class Dummy
 class DummyPropType private constructor()
     : PropType<Dummy>(Dummy::class) {
 
-    override fun findField(prop: Prop<Dummy>, name: String): PropField<Dummy, *>? {
+    override fun findField(prop: Prop<Dummy>, name: String): PropField<Dummy>? {
         return null
     }
 

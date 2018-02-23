@@ -21,6 +21,9 @@ package uk.co.nickthecoder.fizzy.prop
 import uk.co.nickthecoder.fizzy.evaluator.ArgList
 import kotlin.reflect.KClass
 
+/**
+ * T is the type of the receiver object.
+ */
 abstract class PropMethod<T : Any>(val prop: Prop<T>)
     : PropCalculation<Any>() {
 
@@ -60,7 +63,14 @@ abstract class PropMethod<T : Any>(val prop: Prop<T>)
     }
 }
 
-class PropMethod0<T : Any>(prop: Prop<T>, val lambda: () -> Any)
+/**
+ * A method, which has no arguments.
+ * T is the type of the receiver object.
+ */
+class PropMethod0<T : Any>(
+        prop: Prop<T>,
+        val lambda: () -> Any)
+
     : PropMethod<T>(prop) {
 
     override fun eval(arg: Prop<*>): Any {
@@ -71,7 +81,15 @@ class PropMethod0<T : Any>(prop: Prop<T>, val lambda: () -> Any)
     }
 }
 
-open class PropMethod1<T : Any, A : Any>(prop: Prop<T>, val klassA: KClass<A>, val lambda: (A) -> Any)
+/**
+ * A method which has 1 argument.
+ * T is the type of the receiver object.
+ * A is the type of the method's argument.
+ */
+open class PropMethod1<T : Any, A : Any>(
+        prop: Prop<T>, val klassA: KClass<A>,
+        val lambda: (A) -> Any)
+
     : PropMethod<T>(prop) {
 
     override fun eval(arg: Prop<*>): Any {
@@ -83,7 +101,16 @@ open class PropMethod1<T : Any, A : Any>(prop: Prop<T>, val klassA: KClass<A>, v
     }
 }
 
-open class PropMethod2<T : Any, A : Any, B : Any>(prop: Prop<T>, val klassA: KClass<A>, val klassB: KClass<B>, val lambda: (A, B) -> Any)
+/**
+ * A method which has 2 arguments.
+ * T is the type of the receiver object.
+ * A and B are the types of the method's arguments.
+ */
+open class PropMethod2<T : Any, A : Any, B : Any>(
+        prop: Prop<T>, val klassA: KClass<A>,
+        val klassB: KClass<B>,
+        val lambda: (A, B) -> Any)
+
     : PropMethod<T>(prop) {
 
     override fun eval(arg: Prop<*>): Any {
