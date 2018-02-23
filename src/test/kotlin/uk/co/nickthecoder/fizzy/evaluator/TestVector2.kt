@@ -113,5 +113,14 @@ class TestVector2 : MyTestCase() {
         val b = Evaluator("Vector2(3,4).normalise()").parse() as Prop<Vector2>
         assertEquals(3.0 / 5.0, b.value.x, tiny)
         assertEquals(4.0 / 5.0, b.value.y, tiny)
+
+        val c = Evaluator("Vector2(3,4).rotate(90 deg)").parse() as Prop<Vector2>
+        assertEquals(-4.0, c.value.x, tiny)
+        assertEquals(3.0, c.value.y, tiny)
+
+        val d = Evaluator("Vector2(3,4).rotate(-90 deg)").parse() as Prop<Vector2>
+        assertEquals(4.0, d.value.x, tiny)
+        assertEquals(-3.0, d.value.y, tiny)
+
     }
 }
