@@ -33,4 +33,5 @@ class PropConstant<T>(value: T) : AbstractProp<T>() {
 
     override fun isConstant() = true
 
+    override fun toString() = "Constant : $value"
 }

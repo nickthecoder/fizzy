@@ -37,6 +37,8 @@ class Vector2(val x: Double, val y: Double) {
 
     operator fun times(other: Dimension2) = Dimension2(other.x * x, other.y * y)
 
+    operator fun times(other: Dimension) = Dimension2(other * x, other * y)
+
     operator fun div(scale: Double) = Vector2(x / scale, y / scale)
 
     operator fun div(other: Vector2) = Vector2(x / other.x, y / other.y)

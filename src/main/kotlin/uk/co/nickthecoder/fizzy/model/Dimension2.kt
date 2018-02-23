@@ -36,6 +36,8 @@ class Dimension2(val x: Dimension, val y: Dimension) {
 
     operator fun div(other: Dimension2) = Dimension2(x / other.x, y / other.y)
 
+    operator fun div(other: Dimension) = Dimension2(x / other, y / other)
+
     operator fun div(other: Vector2) = Dimension2(x / other.x, y / other.y)
 
     fun ratio(other: Dimension2): Vector2 {

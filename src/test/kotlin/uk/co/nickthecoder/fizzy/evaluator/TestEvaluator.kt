@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.evaluator
 
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.model.Angle
+import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
@@ -195,6 +196,22 @@ class TestEvaluator : MyTestCase() {
         assertEquals(0.0, f.value.x.power, tiny)
         assertEquals(0.0, f.value.y.power, tiny)
     }
+
+    @Test
+    fun testListeners() {
+        val const = PropConstant(Dimension(2.0, Dimension.Units.m))
+        val variable = DimensionExpression("2m")
+        val context = SimpleEvaluationContext(mapOf("const" to const, "variable" to variable))
+
+        val b1 = Vector2Expression("Dimension2(6m,1m) / const", context)
+        assertEquals(b1.value.x, 3.0, tiny)
+
+        val b2 = Vector2Expression("Dimension2(6m,1m) / variable", context)
+        assertEquals(3.0, b2.value.x, tiny)
+        variable.expression = "1m"
+        assertEquals(6.0, b2.value.x, tiny)
+    }
+
 
     //variables.putProp("angle1", ExpressionProp("value1 degrees", Angle::class, context))
     //        val d = Evaluator("Dimension2(1,1).Angle").parse()

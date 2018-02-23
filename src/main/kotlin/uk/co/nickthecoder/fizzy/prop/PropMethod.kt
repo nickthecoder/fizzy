@@ -27,15 +27,17 @@ import kotlin.reflect.KClass
 abstract class PropMethod<T : Any>(val prop: Prop<T>)
     : PropCalculation<Any>() {
 
-    protected var _isConstant = false
+    protected var argsAreConstant = false
 
-    init {
-        prop.listeners.add(this)
-    }
-
-    override fun isConstant() = _isConstant
+    override fun isConstant() = prop.isConstant() && argsAreConstant
 
     protected var arg: Prop<*>? = null
+
+    init {
+        if (!prop.isConstant()) {
+            prop.listeners.add(this)
+        }
+    }
 
     fun applyArgs(arg: Prop<*>) {
         this.arg = arg
@@ -71,7 +73,10 @@ class PropMethod0<T : Any>(
     : PropMethod<T>(prop) {
 
     override fun eval(arg: Prop<*>): Any {
-        _isConstant = prop.isConstant()
+        argsAreConstant = prop.isConstant()
+        if (!argsAreConstant) {
+            prop.listeners.add(this)
+        }
 
         if (arg is ArgList && arg.value.size == 0) {
             return lambda()
@@ -93,7 +98,12 @@ open class PropMethod1<T : Any, A : Any>(
 
     override fun eval(arg: Prop<*>): Any {
 
-        _isConstant = prop.isConstant() && arg.isConstant()
+        if (!argsAreConstant) {
+            if (!arg.isConstant()) {
+                arg.listeners.add(this)
+            }
+        }
+        argsAreConstant = arg.isConstant()
 
         if (klassA.isInstance(arg.value)) {
             @Suppress("UNCHECKED_CAST")
@@ -120,11 +130,22 @@ open class PropMethod2<T : Any, A : Any, B : Any>(
             val a = arg.value[0]
             val b = arg.value[1]
 
-            _isConstant = prop.isConstant() && a.isConstant() && b.isConstant()
 
             if (klassA.isInstance(a.value) && klassB.isInstance(b.value)) {
                 @Suppress("UNCHECKED_CAST")
-                return lambda(a.value as A, b.value as B)
+                val result = lambda(a.value as A, b.value as B)
+
+                if (!argsAreConstant) {
+                    if (!a.isConstant()) {
+                        a.listeners.add(this)
+                    }
+                    if (!b.isConstant()) {
+                        b.listeners.add(this)
+                    }
+                }
+                argsAreConstant = a.isConstant() && b.isConstant()
+
+                return result
             }
 
         }

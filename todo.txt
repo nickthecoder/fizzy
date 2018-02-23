@@ -1,7 +1,8 @@
 To Do
 =====
 
-Test Dimension2 Normalise etc.
+
+PropExpression add ".remove" see TODO.
 
 Implement operators
     < > <= >=  and ? :
@@ -30,8 +31,7 @@ Create a JavaFX application drawing pre-created shapes.
 Maybe
 -----
 
-Evaluating "Dimension2(1m,1m) and "Vector2(1,1)" don't produce PropConstants.
-	Also consider "1+1" creating a PropConstant too. etc.
+Consider "1+1" creating a PropConstant.
 
 Later
 -----
