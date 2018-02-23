@@ -86,10 +86,37 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
         }
     }
 
+    private fun unRead(chars: Int) {
+        index -= chars
+    }
+
     fun parse(): Prop<*> {
         log("Parsing text $text")
         while (true) {
-            val token = readToken()
+            var token = readToken()
+
+            // Special case for infix operators, which do NOT use symbols, such as xor
+            if (!expectValue && Operator.find(token.text) != null) {
+                token.type = TokenType.OPERATOR
+            }
+
+            if (token.type == TokenType.OPERATOR && Operator.find(token.text) == null) {
+                // This operator isn't know, so take chars off the end till it IS known, or we run out of chars
+
+                var text = token.text
+                while (text.isNotBlank()) {
+                    text = text.dropLast(1)
+                    if (Operator.find(text) != null) {
+                        break
+                    }
+                }
+                unRead(token.text.length - text.length)
+                if (text.isBlank()) {
+                    throw EvaluationException("Unknown operator ${token.text}", token.startIndex)
+                }
+                token = Token(token.startIndex, text, TokenType.OPERATOR)
+            }
+
             if (token.type == TokenType.UNKNOWN) {
                 log("Breaking out of parse loop")
                 break
@@ -101,6 +128,9 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
         while (operators.isNotEmpty()) {
             applyOperator()
         }
+
+        log("-------------")
+
         if (values.isEmpty()) {
             throw EvaluationException("No value found", 0)
         }
@@ -218,8 +248,8 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
 
             else -> {
                 if (expectValue) {
-                    if (op.unaryOperator != null) {
-                        op = op.unaryOperator!!
+                    if (op.prefixOperator != null) {
+                        op = op.prefixOperator!!
                         log("Using : Unary $op")
                     } else {
                         throw EvaluationException("Syntax error", token.startIndex)

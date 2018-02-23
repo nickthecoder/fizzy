@@ -116,6 +116,15 @@ class Dimension {
         return Dimension(Math.sqrt(inUnits(units)), units, power / 2)
     }
 
+    override fun hashCode(): Int = 13 * inDefaultUnits.hashCode()
+
+    override fun equals(other: Any?): Boolean {
+        if (other is Dimension) {
+            return inDefaultUnits == other.inDefaultUnits
+        }
+        return false
+    }
+
     override fun toString(): String {
         return if (power == 0.0) {
             "$inDefaultUnits"

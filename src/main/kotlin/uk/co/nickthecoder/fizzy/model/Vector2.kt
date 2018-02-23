@@ -72,6 +72,15 @@ class Vector2(val x: Double, val y: Double) {
         return Vector2(cos * x - sin * y, sin * x + cos * y)
     }
 
+    override fun hashCode() = x.hashCode() + 17 * y.hashCode()
+
+    override fun equals(other: Any?): Boolean {
+        if (other is Vector2) {
+            return x == other.x && y == other.y
+        }
+        return false
+    }
+
     override fun toString() = "Vector2($x , $y)"
 
     companion object {

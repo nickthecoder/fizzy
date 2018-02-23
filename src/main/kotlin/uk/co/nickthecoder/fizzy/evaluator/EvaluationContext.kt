@@ -75,6 +75,8 @@ class ThisContext<T : Any>(val me: Prop<T>, val type: PropType<T>)
 
 val constantsContext = SimpleEvaluationContext(
         mapOf(
+                "true" to PropConstant(true),
+                "false" to PropConstant(false),
                 "PI" to PropConstant(Angle.PI),
                 "TAU" to PropConstant(Angle.TAU),
                 "E" to PropConstant(Math.E),

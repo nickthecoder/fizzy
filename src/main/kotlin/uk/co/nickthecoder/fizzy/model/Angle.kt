@@ -37,6 +37,14 @@ class Angle private constructor(val radians: Double) {
 
     fun unitVector(): Vector2 = Vector2(1.0, 0.0).rotate(this)
 
+    override fun hashCode() = 23 * radians.hashCode()
+
+    override fun equals(other: Any?): Boolean {
+        return other is Angle && other.radians == this.radians
+    }
+    
+    override fun toString(): String = "$degrees°"
+
     companion object {
 
         fun degrees(d: Double) = Angle(Math.toRadians(d))
@@ -48,7 +56,4 @@ class Angle private constructor(val radians: Double) {
         val TAU = Angle(Math.PI * 2.0)
     }
 
-    override fun equals(other: Any?): Boolean {
-        return other is Angle && other.radians == this.radians
-    }
 }

@@ -97,6 +97,17 @@ class Dimension2(val x: Dimension, val y: Dimension) {
         return Dimension2(x * cos - y * sin, x * sin + y * cos)
     }
 
+    override fun hashCode(): Int {
+        return x.hashCode() + 17 * y.hashCode()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other is Dimension2) {
+            return x == other.x && y == other.y
+        }
+        return false
+    }
+
     override fun toString() = "Dimension2($x , $y)"
 
     companion object {

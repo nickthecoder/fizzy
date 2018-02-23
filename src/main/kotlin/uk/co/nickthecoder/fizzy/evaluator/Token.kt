@@ -29,10 +29,9 @@ package uk.co.nickthecoder.fizzy.evaluator
  * Strings are and characters within double quotes. Strings can also contain escaped characters using the
  * backslash. e.g. \n is newline \" is a literal double quote, \t is a tab character.
  */
-class Token(val startIndex: Int) {
+class Token(val startIndex: Int, text: String = "", var type: TokenType = TokenType.UNKNOWN) {
 
-    private val buffer = StringBuffer()
-    var type = TokenType.UNKNOWN
+    private val buffer = StringBuffer(text)
     var ended: Boolean = false
     var literal: Boolean = false
 
@@ -58,7 +57,7 @@ class Token(val startIndex: Int) {
                     return doAccept(c, true)
                 } else {
                     type = TokenType.OPERATOR
-                    return doAccept(c, Operator.isValid(c.toString()))
+                    return doAccept(c, Operator.isOperatorChar(c))
                 }
             }
             TokenType.STRING -> {
@@ -85,7 +84,7 @@ class Token(val startIndex: Int) {
             }
             TokenType.NUMBER -> return doAccept(c, c.isDigit() || c == '.')
             TokenType.IDENTIFIER -> return doAccept(c, c.isJavaIdentifierPart())
-            TokenType.OPERATOR -> return doAccept(c, Operator.isValid(text + c))
+            TokenType.OPERATOR -> return doAccept(c, Operator.isOperatorChar(c))
         }
     }
 

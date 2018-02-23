@@ -1,8 +1,14 @@
 To Do
 =====
 
+Implement BooleanPropType and boolean operators ! && || ^
+    == != ~=
+    ? :
+
 Allow access to other shapes, e.g. for linking a Shape1d end. Use syntax : page@shapeName or page->shapeName ???
     Don't use Visio's "!" operator, because I'll use that for "not" when booleans are implemented.
+
+Decide, and implement a naming convension (constants, constructor, methods, fields, shapeIDs : start with upper case?)
 
 Create tests for realistic Shapes
     Create expressions for each geometry.

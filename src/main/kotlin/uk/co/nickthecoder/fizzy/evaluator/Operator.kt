@@ -32,7 +32,7 @@ abstract class Operator(val str: String, val precedence: Int) {
      * Is there is a unary version of this operator?
      * For example MinusOperator is a BinaryOperator, but also has a unary version (UnaryMinusOperator).
      */
-    open val unaryOperator: Operator? = null
+    open val prefixOperator: Operator? = null
 
     fun expectsValue(): Boolean = true
 
@@ -42,40 +42,49 @@ abstract class Operator(val str: String, val precedence: Int) {
 
         val operators = mutableMapOf<String, Operator>()
 
-        val NONE = NoOperator(0)
+        val UNARY_MINUS = UnaryMinusOperator(20)
+        val NOT = NotOperator(20)
 
-        val OPEN_BRACKET = OpenBracketOperator(1)
+        val DOT = DotOperator(19)
 
-        val APPLY = ApplyOperator(2)
+        val CLOSE_BRACKET = CloseBracketOperator(18)
+
+        val POW = PowerOperator(17)
+
+        val TIMES = TimesOperator(15)
+        val DIV = DivOperator(15)
+        val RATIO = RatioOperator(15)
+
+        val PLUS = PlusOperator(14)
+        val MINUS = MinusOperator(14)
+
+        val EQUALS = EqualsOperator(6)
+        val NOT_EQUALS = NotEqualsOperator(6)
+
+        val AND = AndOperator(5)
+
+        val OR = OrOperator(4)
+        val XOR = XorOperator(4)
 
         val COMMA = CommaOperator(3)
 
-        val PLUS = PlusOperator(4)
-        val MINUS = MinusOperator(4)
+        val APPLY = ApplyOperator(2)
 
-        val TIMES = TimesOperator(5)
-        val DIV = DivOperator(5)
-        val RATIO = RatioOperator(5)
+        val OPEN_BRACKET = OpenBracketOperator(1)
 
-        val POW = PowerOperator(6)
-
-        val CLOSE_BRACKET = CloseBracketOperator(7)
-
-        val DOT = DotOperator(8)
-
-        val UNARY_MINUS = UnaryMinusOperator(9)
+        val NONE = NoOperator(0)
 
         fun add(vararg ops: Operator) {
             ops.forEach { operators.put(it.str, it) }
         }
 
         init {
-            add(OPEN_BRACKET, COMMA, PLUS, MINUS, TIMES, DIV, RATIO, POW, CLOSE_BRACKET, DOT)
+            add(OPEN_BRACKET, COMMA, OR, XOR, EQUALS, NOT_EQUALS, AND, PLUS, MINUS, TIMES, DIV, RATIO, POW, CLOSE_BRACKET, DOT, NOT)
         }
 
         fun find(str: String): Operator? = operators[str]
 
-        fun isValid(str: String): Boolean = operators.containsKey(str)
+        fun isOperatorChar(c: Char) = "()+*^/%-!=><|&.,".contains(c)
     }
 }
 
@@ -178,6 +187,52 @@ class PowerOperator(precedence: Int) : BinaryOperator("^", precedence) {
     }
 }
 
+class NotOperator(precedence: Int) : UnaryOperator("!", precedence) {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun apply(a: Prop<*>): Prop<*> {
+        if (a.value is Boolean) {
+            return PropCalculation1(a as Prop<Boolean>) { !it }
+        }
+        return cannotApply(a)
+    }
+
+    override val prefixOperator: Operator? = this
+}
+
+class OrOperator(precedence: Int) : BinaryOperator("||", precedence) {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+        if (a.value is Boolean && b.value is Boolean) {
+            return PropCalculation2(a as Prop<Boolean>, b as Prop<Boolean>) { av, bv -> av || bv }
+        }
+        return cannotApply(a, b)
+    }
+}
+
+class AndOperator(precedence: Int) : BinaryOperator("&&", precedence) {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+        if (a.value is Boolean && b.value is Boolean) {
+            return PropCalculation2(a as Prop<Boolean>, b as Prop<Boolean>) { av, bv -> av && bv }
+        }
+        return cannotApply(a, b)
+    }
+}
+
+class XorOperator(precedence: Int) : BinaryOperator("xor", precedence) {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+        if (a.value is Boolean && b.value is Boolean) {
+            return PropCalculation2(a as Prop<Boolean>, b as Prop<Boolean>) { av, bv -> av xor bv }
+        }
+        return cannotApply(a, b)
+    }
+}
+
 class PlusOperator(precedence: Int) : BinaryOperator("+", precedence) {
 
     @Suppress("UNCHECKED_CAST")
@@ -234,6 +289,20 @@ class UnaryMinusOperator(precedence: Int) : UnaryOperator("-", precedence) {
 }
 
 @Suppress("UNCHECKED_CAST")
+class EqualsOperator(precedence: Int) : BinaryOperator("==", precedence) {
+    override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+        return PropCalculation2(a as Prop<Any>, b as Prop<Any>) { av, bv -> av == bv }
+    }
+}
+
+@Suppress("UNCHECKED_CAST")
+class NotEqualsOperator(precedence: Int) : BinaryOperator("!=", precedence) {
+    override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+        return PropCalculation2(a as Prop<Any>, b as Prop<Any>) { av, bv -> av != bv }
+    }
+}
+
+@Suppress("UNCHECKED_CAST")
 class MinusOperator(precedence: Int) : BinaryOperator("-", precedence) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
 
@@ -256,7 +325,7 @@ class MinusOperator(precedence: Int) : BinaryOperator("-", precedence) {
         return cannotApply(a, b)
     }
 
-    override val unaryOperator: Operator? get() = Operator.UNARY_MINUS
+    override val prefixOperator: Operator? get() = Operator.UNARY_MINUS
 }
 
 
