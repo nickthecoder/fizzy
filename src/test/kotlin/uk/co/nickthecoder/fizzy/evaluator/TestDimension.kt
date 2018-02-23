@@ -2,17 +2,14 @@ package uk.co.nickthecoder.fizzy.evaluator
 
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.model.Dimension
-import uk.co.nickthecoder.fizzy.prop.DimensionExpression
-import uk.co.nickthecoder.fizzy.prop.DoubleExpression
-import uk.co.nickthecoder.fizzy.prop.Prop
-import uk.co.nickthecoder.fizzy.prop.PropExpression
+import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
 @Suppress("UNCHECKED_CAST")
 class TestDimension : MyTestCase() {
 
     @Test
-    fun testDimensions() {
+    fun testGeneral() {
         val a = Evaluator("10mm").parse() as Prop<Dimension>
         assertEquals(10.0, a.value.mm, tiny)
         assertEquals(1.0, a.value.cm, tiny)
@@ -68,9 +65,19 @@ class TestDimension : MyTestCase() {
 
     }
 
+    @Test
+    fun testIsConstant() {
+
+        val f = Evaluator("10m").parse()
+        assert(f is PropConstant) { "is ${f.javaClass}" }
+        assertEquals(true, f.isConstant())
+        val f2 = Evaluator("(10+1)m").parse()
+        assert(f2 !is PropConstant) { "is ${f2.javaClass}" }
+        assertEquals(false, f2.isConstant())
+    }
 
     @Test
-    fun testDynamicDimensions() {
+    fun testDynamic() {
 
         val variables = SimpleEvaluationContext()
         val context = CompoundEvaluationContext(listOf(constantsContext, variables))
@@ -90,7 +97,7 @@ class TestDimension : MyTestCase() {
     }
 
     @Test
-    fun testDimensionFields() {
+    fun testFields() {
         val a = Evaluator("15mm.mm").parse() as Prop<Double>
         assertEquals(15.0, a.value, tiny)
 

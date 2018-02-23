@@ -5,13 +5,14 @@ import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Vector2
 import uk.co.nickthecoder.fizzy.prop.Prop
+import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
 @Suppress("UNCHECKED_CAST")
 class TestDimension2 : MyTestCase() {
 
     @Test
-    fun testCreateDimension2() {
+    fun testCreate() {
 
         val a = Evaluator("Dimension2(1 mm, 2 mm)").parse() as Prop<Dimension2>
         assertEquals(1.0, a.value.x.mm, tiny)
@@ -19,7 +20,22 @@ class TestDimension2 : MyTestCase() {
     }
 
     @Test
-    fun testVectorDimension2() {
+    fun testIsConstant() {
+
+        //val b = Evaluator("Dimension2(1m,2m)").parse()
+        // FAILS : assert(b is PropConstant<*>) { "is ${a.javaClass}" }
+        // FAILS : assertEquals(true, b.isConstant())
+
+        val b2 = Evaluator("Dimension2((1+1)m,2m)").parse()
+        assert(b2 !is PropConstant<*>) { "is ${b2.javaClass}" }
+        assertEquals(false, b2.isConstant())
+        val b3 = Evaluator("Dimension2(1m,(2+1)m)").parse()
+        assert(b3 !is PropConstant<*>) { "is ${b3.javaClass}" }
+        assertEquals(false, b3.isConstant())
+    }
+
+    @Test
+    fun testMaths() {
 
         val a = Evaluator("Dimension2(1mm ,2mm) * 2").parse() as Prop<Dimension2>
         assertEquals(2.0, a.value.x.mm, tiny)
@@ -36,24 +52,6 @@ class TestDimension2 : MyTestCase() {
         val c = Evaluator("10 * Dimension2(8mm,10mm)").parse() as Prop<Dimension2>
         assertEquals(80.0, c.value.x.mm, tiny)
         assertEquals(100.0, c.value.y.mm, tiny)
-
-        assertFailsAt(2) {
-            Evaluator("5 / Dimension2(1mm,1mm)").parse()
-        }
-
-        assertFailsAt(2) {
-            Evaluator("5 + Dimension2(1mm,1mm)").parse()
-        }
-        assertFailsAt(20) {
-            Evaluator("Dimension2(1mm,1mm) + 5").parse()
-        }
-
-        assertFailsAt(2) {
-            Evaluator("5 - Dimension2(1mm,1mm)").parse()
-        }
-        assertFailsAt(20) {
-            Evaluator("Dimension2(1mm,1mm) - 5").parse()
-        }
 
         val d = Evaluator("Dimension2(1mm,2mm) + Dimension2(8mm,10mm)").parse() as Prop<Dimension2>
         assertEquals(9.0, d.value.x.mm, tiny)
@@ -93,7 +91,30 @@ class TestDimension2 : MyTestCase() {
     }
 
     @Test
-    fun testVectorWithDimension2() {
+    fun testIllegalOperations() {
+
+        assertFailsAt(2) {
+            Evaluator("5 / Dimension2(1mm,1mm)").parse()
+        }
+
+        assertFailsAt(2) {
+            Evaluator("5 + Dimension2(1mm,1mm)").parse()
+        }
+        assertFailsAt(20) {
+            Evaluator("Dimension2(1mm,1mm) + 5").parse()
+        }
+
+        assertFailsAt(2) {
+            Evaluator("5 - Dimension2(1mm,1mm)").parse()
+        }
+        assertFailsAt(20) {
+            Evaluator("Dimension2(1mm,1mm) - 5").parse()
+        }
+
+    }
+
+    @Test
+    fun testWithVector2() {
         val a = Evaluator("Dimension2(3mm,2mm) * Vector2(2, 5)").parse() as Prop<Dimension2>
         assertEquals(6.0, a.value.x.mm, tiny)
         assertEquals(10.0, a.value.y.mm, tiny)
@@ -112,11 +133,10 @@ class TestDimension2 : MyTestCase() {
         assertFailsAt(13) {
             Evaluator("Vector2(1,1) - Dimension2(1m,1m)").parse()
         }
-
     }
 
     @Test
-    fun testDimension2Fields() {
+    fun testFields() {
         val a = Evaluator("Dimension2(15mm,10cm).x").parse() as Prop<Dimension>
         assertEquals(15.0, a.value.mm, tiny)
 
@@ -128,7 +148,7 @@ class TestDimension2 : MyTestCase() {
     }
 
     @Test
-    fun testDimension2Methods() {
+    fun testMethods() {
         val a = Evaluator("Dimension2(3m,4m).length()").parse() as Prop<Dimension>
         assertEquals(5.0, a.value.m, tiny)
 

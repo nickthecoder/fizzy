@@ -4,17 +4,14 @@ import org.junit.Test
 import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
-import uk.co.nickthecoder.fizzy.prop.AngleExpression
-import uk.co.nickthecoder.fizzy.prop.DoubleExpression
-import uk.co.nickthecoder.fizzy.prop.Prop
-import uk.co.nickthecoder.fizzy.prop.PropExpression
+import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
 @Suppress("UNCHECKED_CAST")
 class TestAngle : MyTestCase() {
 
     @Test
-    fun testAngles() {
+    fun testGeneral() {
         assertEquals(2.0, Angle.radians(2.0).radians, tiny)
         assertEquals(2.0 / Math.PI * 180.0, Angle.radians(2.0).degrees, tiny)
 
@@ -64,9 +61,27 @@ class TestAngle : MyTestCase() {
         }
     }
 
+    @Test
+    fun testIsConstant() {
+
+        val c = Evaluator("10 deg").parse()
+        assert(c is PropConstant) { "is ${c.javaClass}" }
+        assertEquals(true, c.isConstant())
+        val c2 = Evaluator("(10+1) deg").parse()
+        assert(c2 !is PropConstant) { "is ${c2.javaClass}" }
+        assertEquals(false, c2.isConstant())
+
+        val d = Evaluator("10 rad").parse()
+        assert(d is PropConstant) { "is ${d.javaClass}" }
+        assertEquals(true, d.isConstant())
+        val d2 = Evaluator("(10+1) rad").parse()
+        assert(d2 !is PropConstant) { "is ${d2.javaClass}" }
+        assertEquals(false, d2.isConstant())
+
+    }
 
     @Test
-    fun testDynamicAngles() {
+    fun testDynamic() {
 
         val variables = SimpleEvaluationContext()
         val context = CompoundEvaluationContext(listOf(constantsContext, variables))
@@ -93,7 +108,7 @@ class TestAngle : MyTestCase() {
     }
 
     @Test
-    fun testAngleFields() {
+    fun testFields() {
         val a = Evaluator("90 deg.degrees").parse() as Prop<Double>
         assertEquals(90.0, a.value, tiny)
 

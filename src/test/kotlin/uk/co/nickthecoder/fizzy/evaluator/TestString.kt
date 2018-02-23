@@ -2,13 +2,14 @@ package uk.co.nickthecoder.fizzy.evaluator
 
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.prop.Prop
+import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
 @Suppress("UNCHECKED_CAST")
 class TestString : MyTestCase() {
 
     @Test
-    fun testStrings() {
+    fun testGeneral() {
 
         val empty = Evaluator("\"\"").parse() as Prop<String>
         assertEquals("", empty.value)
@@ -42,13 +43,25 @@ class TestString : MyTestCase() {
     }
 
     @Test
-    fun testString2Fields() {
+    fun testIsConstant() {
+
+        val e = Evaluator("\"Hello\"").parse()
+        assert(e is PropConstant) { "is ${e.javaClass}" }
+        assertEquals(true, e.isConstant())
+        val e2 = Evaluator("\"Hello\" + \" World\"").parse()
+        assert(e2 !is PropConstant) { "is ${e2.javaClass}" }
+        assertEquals(false, e2.isConstant())
+
+    }
+
+    @Test
+    fun testFields() {
         val a = Evaluator("\"Hello\".length").parse() as Prop<Double>
         assertEquals(5.0, a.value, tiny)
     }
 
     @Test
-    fun testStringMethods() {
+    fun testMethods() {
         val a = Evaluator("\"Hello\".substring(2,5)").parse() as Prop<String>
         assertEquals("llo", a.value)
 

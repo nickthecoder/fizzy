@@ -3,13 +3,14 @@ package uk.co.nickthecoder.fizzy.evaluator
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.model.Vector2
 import uk.co.nickthecoder.fizzy.prop.Prop
+import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
 @Suppress("UNCHECKED_CAST")
 class TestVector2 : MyTestCase() {
 
     @Test
-    fun testCreateVector() {
+    fun testCreate() {
 
         val a = Evaluator("Vector2(1,2)").parse() as Prop<Vector2>
         assertEquals(1.0, a.value.x, tiny)
@@ -17,7 +18,7 @@ class TestVector2 : MyTestCase() {
     }
 
     @Test
-    fun testVectorMaths() {
+    fun testMaths() {
         val a = Evaluator("Vector2(1,2) * 2").parse() as Prop<Vector2>
         assertEquals(2.0, a.value.x, tiny)
         assertEquals(4.0, a.value.y, tiny)
@@ -67,7 +68,18 @@ class TestVector2 : MyTestCase() {
     }
 
     @Test
-    fun testVector2Fields() {
+    fun testIsConstant() {
+
+        //val b = Evaluator("Vector2(1,2)").parse()
+        // FAILS : assert(b is PropConstant<*>) { "is ${a.javaClass}" }
+        val a2 = Evaluator("Vector2(1 + 1,2)").parse()
+        assert(a2 !is PropConstant<*>) { "is ${a2.javaClass}" }
+        val a3 = Evaluator("Vector2(1,2+1)").parse()
+        assert(a3 !is PropConstant<*>) { "is ${a3.javaClass}" }
+    }
+
+    @Test
+    fun testFields() {
         val a = Evaluator("Vector2(15,10).x").parse() as Prop<Double>
         assertEquals(15.0, a.value, tiny)
 
@@ -75,10 +87,8 @@ class TestVector2 : MyTestCase() {
         assertEquals(10.0, b.value, tiny)
     }
 
-
-
     @Test
-    fun testVectorMethods() {
+    fun testMethods() {
         val a = Evaluator("Vector2(3,4).length()").parse() as Prop<Double>
         assertEquals(5.0, a.value, tiny)
 
