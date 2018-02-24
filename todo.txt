@@ -1,10 +1,6 @@
 To Do
 =====
 
-
-Implement operators
-    and ? :
-
 Allow access to other shapes, e.g. for linking a Shape1d end. Use syntax : page@shapeName or page->shapeName ???
     Don't use Visio's "!" operator, because I'll use that for "not" when booleans are implemented.
 

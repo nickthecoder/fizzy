@@ -26,7 +26,7 @@ package uk.co.nickthecoder.fizzy.prop
  * T should be an immutable type, so that the property value cannot change without the property's listeners being
  * notified.
  */
-interface Prop<T> {
+interface Prop<T : Any> {
 
     val value: T
 
@@ -41,7 +41,7 @@ interface Prop<T> {
     fun method(name: String): Prop<*>? = PropType.method(this, name)
 }
 
-abstract class AbstractProp<T> : Prop<T> {
+abstract class AbstractProp<T : Any> : Prop<T> {
 
     override val listeners = PropListeners()
 
@@ -49,5 +49,5 @@ abstract class AbstractProp<T> : Prop<T> {
 }
 
 fun throwExpectedType(type: String, found: Prop<*>): Prop<*> {
-    throw RuntimeException("Expected a $type, but found ${found.value?.javaClass?.simpleName}")
+    throw RuntimeException("Expected a $type, but found ${found.value.javaClass.simpleName}")
 }

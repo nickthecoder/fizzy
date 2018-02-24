@@ -81,7 +81,7 @@ class IfFunction : PropMethod<Dummy>(dummyInstance) {
             if (condition is Boolean) {
                 val a = arg.value[1]
                 val b = arg.value[2]
-                return if (condition) a.value!! else b.value!!
+                return if (condition) a.value else b.value
             }
         }
         throw RuntimeException("Expected (Boolean,Any,Any), but found ${arg.value}")

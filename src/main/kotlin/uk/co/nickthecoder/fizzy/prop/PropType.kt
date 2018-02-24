@@ -66,11 +66,11 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
         private val nameNumber = Pattern.compile("(.*)([0-9])+")
 
         fun field(prop: Prop<*>, fieldName: String): Prop<*>? {
-            return propertyTypes[prop.value?.javaClass!!.kotlin]?.findField2(prop, fieldName)
+            return propertyTypes[prop.value.javaClass.kotlin]?.findField2(prop, fieldName)
         }
 
         fun method(prop: Prop<*>, methodName: String): PropMethod<*>? {
-            return propertyTypes[prop.value?.javaClass!!.kotlin]?.findMethod2(prop, methodName)
+            return propertyTypes[prop.value.javaClass.kotlin]?.findMethod2(prop, methodName)
         }
 
         fun put(propertyType: PropType<*>) {

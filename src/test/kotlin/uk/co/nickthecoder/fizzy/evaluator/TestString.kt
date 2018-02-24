@@ -115,9 +115,6 @@ class TestString : MyTestCase() {
         val g4 = Evaluator("\"Hello\".substring(-3,-1)").parse() as Prop<String>
         assertEquals("", g4.value)
 
-        val h4 = Evaluator("\"Hello\".substring(2,1)").parse() as Prop<String>
-        assertEquals("", g4.value)
     }
-
-
+    
 }

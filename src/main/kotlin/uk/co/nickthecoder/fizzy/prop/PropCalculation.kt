@@ -52,7 +52,7 @@ abstract class PropCalculation<T : Any>
     override fun toString(): String = "${this.javaClass.simpleName} ${if (isConstant()) value.toString() else ""}"
 }
 
-class PropCalculation1<T : Any, A>(val a: Prop<A>, val lambda: (A) -> T)
+class PropCalculation1<T : Any, A : Any>(val a: Prop<A>, val lambda: (A) -> T)
     : PropCalculation<T>() {
 
     init {
@@ -62,7 +62,7 @@ class PropCalculation1<T : Any, A>(val a: Prop<A>, val lambda: (A) -> T)
     override fun eval(): T = lambda(a.value)
 }
 
-class PropCalculation2<T : Any, A, B>(val a: Prop<A>, val b: Prop<B>, val lambda: (A, B) -> T)
+class PropCalculation2<T : Any, A : Any, B : Any>(val a: Prop<A>, val b: Prop<B>, val lambda: (A, B) -> T)
     : PropCalculation<T>() {
 
     init {
