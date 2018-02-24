@@ -19,7 +19,7 @@ Create a mock DrawContext, which logs the output
 Soon
 ----
 
-Add class Page between Document and Layer?
+DimensionExpression to have an additional "expected power", which defaults to 1.
 
 Create a JavaFX application drawing pre-created shapes.
     Add a Glass canvas to highlight the currently selected shape
@@ -31,13 +31,14 @@ Maybe
 
 Consider "1+1" creating a PropConstant.
 
-Re-think layers?
-    Instead of shapes being IN a ayer, perhaps layers should just be a way of turning a shape's visibility on/off.
+Layers
+    Instead of shapes being IN a layer, perhaps layers should just be a way of turning a shape's visibility on/off.
     i.e. a child shape can be in a different layer to its parent.
         Useful for turning text on/off for all shapes on a page.
     For simplisity, we could make the Shape's layer attribute NOT be a PropExpression, but a simple string.
         Note this is NOT a constant! Maybe we need a new PropValue to hold them, and strongly typed versions such as StringValue.
     A layer could have an alias, which allows it to have a different name in the GUI e.g. to change to a different language.
+    As this is not a structural item, it isn't needed to be done early.
 
 Later
 -----
