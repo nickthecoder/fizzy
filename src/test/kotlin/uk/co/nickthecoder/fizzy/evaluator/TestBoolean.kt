@@ -153,6 +153,23 @@ class TestBoolean : MyTestCase() {
 
         assertEquals(false, parseBoolean("45 deg == 46 deg"))
         assertEquals(true, parseBoolean("45 deg != 46 deg"))
+
+        assertEquals(false, parseBoolean("1deg > 2deg"))
+        assertEquals(false, parseBoolean("2deg > 2deg"))
+        assertEquals(true, parseBoolean("3deg > 2deg"))
+
+        assertEquals(false, parseBoolean("1deg >= 2deg"))
+        assertEquals(true, parseBoolean("2deg >= 2deg"))
+        assertEquals(true, parseBoolean("3deg >= 2deg"))
+
+        assertEquals(true, parseBoolean("1deg < 2deg"))
+        assertEquals(false, parseBoolean("2deg < 2deg"))
+        assertEquals(false, parseBoolean("3 deg< 2deg"))
+
+        assertEquals(true, parseBoolean("1deg <= 2deg"))
+        assertEquals(true, parseBoolean("2deg <= 2deg"))
+        assertEquals(false, parseBoolean("3deg <= 2deg"))
+
     }
 
     @Test

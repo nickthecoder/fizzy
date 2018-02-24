@@ -316,6 +316,8 @@ class GreaterThanOperator(precedence: Int) : BinaryOperator(">", precedence) {
             PropCalculation2(a as Prop<Double>, b as Prop<Double>) { av, bv -> av > bv }
         } else if (a.value is Dimension && b.value is Dimension) {
             PropCalculation2(a as Prop<Dimension>, b as Prop<Dimension>) { av, bv -> av.inDefaultUnits > bv.inDefaultUnits }
+        } else if (a.value is Angle && b.value is Angle) {
+            PropCalculation2(a as Prop<Angle>, b as Prop<Angle>) { av, bv -> av.radians > bv.radians }
         } else {
             cannotApply(a, b)
         }
@@ -329,6 +331,8 @@ class GreaterThanEqualsOperator(precedence: Int) : BinaryOperator(">=", preceden
             PropCalculation2(a as Prop<Double>, b as Prop<Double>) { av, bv -> av >= bv }
         } else if (a.value is Dimension && b.value is Dimension) {
             PropCalculation2(a as Prop<Dimension>, b as Prop<Dimension>) { av, bv -> av.inDefaultUnits >= bv.inDefaultUnits }
+        } else if (a.value is Angle && b.value is Angle) {
+            PropCalculation2(a as Prop<Angle>, b as Prop<Angle>) { av, bv -> av.radians >= bv.radians }
         } else {
             cannotApply(a, b)
         }
@@ -342,6 +346,8 @@ class LessThanOperator(precedence: Int) : BinaryOperator("<", precedence) {
             PropCalculation2(a as Prop<Double>, b as Prop<Double>) { av, bv -> av < bv }
         } else if (a.value is Dimension && b.value is Dimension) {
             PropCalculation2(a as Prop<Dimension>, b as Prop<Dimension>) { av, bv -> av.inDefaultUnits < bv.inDefaultUnits }
+        } else if (a.value is Angle && b.value is Angle) {
+            PropCalculation2(a as Prop<Angle>, b as Prop<Angle>) { av, bv -> av.radians < bv.radians }
         } else {
             cannotApply(a, b)
         }
@@ -355,6 +361,8 @@ class LessThanEqualsOperator(precedence: Int) : BinaryOperator("<=", precedence)
             PropCalculation2(a as Prop<Double>, b as Prop<Double>) { av, bv -> av <= bv }
         } else if (a.value is Dimension && b.value is Dimension) {
             PropCalculation2(a as Prop<Dimension>, b as Prop<Dimension>) { av, bv -> av.inDefaultUnits <= bv.inDefaultUnits }
+        } else if (a.value is Angle && b.value is Angle) {
+            PropCalculation2(a as Prop<Angle>, b as Prop<Angle>) { av, bv -> av.radians <= bv.radians }
         } else {
             cannotApply(a, b)
         }
