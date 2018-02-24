@@ -60,6 +60,10 @@ abstract class Operator(val str: String, val precedence: Int) {
 
         val EQUALS = EqualsOperator(6)
         val NOT_EQUALS = NotEqualsOperator(6)
+        val GREATER_THAN = GreaterThanOperator(6)
+        val GREATER_THAN_EQUALS = GreaterThanEqualsOperator(6)
+        val LESS_THAN = LessThanOperator(6)
+        val LESS_THAN_EQUALS = LessThanEqualsOperator(6)
 
         val AND = AndOperator(5)
 
@@ -79,7 +83,9 @@ abstract class Operator(val str: String, val precedence: Int) {
         }
 
         init {
-            add(OPEN_BRACKET, COMMA, OR, XOR, EQUALS, NOT_EQUALS, AND, PLUS, MINUS, TIMES, DIV, RATIO, POW, CLOSE_BRACKET, DOT, NOT)
+            add(OPEN_BRACKET, COMMA, OR, XOR, AND,
+                    EQUALS, NOT_EQUALS, GREATER_THAN, GREATER_THAN_EQUALS, LESS_THAN, LESS_THAN_EQUALS,
+                    PLUS, MINUS, TIMES, DIV, RATIO, POW, CLOSE_BRACKET, DOT, NOT)
         }
 
         fun find(str: String): Operator? = operators[str]
@@ -299,6 +305,59 @@ class EqualsOperator(precedence: Int) : BinaryOperator("==", precedence) {
 class NotEqualsOperator(precedence: Int) : BinaryOperator("!=", precedence) {
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         return PropCalculation2(a as Prop<Any>, b as Prop<Any>) { av, bv -> av != bv }
+    }
+}
+
+
+@Suppress("UNCHECKED_CAST")
+class GreaterThanOperator(precedence: Int) : BinaryOperator(">", precedence) {
+    override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+        return if (a.value is Double && b.value is Double) {
+            PropCalculation2(a as Prop<Double>, b as Prop<Double>) { av, bv -> av > bv }
+        } else if (a.value is Dimension && b.value is Dimension) {
+            PropCalculation2(a as Prop<Dimension>, b as Prop<Dimension>) { av, bv -> av.inDefaultUnits > bv.inDefaultUnits }
+        } else {
+            cannotApply(a, b)
+        }
+    }
+}
+
+@Suppress("UNCHECKED_CAST")
+class GreaterThanEqualsOperator(precedence: Int) : BinaryOperator(">=", precedence) {
+    override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+        return if (a.value is Double && b.value is Double) {
+            PropCalculation2(a as Prop<Double>, b as Prop<Double>) { av, bv -> av >= bv }
+        } else if (a.value is Dimension && b.value is Dimension) {
+            PropCalculation2(a as Prop<Dimension>, b as Prop<Dimension>) { av, bv -> av.inDefaultUnits >= bv.inDefaultUnits }
+        } else {
+            cannotApply(a, b)
+        }
+    }
+}
+
+@Suppress("UNCHECKED_CAST")
+class LessThanOperator(precedence: Int) : BinaryOperator("<", precedence) {
+    override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+        return if (a.value is Double && b.value is Double) {
+            PropCalculation2(a as Prop<Double>, b as Prop<Double>) { av, bv -> av < bv }
+        } else if (a.value is Dimension && b.value is Dimension) {
+            PropCalculation2(a as Prop<Dimension>, b as Prop<Dimension>) { av, bv -> av.inDefaultUnits < bv.inDefaultUnits }
+        } else {
+            cannotApply(a, b)
+        }
+    }
+}
+
+@Suppress("UNCHECKED_CAST")
+class LessThanEqualsOperator(precedence: Int) : BinaryOperator("<=", precedence) {
+    override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
+        return if (a.value is Double && b.value is Double) {
+            PropCalculation2(a as Prop<Double>, b as Prop<Double>) { av, bv -> av <= bv }
+        } else if (a.value is Dimension && b.value is Dimension) {
+            PropCalculation2(a as Prop<Dimension>, b as Prop<Dimension>) { av, bv -> av.inDefaultUnits <= bv.inDefaultUnits }
+        } else {
+            cannotApply(a, b)
+        }
     }
 }
 

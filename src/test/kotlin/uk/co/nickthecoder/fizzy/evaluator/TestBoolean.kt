@@ -84,6 +84,31 @@ class TestBoolean : MyTestCase() {
     }
 
     @Test
+    fun testDouble() {
+        assertEquals(true, parseBoolean("1+1 == 2"))
+        assertEquals(false, parseBoolean("1+1 == 1"))
+
+        assertEquals(false, parseBoolean("1+1 != 2"))
+        assertEquals(true, parseBoolean("1+1 != 1"))
+
+        assertEquals(false, parseBoolean("1 > 2"))
+        assertEquals(false, parseBoolean("2 > 2"))
+        assertEquals(true, parseBoolean("3 > 2"))
+
+        assertEquals(false, parseBoolean("1 >= 2"))
+        assertEquals(true, parseBoolean("2 >= 2"))
+        assertEquals(true, parseBoolean("3 >= 2"))
+
+        assertEquals(true, parseBoolean("1 < 2"))
+        assertEquals(false, parseBoolean("2 < 2"))
+        assertEquals(false, parseBoolean("3 < 2"))
+
+        assertEquals(true, parseBoolean("1 <= 2"))
+        assertEquals(true, parseBoolean("2 <= 2"))
+        assertEquals(false, parseBoolean("3 <= 2"))
+    }
+
+    @Test
     fun testDimension() {
         assertEquals(true, parseBoolean("(10mm) == (10mm)"))
         assertEquals(false, parseBoolean("(10mm) != (10mm)"))
@@ -99,6 +124,23 @@ class TestBoolean : MyTestCase() {
 
         assertEquals(false, parseBoolean("10mm == 11mm"))
         assertEquals(true, parseBoolean("10mm != 11mm"))
+
+
+        assertEquals(false, parseBoolean("1m > 2m"))
+        assertEquals(false, parseBoolean("2m > 2m"))
+        assertEquals(true, parseBoolean("3m > 2m"))
+
+        assertEquals(false, parseBoolean("1m >= 2m"))
+        assertEquals(true, parseBoolean("2m >= 2m"))
+        assertEquals(true, parseBoolean("3m >= 2m"))
+
+        assertEquals(true, parseBoolean("1m < 2m"))
+        assertEquals(false, parseBoolean("2m < 2m"))
+        assertEquals(false, parseBoolean("3m < 2m"))
+
+        assertEquals(true, parseBoolean("1m <= 2m"))
+        assertEquals(true, parseBoolean("2m <= 2m"))
+        assertEquals(false, parseBoolean("3m <= 2m"))
     }
 
     @Test
@@ -129,4 +171,5 @@ class TestBoolean : MyTestCase() {
 
         assertEquals(false, parseBoolean("Vector2(10, 12) == Vector2(10, 10)"))
     }
+
 }
