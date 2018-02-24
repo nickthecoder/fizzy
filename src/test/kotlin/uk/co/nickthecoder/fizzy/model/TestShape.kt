@@ -25,7 +25,7 @@ class TestShape : MyTestCase() {
 
     val document = Document()
 
-    val layer1 = Layer(document)
+    val layer1 = Page(document)
 
     val line = Shape1d(layer1)
 

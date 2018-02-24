@@ -25,8 +25,8 @@ class TestListeners : MyTestCase() {
 
     val document = Document()
 
-    val layer1 = Layer(document)
-    val layer2 = Layer(document)
+    val layer1 = Page(document)
+    val layer2 = Page(document)
 
     val shape1a = Shape2d(layer1)
     val shape1b = Shape1d(layer1)

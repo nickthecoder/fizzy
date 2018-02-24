@@ -1,9 +1,13 @@
 To Do
 =====
 
-Allow access to other shapes, e.g. for linking a Shape1d end. Use syntax : page@shapeName or page->shapeName ???
-    Don't use Visio's "!" operator, because I'll use that for "not" when booleans are implemented.
-
+Allow access to other shapes
+    Make Shape's d a number, and allow access to any using :
+        Shape(n)
+    This isn't user friendly when a Master Shape is refering to a child.
+    So a shape can reference any child shape using just its NAME (which is only unique within that parent)
+        ChildName
+    You can also refer to a Shape's parent using Parent
 
 Create tests for realistic Shapes
     Create expressions for each geometry.
@@ -26,6 +30,14 @@ Maybe
 -----
 
 Consider "1+1" creating a PropConstant.
+
+Re-think layers?
+    Instead of shapes being IN a ayer, perhaps layers should just be a way of turning a shape's visibility on/off.
+    i.e. a child shape can be in a different layer to its parent.
+        Useful for turning text on/off for all shapes on a page.
+    For simplisity, we could make the Shape's layer attribute NOT be a PropExpression, but a simple string.
+        Note this is NOT a constant! Maybe we need a new PropValue to hold them, and strongly typed versions such as StringValue.
+    A layer could have an alias, which allows it to have a different name in the GUI e.g. to change to a different language.
 
 Later
 -----
@@ -60,6 +72,17 @@ Consider a "isNear" method for Angle, Double, Dimension, Dimension2 and Vector (
 
 Problems
 --------
+
+How are Shapes and Master Shapes related?
+    I want Shapes to change if their Master Shape changes, therefore they have to be linked.
+    Some properties of a Shape can be changed per-Shape (such as Pin and its control points, its text etc)
+    Assume that only the properties are linked, and not the structure (i.e. each Section object is unique, and not linked).
+        Then each PropExpression can either be on the master, or be overriden on the Shape.
+        So PropExpression must be TWO things, either a link to the master's expression, its own expression string.
+    Note, a document should be stand-alone, so it can exist without the corresponding stencil.
+        Therefore a document should COPY any master shapes from the stencil into itself.
+        There's a problem with Shape's ids being unique, as different stencils will have Shapes with the same id.
+            Maybe forbid/discourage user-editted formulars from using IDs, only the GUI can do that (e.g. when joining/glueing shapes together).
 
 Font sizes and Real-World sizes
     Creating floor plans, the Dimensions are LARGE, but the page size is small.
@@ -164,9 +187,6 @@ When a compound object such as Dimension2 is shown in the spreadsheet, we need t
         merging can be done nicely without making a mess (i.e. check that both expressions are " *( *blah *).x"
         or " *blah *.x" where blah doesn't have any operators.
 
-Visio clip :
-https://www.youtube.com/watch?v=9Kyv48e22LQ
-
 Much Later
 ----------
 
@@ -176,3 +196,9 @@ Split the project into core and app, so that headless tools can manipulate Fizzy
 Create a separate project for useful tools, such as batch converting to SVG.
     Use paratask to parse the commands.
 
+
+Useful Documents
+----------------
+
+Understanding Shape Sheets : https://msdn.microsoft.com/en-us/library/office/gg144579(v=office.14).aspx
+Japanese video using shape sheets : https://www.youtube.com/watch?v=9Kyv48e22LQ

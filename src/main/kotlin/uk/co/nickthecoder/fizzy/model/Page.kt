@@ -20,26 +20,26 @@ package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 
-class Layer(val document: Document)
-    : Parent, HasChangeListeners<Layer> {
+class Page(val document: Document)
+    : Parent, HasChangeListeners<Page> {
 
-    override val listeners = ChangeListeners<Layer>()
+    override val listeners = ChangeListeners<Page>()
     
     override val children = MutableFList<Shape>()
 
     private val shapesListener = ChangeAndCollectionListener(this, children)
 
     init {
-        document.layers.add(this)
+        document.pages.add(this)
     }
 
     override fun document() = document
 
-    override fun layer() = this
+    override fun page() = this
 
     fun findShape(id: String): Shape? {
-        children.forEach { layer ->
-            val found = layer.findShape(id)
+        children.forEach { shape ->
+            val found = shape.findShape(id)
             if (found != null) return found
         }
         return null

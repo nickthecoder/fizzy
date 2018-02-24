@@ -28,7 +28,7 @@ abstract class ShapePropType<T : Shape>(klass: KClass<in T>)
     override fun findField(prop: Prop<T>, name: String): Prop<*>? {
         return when (name) {
             "Document" -> PropConstant(prop.value.document())
-            "Layer" -> PropConstant(prop.value.layer())
+            "Page" -> PropConstant(prop.value.page())
             else -> {
                 // Allow the name of any shape on the document to be addresses as a top-level item
                 val document = prop.value.document()

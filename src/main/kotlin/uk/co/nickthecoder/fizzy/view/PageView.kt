@@ -21,8 +21,8 @@ package uk.co.nickthecoder.fizzy.view
 import javafx.application.Platform
 import uk.co.nickthecoder.fizzy.model.*
 
-class LayerView(val layer: Layer, val dc: DrawContext)
-    : ChangeListener<Layer> {
+class PageView(val page: Page, val dc: DrawContext)
+    : ChangeListener<Page> {
 
     private var dirty = true
         set(v) {
@@ -35,13 +35,13 @@ class LayerView(val layer: Layer, val dc: DrawContext)
         }
 
 
-    override fun changed(item: Layer, changeType: ChangeType, obj: Any?) {
+    override fun changed(item: Page, changeType: ChangeType, obj: Any?) {
         dirty = true
     }
 
     fun draw() {
         dc.use {
-            layer.children.forEach { shape ->
+            page.children.forEach { shape ->
                 drawShape(shape)
             }
 

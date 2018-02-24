@@ -24,16 +24,16 @@ class Document : HasChangeListeners<Document> {
 
     override val listeners = ChangeListeners<Document>()
 
-    var layers = MutableFList<Layer>()
+    var pages = MutableFList<Page>()
 
 
     private var previousId = 0
 
-    private val layersListener = ChangeAndCollectionListener(this, layers)
+    private val pagesListener = ChangeAndCollectionListener(this, pages)
 
     fun findShape(id: String): Shape? {
-        layers.forEach { layer ->
-            val found = layer.findShape(id)
+        pages.forEach { page ->
+            val found = page.findShape(id)
             if (found != null) {
                 return found
             }

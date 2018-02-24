@@ -81,7 +81,7 @@ abstract class Shape(var parent: Parent)
 
     fun document(): Document = parent.document()
 
-    fun layer(): Layer = parent.layer()
+    fun page(): Page = parent.page()
 
     fun findShape(id: String): Shape? {
         if (id == this.id.value) return this

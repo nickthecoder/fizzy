@@ -23,14 +23,14 @@ import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.Vector2Expression
 
 /**
- * Holds the position of a shape within a parent (which is either a [ShapeGroup] or a [Layer].
+ * Holds the position of a shape within a parent (which is either a [ShapeGroup] or a [Page].
  *
  * Used by [Shape2d] and [ShapeGroup].
  */
 class ShapeTransform(val shape: Shape) {
 
     /**
-     * The position of this object relative to the parent (which is either a [ShapeGroup] or a [Layer]).
+     * The position of this object relative to the parent (which is either a [ShapeGroup] or a [Page]).
      */
     val pin = Dimension2Expression("Dimension2(0mm, 0mm)", shape.context)
 

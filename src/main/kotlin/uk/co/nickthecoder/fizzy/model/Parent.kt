@@ -24,7 +24,7 @@ interface Parent {
 
     val children: MutableFList<Shape>
 
-    fun layer(): Layer
+    fun page(): Page
 
     fun document(): Document
 
