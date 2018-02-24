@@ -48,7 +48,9 @@ abstract class PropMethod<T : Any>(val prop: Prop<T>)
                 }
             }
         } else {
-            arg.listeners.add(this)
+            if (!arg.isConstant()) {
+                arg.listeners.add(this)
+            }
         }
     }
 

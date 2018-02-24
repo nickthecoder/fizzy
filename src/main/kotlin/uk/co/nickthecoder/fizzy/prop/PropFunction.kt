@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
+import uk.co.nickthecoder.fizzy.evaluator.ArgList
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Vector2
@@ -48,7 +49,7 @@ class DummyPropType private constructor()
             "ln" -> PropFunction1(Double::class) { Math.log(it) }
             "log" -> PropFunction1(Double::class) { Math.log10(it) }
             "sqrt" -> PropFunction1(Double::class) { Math.sqrt(it) }
-
+            "if" -> IfFunction()
             "Vector2" -> PropFunction2(Double::class, Double::class) { x, y -> Vector2(x, y) }
             "Dimension2" -> PropFunction2(Dimension::class, Dimension::class) { x, y -> Dimension2(x, y) }
             else -> null
@@ -71,3 +72,18 @@ class PropFunction1<A : Any>(klassA: KClass<A>, lambda: (A) -> Any)
 
 class PropFunction2<A : Any, B : Any>(klassA: KClass<A>, klassB: KClass<B>, lambda: (A, B) -> Any)
     : PropMethod2<Dummy, A, B>(dummyInstance, klassA, klassB, lambda)
+
+class IfFunction : PropMethod<Dummy>(dummyInstance) {
+
+    override fun eval(arg: Prop<*>): Any {
+        if (arg is ArgList && arg.value.size == 3) {
+            val condition = arg.value[0].value
+            if (condition is Boolean) {
+                val a = arg.value[1]
+                val b = arg.value[2]
+                return if (condition) a.value!! else b.value!!
+            }
+        }
+        throw RuntimeException("Expected (Boolean,Any,Any), but found ${arg.value}")
+    }
+}

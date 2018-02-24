@@ -35,7 +35,7 @@ class ArgList : AbstractProp<MutableList<Prop<*>>>() {
     override val value = mutableListOf<Prop<*>>()
 
     override fun toString(): String {
-        return "ArgList: $value"
+        return value.map { it.value }.joinToString(prefix = "( ", separator = " , ", postfix = " )")
     }
 
 }

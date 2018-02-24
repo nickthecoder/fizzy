@@ -189,4 +189,10 @@ class TestBoolean : MyTestCase() {
         assertEquals(false, parseBoolean("Vector2(10, 12) == Vector2(10, 10)"))
     }
 
+    @Test
+    fun testIf() {
+        assertEquals(3.0, Evaluator("if( true, 3, 2 )").parse().value)
+        assertEquals(2.0, Evaluator("if( false, 3, 2 )").parse().value)
+    }
+
 }
