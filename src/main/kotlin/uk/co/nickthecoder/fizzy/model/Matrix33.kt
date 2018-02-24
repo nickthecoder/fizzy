@@ -33,14 +33,14 @@ class Matrix33(
     /**
      * This performs a 3x3 matrix times by a 1x3 matrix, adding an extra 1.0 for the z value of the 1x3 matrix.
      */
-    fun mul(x: Double, y: Double): Vector2 {
+    fun times(x: Double, y: Double): Vector2 {
         return Vector2(
                 x1y1 * x + x2y1 * y + x3y1,
                 x1y2 * x + x2y2 * y + x3y2
         )
     }
 
-    operator fun times(v2: Vector2) = mul(v2.x, v2.y)
+    operator fun times(vector: Vector2) = times(vector.x, vector.y)
 
     operator fun times(o: Matrix33): Matrix33 {
         return Matrix33(
@@ -76,7 +76,7 @@ class Matrix33(
             return Matrix33(
                     cos, -sin, 0.0,
                     sin, cos, 0.0,
-                    1.0, 1.0, 1.0
+                    0.0, 0.0, 1.0
             )
         }
 

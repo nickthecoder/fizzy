@@ -19,37 +19,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import org.junit.Test
+import uk.co.nickthecoder.fizzy.util.MyShapeTest
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
-class TestShape : MyTestCase() {
+class TestShape : MyTestCase(), MyShapeTest {
 
     val document = Document()
 
-    val layer1 = Page(document)
+    val page1 = Page(document)
 
-    val line = Shape1d(layer1)
-
-    fun createBox(): Shape2d {
-        val box = Shape2d(layer1)
-        // Make a box 60mm x 40mm. centered at (40mm,120mm)
-        box.size.expression = "Dimension2(60mm,120mm)"
-        box.transform.pin.expression = "Dimension2(40mmx60mm)"
-        val geometry = Geometry()
-        box.geometries.add(geometry)
-        // Make a box
-        geometry.parts.add(MoveTo("Size * -0.5"))
-        geometry.parts.add(LineTo("Size * Vector2(0.5,-0.5)"))
-        geometry.parts.add(LineTo("Size * 0.5"))
-        geometry.parts.add(LineTo("Size * Vector2(-0.5, 0.5)"))
-        geometry.parts.add(LineTo("Geometry1.Point1"))
-
-        return box
-    }
+    val line = Shape1d(page1)
 
     @Test
     fun testGeometry() {
 
-        val box = createBox()
+        val box = createBox(page1, "Dimension2(60mm,120mm)", "Dimension2(40mmx60mm)")
         val geometry = box.geometries[0]
 
         // The top left should be (-30,-60)

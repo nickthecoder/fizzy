@@ -61,5 +61,13 @@ class TestMatrix33 : MyTestCase() {
         val d = s4_5 * r90 * src // rotate(90) then scale(4,5)
         assertEquals(-12.0, d.x, tiny)
         assertEquals(10.0, d.y, tiny)
+
+        val e = t3_6 * r90 * src // rotate(90) then translate(3,6)
+        assertEquals(0.0, e.x, tiny)
+        assertEquals(8.0, e.y, tiny)
+
+        val f = r90 * t3_6 * src // translate(3,6) then rotate(90)
+        assertEquals(-9.0, f.x, tiny)
+        assertEquals(5.0, f.y, tiny)
     }
 }

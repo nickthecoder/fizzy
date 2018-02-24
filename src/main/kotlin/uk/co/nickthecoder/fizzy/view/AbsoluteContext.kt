@@ -37,7 +37,7 @@ abstract class AbsoluteContext(scale: Double = 1.0) : DrawContext {
     val stateStack = mutableListOf<State>()
 
     fun transform(point: Dimension2): Vector2 {
-        return state.transformation.mul(point.x.inDefaultUnits, point.y.inDefaultUnits)
+        return state.transformation.times(point.x.inDefaultUnits, point.y.inDefaultUnits)
     }
 
     override fun save() {
@@ -64,7 +64,6 @@ abstract class AbsoluteContext(scale: Double = 1.0) : DrawContext {
     override fun scale(by: Vector2) {
         state.transformation = state.transformation * Matrix33.scale(by.x, by.y)
     }
-
 
     /**
      * Note. this doesn't work correctly if the x and y have been scaled differently!
