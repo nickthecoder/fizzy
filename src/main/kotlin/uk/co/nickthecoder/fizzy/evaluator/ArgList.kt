@@ -34,6 +34,15 @@ class ArgList : AbstractProp<MutableList<Prop<*>>>() {
 
     override val value = mutableListOf<Prop<*>>()
 
+    override fun isConstant(): Boolean {
+        value.forEach {
+            if (!it.isConstant()) {
+                return false
+            }
+        }
+        return true
+    }
+    
     override fun toString(): String {
         return value.map { it.value }.joinToString(prefix = "( ", separator = " , ", postfix = " )")
     }

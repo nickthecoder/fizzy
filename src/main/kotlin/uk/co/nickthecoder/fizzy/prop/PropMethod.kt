@@ -27,9 +27,6 @@ import kotlin.reflect.KClass
 abstract class PropMethod<T : Any>(val prop: Prop<T>)
     : PropCalculation<Any>() {
 
-    protected var argsAreConstant = false
-
-    override fun isConstant() = prop.isConstant() && argsAreConstant
 
     protected var arg: Prop<*>? = null
 
@@ -38,6 +35,8 @@ abstract class PropMethod<T : Any>(val prop: Prop<T>)
             prop.listeners.add(this)
         }
     }
+
+    override fun isConstant() = prop.isConstant() && arg?.isConstant() == true
 
     fun applyArgs(arg: Prop<*>) {
         this.arg = arg
@@ -75,11 +74,6 @@ class PropMethod0<T : Any>(
     : PropMethod<T>(prop) {
 
     override fun eval(arg: Prop<*>): Any {
-        argsAreConstant = prop.isConstant()
-        if (!argsAreConstant) {
-            prop.listeners.add(this)
-        }
-
         if (arg is ArgList && arg.value.size == 0) {
             return lambda()
         }
@@ -99,13 +93,6 @@ open class PropMethod1<T : Any, A : Any>(
     : PropMethod<T>(prop) {
 
     override fun eval(arg: Prop<*>): Any {
-
-        if (!argsAreConstant) {
-            if (!arg.isConstant()) {
-                arg.listeners.add(this)
-            }
-        }
-        argsAreConstant = arg.isConstant()
 
         if (klassA.isInstance(arg.value)) {
             @Suppress("UNCHECKED_CAST")
@@ -132,20 +119,9 @@ open class PropMethod2<T : Any, A : Any, B : Any>(
             val a = arg.value[0]
             val b = arg.value[1]
 
-
             if (klassA.isInstance(a.value) && klassB.isInstance(b.value)) {
                 @Suppress("UNCHECKED_CAST")
                 val result = lambda(a.value as A, b.value as B)
-
-                if (!argsAreConstant) {
-                    if (!a.isConstant()) {
-                        a.listeners.add(this)
-                    }
-                    if (!b.isConstant()) {
-                        b.listeners.add(this)
-                    }
-                }
-                argsAreConstant = a.isConstant() && b.isConstant()
 
                 return result
             }
