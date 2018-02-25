@@ -22,6 +22,7 @@ import uk.co.nickthecoder.fizzy.evaluator.CompoundEvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
+import uk.co.nickthecoder.fizzy.prop.DimensionExpression
 import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.prop.Shape1dPropType
 
@@ -37,9 +38,16 @@ class Shape1d private constructor(parent: Parent)
 
     val end = Dimension2Expression("Dimension2(1mm,1mm)", context)
 
+    val size = Dimension2Expression("Dimension2((End-Start).Length,LineWidth)", context)
+
+    val lineWidth = DimensionExpression("2mm", context)
+
     init {
         start.listeners.add(this)
         end.listeners.add(this)
+        transform.locPin.expression = "(Size) / 2"
+        transform.pin.expression = "(Start+End) / 2 + Dimension2(LocPin.X, 0mm)"
+        transform.rotation.expression = "(End-Start).Angle"
     }
 
     companion object {

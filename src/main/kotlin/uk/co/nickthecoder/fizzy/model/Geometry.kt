@@ -65,6 +65,8 @@ abstract class GeometryPart
 
     internal abstract fun setContext(context: EvaluationContext)
 
+    abstract fun expression() : String
+
     override val listeners = ChangeListeners<GeometryPart>()
 
     override fun dirty(prop: Prop<*>) {
@@ -85,7 +87,9 @@ class MoveTo(expression: String = "Dimension2(0mm, 0mm)")
         point.context = context
     }
 
-    override fun toString() = "MoveTo point=$point"
+    override fun expression() = "LineTo point='${point.expression}'"
+
+    override fun toString() = "MoveTo point=${point.value}"
 }
 
 class LineTo(expression: String = "Dimension2(0mm, 0mm)")
@@ -102,5 +106,7 @@ class LineTo(expression: String = "Dimension2(0mm, 0mm)")
         point.context = context
     }
 
-    override fun toString() = "LineTo point=$point"
+    override fun expression() = "LineTo point='${point.expression}'"
+
+    override fun toString() = "LineTo point=${point.value}"
 }

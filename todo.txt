@@ -1,7 +1,13 @@
 To Do
 =====
 
-Make PI and TAU Doubles, not angles.
+Test a Shape1d
+
+
+Consider changing the order of field evaluation.
+    Currently things like "Dimension2" are asking ShapePropType first BEFORE the global functions.
+    Line 309 of Evaluator.
+
 
 Allow access to other shapes
     Make Shape's id a number, and allow access to any using :

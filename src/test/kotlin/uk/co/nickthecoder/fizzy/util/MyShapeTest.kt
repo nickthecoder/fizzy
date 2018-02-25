@@ -39,5 +39,19 @@ interface MyShapeTest {
         return box
     }
 
+    fun createLine(parent: Parent, start: String, end: String, lineWidth: String = "2mm"): Shape1d {
+        val line = Shape1d.create(parent)
 
+        line.start.expression = start
+        line.end.expression = end
+        line.lineWidth.expression = lineWidth
+
+        val geometry = Geometry()
+        line.geometries.add(geometry)
+
+        geometry.parts.add(MoveTo("Dimension2((End-Start).Length*-0.5,LineWidth/2)"))
+        geometry.parts.add(LineTo("Dimension2((End-Start).Length*0.5,LineWidth/2)"))
+
+        return line
+    }
 }
