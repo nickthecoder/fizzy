@@ -77,8 +77,8 @@ val constantsContext = SimpleEvaluationContext(
         mapOf(
                 "true" to PropConstant(true),
                 "false" to PropConstant(false),
-                "PI" to PropConstant(Angle.PI),
-                "TAU" to PropConstant(Angle.TAU),
+                "PI" to PropConstant(Math.PI),
+                "TAU" to PropConstant(Math.PI * 2),
                 "E" to PropConstant(Math.E),
                 "MAX_DOUBLE" to PropConstant(Double.MAX_VALUE),
                 "MIN_DOUBLE" to PropConstant(-Double.MAX_VALUE), // Note, this is NOT the same as the badly named Java Double.MIN_VALUE

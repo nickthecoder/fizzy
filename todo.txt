@@ -1,8 +1,6 @@
 To Do
 =====
 
-Vector2PropType's create method is never used - so how are they created?
-
 Make PI and TAU Doubles, not angles.
 
 Allow access to other shapes

@@ -25,6 +25,9 @@ package uk.co.nickthecoder.fizzy.prop
  *
  * T should be an immutable type, so that the property value cannot change without the property's listeners being
  * notified.
+ * Note. Mutables classes such as Shape are also used as [Prop] values, and their listeners never fire.
+ * This is ok, because they only use a Prop<Shape> to get to the Prop's that they care about.
+ * i.e. the are temporary items within an expression.
  */
 interface Prop<out T : Any> {
 

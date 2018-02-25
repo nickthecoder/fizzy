@@ -106,7 +106,7 @@ class TestAngle : MyTestCase() {
 
         variables.putProp("value1", DoubleExpression("80", context))
         variables.putProp("angle1", AngleExpression("value1 deg", context))
-        variables.putProp("angle2", AngleExpression("PI", context))
+        variables.putProp("angle2", AngleExpression("PI rad", context))
 
         assertEquals(Angle.radians(Math.PI), variables.findProp("angle2")?.value)
         assertEquals(Angle.degrees(80.0), variables.findProp("angle1")?.value)
@@ -130,10 +130,10 @@ class TestAngle : MyTestCase() {
         val a = Evaluator("90 deg.Degrees").parse() as Prop<Double>
         assertEquals(90.0, a.value, tiny)
 
-        val b = Evaluator("PI.Degrees").parse() as Prop<Double>
+        val b = Evaluator("PI rad.Degrees").parse() as Prop<Double>
         assertEquals(180.0, b.value, tiny)
 
-        val c = Evaluator("PI.Radians").parse() as Prop<Double>
+        val c = Evaluator("PI rad.Radians").parse() as Prop<Double>
         assertEquals(Math.PI, c.value, tiny)
     }
 
