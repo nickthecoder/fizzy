@@ -45,8 +45,8 @@ class Shape1d private constructor(parent: Parent)
     init {
         start.listeners.add(this)
         end.listeners.add(this)
-        transform.locPin.expression = "(Size) / 2"
-        transform.pin.expression = "(Start+End) / 2 + Dimension2(LocPin.X, 0mm)"
+        transform.locPin.expression = "Dimension2( (End-Start).Length*0.5, LineWidth * 0.5)"
+        transform.pin.expression = "(Start+End) * 0.5"
         transform.rotation.expression = "(End-Start).Angle"
     }
 

@@ -49,8 +49,8 @@ interface MyShapeTest {
         val geometry = Geometry()
         line.geometries.add(geometry)
 
-        geometry.parts.add(MoveTo("Dimension2((End-Start).Length*-0.5,LineWidth/2)"))
-        geometry.parts.add(LineTo("Dimension2((End-Start).Length*0.5,LineWidth/2)"))
+        geometry.parts.add(MoveTo("Dimension2(0mm,LineWidth/2)"))
+        geometry.parts.add(LineTo("Dimension2((End-Start).Length,LineWidth/2)"))
 
         return line
     }
