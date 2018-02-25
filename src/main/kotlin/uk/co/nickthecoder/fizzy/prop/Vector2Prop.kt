@@ -45,14 +45,6 @@ class Vector2PropType private constructor() : PropType<Vector2>(Vector2::class) 
 
     companion object {
         val instance = Vector2PropType()
-
-        fun create(a: Prop<Double>, b: Prop<Double>): Prop<Vector2> {
-            if (a.isConstant() && b.isConstant()) {
-                return PropConstant(Vector2(a.value, b.value))
-            } else {
-                return PropCalculation2(a, b) { av, bv -> Vector2(av, bv) }
-            }
-        }
     }
 }
 
