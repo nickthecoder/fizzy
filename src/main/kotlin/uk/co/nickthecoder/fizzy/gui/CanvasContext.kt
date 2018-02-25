@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.gui
 
 import javafx.scene.canvas.Canvas
+import javafx.scene.canvas.GraphicsContext
 import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
@@ -28,7 +29,7 @@ import uk.co.nickthecoder.fizzy.view.DrawContext
 class CanvasContext(canvas: Canvas)
     : DrawContext {
 
-    val gc = canvas.graphicsContext2D
+    val gc: GraphicsContext = canvas.graphicsContext2D
 
     override fun save() {
         gc.save()

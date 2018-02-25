@@ -28,8 +28,8 @@ class TestListeners : MyTestCase() {
     val layer1 = Page(document)
     val layer2 = Page(document)
 
-    val shape1a = Shape2d(layer1)
-    val shape1b = Shape1d(layer1)
+    val shape1a = Shape2d.create(layer1)
+    val shape1b = Shape1d.create(layer1)
 
     var pageChanged = 0
     var layer1Changed = 0

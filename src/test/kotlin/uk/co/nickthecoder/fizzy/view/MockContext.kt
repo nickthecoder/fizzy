@@ -70,7 +70,5 @@ class MockContext : AbsoluteContext() {
         super.translate(x, y)
     }
 
-    fun toList() = buffer.toString().split("\n")
-
     override fun toString() = buffer.toString()
 }

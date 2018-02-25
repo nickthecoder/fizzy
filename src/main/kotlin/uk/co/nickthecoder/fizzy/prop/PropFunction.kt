@@ -62,7 +62,7 @@ class DummyPropType private constructor()
 }
 
 /**
- * The one and only instance of a [DummyConstant] used as the [PropMethod]'s value when the 'method' is really a
+ * The one and only instance of a [Prop] of type [Dummy] used as the [PropMethod]'s value when the 'method' is really a
  * function (and applies to nothing).
  */
 val dummyInstance = PropConstant(Dummy())

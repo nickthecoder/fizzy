@@ -22,4 +22,4 @@ import java.text.DecimalFormat
 
 val terseDoubleFormat = DecimalFormat("0.####")
 
-fun Double.terse() = terseDoubleFormat.format(this)
+fun Double.terse(): String = terseDoubleFormat.format(this)

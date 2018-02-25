@@ -75,7 +75,6 @@ class TestBoolean : MyTestCase() {
         assertEquals(true, parseBoolean("!(true && false)"))
         assertEquals(false, parseBoolean("!true && false"))
 
-        assertEquals(true && false || true, parseBoolean("true && false || true"))
         assertEquals(true, parseBoolean("false && true || true"))
         assertEquals(true, parseBoolean("(false && true) || true")) // No change
         assertEquals(false, parseBoolean("false && (true || true)")) // Change!

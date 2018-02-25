@@ -26,7 +26,7 @@ package uk.co.nickthecoder.fizzy.prop
  * T should be an immutable type, so that the property value cannot change without the property's listeners being
  * notified.
  */
-interface Prop<T : Any> {
+interface Prop<out T : Any> {
 
     val value: T
 

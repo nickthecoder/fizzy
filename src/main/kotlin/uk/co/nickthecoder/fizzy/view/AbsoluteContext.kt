@@ -86,7 +86,5 @@ abstract class AbsoluteContext(scale: Double = 1.0) : DrawContext {
     abstract fun absoluteLineTo(point: Vector2)
 
 
-    class State(var transformation: Matrix33, var lineWidth: Double = 1.0) {
-
-    }
+    class State(var transformation: Matrix33, var lineWidth: Double = 1.0)
 }

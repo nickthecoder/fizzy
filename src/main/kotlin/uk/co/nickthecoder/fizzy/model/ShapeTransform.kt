@@ -75,6 +75,7 @@ class ShapeTransform(val shape: Shape) {
     /**
      * A matrix which can transform local coordinates of this shape into coordinates of the page.
      */
+    // TODO This hasn't been tested!
     val pageTransformation = object : PropCalculation<Matrix33>() {
         init {
             shape.parent.transformation.listeners.add(this)

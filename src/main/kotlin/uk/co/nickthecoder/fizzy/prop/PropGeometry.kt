@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.model.Geometry
-import uk.co.nickthecoder.fizzy.model.GeometryPart
 import uk.co.nickthecoder.fizzy.model.LineTo
 import uk.co.nickthecoder.fizzy.model.MoveTo
 
@@ -30,7 +29,7 @@ class GeometryPropType private constructor()
     override fun findField(prop: Prop<Geometry>, name: String): Prop<*>? {
 
         // Allow access to any of the Geometries parts, without the hassle of ".parts.xxx"
-        val partsProp = FListProp<GeometryPart>(prop.value.parts)
+        val partsProp = FListProp(prop.value.parts)
         val found = partsProp.field(name)
         return found ?: super.findField(prop, name)
     }

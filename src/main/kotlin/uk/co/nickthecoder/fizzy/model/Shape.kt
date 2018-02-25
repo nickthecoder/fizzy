@@ -36,7 +36,7 @@ abstract class Shape(var parent: Parent)
 
     override var listeners = ChangeListeners<Shape>()
 
-    override val children = MutableFList<Shape>()
+    final override val children = MutableFList<Shape>()
 
     abstract val transform: ShapeTransform
 
@@ -60,7 +60,11 @@ abstract class Shape(var parent: Parent)
         }
     }
 
-    init {
+    /**
+     * Shapes should not be created directly with a constructor, instead use a static 'create' method,
+     * which calls [postInit]. This is to ensure that 'this' is not leaked from the constructor.
+     */
+    open protected fun postInit() {
         id.listeners.add(this)
         children.listeners.add(shapeListener)
         parent.children.add(this)
@@ -108,15 +112,29 @@ abstract class RealShape(parent: Parent) : Shape(parent) {
 
     val geometries = MutableFList<Geometry>()
 
-    private val geometriesListener = object : ChangeAndCollectionListener<Shape, Geometry>(this, geometries) {
-        override fun added(collection: FCollection<Geometry>, item: Geometry) {
-            super.added(collection, item)
-            item.shape = this@RealShape
-        }
+    private val geometriesListener by lazy {
+        // lazy to prevent leaking this in the constructor.
+        // NOTE. I tried just creating this in postInit (without a val), and I got a failed unit test
+        // This only happened from within IntelliJ (running directly from gradle, all tests passed).
+        // It also passed when running the single Test class (and also a single method).
+        // However, I'm not in the mood for a bug hunt, so I'll leave this implementation here.
+        // It is slightly weird looking, but it works!
+        object : ChangeAndCollectionListener<Shape, Geometry>(this, geometries) {
 
-        override fun removed(collection: FCollection<Geometry>, item: Geometry) {
-            super.removed(collection, item)
-            item.shape = null
+            override fun added(collection: FCollection<Geometry>, item: Geometry) {
+                super.added(collection, item)
+                item.shape = this@RealShape
+            }
+
+            override fun removed(collection: FCollection<Geometry>, item: Geometry) {
+                super.removed(collection, item)
+                item.shape = null
+            }
         }
+    }
+
+    override fun postInit() {
+        geometriesListener // Force it to be initialised (it is by lazy).
+        super.postInit()
     }
 }

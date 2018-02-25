@@ -25,7 +25,7 @@ import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.prop.Shape2dPropType
 
-class Shape2d(parent: Parent)
+class Shape2d private constructor(parent: Parent)
     : RealShape(parent) {
 
     override val context = CompoundEvaluationContext(listOf(
@@ -37,5 +37,14 @@ class Shape2d(parent: Parent)
 
     init {
         size.listeners.add(this)
+    }
+
+
+    companion object {
+        fun create(parent: Parent): Shape2d {
+            val result = Shape2d(parent)
+            result.postInit()
+            return result
+        }
     }
 }

@@ -1,20 +1,26 @@
 To Do
 =====
 
+leaking this in constructor 
+    PropMethod
+    ChangeAndCollectionListener
+
+Vector2PropType's create method is never used - so how are they created?
+
+Make PI and TAU Doubles, not angles.
+
 Allow access to other shapes
-    Make Shape's d a number, and allow access to any using :
+    Make Shape's id a number, and allow access to any using :
         Shape(n)
     This isn't user friendly when a Master Shape is refering to a child.
     So a shape can reference any child shape using just its NAME (which is only unique within that parent)
         ChildName
     You can also refer to a Shape's parent using Parent
 
-Create tests for realistic Shapes
-    Create expressions for each geometry.
+Create tests for rotated shapes.
+Create tests for Shape1d s
     Link a line from one shape to another, then move the shape.
 
-Create a mock DrawContext, which logs the output
-    Use it to test the drawing of shapes, including in groups, scaled, rotated etc.
 
 Soon
 ----

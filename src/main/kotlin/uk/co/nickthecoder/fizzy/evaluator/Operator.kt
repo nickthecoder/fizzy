@@ -273,7 +273,7 @@ class UnaryMinusOperator(precedence: Int) : UnaryOperator("-", precedence) {
     override fun apply(a: Prop<*>): Prop<*> {
 
         if (a.value is Double) {
-            return PropCalculation1<Double, Double>(a as Prop<Double>) { -it }
+            return PropCalculation1(a as Prop<Double>) { -it }
 
         } else if (a.value is Angle) {
             return PropCalculation1(a as Prop<Angle>) { -it }

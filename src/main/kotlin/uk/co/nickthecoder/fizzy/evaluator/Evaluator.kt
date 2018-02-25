@@ -25,11 +25,11 @@ import uk.co.nickthecoder.fizzy.prop.*
  * Parses a expression (a [CharSequence]), converting it into a single [Prop].
  *
  * Note that parsing is NOT the same as evaluating, and therefore parsing "2+2" does NOT return 4.
- * Instead, it will return a [DoublePlus] object. It will only be evaluated when [Prop.value] is first referenced.
- * The value 4 will then be cached by the [DoublePlus] object so that subsequent references to [Prop.value] will
- * NOT re-evaluated. If either of [DoublePlus]'s arguments are changed (or made 'dirty'), then referencing
+ * Instead, it will return a [PropCalculation] object. It will only be evaluated when [Prop.value] is first referenced.
+ * The value 4 will then be cached by the [PropCalculation] object so that subsequent references to [Prop.value] will
+ * NOT re-evaluated. If either of [PropCalculation]'s arguments are changed (or made 'dirty'), then referencing
  * [Prop.value] will cause a re-evaluation. In this simple example of "2+2", this won't happen because "2" is a constant,
- * and therefore the [DoublePlus] will never need re-evaluating.
+ * and therefore the [PropCalculation] will never need re-evaluating.
  *
  * During parsing, there are two stacks, the [values] stack and the [operators] stack. As parsing progresses
  * an operator and its corresponding values are popped off the stacks, and the result of the operation is pushed onto
@@ -227,7 +227,7 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
                 }
             }
             is CloseBracketOperator -> {
-                log("Close bracket. ExpectValue ? ${expectValue}")
+                log("Close bracket. ExpectValue ? $expectValue")
                 // If we have : foo(), then no value has been pushed on the stack after the "(", so lets add
                 // an empty argument list.
                 if (expectValue) {

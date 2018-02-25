@@ -26,7 +26,7 @@ import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
 
-class Geometry()
+class Geometry
 
     : HasChangeListeners<Geometry> {
 
