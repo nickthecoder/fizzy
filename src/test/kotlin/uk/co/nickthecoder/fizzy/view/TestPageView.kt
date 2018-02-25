@@ -163,27 +163,14 @@ class TestPageView : MyTestCase(), MyShapeTest {
 
     @Test
     fun testLine() {
-        val line = createLine(page, "Dimension2(4mm,26mm)", "Dimension2(16mm,26mm)", "6mm")
-        println("start ${line.start.value}")
-        println("end ${line.end.value}")
-        println("end-start ${line.end.value - line.end.value}")
-        println("angle ${(line.end.value - line.end.value).angle()}")
-        println("rotation ${line.transform.rotation.value}")
-        println("rotation ${line.transform.rotation}")
-        println("locPin ${line.transform.locPin.value}")
-        println("Pin ${line.transform.pin.value}")
-        println("Size ${line.size.value}")
-        println("G1 ${line.geometries[0].parts[0]}")
-        println("G2 ${line.geometries[0].parts[1]}")
-        println("G1 ${line.geometries[0].parts[0].expression()}")
-        println("G2 ${line.geometries[0].parts[1].expression()}")
+        createLine(page, "Dimension2(4mm,14mm)", "Dimension2(16mm,26mm)", "6mm")
+
         val context = MockContext()
-        context.debug = true
         val view = PageView(page, context)
 
         view.draw()
         assertEquals("""
-            |M4,26
+            |M4,14
             |L16,26
 
 

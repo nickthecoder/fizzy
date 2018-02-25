@@ -70,6 +70,7 @@ class Shape1dPropType private constructor()
             "Start" -> prop.value.start
             "End" -> prop.value.end
             "Size" -> prop.value.size
+            "Length" -> prop.value.length
             "LineWidth" -> prop.value.lineWidth
             else -> super.findField(prop, name)
         }

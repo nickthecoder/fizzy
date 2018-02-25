@@ -50,7 +50,7 @@ interface MyShapeTest {
         line.geometries.add(geometry)
 
         geometry.parts.add(MoveTo("Dimension2(0mm,LineWidth/2)"))
-        geometry.parts.add(LineTo("Dimension2((End-Start).Length,LineWidth/2)"))
+        geometry.parts.add(LineTo("Dimension2(Length,LineWidth/2)"))
 
         return line
     }
