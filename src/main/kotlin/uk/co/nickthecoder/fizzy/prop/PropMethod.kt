@@ -27,19 +27,15 @@ import kotlin.reflect.KClass
 abstract class PropMethod<out T : Any>(val prop: Prop<T>)
     : PropCalculation<Any>() {
 
-
     protected var arg: Prop<*>? = null
-
-    init {
-        if (!prop.isConstant()) {
-            prop.listeners.add(this)
-        }
-    }
 
     override fun isConstant() = prop.isConstant() && arg?.isConstant() == true
 
     fun applyArgs(arg: Prop<*>) {
         this.arg = arg
+        if (!prop.isConstant()) {
+            prop.listeners.add(this)
+        }
         if (arg is ArgList) {
             arg.value.forEach { single ->
                 if (!single.isConstant()) {

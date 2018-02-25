@@ -1,9 +1,6 @@
 To Do
 =====
 
-leaking this in constructor 
-    PropMethod
-
 Vector2PropType's create method is never used - so how are they created?
 
 Make PI and TAU Doubles, not angles.
