@@ -41,7 +41,7 @@ interface Prop<out T : Any> {
     fun method(name: String): Prop<*>? = PropType.method(this, name)
 }
 
-abstract class AbstractProp<T : Any> : Prop<T> {
+abstract class AbstractProp<out T : Any> : Prop<T> {
 
     override val listeners = PropListeners()
 

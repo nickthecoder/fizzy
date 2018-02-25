@@ -24,7 +24,7 @@ import kotlin.reflect.KClass
 /**
  * T is the type of the receiver object.
  */
-abstract class PropMethod<T : Any>(val prop: Prop<T>)
+abstract class PropMethod<out T : Any>(val prop: Prop<T>)
     : PropCalculation<Any>() {
 
 
@@ -67,7 +67,7 @@ abstract class PropMethod<T : Any>(val prop: Prop<T>)
  * A method, which has no arguments.
  * T is the type of the receiver object.
  */
-class PropMethod0<T : Any>(
+class PropMethod0<out T : Any>(
         prop: Prop<T>,
         val lambda: () -> Any)
 
@@ -86,7 +86,7 @@ class PropMethod0<T : Any>(
  * T is the type of the receiver object.
  * A is the type of the method's argument.
  */
-open class PropMethod1<T : Any, A : Any>(
+open class PropMethod1<out T : Any, A : Any>(
         prop: Prop<T>, val klassA: KClass<A>,
         val lambda: (A) -> Any)
 
@@ -107,7 +107,7 @@ open class PropMethod1<T : Any, A : Any>(
  * T is the type of the receiver object.
  * A and B are the types of the method's arguments.
  */
-open class PropMethod2<T : Any, A : Any, B : Any>(
+open class PropMethod2<out T : Any, A : Any, B : Any>(
         prop: Prop<T>, val klassA: KClass<A>,
         val klassB: KClass<B>,
         val lambda: (A, B) -> Any)

@@ -3,7 +3,6 @@ To Do
 
 leaking this in constructor 
     PropMethod
-    ChangeAndCollectionListener
 
 Vector2PropType's create method is never used - so how are they created?
 

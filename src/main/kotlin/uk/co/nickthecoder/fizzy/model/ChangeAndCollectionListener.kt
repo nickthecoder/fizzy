@@ -35,9 +35,12 @@ import uk.co.nickthecoder.fizzy.collection.FCollection
  * When an item in the collection changes, the parent's [ChangeListener]s are notified by firing a
  * [ChangeListener.changed].
  */
-open class ChangeAndCollectionListener<P : HasChangeListeners<P>, C : HasChangeListeners<C>>(
+class ChangeAndCollectionListener<P : HasChangeListeners<P>, C : HasChangeListeners<C>>(
         val parent: P,
-        child: FCollection<C>)
+        child: FCollection<C>,
+        val onAdded: ((item: C) -> Unit)? = null,
+        val onRemoved: ((item: C) -> Unit)? = null
+)
 
     : ChangeListener<C>, CollectionListener<C> {
 
@@ -52,11 +55,13 @@ open class ChangeAndCollectionListener<P : HasChangeListeners<P>, C : HasChangeL
     override fun added(collection: FCollection<C>, item: C) {
         parent.listeners.fireChanged(parent, ChangeType.ADD, item)
         item.listeners.add(this)
+        onAdded?.invoke(item)
     }
 
     override fun removed(collection: FCollection<C>, item: C) {
         parent.listeners.fireChanged(parent, ChangeType.REMOVE, item)
         item.listeners.remove(this)
+        onRemoved?.invoke(item)
     }
 
 }

@@ -119,18 +119,10 @@ abstract class RealShape(parent: Parent) : Shape(parent) {
         // It also passed when running the single Test class (and also a single method).
         // However, I'm not in the mood for a bug hunt, so I'll leave this implementation here.
         // It is slightly weird looking, but it works!
-        object : ChangeAndCollectionListener<Shape, Geometry>(this, geometries) {
-
-            override fun added(collection: FCollection<Geometry>, item: Geometry) {
-                super.added(collection, item)
-                item.shape = this@RealShape
-            }
-
-            override fun removed(collection: FCollection<Geometry>, item: Geometry) {
-                super.removed(collection, item)
-                item.shape = null
-            }
-        }
+        ChangeAndCollectionListener(this, geometries,
+                onAdded = { geometry -> geometry.shape = this@RealShape },
+                onRemoved = { geometry -> geometry.shape = null }
+        )
     }
 
     override fun postInit() {

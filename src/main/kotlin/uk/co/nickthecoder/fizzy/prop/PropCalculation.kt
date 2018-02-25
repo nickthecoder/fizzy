@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-abstract class PropCalculation<T : Any>
+abstract class PropCalculation<out T : Any>
 
     : AbstractProp<T>(), PropListener {
 

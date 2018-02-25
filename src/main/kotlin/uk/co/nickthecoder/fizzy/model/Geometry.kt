@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
-import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
@@ -44,17 +43,10 @@ class Geometry
 
     // TODO Add fill and line booleans
 
-    private val geometryPartsListener = object : ChangeAndCollectionListener<Geometry, GeometryPart>(this, parts) {
-        override fun added(collection: FCollection<GeometryPart>, item: GeometryPart) {
-            super.added(collection, item)
-            item.geometry = parent
-        }
-
-        override fun removed(collection: FCollection<GeometryPart>, item: GeometryPart) {
-            super.removed(collection, item)
-            item.geometry = null
-        }
-    }
+    private val geometryPartsListener = ChangeAndCollectionListener(this, parts,
+            onAdded = { part -> part.geometry = this },
+            onRemoved = { part -> part.geometry = null }
+    )
 }
 
 abstract class GeometryPart
