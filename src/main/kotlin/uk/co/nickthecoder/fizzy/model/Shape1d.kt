@@ -31,6 +31,8 @@ class Shape1d(parent: Parent)
     override val context = CompoundEvaluationContext(listOf(
             constantsContext, ThisContext(PropConstant(this), Shape1dPropType.instance)))
 
+    override val transform = ShapeTransform(this)
+
     val start = Dimension2Expression("Dimension2(0mm,0mm)", context)
 
     val end = Dimension2Expression("Dimension2(1mm,1mm)", context)

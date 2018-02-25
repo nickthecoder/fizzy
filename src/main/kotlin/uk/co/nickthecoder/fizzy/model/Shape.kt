@@ -28,7 +28,7 @@ import uk.co.nickthecoder.fizzy.prop.PropListener
 import uk.co.nickthecoder.fizzy.util.runLater
 
 abstract class Shape(var parent: Parent)
-    : PropListener, HasChangeListeners<Shape> {
+    : Parent, PropListener, HasChangeListeners<Shape> {
 
     var id = PropConstant(parent.document().generateId())
 
@@ -36,8 +36,12 @@ abstract class Shape(var parent: Parent)
 
     override var listeners = ChangeListeners<Shape>()
 
-    val children = MutableFList<Shape>()
+    override val children = MutableFList<Shape>()
 
+    abstract val transform: ShapeTransform
+
+    override val transformation
+        get() = transform.transformation
 
     private val shapeListener = object : ChangeListener<Shape>, CollectionListener<Shape> {
 
@@ -79,9 +83,9 @@ abstract class Shape(var parent: Parent)
         dirty = true
     }
 
-    fun document(): Document = parent.document()
+    override fun document(): Document = parent.document()
 
-    fun page(): Page = parent.page()
+    override fun page(): Page = parent.page()
 
     fun findShape(id: String): Shape? {
         if (id == this.id.value) return this
@@ -94,8 +98,8 @@ abstract class Shape(var parent: Parent)
     }
 
     override fun toString(): String = "Shape ${id.value}"
-
 }
+
 
 /**
  * The basis for Shape1d and Shape2d, i.e. the type of Shapes which have their own Geometries.

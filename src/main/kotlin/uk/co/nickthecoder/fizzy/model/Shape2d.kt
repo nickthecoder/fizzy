@@ -26,7 +26,7 @@ import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.prop.Shape2dPropType
 
 class Shape2d(parent: Parent)
-    : RealShape(parent), HasShapeTransform {
+    : RealShape(parent) {
 
     override val context = CompoundEvaluationContext(listOf(
             constantsContext, ThisContext(PropConstant(this), Shape2dPropType.instance)))

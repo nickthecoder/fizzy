@@ -52,17 +52,11 @@ class PageView(val page: Page, val dc: DrawContext)
     fun drawShape(shape: Shape) {
         dc.use {
 
-            if (shape is HasShapeTransform) {
-                // Translate to make the shape's center @ (0,0)
-                dc.translate(-shape.transform.locPin.value.x, -shape.transform.locPin.value.y)
-                dc.rotate(shape.transform.rotation.value)
-                dc.scale(shape.transform.scale.value)
-                // Now translate back into to the position with the page (or the parent's shapes coordinates)
-                dc.translate(
-                        shape.transform.locPin.value.x + shape.transform.pin.value.x,
-                        shape.transform.locPin.value.y + shape.transform.pin.value.y
-                )
-            }
+            dc.translate(shape.transform.pin.value)
+            dc.scale(shape.transform.scale.value)
+            dc.rotate(shape.transform.rotation.value)
+
+            dc.translate(-shape.transform.locPin.value) // Inefficient
 
             if (shape is RealShape) {
 
@@ -79,10 +73,12 @@ class PageView(val page: Page, val dc: DrawContext)
                 }
                 dc.endPath()
             }
-        }
 
-        shape.children.forEach { child ->
-            drawShape(child)
+
+            shape.children.forEach { child ->
+                drawShape(child)
+            }
         }
     }
+
 }

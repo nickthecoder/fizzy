@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.prop.AngleExpression
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
+import uk.co.nickthecoder.fizzy.prop.PropCalculation
 import uk.co.nickthecoder.fizzy.prop.Vector2Expression
 
 /**
@@ -48,6 +49,41 @@ class ShapeTransform(val shape: Shape) {
     val rotation = AngleExpression("0 deg", shape.context)
 
     // TODO Add flipX and flipY (we don't have Boolean properties yet!)
+
+    // TODO The following does NOT hve unit tests yet.
+    // I'm not sure if it will be needed, so I've left it in for now.
+    /**
+     * A matrix which can transform local coordinates fo this shape into coordinates of the parent.
+     * This is based on [pin], [locPin], [scale] and [rotation].
+     * Whenever any of those become dirty, then this also becomes dirty.
+     */
+    val transformation = object : PropCalculation<Matrix33>() {
+        init {
+            pin.listeners.add(this)
+            locPin.listeners.add(this)
+            scale.listeners.add(this)
+            rotation.listeners.add(this)
+        }
+
+        override fun eval() =
+                Matrix33.translate(pin.value.x.inDefaultUnits, pin.value.y.inDefaultUnits) *
+                        Matrix33.rotate(rotation.value) *
+                        Matrix33.scale(scale.value) *
+                        Matrix33.translate(-locPin.value.x.inDefaultUnits, -locPin.value.y.inDefaultUnits)
+    }
+
+    /**
+     * A matrix which can transform local coordinates of this shape into coordinates of the page.
+     */
+    val pageTransformation = object : PropCalculation<Matrix33>() {
+        init {
+            shape.parent.transformation.listeners.add(this)
+            transformation.listeners.add(this)
+        }
+
+        override fun eval() =
+                shape.parent.transformation.value * transformation.value
+    }
 
     init {
         pin.listeners.add(shape)

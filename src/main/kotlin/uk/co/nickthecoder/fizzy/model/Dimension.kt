@@ -59,6 +59,15 @@ class Dimension {
     }
 
     /**
+     * Creates a dimension using default units.
+     */
+    internal constructor(inDefaultUnits: Double) {
+        this.inDefaultUnits = inDefaultUnits
+        this.units = Units.mm
+        this.power = 1.0
+    }
+
+    /**
      * Units of measure in length.
      *
      * The scale is relative to the default units.

@@ -18,6 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
+/**
+ * Note. if this only needed for affine transformations, then the bottom row can be hard coded to 0,0,1@author
+ * This will simplify the maths.
+ * However, as it is only used from within the test scripts at the moment, then there's no harm in it being
+ * inefficient.
+ */
 class Matrix33(
         val x1y1: Double = 1.0,
         val x2y1: Double = 0.0,
@@ -58,7 +64,17 @@ class Matrix33(
         )
     }
 
+    override fun toString() = "\n" +
+            "| $x1y1 , $x2y1 , $x3y1 |\n" +
+            "| $x1y2 , $x2y2 , $x3y2 |\n" +
+            "| $x1y3 , $x2y3 , $x3y3 |\n"
+
     companion object {
+
+        val identity = Matrix33()
+
+        fun scale(vector2: Vector2) = scale(vector2.x, vector2.y)
+
         fun scale(xScale: Double, yScale: Double) = Matrix33(
                 xScale, 0.0, 0.0,
                 0.0, yScale, 0.0,
@@ -81,10 +97,5 @@ class Matrix33(
         }
 
     }
-
-    override fun toString() = "\n" +
-            "| $x1y1 , $x2y1 , $x3y1 |\n" +
-            "| $x1y2 , $x2y2 , $x3y2 |\n" +
-            "| $x1y3 , $x2y3 , $x3y3 |\n"
 
 }

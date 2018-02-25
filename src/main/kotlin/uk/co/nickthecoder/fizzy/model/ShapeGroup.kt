@@ -26,12 +26,11 @@ import uk.co.nickthecoder.fizzy.prop.ShapeGroupPropType
 
 class ShapeGroup(parent: Parent)
 
-    : Shape(parent), Parent, HasShapeTransform {
-
-    override val transform = ShapeTransform(this)
+    : Shape(parent), Parent {
 
     override val context = CompoundEvaluationContext(listOf(
             constantsContext, ThisContext(PropConstant(this), ShapeGroupPropType.instance)))
 
+    override val transform = ShapeTransform(this)
 
 }

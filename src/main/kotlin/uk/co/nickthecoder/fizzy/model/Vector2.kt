@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
+import uk.co.nickthecoder.fizzy.util.terse
+
 /**
  * A unit-less 2 dimensional vector.
  * When working with points and lines etc, it is better to use [Dimension2] so that the lengths can have
@@ -82,6 +84,8 @@ class Vector2(val x: Double, val y: Double) {
         }
         return false
     }
+
+    fun terse() = "${x.terse()},${y.terse()}"
 
     override fun toString() = "Vector2($x , $y)"
 

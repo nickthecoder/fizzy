@@ -19,7 +19,8 @@ Create a mock DrawContext, which logs the output
 Soon
 ----
 
-DimensionExpression to have an additional "expected power", which defaults to 1.
+DimensionExpression and Dimension2Expression to have an additional "expected power", which defaults to 1.
+    Will error if other powers are returned
 
 Create a JavaFX application drawing pre-created shapes.
     Add a Glass canvas to highlight the currently selected shape

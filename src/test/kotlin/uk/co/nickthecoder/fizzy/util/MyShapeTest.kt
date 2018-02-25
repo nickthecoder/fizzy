@@ -1,21 +1,39 @@
+/*
+Fizzy
+Copyright (C) 2018 Nick Robinson
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
 package uk.co.nickthecoder.fizzy.util
 
 import uk.co.nickthecoder.fizzy.model.*
 
 interface MyShapeTest {
 
-    fun createBox(page: Page, size: String, at : String): Shape2d {
-        val box = Shape2d(page)
+    fun createBox(parent: Parent, size: String, at: String): Shape2d {
+        val box = Shape2d(parent)
         // Make a box 60mm x 40mm. centered at (40mm,120mm)
         box.size.expression = size
         box.transform.pin.expression = at
         val geometry = Geometry()
         box.geometries.add(geometry)
         // Make a box
-        geometry.parts.add(MoveTo("Size * -0.5"))
-        geometry.parts.add(LineTo("Size * Vector2(0.5,-0.5)"))
-        geometry.parts.add(LineTo("Size * 0.5"))
-        geometry.parts.add(LineTo("Size * Vector2(-0.5, 0.5)"))
+        geometry.parts.add(MoveTo("Size * Vector2(0,0)"))
+        geometry.parts.add(LineTo("Size * Vector2(1,0)"))
+        geometry.parts.add(LineTo("Size * Vector2(1,1)"))
+        geometry.parts.add(LineTo("Size * Vector2(0,1)"))
         geometry.parts.add(LineTo("Geometry1.Point1"))
 
         return box

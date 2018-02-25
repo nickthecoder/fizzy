@@ -19,12 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
+import uk.co.nickthecoder.fizzy.prop.PropConstant
 
 class Page(val document: Document)
     : Parent, HasChangeListeners<Page> {
 
     override val listeners = ChangeListeners<Page>()
-    
+
     override val children = MutableFList<Shape>()
 
     private val shapesListener = ChangeAndCollectionListener(this, children)
@@ -36,6 +37,8 @@ class Page(val document: Document)
     override fun document() = document
 
     override fun page() = this
+
+    override val transformation = PropConstant(Matrix33.identity)
 
     fun findShape(id: String): Shape? {
         children.forEach { shape ->

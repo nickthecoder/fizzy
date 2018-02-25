@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
+import uk.co.nickthecoder.fizzy.prop.Prop
 
 interface Parent {
 
@@ -28,4 +29,5 @@ interface Parent {
 
     fun document(): Document
 
+    val transformation: Prop<Matrix33>
 }

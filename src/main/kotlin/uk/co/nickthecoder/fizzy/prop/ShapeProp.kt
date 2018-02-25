@@ -29,6 +29,11 @@ abstract class ShapePropType<T : Shape>(klass: KClass<in T>)
         return when (name) {
             "Document" -> PropConstant(prop.value.document())
             "Page" -> PropConstant(prop.value.page())
+            "Parent" -> PropConstant(prop.value.parent)
+            "Pin" -> prop.value.transform.pin
+            "LocPin" -> prop.value.transform.locPin
+            "Scale" -> prop.value.transform.scale
+            "Rotation" -> prop.value.transform.rotation
             else -> {
                 // Allow the name of any shape on the document to be addresses as a top-level item
                 val document = prop.value.document()

@@ -16,8 +16,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-package uk.co.nickthecoder.fizzy.model
+package uk.co.nickthecoder.fizzy.util
 
-interface HasShapeTransform {
-    val transform: ShapeTransform
-}
+import java.text.DecimalFormat
+
+val terseDoubleFormat = DecimalFormat("0.####")
+
+fun Double.terse() = terseDoubleFormat.format(this)
