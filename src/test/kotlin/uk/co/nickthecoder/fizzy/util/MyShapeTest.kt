@@ -24,7 +24,6 @@ interface MyShapeTest {
 
     fun createBox(parent: Parent, size: String, at: String): Shape2d {
         val box = Shape2d.create(parent)
-        // Make a box 60mm x 40mm. centered at (40mm,120mm)
         box.size.expression = size
         box.transform.pin.expression = at
         val geometry = Geometry()

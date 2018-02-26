@@ -31,6 +31,10 @@ class Document : HasChangeListeners<Document> {
 
     private val pagesListener = ChangeAndCollectionListener(this, pages)
 
+    // TODO When load/save is implemented, this should be the file name without the file extension.
+    val name: String
+        get() = "New Document"
+
     fun findShape(id: String): Shape? {
         pages.forEach { page ->
             val found = page.findShape(id)

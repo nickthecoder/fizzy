@@ -102,6 +102,45 @@ abstract class Shape(var parent: Parent)
     }
 
     override fun toString(): String = "Shape ${id.value}"
+
+    companion object {
+
+        fun createBox(parent: Parent, size: String, at: String): Shape2d {
+
+            val box = Shape2d.create(parent)
+            box.size.expression = size
+            box.transform.pin.expression = at
+
+            val geometry = Geometry()
+            box.geometries.add(geometry)
+            geometry.parts.add(MoveTo("Size * Vector2(0,0)"))
+            geometry.parts.add(LineTo("Size * Vector2(1,0)"))
+            geometry.parts.add(LineTo("Size * Vector2(1,1)"))
+            geometry.parts.add(LineTo("Size * Vector2(0,1)"))
+            geometry.parts.add(LineTo("Geometry1.Point1"))
+
+            return box
+        }
+
+        // TODO We need to do something more sensible for the lineWidth.
+        // Maybe when styles are in place, it will use a default style, rather than a hard coded value.
+        fun createLine(parent: Parent, start: String, end: String, lineWidth: String = "2mm"): Shape1d {
+            val line = Shape1d.create(parent)
+
+            line.start.expression = start
+            line.end.expression = end
+            line.lineWidth.expression = lineWidth
+
+            val geometry = Geometry()
+            line.geometries.add(geometry)
+
+            geometry.parts.add(MoveTo("Dimension2(0mm,LineWidth/2)"))
+            geometry.parts.add(LineTo("Dimension2(Length,LineWidth/2)"))
+
+            return line
+        }
+    }
+
 }
 
 

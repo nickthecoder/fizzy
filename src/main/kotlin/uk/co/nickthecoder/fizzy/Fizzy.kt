@@ -18,8 +18,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy
 
+import javafx.application.Application
+import javafx.stage.Stage
+import uk.co.nickthecoder.fizzy.gui.MainWindow
+import uk.co.nickthecoder.fizzy.model.Document
+import uk.co.nickthecoder.fizzy.model.Page
+import uk.co.nickthecoder.fizzy.model.Shape
+
+/**
+ * The JavaFX [Application] (i.e. the entry point for the program when using a gui.
+ */
+class Fizzy : Application() {
+
+    override fun start(primaryStage: Stage) {
+        val mainWindow = MainWindow(primaryStage)
+
+        // For now, we create a test document to display.
+        val doc = Document()
+        val page = Page(doc)
+        Shape.createBox(page, "Dimension2(4cm,2cm)", "Dimension2(10cm,10cm)")
+        Shape.createBox(page, "Dimension2(4cm,2cm)", "Dimension2(10cm,14cm)")
+        Shape.createLine(page, "Dimension2(10cm,11cm)", "Dimension2(10cm,13cm)")
+
+        mainWindow.addDocument(doc)
+    }
+
+    companion object {
+        fun start() {
+            Application.launch(Fizzy::class.java)
+        }
+    }
+}
+
+/**
+ *
+ */
 fun main(args: Array<String>) {
 
-    println( "Hello world!")
-
+    Fizzy.start()
 }

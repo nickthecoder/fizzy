@@ -1,21 +1,16 @@
 To Do
 =====
 
-Test a Shape1d
-
-
-Consider changing the order of field evaluation.
-    Currently things like "Dimension2" are asking ShapePropType first BEFORE the global functions.
-    Line 309 of Evaluator.
-
 
 Allow access to other shapes
     Make Shape's id a number, and allow access to any using :
         Shape(n)
     This isn't user friendly when a Master Shape is refering to a child.
-    So a shape can reference any child shape using just its NAME (which is only unique within that parent)
-        ChildName
-    You can also refer to a Shape's parent using Parent
+    Instead, refer to it by name :
+            #ChildName
+        Which can also work from other shapes, such as the parent :
+            Parent#ChildName
+        Would need to two versions, because Parent#ChildName it has two arguments, and #ChildName as a prefix operator.
 
 Create tests for rotated shapes.
 Create tests for Shape1d s
@@ -50,10 +45,6 @@ Layers
 Later
 -----
 
-NOTE. Visio has line width on Shape, not geometry. Why?
-    What are multiple Geometries for?
-    I'll use a Geometry for snapping, so perhaps I should follow.
-
 Create an SVGDrawContext to convert to SVG.
     This can be used to in the unit tests ;-)
 
@@ -62,11 +53,6 @@ When designing the Glass view, allow actions from JUnit tests
     in this way, I can test most functionality without starting JavaFX.
     In fact, I could have a view without ANY JavaFX code (including mouse events or canvases)
     Could even split the JavaFX stuff into a separate module.
-
-
-Shape to have a list of Sections
-    Geometry and ShapeTransform being sections.
-    The spreadsheet's gui can then use the list and each section's meta data to create the tables.
 
 Allow FList items to be MOVED, so that listeners don't hear a REMOVE and an ADD event, just a single MOVED?/CHANGED? event..
 
@@ -210,3 +196,4 @@ Useful Documents
 
 Understanding Shape Sheets : https://msdn.microsoft.com/en-us/library/office/gg144579(v=office.14).aspx
 Japanese video using shape sheets : https://www.youtube.com/watch?v=9Kyv48e22LQ
+Shows shapesheet screen shots : https://stackoverflow.com/questions/28877699/new-created-custom-list-shape-doesnt-work-in-microsoft-visio-2013-x64?rq=1

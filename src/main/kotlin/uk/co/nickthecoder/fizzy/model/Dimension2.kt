@@ -110,6 +110,7 @@ class Dimension2(val x: Dimension, val y: Dimension) {
         return false
     }
 
+    // Note this MUST return a format that is suitable for the Evaluator to parse.
     override fun toString() = "Dimension2($x , $y)"
 
     companion object {

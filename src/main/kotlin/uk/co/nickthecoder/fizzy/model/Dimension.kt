@@ -134,6 +134,7 @@ class Dimension {
         return false
     }
 
+    // Note. This must return a format that is suitable for the Evaluator to parse when power==1.
     override fun toString(): String {
         return if (power == 0.0) {
             "$inDefaultUnits"
