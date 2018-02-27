@@ -21,6 +21,7 @@ package uk.co.nickthecoder.fizzy.model
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
+import uk.co.nickthecoder.fizzy.prop.BooleanExpression
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
@@ -33,15 +34,31 @@ class Geometry
 
     var shape: RealShape? = null
         set(v) {
-            field = v
-            parts.forEach { part ->
-                part.setContext(v?.context ?: constantsContext)
+            if (field != v) {
+                field?.let {
+                    fill.listeners.remove(it)
+                    line.listeners.add(it)
+                }
+
+                field = v
+
+                parts.forEach { part ->
+                    val context = v?.context ?: constantsContext
+                    part.setContext(context)
+                    fill.context = context
+                    line.context = context
+                    if (v != null) {
+                        fill.listeners.add(v)
+                        line.listeners.add(v)
+                    }
+                }
             }
         }
 
     var parts = MutableFList<GeometryPart>()
 
-    // TODO Add fill and line booleans
+    val fill = BooleanExpression("false")
+    val line = BooleanExpression("true")
 
     private val geometryPartsListener = ChangeAndCollectionListener(this, parts,
             onAdded = { part -> part.geometry = this },
@@ -49,9 +66,26 @@ class Geometry
     )
 
     fun isAt(point: Dimension2, thickness: Dimension): Boolean {
-        // TODO If this is filled, use part.isWithin rather than isAlong
 
         var prev: Dimension2? = null
+
+        // Adapted from : https://wrf.ecse.rpi.edu//Research/Short_Notes/pnpoly.html
+        var oddEven = false
+        if (fill.value) {
+            parts.forEach { part ->
+                prev?.let {
+                    if (part.isCrossing(point, it)) {
+                        oddEven = !oddEven
+                    }
+                }
+                prev = part.point.value
+            }
+            if (oddEven) {
+                return true
+            }
+        }
+
+        prev = null
         parts.forEach { part ->
             prev?.let {
                 if (part.isAlong(point, it, thickness)) {
@@ -62,6 +96,7 @@ class Geometry
         }
         return false
     }
+
 }
 
 abstract class GeometryPart
@@ -100,6 +135,7 @@ abstract class GeometryPart
      */
     abstract fun isAlong(here: Dimension2, prev: Dimension2, thickness: Dimension): Boolean
 
+    abstract fun isCrossing(here: Dimension2, prev: Dimension2): Boolean
 }
 
 class MoveTo(expression: String = "Dimension2(0mm, 0mm)")
@@ -118,6 +154,8 @@ class MoveTo(expression: String = "Dimension2(0mm, 0mm)")
     override fun expression() = "LineTo point='${point.expression}'"
 
     override fun isAlong(here: Dimension2, prev: Dimension2, thickness: Dimension) = false
+
+    override fun isCrossing(here: Dimension2, prev: Dimension2) = false
 
     override fun toString() = "MoveTo point=${point.value}"
 }
@@ -166,6 +204,23 @@ class LineTo(expression: String = "Dimension2(0mm, 0mm)")
 
         // Is it within the thickness of the line?
         return (lengthSquared * length2Squared) <= thickness.inDefaultUnits * thickness.inDefaultUnits + dotProduct * dotProduct
+    }
+
+    /**
+     * Adapted from :
+     * https://wrf.ecse.rpi.edu//Research/Short_Notes/pnpoly.html
+     *
+     * vert[i] = myPoint, vert[j] = prev, test = here
+     */
+    override fun isCrossing(here: Dimension2, prev: Dimension2): Boolean {
+
+        val myPoint = point.value
+        val testx = here.x.inDefaultUnits
+        val testy = here.y.inDefaultUnits
+
+        return ((myPoint.y.inDefaultUnits > testy) != (prev.y.inDefaultUnits > testy)) &&
+                (testx < (prev.x.inDefaultUnits - myPoint.x.inDefaultUnits) * (testy - myPoint.y.inDefaultUnits)
+                        / (prev.y.inDefaultUnits - myPoint.y.inDefaultUnits) + myPoint.x.inDefaultUnits)
     }
 
     override fun toString() = "LineTo point=${point.value}"
