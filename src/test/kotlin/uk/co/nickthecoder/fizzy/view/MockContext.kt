@@ -42,7 +42,7 @@ class MockContext : AbsoluteContext() {
         }
     }
 
-    override fun endPath() {
+    override fun endPath(stroke: Boolean, fill: Boolean) {
         buffer.append("\n")
         if (debug) {
             println("End Path")

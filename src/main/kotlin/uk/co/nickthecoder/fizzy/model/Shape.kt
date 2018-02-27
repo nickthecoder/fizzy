@@ -114,7 +114,7 @@ abstract class Shape(var parent: Parent)
 
     companion object {
 
-        fun createBox(parent: Parent, size: String, at: String): Shape2d {
+        fun createBox(parent: Parent, size: String, at: String, fill: Boolean = false): Shape2d {
 
             val box = Shape2d.create(parent)
             box.size.expression = size
@@ -128,7 +128,9 @@ abstract class Shape(var parent: Parent)
             geometry.parts.add(LineTo("Size * Vector2(0,1)"))
             geometry.parts.add(LineTo("Geometry1.Point1"))
 
-            geometry.fill.expression = "true"
+            if (fill) {
+                geometry.fill.expression = "true"
+            }
 
             return box
         }

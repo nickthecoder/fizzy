@@ -1,8 +1,6 @@
 To Do
 =====
 
-Get isAt working with filled shapes
-    Perform edge test if the fill test fails (it may be 3 points in a line!)
 Add more tests
     Box in Box
     Simple line

@@ -66,8 +66,13 @@ class CanvasContext(canvas: Canvas)
         gc.beginPath()
     }
 
-    override fun endPath() {
-        gc.stroke()
+    override fun endPath(stroke: Boolean, fill: Boolean) {
+        if(fill) {
+            gc.fill()
+        }
+        if(stroke) {
+            gc.stroke()
+        }
     }
 
     override fun moveTo(point: Dimension2) {

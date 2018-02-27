@@ -49,7 +49,7 @@ interface DrawContext {
 
     fun beginPath()
 
-    fun endPath()
+    fun endPath(stroke: Boolean, fill: Boolean)
 
     fun moveTo(point: Dimension2)
 

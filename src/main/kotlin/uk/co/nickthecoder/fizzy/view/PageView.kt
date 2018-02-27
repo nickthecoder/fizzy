@@ -70,8 +70,8 @@ class PageView(val page: Page, val dc: DrawContext)
 
                         }
                     }
+                    dc.endPath(geometry.line.value, geometry.fill.value)
                 }
-                dc.endPath()
             }
 
 

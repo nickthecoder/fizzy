@@ -36,7 +36,7 @@ class Fizzy : Application() {
         // For now, we create a test document to display.
         val doc = Document()
         val page = Page(doc)
-        Shape.createBox(page, "Dimension2(4cm,2cm)", "Dimension2(10cm,10cm)")
+        Shape.createBox(page, "Dimension2(4cm,2cm)", "Dimension2(10cm,10cm)", true)
         Shape.createBox(page, "Dimension2(4cm,2cm)", "Dimension2(10cm,14cm)")
         Shape.createLine(page, "Dimension2(10cm,11cm)", "Dimension2(10cm,13cm)")
 

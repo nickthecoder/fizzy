@@ -71,7 +71,7 @@ class Geometry
 
         // Adapted from : https://wrf.ecse.rpi.edu//Research/Short_Notes/pnpoly.html
         var oddEven = false
-        if (fill.value) {
+        if (fill.value && parts.size > 2) {
             parts.forEach { part ->
                 prev?.let {
                     if (part.isCrossing(point, it)) {
@@ -80,23 +80,47 @@ class Geometry
                 }
                 prev = part.point.value
             }
+            // If the Geometry is not closed. i.e. if the first point isn't the same as the last point,
+            // then add an extra line to close the shape.
+            val first = parts[0].point.value
+            val last = parts[parts.size - 1].point.value
+            if (first != last) {
+                if (first != last && isCrossing(point, last, first)) {
+                    oddEven = !oddEven
+                }
+            }
             if (oddEven) {
                 return true
             }
         }
 
-        prev = null
-        parts.forEach { part ->
-            prev?.let {
-                if (part.isAlong(point, it, thickness)) {
-                    return true
+        if (line.value) {
+            prev = null
+            parts.forEach { part ->
+                prev?.let {
+                    if (part.isAlong(point, it, thickness)) {
+                        return true
+                    }
                 }
+                prev = part.point.value
             }
-            prev = part.point.value
         }
+        
         return false
     }
 
+}
+
+/**
+ * Tests if a horizontal ray through line crosses the line segment from prev to next.
+ * See https://wrf.ecse.rpi.edu//Research/Short_Notes/pnpoly.html
+ */
+private fun isCrossing(here: Dimension2, prev: Dimension2, next: Dimension2): Boolean {
+    val testx = here.x.inDefaultUnits
+    val testy = here.y.inDefaultUnits
+    return ((next.y.inDefaultUnits > testy) != (prev.y.inDefaultUnits > testy)) &&
+            (testx < (prev.x.inDefaultUnits - next.x.inDefaultUnits) * (testy - next.y.inDefaultUnits)
+                    / (prev.y.inDefaultUnits - next.y.inDefaultUnits) + next.x.inDefaultUnits)
 }
 
 abstract class GeometryPart
@@ -212,16 +236,7 @@ class LineTo(expression: String = "Dimension2(0mm, 0mm)")
      *
      * vert[i] = myPoint, vert[j] = prev, test = here
      */
-    override fun isCrossing(here: Dimension2, prev: Dimension2): Boolean {
-
-        val myPoint = point.value
-        val testx = here.x.inDefaultUnits
-        val testy = here.y.inDefaultUnits
-
-        return ((myPoint.y.inDefaultUnits > testy) != (prev.y.inDefaultUnits > testy)) &&
-                (testx < (prev.x.inDefaultUnits - myPoint.x.inDefaultUnits) * (testy - myPoint.y.inDefaultUnits)
-                        / (prev.y.inDefaultUnits - myPoint.y.inDefaultUnits) + myPoint.x.inDefaultUnits)
-    }
+    override fun isCrossing(here: Dimension2, prev: Dimension2) = isCrossing(here, prev, point.value)
 
     override fun toString() = "LineTo point=${point.value}"
 }
