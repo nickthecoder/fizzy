@@ -47,6 +47,21 @@ class Geometry
             onAdded = { part -> part.geometry = this },
             onRemoved = { part -> part.geometry = null }
     )
+
+    fun isAt(point: Dimension2, thickness: Dimension): Boolean {
+        // TODO If this is filled, use part.isWithin rather than isAlong
+
+        var prev: Dimension2? = null
+        parts.forEach { part ->
+            prev?.let {
+                if (part.isAlong(point, it, thickness)) {
+                    return true
+                }
+            }
+            prev = part.point.value
+        }
+        return false
+    }
 }
 
 abstract class GeometryPart
@@ -63,21 +78,34 @@ abstract class GeometryPart
             }
         }
 
+    /**
+     * The end point for this geometery point.
+     */
+    abstract val point: Dimension2Expression
+
     internal abstract fun setContext(context: EvaluationContext)
 
-    abstract fun expression() : String
+    abstract fun expression(): String
 
     override val listeners = ChangeListeners<GeometryPart>()
 
     override fun dirty(prop: Prop<*>) {
         listeners.fireChanged(this, ChangeType.CHANGE, prop)
     }
+
+    /**
+     * Does the point touch the line given by this part of the geometry.
+     * The thickness is the distance away [here] can be, and still be considered touching.
+     * [here] is usually the shapes lineWidth, or greater if that is too thin.
+     */
+    abstract fun isAlong(here: Dimension2, prev: Dimension2, thickness: Dimension): Boolean
+
 }
 
 class MoveTo(expression: String = "Dimension2(0mm, 0mm)")
     : GeometryPart() {
 
-    val point = Dimension2Expression(expression)
+    override val point = Dimension2Expression(expression)
 
     init {
         point.listeners.add(this)
@@ -88,6 +116,8 @@ class MoveTo(expression: String = "Dimension2(0mm, 0mm)")
     }
 
     override fun expression() = "LineTo point='${point.expression}'"
+
+    override fun isAlong(here: Dimension2, prev: Dimension2, thickness: Dimension) = false
 
     override fun toString() = "MoveTo point=${point.value}"
 }
@@ -96,7 +126,7 @@ class LineTo(expression: String = "Dimension2(0mm, 0mm)")
 
     : GeometryPart() {
 
-    val point = Dimension2Expression(expression)
+    override val point = Dimension2Expression(expression)
 
     init {
         point.listeners.add(this)
@@ -107,6 +137,36 @@ class LineTo(expression: String = "Dimension2(0mm, 0mm)")
     }
 
     override fun expression() = "LineTo point='${point.expression}'"
+
+    override fun isAlong(here: Dimension2, prev: Dimension2, thickness: Dimension): Boolean {
+
+        // Using the following diagram given by Henry. A is prev, B is myPoint and C is here :
+        // https://math.stackexchange.com/questions/60070/checking-whether-a-point-lies-on-a-wide-line-segment
+        // We then use the formula given by "Did".
+
+        val myPoint = point.value
+        // The distance between this point and the previous point
+        val dx = myPoint.x.inDefaultUnits - prev.x.inDefaultUnits
+        val dy = myPoint.y.inDefaultUnits - prev.y.inDefaultUnits
+
+        // The distance from the point being tested and the previous point.
+        val dx2 = here.x.inDefaultUnits - prev.x.inDefaultUnits
+        val dy2 = here.y.inDefaultUnits - prev.y.inDefaultUnits
+        // (here-prev) dot-product (myPoint-prev)
+        // -30 * 20 + 0 * 0
+
+        val dotProduct = dx2 * dx + dy2 * dy
+
+        // Is it beyond the line segment's ends?
+        if (dotProduct < 0) return false
+        val lengthSquared = dx * dx + dy * dy
+        if (dotProduct > lengthSquared) return false
+
+        val length2Squared = dx2 * dx2 + dy2 * dy2
+
+        // Is it within the thickness of the line?
+        return (lengthSquared * length2Squared) <= thickness.inDefaultUnits * thickness.inDefaultUnits + dotProduct * dotProduct
+    }
 
     override fun toString() = "LineTo point=${point.value}"
 }

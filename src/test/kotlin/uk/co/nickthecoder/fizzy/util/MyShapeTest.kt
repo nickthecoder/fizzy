@@ -18,9 +18,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.util
 
+import uk.co.nickthecoder.fizzy.evaluator.Evaluator
 import uk.co.nickthecoder.fizzy.model.*
 
 interface MyShapeTest {
+
+    fun dimension(expression: String) = Evaluator(expression).parse().value as Dimension
+
+    fun dimension2(expression: String) = Evaluator(expression).parse().value as Dimension2
 
     fun createBox(parent: Parent, size: String, at: String): Shape2d {
         val box = Shape2d.create(parent)

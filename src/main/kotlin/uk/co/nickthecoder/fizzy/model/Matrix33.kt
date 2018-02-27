@@ -48,6 +48,10 @@ class Matrix33(
 
     operator fun times(vector: Vector2) = times(vector.x, vector.y)
 
+    operator fun times(dimension2: Dimension2) = Dimension2(
+            Dimension(x1y1 * dimension2.x.inDefaultUnits + x2y1 * dimension2.y.inDefaultUnits + x3y1),
+            Dimension(x1y2 * dimension2.x.inDefaultUnits + x2y2 * dimension2.y.inDefaultUnits + x3y2))
+
     operator fun times(o: Matrix33): Matrix33 {
         return Matrix33(
                 x1y1 * o.x1y1 + x2y1 * o.x1y2 + x3y1 * o.x1y3,

@@ -21,7 +21,10 @@ package uk.co.nickthecoder.fizzy.model
 import uk.co.nickthecoder.fizzy.evaluator.CompoundEvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
-import uk.co.nickthecoder.fizzy.prop.*
+import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
+import uk.co.nickthecoder.fizzy.prop.PropCalculation2
+import uk.co.nickthecoder.fizzy.prop.PropConstant
+import uk.co.nickthecoder.fizzy.prop.Shape1dPropType
 
 class Shape1d private constructor(parent: Parent)
     : RealShape(parent) {
@@ -31,19 +34,18 @@ class Shape1d private constructor(parent: Parent)
 
     override val transform = ShapeTransform(this)
 
-    val start = Dimension2Expression("Dimension2(0mm,0mm)", context)
+    val start = Dimension2Expression("Dimension2(0mm,0mm)")
 
-    val end = Dimension2Expression("Dimension2(1mm,1mm)", context)
+    val end = Dimension2Expression("Dimension2(1mm,1mm)")
 
-    val size = Dimension2Expression("Dimension2((End-Start).Length,LineWidth)", context)
+    val size = Dimension2Expression("Dimension2((End-Start).Length,LineWidth)")
 
     val length = PropCalculation2(start, end) { sv, ev -> (ev - sv).length() }
 
-    val lineWidth = DimensionExpression("2mm", context)
-
     init {
-        start.listeners.add(this)
-        end.listeners.add(this)
+        listenTo(start)
+        listenTo(end)
+        listenTo(size)
         transform.locPin.expression = "Dimension2(Length*0.5, LineWidth * 0.5)"
         transform.pin.expression = "(Start+End) * 0.5"
         transform.rotation.expression = "(End-Start).Angle"

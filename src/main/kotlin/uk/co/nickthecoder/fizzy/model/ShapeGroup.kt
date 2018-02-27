@@ -33,6 +33,16 @@ class ShapeGroup private constructor(parent: Parent)
 
     override val transform = ShapeTransform(this)
 
+    override fun isAt(point: Dimension2): Boolean {
+        // TODO Convert the point to local coordinates.
+        children.forEach { child ->
+            if (child.isAt(point)) {
+                return true
+            }
+        }
+        return false
+    }
+
     companion object {
         fun create(parent: Parent): ShapeGroup {
             val result = ShapeGroup(parent)

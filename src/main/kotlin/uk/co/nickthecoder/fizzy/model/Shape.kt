@@ -22,9 +22,7 @@ import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
-import uk.co.nickthecoder.fizzy.prop.Prop
-import uk.co.nickthecoder.fizzy.prop.PropConstant
-import uk.co.nickthecoder.fizzy.prop.PropListener
+import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.runLater
 
 abstract class Shape(var parent: Parent)
@@ -101,6 +99,17 @@ abstract class Shape(var parent: Parent)
         return null
     }
 
+    abstract fun isAt(point: Dimension2): Boolean
+
+    /**
+     * Listens to the expression, so that when it changes, Shape's listeners are informed.
+     * The expression's [EvaluationContext] is also set.
+     */
+    protected fun listenTo(expression: PropExpression<*>) {
+        expression.listeners.add(this)
+        expression.context = context
+    }
+
     override fun toString(): String = "Shape ${id.value}"
 
     companion object {
@@ -151,6 +160,9 @@ abstract class RealShape(parent: Parent) : Shape(parent) {
 
     val geometries = MutableFList<Geometry>()
 
+    val lineWidth = DimensionExpression("2mm")
+
+
     private val geometriesListener by lazy {
         // lazy to prevent leaking this in the constructor.
         // NOTE. I tried just creating this in postInit (without a val), and I got a failed unit test
@@ -165,7 +177,36 @@ abstract class RealShape(parent: Parent) : Shape(parent) {
     }
 
     override fun postInit() {
+        listenTo(lineWidth)
         geometriesListener // Force it to be initialised (it is by lazy).
         super.postInit()
     }
+
+    /**
+     * point should be in units of the parent (i.e. in the same units as this.transform.pin).
+     * It is NOT in the coordinates used by the [Geometry] sections.
+     * Therefore we first need to convert it to this shapes coordinates, and then compare it to the
+     * [Geometry].
+     *
+     * Returns true iff this geometry is close to the given point, or if any of the descendants isAt the point.
+     *
+     */
+    override fun isAt(point: Dimension2): Boolean {
+        val localPoint = transform.transformation.value * point
+
+        geometries.forEach { geo ->
+            if (geo.isAt(localPoint, lineWidth.value)) {
+                return true
+            }
+        }
+
+        children.forEach { child ->
+            if (child.isAt(localPoint)) {
+                return true
+            }
+        }
+
+        return false
+    }
+
 }

@@ -47,4 +47,13 @@ class Page(val document: Document)
         }
         return null
     }
+
+    fun findShapeAt(point: Dimension2): Shape? {
+        children.forEach { shape ->
+            if (shape.isAt(point)) {
+                return shape
+            }
+        }
+        return null
+    }
 }

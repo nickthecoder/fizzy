@@ -66,10 +66,18 @@ class ShapeTransform(val shape: Shape) {
         }
 
         override fun eval() =
-                Matrix33.translate(pin.value.x.inDefaultUnits, pin.value.y.inDefaultUnits) *
-                        Matrix33.rotate(rotation.value) *
-                        Matrix33.scale(scale.value) *
-                        Matrix33.translate(-locPin.value.x.inDefaultUnits, -locPin.value.y.inDefaultUnits)
+                Matrix33.translate(locPin.value.x.inDefaultUnits, locPin.value.y.inDefaultUnits) *
+                        Matrix33.scale(1.0 / scale.value.x, 1.0 / scale.value.y) *
+                        Matrix33.rotate(-rotation.value) *
+                        Matrix33.translate(-pin.value.x.inDefaultUnits, -pin.value.y.inDefaultUnits)
+
+        /*
+            This is the inverse of what I need I think???
+            Matrix33.translate(pin.value.x.inDefaultUnits, pin.value.y.inDefaultUnits) *
+                    Matrix33.rotate(rotation.value) *
+                    Matrix33.scale(scale.value) *
+                    Matrix33.translate(-locPin.value.x.inDefaultUnits, -locPin.value.y.inDefaultUnits)
+        */
     }
 
     /**

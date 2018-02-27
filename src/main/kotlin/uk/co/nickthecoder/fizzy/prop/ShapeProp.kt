@@ -55,10 +55,11 @@ abstract class RealShapePropType<T : RealShape>(klass: KClass<in T>)
     : ShapePropType<T>(klass) {
 
     override fun findField(prop: Prop<T>, name: String): Prop<*>? {
-        if (name == "Geometry") {
-            return PropCalculation1(prop) { v -> v.geometries }
+        return when (name) {
+            "Geometry" -> PropCalculation1(prop) { v -> v.geometries }
+            "LineWidth" -> prop.value.lineWidth
+            else -> return super.findField(prop, name)
         }
-        return super.findField(prop, name)
     }
 }
 
@@ -71,7 +72,6 @@ class Shape1dPropType private constructor()
             "End" -> prop.value.end
             "Size" -> prop.value.size
             "Length" -> prop.value.length
-            "LineWidth" -> prop.value.lineWidth
             else -> super.findField(prop, name)
         }
     }

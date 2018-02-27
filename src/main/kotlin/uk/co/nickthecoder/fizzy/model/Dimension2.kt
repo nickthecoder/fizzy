@@ -40,6 +40,12 @@ class Dimension2(val x: Dimension, val y: Dimension) {
 
     operator fun div(other: Vector2) = Dimension2(x / other.x, y / other.y)
 
+    /**
+     * Returns the dot product of the two Dimension2s in default units.
+     */
+    fun dot(other: Dimension2) =
+            x.inDefaultUnits * other.x.inDefaultUnits + y.inDefaultUnits * other.y.inDefaultUnits
+
     fun ratio(other: Dimension2): Vector2 {
         assert(x.power == other.x.power)
         assert(y.power == other.y.power)
