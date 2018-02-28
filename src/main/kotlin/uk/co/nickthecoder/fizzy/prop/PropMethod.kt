@@ -34,7 +34,7 @@ abstract class PropMethod<T : Any>(val prop: Prop<T>)
     fun applyArgs(arg: Prop<*>) {
         this.arg = arg
         if (!prop.isConstant()) {
-            prop.listeners.add(this)
+            prop.propListeners.add(this)
         }
         if (arg is ArgList) {
             arg.value.forEach { single ->

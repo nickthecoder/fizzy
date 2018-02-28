@@ -33,7 +33,7 @@ interface Prop<out T : Any> {
 
     val value: T
 
-    val listeners: PropListeners
+    val propListeners: PropListeners
 
     fun dump(): String = value.toString()
 
@@ -47,7 +47,7 @@ interface Prop<out T : Any> {
 
 abstract class AbstractProp<out T : Any> : Prop<T> {
 
-    override val listeners = PropListeners()
+    override val propListeners = PropListeners()
 
     override fun toString(): String = "Prop: $value"
 

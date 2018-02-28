@@ -27,7 +27,7 @@ abstract class PropCalculation<T : Any>
             if (field != v) {
                 field = v
                 if (v) {
-                    listeners.fireDirty(this)
+                    propListeners.fireDirty(this)
                 }
             }
         }
@@ -61,13 +61,13 @@ abstract class PropCalculation<T : Any>
 
     fun listenTo(prop: Prop<*>) {
         if (!prop.isConstant()) {
-            prop.listeners.add(this)
+            prop.propListeners.add(this)
         }
     }
 
     fun unlistenTo(prop: Prop<*>) {
         if (!prop.isConstant()) {
-            prop.listeners.remove(this)
+            prop.propListeners.remove(this)
         }
     }
 
@@ -78,7 +78,7 @@ class PropCalculation1<T : Any, A : Any>(val a: Prop<A>, val lambda: (A) -> T)
     : PropCalculation<T>() {
 
     init {
-        if (!a.isConstant()) a.listeners.add(this)
+        if (!a.isConstant()) a.propListeners.add(this)
     }
 
     override fun eval(): T = lambda(a.value)
@@ -88,8 +88,8 @@ class PropCalculation2<T : Any, A : Any, B : Any>(val a: Prop<A>, val b: Prop<B>
     : PropCalculation<T>() {
 
     init {
-        if (!a.isConstant()) a.listeners.add(this)
-        if (!b.isConstant()) b.listeners.add(this)
+        if (!a.isConstant()) a.propListeners.add(this)
+        if (!b.isConstant()) b.propListeners.add(this)
     }
 
     override fun eval(): T = lambda(a.value, b.value)

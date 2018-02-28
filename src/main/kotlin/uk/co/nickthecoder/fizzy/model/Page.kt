@@ -27,7 +27,7 @@ import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 class Page(val document: Document)
     : Parent, HasChangeListeners<Page> {
 
-    override val listeners = ChangeListeners<Page>()
+    override val changeListeners = ChangeListeners<Page>()
 
     override val children = MutableFList<Shape>()
 

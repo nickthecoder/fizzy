@@ -24,7 +24,7 @@ import uk.co.nickthecoder.fizzy.collection.FCollection
 /**
  * Coordinates add/remove/change events from a collection of children (C) to their parent's listeners.
  *
- * When an item is added to the collection, [added] endures that the parent's [ChangeListeners] are notified
+ * When an item is added to the collection, [added] ensures that the parent's [ChangeListeners] are notified
  * by firing a [ChangeListener.changed].
  * At the same time, the parent is added to the child's [ChangeListeners].
  *
@@ -49,18 +49,18 @@ class ChangeAndCollectionListener<P : HasChangeListeners<P>, C : HasChangeListen
     }
 
     override fun changed(item: C, changeType: ChangeType, obj: Any?) {
-        parent.listeners.fireChanged(parent, changeType, obj)
+        parent.changeListeners.fireChanged(parent, changeType, obj)
     }
 
     override fun added(collection: FCollection<C>, item: C) {
-        parent.listeners.fireChanged(parent, ChangeType.ADD, item)
-        item.listeners.add(this)
+        parent.changeListeners.fireChanged(parent, ChangeType.ADD, item)
+        item.changeListeners.add(this)
         onAdded?.invoke(item)
     }
 
     override fun removed(collection: FCollection<C>, item: C) {
-        parent.listeners.fireChanged(parent, ChangeType.REMOVE, item)
-        item.listeners.remove(this)
+        parent.changeListeners.fireChanged(parent, ChangeType.REMOVE, item)
+        item.changeListeners.remove(this)
         onRemoved?.invoke(item)
     }
 

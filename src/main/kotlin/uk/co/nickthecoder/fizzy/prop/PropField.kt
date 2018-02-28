@@ -30,7 +30,7 @@ class PropField<T : Any>(
     : PropCalculation<Any>() {
 
     init {
-        prop.listeners.add(this)
+        prop.propListeners.add(this)
     }
 
     override fun isConstant() = prop.isConstant()

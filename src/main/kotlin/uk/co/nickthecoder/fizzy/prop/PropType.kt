@@ -44,7 +44,12 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
                 if (fieldValue is FList<*>) {
                     if (index > 0 && index <= fieldValue.size) {
                         val itemProp = PropCalculation1(prop) { fieldValue[index - 1]!! }
-                        return itemProp
+                        val value = itemProp.value
+                        if (value is Prop<*>) {
+                            return value
+                        } else {
+                            return itemProp
+                        }
                     }
                 }
             }

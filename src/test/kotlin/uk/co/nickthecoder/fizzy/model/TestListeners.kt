@@ -63,11 +63,11 @@ class TestListeners : MyTestCase() {
         shape1aChanged = 0
         shape1bChanged = 0
 
-        document.listeners.add(changeListener { pageChanged++ })
-        layer1.listeners.add(changeListener { layer1Changed++ })
-        layer2.listeners.add(changeListener { layer2Changed++ })
-        shape1a.listeners.add(changeListener { shape1aChanged++ })
-        shape1b.listeners.add(changeListener { shape1bChanged++ })
+        document.changeListeners.add(changeListener { pageChanged++ })
+        layer1.changeListeners.add(changeListener { layer1Changed++ })
+        layer2.changeListeners.add(changeListener { layer2Changed++ })
+        shape1a.changeListeners.add(changeListener { shape1aChanged++ })
+        shape1b.changeListeners.add(changeListener { shape1bChanged++ })
     }
 
     override fun tearDown() {

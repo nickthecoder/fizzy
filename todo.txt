@@ -1,7 +1,13 @@
 To Do
 =====
 
+Do NOT allow PropConstant to change value.
+
 Test ConnectionPoint
+
+I want ConnectionPoint to be "dirty" when its parent's shape's localToPage Matrix33 is dirty.
+    But currently, "this.ConnectionPoint1" creates a Prop inside PropType.
+    So, should FList ONLY allow lists of Props?
 
 Fix  JoinAlong (recursive error).
 The way the list of Geometries is returned as a Prop differs from GeometryParts

@@ -32,7 +32,7 @@ class Shape2d private constructor(parent: Parent)
     val size = Dimension2Expression("Dimension2(1mm,1mm)")
 
     init {
-        size.listeners.add(this)
+        size.propListeners.add(this)
     }
 
 

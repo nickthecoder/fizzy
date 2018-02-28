@@ -34,14 +34,14 @@ class Geometry
 
     : HasChangeListeners<Geometry> {
 
-    override val listeners = ChangeListeners<Geometry>()
+    override val changeListeners = ChangeListeners<Geometry>()
 
     var shape: RealShape? = null
         set(v) {
             if (field != v) {
                 field?.let {
-                    fill.listeners.remove(it)
-                    line.listeners.add(it)
+                    fill.propListeners.remove(it)
+                    line.propListeners.add(it)
                 }
 
                 field = v
@@ -52,8 +52,8 @@ class Geometry
                     fill.context = context
                     line.context = context
                     if (v != null) {
-                        fill.listeners.add(v)
-                        line.listeners.add(v)
+                        fill.propListeners.add(v)
+                        line.propListeners.add(v)
                     }
                 }
             }
@@ -182,10 +182,10 @@ abstract class GeometryPart
 
     abstract fun expression(): String
 
-    override val listeners = ChangeListeners<GeometryPart>()
+    override val changeListeners = ChangeListeners<GeometryPart>()
 
     override fun dirty(prop: Prop<*>) {
-        listeners.fireChanged(this, ChangeType.CHANGE, prop)
+        changeListeners.fireChanged(this, ChangeType.CHANGE, prop)
     }
 
     /**
@@ -206,7 +206,7 @@ class MoveTo(expression: String = "Dimension2(0mm, 0mm)")
     override val point = Dimension2Expression(expression)
 
     init {
-        point.listeners.add(this)
+        point.propListeners.add(this)
     }
 
     override fun setContext(context: EvaluationContext) {
@@ -231,7 +231,7 @@ class LineTo(expression: String = "Dimension2(0mm, 0mm)")
     override val point = Dimension2Expression(expression)
 
     init {
-        point.listeners.add(this)
+        point.propListeners.add(this)
     }
 
     override fun setContext(context: EvaluationContext) {

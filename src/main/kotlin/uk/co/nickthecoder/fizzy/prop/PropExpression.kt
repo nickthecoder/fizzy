@@ -71,11 +71,11 @@ abstract class PropExpression<T : Any>(expression: String, val klass: KClass<T>,
     var calculatedProperty: Prop<T>? = null
 
     override fun eval(): T {
-        calculatedProperty?.listeners?.remove(this)
+        calculatedProperty?.propListeners?.remove(this)
         try {
             val cp = evaluate(expression, klass, context)
             calculatedProperty = cp
-            cp.listeners.add(this)
+            cp.propListeners.add(this)
             return cp.value
         } catch (e: Exception) {
             throw e

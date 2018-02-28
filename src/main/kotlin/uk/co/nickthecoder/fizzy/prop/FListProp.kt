@@ -75,11 +75,11 @@ class FListProp<T>(override val value: FList<T>) :
     }
 
     override fun added(collection: FCollection<T>, item: T) {
-        listeners.fireDirty(this)
+        propListeners.fireDirty(this)
     }
 
     override fun removed(collection: FCollection<T>, item: T) {
-        listeners.fireDirty(this)
+        propListeners.fireDirty(this)
     }
     // TODO This won't notify listeners when an item in the list CHANGES.
     // Is that a problem?

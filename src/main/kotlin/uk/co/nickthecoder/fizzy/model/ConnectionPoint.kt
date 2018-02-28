@@ -1,15 +1,11 @@
 package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
-import uk.co.nickthecoder.fizzy.prop.AngleExpression
-import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
+import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
-class ConnectionPoint(point: String, angle: String) :
-        HasChangeListeners<ConnectionPoint> {
-
-    override val listeners = ChangeListeners<ConnectionPoint>()
+class ConnectionPoint(point: String, angle: String) {
 
     val point = Dimension2Expression(point)
 
@@ -22,8 +18,8 @@ class ConnectionPoint(point: String, angle: String) :
         set(v) {
             if (field != v) {
                 field?.let {
-                    point.listeners.remove(it)
-                    direction.listeners.remove(it)
+                    point.propListeners.remove(it)
+                    direction.propListeners.remove(it)
                 }
                 field = v
 
@@ -32,9 +28,26 @@ class ConnectionPoint(point: String, angle: String) :
                 direction.context = context
 
                 if (v != null) {
-                    point.listeners.add(v)
-                    direction.listeners.add(v)
+                    point.propListeners.add(v)
+                    direction.propListeners.add(v)
                 }
             }
         }
+
+}
+
+class ConnectionPointProp(connectionPoint: ConnectionPoint)
+    : PropValue<ConnectionPoint>(connectionPoint), PropListener,
+        HasChangeListeners<ConnectionPointProp> {
+
+    override val changeListeners = ChangeListeners<ConnectionPointProp>()
+
+    init {
+        connectionPoint.point.propListeners.add(this)
+        connectionPoint.direction.propListeners.add(this)
+    }
+
+    override fun dirty(prop: Prop<*>) {
+        propListeners.fireDirty(this)
+    }
 }

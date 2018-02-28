@@ -41,7 +41,7 @@ abstract class Shape(var parent: Parent)
     // Note, this is abstract to avoid leaking 'this' in the constructor, so it is only instantiated in final sub-classes
     abstract val transform: ShapeTransform
 
-    override var listeners = ChangeListeners<Shape>()
+    override var changeListeners = ChangeListeners<Shape>()
 
     final override val children = MutableFList<Shape>()
 
@@ -64,17 +64,17 @@ abstract class Shape(var parent: Parent)
     private val shapeListener = object : ChangeListener<Shape>, CollectionListener<Shape> {
 
         override fun changed(item: Shape, changeType: ChangeType, obj: Any?) {
-            listeners.fireChanged(this@Shape)
+            changeListeners.fireChanged(this@Shape)
         }
 
         override fun added(collection: FCollection<Shape>, item: Shape) {
-            listeners.fireChanged(this@Shape)
-            item.listeners.add(this)
+            changeListeners.fireChanged(this@Shape)
+            item.changeListeners.add(this)
         }
 
         override fun removed(collection: FCollection<Shape>, item: Shape) {
-            listeners.fireChanged(this@Shape)
-            item.listeners.add(this)
+            changeListeners.fireChanged(this@Shape)
+            item.changeListeners.add(this)
         }
     }
 
@@ -104,7 +104,7 @@ abstract class Shape(var parent: Parent)
                 if (v) {
                     runLater {
                         dirty = false
-                        listeners.fireChanged(this)
+                        changeListeners.fireChanged(this)
                     }
                 }
             }
@@ -165,7 +165,7 @@ abstract class Shape(var parent: Parent)
      * The expression's [EvaluationContext] is also set.
      */
     protected fun listenTo(expression: PropExpression<*>) {
-        expression.listeners.add(this)
+        expression.propListeners.add(this)
         expression.context = context
     }
 

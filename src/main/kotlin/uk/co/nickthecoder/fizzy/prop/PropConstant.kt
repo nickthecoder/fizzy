@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.prop
 
 /**
- * A property whose value can be changed (i.e. it is a var).
+ * TODO Do NOT allow the value to change.
  */
 class PropConstant<T : Any>(value: T) : AbstractProp<T>() {
 
@@ -27,7 +27,7 @@ class PropConstant<T : Any>(value: T) : AbstractProp<T>() {
         set(v) {
             if (v != field) {
                 field = v
-                listeners.fireDirty(this)
+                propListeners.fireDirty(this)
             }
         }
 

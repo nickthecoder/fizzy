@@ -58,10 +58,10 @@ class ShapeTransform(val shape: Shape) {
      */
     val fromParentToLocal = object : PropCalculation<Matrix33>() {
         init {
-            pin.listeners.add(this)
-            locPin.listeners.add(this)
-            scale.listeners.add(this)
-            rotation.listeners.add(this)
+            pin.propListeners.add(this)
+            locPin.propListeners.add(this)
+            scale.propListeners.add(this)
+            rotation.propListeners.add(this)
         }
 
         override fun eval() =
@@ -79,10 +79,10 @@ class ShapeTransform(val shape: Shape) {
      */
     val fromLocalToParent = object : PropCalculation<Matrix33>() {
         init {
-            pin.listeners.add(this)
-            locPin.listeners.add(this)
-            scale.listeners.add(this)
-            rotation.listeners.add(this)
+            pin.propListeners.add(this)
+            locPin.propListeners.add(this)
+            scale.propListeners.add(this)
+            rotation.propListeners.add(this)
         }
 
         override fun eval() =
@@ -98,8 +98,8 @@ class ShapeTransform(val shape: Shape) {
      */
     val fromLocalToPage = object : PropCalculation<Matrix33>() {
         init {
-            shape.parent.fromLocalToPage.listeners.add(this)
-            fromLocalToParent.listeners.add(this)
+            shape.parent.fromLocalToPage.propListeners.add(this)
+            fromLocalToParent.propListeners.add(this)
         }
 
         override fun eval() =
@@ -110,8 +110,8 @@ class ShapeTransform(val shape: Shape) {
      */
     val fromPageToLocal = object : PropCalculation<Matrix33>() {
         init {
-            shape.parent.fromPageToLocal.listeners.add(this)
-            fromParentToLocal.listeners.add(this)
+            shape.parent.fromPageToLocal.propListeners.add(this)
+            fromParentToLocal.propListeners.add(this)
         }
 
         override fun eval() =
@@ -119,9 +119,9 @@ class ShapeTransform(val shape: Shape) {
     }
 
     init {
-        pin.listeners.add(shape)
-        locPin.listeners.add(shape)
-        scale.listeners.add(shape)
-        rotation.listeners.add(shape)
+        pin.propListeners.add(shape)
+        locPin.propListeners.add(shape)
+        scale.propListeners.add(shape)
+        rotation.propListeners.add(shape)
     }
 }

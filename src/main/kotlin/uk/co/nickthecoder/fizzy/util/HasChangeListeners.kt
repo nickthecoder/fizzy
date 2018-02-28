@@ -22,5 +22,5 @@ package uk.co.nickthecoder.fizzy.util
  * Used by [ChangeAndCollectionListener].
  */
 interface HasChangeListeners<T> {
-    val listeners: ChangeListeners<T>
+    val changeListeners: ChangeListeners<T>
 }
