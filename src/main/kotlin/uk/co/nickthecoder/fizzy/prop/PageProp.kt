@@ -1,6 +1,7 @@
 package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.model.Page
+import uk.co.nickthecoder.fizzy.prop.methods.FindShape
 
 class PagePropType private constructor()
     : PropType<Page>(Page::class) {
@@ -16,6 +17,13 @@ class PagePropType private constructor()
             }
         }
         return super.findField(prop, name)
+    }
+
+    override fun findMethod(prop: Prop<Page>, name: String): PropMethod<in Page>? {
+        return when (name) {
+            "Shape" -> FindShape(prop)
+            else -> return super.findMethod(prop, name)
+        }
     }
 
     companion object {

@@ -26,8 +26,13 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
 
     open fun findField(prop: Prop<T>, name: String): Prop<*>? {
 
-        // To make accessing items in an array easier, we can reference a property "Foo" of an item in the list using :
-        // "myListProp.FooN" where N is the index into the list with base 1 (i.e. the 0th item is N=1).
+        // To make accessing list properties easier, we can give the list's property name, and the number of the item
+        // within the list as one identifier.
+        // e.g. myShape.Geometry1
+        // Will look for a property called "Geometry" in myShape, and if it is an FList, then find item number 1
+        // (which is index 0).
+        //
+        // Note, there is similar functionality in FListPropType, but it does something different!
         val matcher = nameNumber.matcher(name)
         if (matcher.matches()) {
             val fieldName = matcher.group(1)
@@ -53,9 +58,9 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
         return findField(prop as Prop<T>, name)
     }
 
-    open fun findMethod(prop: Prop<T>, name: String): PropMethod<T>? = null
+    open fun findMethod(prop: Prop<T>, name: String): PropMethod<in T>? = null
 
-    private fun findMethod2(prop: Prop<*>, name: String): PropMethod<T>? {
+    private fun findMethod2(prop: Prop<*>, name: String): PropMethod<in T>? {
         @Suppress("UNCHECKED_CAST")
         return findMethod(prop as Prop<T>, name)
     }

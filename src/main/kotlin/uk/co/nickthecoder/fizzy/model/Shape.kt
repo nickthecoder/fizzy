@@ -110,6 +110,16 @@ abstract class Shape(var parent: Parent)
         return null
     }
 
+    override fun findShape(name: String): Shape? {
+        if (name == this.name.value) return this
+
+        children.forEach { child ->
+            val found = child.findShape(name)
+            if (found != null) return found
+        }
+        return null
+    }
+
     abstract fun isAt(point: Dimension2): Boolean
 
     /**

@@ -43,8 +43,8 @@ class Fizzy : Application() {
 
         val line = Shape.createLine(page, "Dimension2(10cm,11cm)", "Dimension2(10cm,13cm)")
         line.start.expression = "this.joinTo(1, Page.Shape1.Geometry1.Point1)"
-        line.end.expression = "this.joinTo(2, Page.Shape2.Geometry1.Point1)"
-        //line.end.expression = "this.joinAlong(Page#1 .Geometry1, 0.125)"
+        //line.end.expression = "this.joinTo(2, Page.Shape2.Geometry1.Point1)"
+        line.end.expression = "this.joinAlong(Page.Shape2.Geometry1, 0.125)"
 
         val mainWindow = MainWindow(primaryStage)
         mainWindow.addDocument(doc)

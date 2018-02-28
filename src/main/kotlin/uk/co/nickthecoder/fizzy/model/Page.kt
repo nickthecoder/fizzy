@@ -46,6 +46,14 @@ class Page(val document: Document)
     override val fromLocalToPage = PropConstant(Matrix33.identity)
     override val fromPageToLocal = PropConstant(Matrix33.identity)
 
+    override fun findShape(name: String): Shape? {
+        children.forEach { shape ->
+            val found = shape.findShape(name)
+            if (found != null) return found
+        }
+        return null
+    }
+
     fun findShape(id: Int): Shape? {
         children.forEach { shape ->
             val found = shape.findShape(id)

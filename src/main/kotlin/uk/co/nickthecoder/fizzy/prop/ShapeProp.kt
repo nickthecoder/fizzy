@@ -18,12 +18,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-import uk.co.nickthecoder.fizzy.evaluator.ArgList
 import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.prop.methods.FindShape
+import uk.co.nickthecoder.fizzy.prop.methods.JoinAlong
+import uk.co.nickthecoder.fizzy.prop.methods.JoinTo
 import kotlin.reflect.KClass
 
 
-abstract class ShapePropType<T : Shape>(klass: KClass<in T>)
+abstract class ShapePropType<T : Shape>(klass: KClass<T>)
     : PropType<T>(klass) {
 
     override fun findField(prop: Prop<T>, name: String): Prop<*>? {
@@ -51,57 +53,23 @@ abstract class ShapePropType<T : Shape>(klass: KClass<in T>)
         }
     }
 
-
-    override fun findMethod(prop: Prop<T>, name: String): PropMethod<T>? {
+    override fun findMethod(prop: Prop<T>, name: String): PropMethod<in T>? {
         return when (name) {
-            "joinTo" -> {
-                PropMethod2(prop, Double::class, Dimension2::class,
-                        { id, point ->
-                            val otherShape = prop.value.page().findShape(id.toInt()) as RealShape
-                            prop.value.parent.fromPageToLocal.value * otherShape.fromLocalToPage.value * point
-                        })
-            }
-        // TODO joinAlong doesn't work!!!
-            "joinAlong" -> {
-                val method = PropMethod2(prop, Geometry::class, Double::class) { geometry, along ->
-                    val otherShape = geometry.shape ?: throw RuntimeException("Geometry isn't connected to a Shape")
-                    val thisShape = prop.value
-                    println("Calculating join from $otherShape to $thisShape")
-
-                    thisShape.fromPageToLocal.value * (otherShape.fromLocalToPage.value * geometry.pointAlong(along))
-                }
-                method
-            }
+            "joinTo" -> JoinTo(prop)
+            "joinAlong" -> JoinAlong(prop)
+            "findShape" -> FindShape(prop)
             else -> super.findMethod(prop, name)
         }
     }
 
 }
 
-class JoinTo(prop: Prop<Shape>)
-    : PropMethod<Shape>(prop) {
-
-    override fun eval(arg: Prop<*>): Any {
-        if (arg is ArgList && arg.value.size == 2) {
-
-            val id = arg.value[0].value
-            val point = arg.value[0].value
-
-            if (id is Number && point is Dimension2) {
-                val otherShape = prop.value.page().findShape(id.toInt()) as RealShape
-                return prop.value.parent.fromPageToLocal.value * otherShape.fromLocalToPage.value * point
-            }
-        }
-        throw RuntimeException("Expected arguments (Number, Dimension2), but found $arg")
-    }
-}
-
-abstract class RealShapePropType<T : RealShape>(klass: KClass<in T>)
+abstract class RealShapePropType<T : RealShape>(klass: KClass<T>)
     : ShapePropType<T>(klass) {
 
     override fun findField(prop: Prop<T>, name: String): Prop<*>? {
         return when (name) {
-            "Geometry" -> PropCalculation1(prop) { v -> v.geometries }
+            "Geometry" -> PropConstant(prop.value.geometries)
             "LineWidth" -> prop.value.lineWidth
             else -> return super.findField(prop, name)
         }
@@ -121,7 +89,7 @@ class Shape1dPropType private constructor()
         }
     }
 
-    override fun findMethod(prop: Prop<Shape1d>, name: String): PropMethod<Shape1d>? {
+    override fun findMethod(prop: Prop<Shape1d>, name: String): PropMethod<in Shape1d>? {
         return super.findMethod(prop, name)
     }
 

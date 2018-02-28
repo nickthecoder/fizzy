@@ -1,6 +1,11 @@
 To Do
 =====
 
+Fix  JoinAlong (recursive error).
+The way the list of Geometries is returned as a Prop differs from GeometryParts
+    Should the mode have Props, and never create Prop<Geometry> or Prop<GeometryPart> on the fly.
+
+
 Optimise by checking the bounding box first.
     Need to update the existing tests, so that the optimisation doesn't ruin the edge case tests!
 
@@ -33,6 +38,8 @@ Create tests for Shape1d s
 
 Soon
 ----
+
+Check that "Geometry1" becomes dirty when items are added/removed from the geometry list.
 
 DimensionExpression and Dimension2Expression to have an additional "expected power", which defaults to 1.
     Will error if other powers are returned

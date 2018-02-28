@@ -29,6 +29,8 @@ interface Parent {
 
     fun document(): Document
 
+    fun findShape(name: String) : Shape?
+
     val fromLocalToParent: Prop<Matrix33>
 
     val fromParentToLocal: Prop<Matrix33>

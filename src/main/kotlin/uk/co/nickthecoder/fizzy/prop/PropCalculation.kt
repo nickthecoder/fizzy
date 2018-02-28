@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-abstract class PropCalculation<out T : Any>
+abstract class PropCalculation<T : Any>
 
     : AbstractProp<T>(), PropListener {
 
@@ -32,7 +32,7 @@ abstract class PropCalculation<out T : Any>
             }
         }
 
-    private lateinit var calculatedValue: T
+    protected var calculatedValue: T? = null
 
     override fun dirty(prop: Prop<*>) {
         dirty = true
@@ -51,13 +51,25 @@ abstract class PropCalculation<out T : Any>
                     calculatedValue = eval()
                 } finally {
                     isCalculating = false
+                    dirty = false
                 }
-                dirty = false
             }
-            return calculatedValue
+            return calculatedValue!!
         }
 
     abstract fun eval(): T
+
+    fun listenTo(prop: Prop<*>) {
+        if (!prop.isConstant()) {
+            prop.listeners.add(this)
+        }
+    }
+
+    fun unlistenTo(prop: Prop<*>) {
+        if (!prop.isConstant()) {
+            prop.listeners.remove(this)
+        }
+    }
 
     override fun toString(): String = "${this.javaClass.simpleName} ${if (isConstant()) value.toString() else ""}"
 }

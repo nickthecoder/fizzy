@@ -38,6 +38,10 @@ class FListPropType private constructor()
 
         // To make accessing items in an array easier, we can reference a property "Foo" of an item in the list using :
         // "myListProp.FooN" where N is the index into the list with base 1 (i.e. the 0th item is N=1).
+        // For example, to get the point from geometry part number 3 (which is index 2) :
+        // someGeometry.Point3
+        //
+        // Note, there is similar functionality in PropType, but it does something different!
         val matcher = nameNumber.matcher(name)
         if (matcher.matches()) {
             val fieldName = matcher.group(1)

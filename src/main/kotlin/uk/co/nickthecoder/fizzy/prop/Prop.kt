@@ -42,6 +42,7 @@ interface Prop<out T : Any> {
     fun field(name: String): Prop<*>? = PropType.field(this, name)
 
     fun method(name: String): Prop<*>? = PropType.method(this, name)
+
 }
 
 abstract class AbstractProp<out T : Any> : Prop<T> {
@@ -49,6 +50,7 @@ abstract class AbstractProp<out T : Any> : Prop<T> {
     override val listeners = PropListeners()
 
     override fun toString(): String = "Prop: $value"
+
 }
 
 fun throwExpectedType(type: String, found: Prop<*>): Prop<*> {
