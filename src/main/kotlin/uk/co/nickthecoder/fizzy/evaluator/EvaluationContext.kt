@@ -64,12 +64,14 @@ class SimpleEvaluationContext(properties: Map<String, Prop<*>> = emptyMap())
  * This is used by Shape, so that its expressions can reference part of the Shape
  * without the need for "this.".
  */
-class ThisContext<T : Any>(val me: Prop<T>, val type: PropType<T>)
+class ThisContext<T : Any>(val me: T, val type: PropType<T>)
     : EvaluationContext {
 
+    val meProp = PropConstant(me)
+
     override fun findProp(name: String): Prop<*>? {
-        if (name == "this") return me
-        return type.findField(me, name)
+        if (name == "this") return meProp
+        return type.findField(meProp, name)
     }
 }
 

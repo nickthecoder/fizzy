@@ -18,30 +18,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
-import uk.co.nickthecoder.fizzy.evaluator.CompoundEvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
-import uk.co.nickthecoder.fizzy.evaluator.constantsContext
-import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.prop.ShapeGroupPropType
 
 class ShapeGroup private constructor(parent: Parent)
 
-    : Shape(parent), Parent {
+    : Shape(parent) {
 
-    override val context = CompoundEvaluationContext(listOf(
-            constantsContext, ThisContext(PropConstant(this), ShapeGroupPropType.instance)))
+    override val context = createContext(ThisContext(this, ShapeGroupPropType.instance))
 
     override val transform = ShapeTransform(this)
-
-    override fun isAt(point: Dimension2): Boolean {
-        // TODO Convert the point to local coordinates.
-        children.forEach { child ->
-            if (child.isAt(point)) {
-                return true
-            }
-        }
-        return false
-    }
 
     companion object {
         fun create(parent: Parent): ShapeGroup {
