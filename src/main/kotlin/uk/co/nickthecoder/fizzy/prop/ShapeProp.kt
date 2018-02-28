@@ -19,9 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.prop.methods.ConnectTo
 import uk.co.nickthecoder.fizzy.prop.methods.FindShape
-import uk.co.nickthecoder.fizzy.prop.methods.JoinAlong
-import uk.co.nickthecoder.fizzy.prop.methods.JoinTo
 import kotlin.reflect.KClass
 
 
@@ -55,8 +54,6 @@ abstract class ShapePropType<T : Shape>(klass: KClass<T>)
 
     override fun findMethod(prop: Prop<T>, name: String): PropMethod<in T>? {
         return when (name) {
-            "joinTo" -> JoinTo(prop)
-            "joinAlong" -> JoinAlong(prop)
             "findShape" -> FindShape(prop)
             else -> super.findMethod(prop, name)
         }
@@ -70,8 +67,16 @@ abstract class RealShapePropType<T : RealShape>(klass: KClass<T>)
     override fun findField(prop: Prop<T>, name: String): Prop<*>? {
         return when (name) {
             "Geometry" -> PropConstant(prop.value.geometries)
+            "ConnectionPoint" -> PropConstant(prop.value.connectionPoints)
             "LineWidth" -> prop.value.lineWidth
             else -> return super.findField(prop, name)
+        }
+    }
+
+    override fun findMethod(prop: Prop<T>, name: String): PropMethod<in T>? {
+        return when (name) {
+            "connectTo" -> ConnectTo(prop)
+            else -> super.findMethod(prop, name)
         }
     }
 }

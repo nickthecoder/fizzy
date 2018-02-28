@@ -346,6 +346,8 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
         log("Applying $op")
         try {
             pushValue(op.apply(values))
+        } catch (e: EvaluationException) {
+            throw e
         } catch (e: Exception) {
             throw EvaluationException(e, opToken.startIndex)
         }
@@ -355,6 +357,7 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
         init {
             PropType.put(AnglePropType.instance)
             PropType.put(BooleanPropType.instance)
+            PropType.put(ConnectionPointPropType.instance)
             PropType.put(Dimension2PropType.instance)
             PropType.put(Dimension2PropType.instance)
             PropType.put(DoublePropType.instance)

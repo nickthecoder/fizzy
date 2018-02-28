@@ -45,6 +45,7 @@ abstract class Shape(var parent: Parent)
 
     final override val children = MutableFList<Shape>()
 
+
     override val fromLocalToParent
         get() = transform.fromLocalToParent
 
@@ -57,6 +58,9 @@ abstract class Shape(var parent: Parent)
     override val fromPageToLocal: Prop<Matrix33>
         get() = transform.fromPageToLocal
 
+    /**
+     * When child Shapes change, this causes that even to bubble up to listeners of this Shape.
+     */
     private val shapeListener = object : ChangeListener<Shape>, CollectionListener<Shape> {
 
         override fun changed(item: Shape, changeType: ChangeType, obj: Any?) {
@@ -73,6 +77,12 @@ abstract class Shape(var parent: Parent)
             item.listeners.add(this)
         }
     }
+
+    /**
+     * Keeps references to [ChangeAndCollectionListener], so that they are not gc'd.
+     * They do not need to be referenced directly, they take care of everything themselves.
+     */
+    protected val collectionListeners = mutableListOf<ChangeAndCollectionListener<Shape, *>>()
 
     /**
      * Shapes should not be created directly with a constructor, instead use a static 'create' method,
@@ -205,46 +215,3 @@ abstract class Shape(var parent: Parent)
 
 }
 
-
-/**
- * The basis for Shape1d and Shape2d, i.e. the type of Shapes which have their own Geometries.
- */
-abstract class RealShape(parent: Parent) : Shape(parent) {
-
-    val geometries = MutableFList<Geometry>()
-
-    val lineWidth = DimensionExpression("2mm")
-
-
-    private val geometriesListener by lazy {
-        // lazy to prevent leaking this in the constructor.
-        // NOTE. I tried just creating this in postInit (without a val), and I got a failed unit test
-        // This only happened from within IntelliJ (running directly from gradle, all tests passed).
-        // It also passed when running the single Test class (and also a single method).
-        // However, I'm not in the mood for a bug hunt, so I'll leave this implementation here.
-        // It is slightly weird looking, but it works!
-        ChangeAndCollectionListener(this, geometries,
-                onAdded = { geometry -> geometry.shape = this@RealShape },
-                onRemoved = { geometry -> geometry.shape = null }
-        )
-    }
-
-    override fun isAt(point: Dimension2): Boolean {
-        val localPoint = transform.fromParentToLocal.value * point
-
-        geometries.forEach { geo ->
-            if (geo.isAt(localPoint, lineWidth.value)) {
-                return true
-            }
-        }
-
-        return super.isAt(point)
-    }
-
-    override fun postInit() {
-        listenTo(lineWidth)
-        geometriesListener // Force it to be initialised (it is by lazy).
-        super.postInit()
-    }
-
-}

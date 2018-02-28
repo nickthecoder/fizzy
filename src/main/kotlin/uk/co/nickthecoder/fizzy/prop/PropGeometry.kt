@@ -59,7 +59,7 @@ class LineToPropType private constructor()
 
     override fun findField(prop: Prop<LineTo>, name: String): Prop<*>? {
         return when (name) {
-            "point" -> prop.value.point
+            "Point" -> prop.value.point
             else -> null
         }
     }

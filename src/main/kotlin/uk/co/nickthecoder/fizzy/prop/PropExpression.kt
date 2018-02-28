@@ -78,7 +78,6 @@ abstract class PropExpression<T : Any>(expression: String, val klass: KClass<T>,
             cp.listeners.add(this)
             return cp.value
         } catch (e: Exception) {
-            println("*** Evaluating $expression")
             throw e
         }
     }

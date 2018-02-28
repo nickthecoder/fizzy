@@ -46,7 +46,6 @@ class FListPropType private constructor()
         if (matcher.matches()) {
             val fieldName = matcher.group(1)
             val index = matcher.group(2).toInt()
-
             if (index > 0 && index <= list.size) {
                 list [index - 1]?.let { item ->
 

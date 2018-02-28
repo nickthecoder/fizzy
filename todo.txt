@@ -1,6 +1,8 @@
 To Do
 =====
 
+Test ConnectionPoint
+
 Fix  JoinAlong (recursive error).
 The way the list of Geometries is returned as a Prop differs from GeometryParts
     Should the mode have Props, and never create Prop<Geometry> or Prop<GeometryPart> on the fly.

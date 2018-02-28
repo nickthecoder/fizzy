@@ -22,6 +22,7 @@ import javafx.application.Application
 import javafx.application.Platform
 import javafx.stage.Stage
 import uk.co.nickthecoder.fizzy.gui.MainWindow
+import uk.co.nickthecoder.fizzy.model.ConnectionPoint
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.Page
 import uk.co.nickthecoder.fizzy.model.Shape
@@ -38,13 +39,18 @@ class Fizzy : Application() {
         // For now, we create a test document to display.
         val doc = Document()
         val page = Page(doc)
-        Shape.createBox(page, "Dimension2(4cm,2cm)", "Dimension2(10cm,10cm)")
-        Shape.createBox(page, "Dimension2(4cm,2cm)", "Dimension2(10cm,14cm)")
+        val box1 = Shape.createBox(page, "Dimension2(4cm,2cm)", "Dimension2(10cm,10cm)")
+        val box2 = Shape.createBox(page, "Dimension2(4cm,2cm)", "Dimension2(10cm,14cm)")
+
+        box1.connectionPoints.add(ConnectionPoint("(Geometry1.Point1 + Geometry1.Point2) / 2", "-90 deg"))
+        box1.connectionPoints.add(ConnectionPoint("(Geometry1.Point3 + Geometry1.Point4) / 2", "90 deg"))
+
+        box2.connectionPoints.add(ConnectionPoint("(Geometry1.Point1 + Geometry1.Point2) / 2", "-90 deg"))
+        box2.connectionPoints.add(ConnectionPoint("(Geometry1.Point3 + Geometry1.Point4) / 2", "90 deg"))
 
         val line = Shape.createLine(page, "Dimension2(10cm,11cm)", "Dimension2(10cm,13cm)")
-        line.start.expression = "this.joinTo(1, Page.Shape1.Geometry1.Point1)"
-        //line.end.expression = "this.joinTo(2, Page.Shape2.Geometry1.Point1)"
-        line.end.expression = "this.joinAlong(Page.Shape2.Geometry1, 0.125)"
+        line.start.expression = "this.connectTo(Page.Shape1.ConnectionPoint2)"
+        line.end.expression = "this.connectTo( Page.Shape2.ConnectionPoint1 )"
 
         val mainWindow = MainWindow(primaryStage)
         mainWindow.addDocument(doc)

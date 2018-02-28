@@ -37,7 +37,7 @@ abstract class AbsoluteContext(scale: Double = 1.0) : DrawContext {
     val stateStack = mutableListOf<State>()
 
     fun transform(point: Dimension2): Vector2 {
-        // println( "*** Transforming point ${point} to ${state.transformation.times(point.x.inDefaultUnits, point.y.inDefaultUnits)}")
+        // println( "AbsoluteContext : Transforming point ${point} to ${state.transformation.times(point.x.inDefaultUnits, point.y.inDefaultUnits)}")
         return state.transformation.times(point.x.inDefaultUnits, point.y.inDefaultUnits)
     }
 
