@@ -23,12 +23,14 @@ import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.prop.*
-import uk.co.nickthecoder.fizzy.util.runLater
+import uk.co.nickthecoder.fizzy.util.*
 
 abstract class Shape(var parent: Parent)
     : Parent, PropListener, HasChangeListeners<Shape> {
 
-    var id = PropConstant(parent.document().generateId())
+    val id = PropConstant(parent.document().generateId())
+
+    val name = StringExpression("\"\"")
 
     abstract val context: EvaluationContext
 
@@ -38,8 +40,17 @@ abstract class Shape(var parent: Parent)
 
     abstract val transform: ShapeTransform
 
-    override val transformation
-        get() = transform.transformation
+    override val fromLocalToParent
+        get() = transform.fromLocalToParent
+
+    override val fromParentToLocal
+        get() = transform.fromParentToLocal
+
+    override val fromLocalToPage: Prop<Matrix33>
+        get() = transform.fromLocalToPage
+
+    override val fromPageToLocal: Prop<Matrix33>
+        get() = transform.fromPageToLocal
 
     private val shapeListener = object : ChangeListener<Shape>, CollectionListener<Shape> {
 
@@ -63,7 +74,7 @@ abstract class Shape(var parent: Parent)
      * which calls [postInit]. This is to ensure that 'this' is not leaked from the constructor.
      */
     open protected fun postInit() {
-        id.listeners.add(this)
+        listenTo(name)
         children.listeners.add(shapeListener)
         parent.children.add(this)
     }
@@ -89,7 +100,7 @@ abstract class Shape(var parent: Parent)
 
     override fun page(): Page = parent.page()
 
-    fun findShape(id: String): Shape? {
+    fun findShape(id: Int): Shape? {
         if (id == this.id.value) return this
 
         children.forEach { child ->
@@ -196,7 +207,7 @@ abstract class RealShape(parent: Parent) : Shape(parent) {
      *
      */
     override fun isAt(point: Dimension2): Boolean {
-        val localPoint = transform.transformation.value * point
+        val localPoint = transform.fromParentToLocal.value * point
 
         geometries.forEach { geo ->
             if (geo.isAt(localPoint, lineWidth.value)) {

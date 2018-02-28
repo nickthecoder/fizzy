@@ -20,6 +20,8 @@ package uk.co.nickthecoder.fizzy.view
 
 import javafx.application.Platform
 import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.util.ChangeListener
+import uk.co.nickthecoder.fizzy.util.ChangeType
 
 class PageView(val page: Page, val dc: DrawContext)
     : ChangeListener<Page> {

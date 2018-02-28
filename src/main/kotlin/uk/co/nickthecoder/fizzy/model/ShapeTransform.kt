@@ -50,14 +50,13 @@ class ShapeTransform(val shape: Shape) {
 
     // TODO Add flipX and flipY (we don't have Boolean properties yet!)
 
-    // TODO The following does NOT hve unit tests yet.
-    // I'm not sure if it will be needed, so I've left it in for now.
     /**
-     * A matrix which can transform local coordinates fo this shape into coordinates of the parent.
+     * A matrix which can transform a point from the coordinate system of the parent to local coordinates.
+     * The inverse is [fromLocalToParent].
      * This is based on [pin], [locPin], [scale] and [rotation].
      * Whenever any of those become dirty, then this also becomes dirty.
      */
-    val transformation = object : PropCalculation<Matrix33>() {
+    val fromParentToLocal = object : PropCalculation<Matrix33>() {
         init {
             pin.listeners.add(this)
             locPin.listeners.add(this)
@@ -70,28 +69,53 @@ class ShapeTransform(val shape: Shape) {
                         Matrix33.scale(1.0 / scale.value.x, 1.0 / scale.value.y) *
                         Matrix33.rotate(-rotation.value) *
                         Matrix33.translate(-pin.value.x.inDefaultUnits, -pin.value.y.inDefaultUnits)
-
-        /*
-            This is the inverse of what I need I think???
-            Matrix33.translate(pin.value.x.inDefaultUnits, pin.value.y.inDefaultUnits) *
-                    Matrix33.rotate(rotation.value) *
-                    Matrix33.scale(scale.value) *
-                    Matrix33.translate(-locPin.value.x.inDefaultUnits, -locPin.value.y.inDefaultUnits)
-        */
     }
 
     /**
-     * A matrix which can transform local coordinates of this shape into coordinates of the page.
+     * A matrix which can transform a point from a local coordinate into a coordinate in the parent's coordinate system.
+     * The inverse is [fromParentToLocal].
+     * This is based on [pin], [locPin], [scale] and [rotation].
+     * Whenever any of those become dirty, then this also becomes dirty.
      */
-    // TODO This hasn't been tested!
-    val pageTransformation = object : PropCalculation<Matrix33>() {
+    val fromLocalToParent = object : PropCalculation<Matrix33>() {
         init {
-            shape.parent.transformation.listeners.add(this)
-            transformation.listeners.add(this)
+            pin.listeners.add(this)
+            locPin.listeners.add(this)
+            scale.listeners.add(this)
+            rotation.listeners.add(this)
         }
 
         override fun eval() =
-                shape.parent.transformation.value * transformation.value
+                Matrix33.translate(pin.value.x.inDefaultUnits, pin.value.y.inDefaultUnits) *
+                        Matrix33.rotate(rotation.value) *
+                        Matrix33.scale(scale.value) *
+                        Matrix33.translate(-locPin.value.x.inDefaultUnits, -locPin.value.y.inDefaultUnits)
+    }
+
+
+    /**
+     * A matrix which can transform a local coordinate into a coordinate of the page.
+     */
+    val fromLocalToPage = object : PropCalculation<Matrix33>() {
+        init {
+            shape.parent.fromLocalToPage.listeners.add(this)
+            fromLocalToParent.listeners.add(this)
+        }
+
+        override fun eval() =
+                shape.parent.fromLocalToPage.value * fromLocalToParent.value
+    }
+    /**
+     * A matrix which can transform a local coordinate into a coordinate of the page.
+     */
+    val fromPageToLocal = object : PropCalculation<Matrix33>() {
+        init {
+            shape.parent.fromPageToLocal.listeners.add(this)
+            fromParentToLocal.listeners.add(this)
+        }
+
+        override fun eval() =
+                shape.parent.fromPageToLocal.value * fromParentToLocal.value
     }
 
     init {

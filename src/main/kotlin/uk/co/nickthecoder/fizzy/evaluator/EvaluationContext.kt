@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.evaluator
 
-import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.prop.PropType
@@ -69,6 +68,7 @@ class ThisContext<T : Any>(val me: Prop<T>, val type: PropType<T>)
     : EvaluationContext {
 
     override fun findProp(name: String): Prop<*>? {
+        if (name == "this") return me
         return type.findField(me, name)
     }
 }

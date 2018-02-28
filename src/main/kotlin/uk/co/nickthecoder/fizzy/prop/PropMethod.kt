@@ -31,7 +31,7 @@ abstract class PropMethod<out T : Any>(val prop: Prop<T>)
 
     override fun isConstant() = prop.isConstant() && arg?.isConstant() == true
 
-    fun applyArgs(arg: Prop<*>) {
+    open fun applyArgs(arg: Prop<*>) {
         this.arg = arg
         if (!prop.isConstant()) {
             prop.listeners.add(this)
@@ -63,7 +63,7 @@ abstract class PropMethod<out T : Any>(val prop: Prop<T>)
  * A method, which has no arguments.
  * T is the type of the receiver object.
  */
-class PropMethod0<out T : Any>(
+open class PropMethod0<out T : Any>(
         prop: Prop<T>,
         val lambda: () -> Any)
 
@@ -83,7 +83,8 @@ class PropMethod0<out T : Any>(
  * A is the type of the method's argument.
  */
 open class PropMethod1<out T : Any, A : Any>(
-        prop: Prop<T>, val klassA: KClass<A>,
+        prop: Prop<T>,
+        val klassA: KClass<A>,
         val lambda: (A) -> Any)
 
     : PropMethod<T>(prop) {

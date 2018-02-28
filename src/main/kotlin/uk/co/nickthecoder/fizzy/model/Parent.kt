@@ -29,5 +29,11 @@ interface Parent {
 
     fun document(): Document
 
-    val transformation: Prop<Matrix33>
+    val fromLocalToParent: Prop<Matrix33>
+
+    val fromParentToLocal: Prop<Matrix33>
+
+    val fromLocalToPage: Prop<Matrix33>
+
+    val fromPageToLocal: Prop<Matrix33>
 }

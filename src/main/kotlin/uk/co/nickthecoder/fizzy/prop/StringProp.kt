@@ -76,3 +76,5 @@ class StringPropType private constructor()
         val instance = StringPropType()
     }
 }
+
+class StringExpression(expression: String) : PropExpression<String>(expression, String::class)

@@ -267,7 +267,7 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
 
     /**
      * Applies any non-open brackets on the stack.
-     * If an open bracket is not found, then an expection is throw.
+     * If an open bracket is not found, then an exception is throw.
      * Otherwise the open bracket is returned, but it is NOT popped off the stack, and the top-most item on the
      * stack will be the open bracket.
      */
@@ -364,6 +364,7 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
             PropType.put(GeometryPropType.instance)
             PropType.put(LineToPropType.instance)
             PropType.put(MoveToPropType.instance)
+            PropType.put(PagePropType.instance)
             PropType.put(Shape1dPropType.instance)
             PropType.put(Shape2dPropType.instance)
             PropType.put(ShapeGroupPropType.instance)

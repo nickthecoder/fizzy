@@ -25,6 +25,10 @@ import uk.co.nickthecoder.fizzy.prop.BooleanExpression
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
+import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
+import uk.co.nickthecoder.fizzy.util.ChangeListeners
+import uk.co.nickthecoder.fizzy.util.ChangeType
+import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
 class Geometry
 
@@ -105,10 +109,42 @@ class Geometry
                 prev = part.point.value
             }
         }
-        
+
         return false
     }
 
+    /**
+     * Find the point part way along this geometry. 0 will be the start of the geometry,
+     * 1 will be the end.
+     */
+    fun pointAlong(along: Double): Dimension2 {
+        val nonMoveCount = parts.count { it !is MoveTo }
+
+        // Clip to 0..1
+        val alongClipped = if (along < 0) {
+            0.0
+        } else if (along > 1.0) {
+            1.0
+        } else {
+            along
+        }
+
+        var partIndex = Math.floor(nonMoveCount * alongClipped).toInt()
+        val partAlong = alongClipped - partIndex / nonMoveCount
+
+        var prev: Dimension2? = null
+        for (part in parts) {
+            if (partIndex == 0) {
+                if (prev != null) {
+                    return parts[partIndex].pointAlong(prev, partAlong)
+                }
+                break
+            }
+            prev = part.point.value
+            partIndex--
+        }
+        return Dimension2.ZERO_mm
+    }
 }
 
 /**
@@ -160,6 +196,8 @@ abstract class GeometryPart
     abstract fun isAlong(here: Dimension2, prev: Dimension2, thickness: Dimension): Boolean
 
     abstract fun isCrossing(here: Dimension2, prev: Dimension2): Boolean
+
+    abstract fun pointAlong(prev: Dimension2, along: Double): Dimension2
 }
 
 class MoveTo(expression: String = "Dimension2(0mm, 0mm)")
@@ -180,6 +218,8 @@ class MoveTo(expression: String = "Dimension2(0mm, 0mm)")
     override fun isAlong(here: Dimension2, prev: Dimension2, thickness: Dimension) = false
 
     override fun isCrossing(here: Dimension2, prev: Dimension2) = false
+
+    override fun pointAlong(prev: Dimension2, along: Double) = Dimension2.ZERO_mm
 
     override fun toString() = "MoveTo point=${point.value}"
 }
@@ -237,6 +277,8 @@ class LineTo(expression: String = "Dimension2(0mm, 0mm)")
      * vert[i] = myPoint, vert[j] = prev, test = here
      */
     override fun isCrossing(here: Dimension2, prev: Dimension2) = isCrossing(here, prev, point.value)
+
+    override fun pointAlong(prev: Dimension2, along: Double) = prev + (point.value - prev) / along
 
     override fun toString() = "LineTo point=${point.value}"
 }

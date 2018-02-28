@@ -90,7 +90,7 @@ abstract class Operator(val str: String, val precedence: Int) {
 
         fun find(str: String): Operator? = operators[str]
 
-        fun isOperatorChar(c: Char) = "()+*^/%-!=><|&.,".contains(c)
+        fun isOperatorChar(c: Char) = "()+*^/%-!=><|&.,#".contains(c)
     }
 }
 
@@ -526,7 +526,9 @@ class DivOperator(precedence: Int) : BinaryOperator("/", precedence) {
     }
 }
 
-class CommaOperator(precedence: Int) : BinaryOperator(",", precedence) {
+class CommaOperator(precedence: Int)
+    : BinaryOperator(",", precedence) {
+
     override fun apply(a: Prop<*>, b: Prop<*>): Prop<*> {
         if (a is ArgList) {
             a.value.add(b)

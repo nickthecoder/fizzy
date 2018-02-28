@@ -72,10 +72,15 @@ abstract class PropExpression<T : Any>(expression: String, val klass: KClass<T>,
 
     override fun eval(): T {
         calculatedProperty?.listeners?.remove(this)
-        val cp = evaluate(expression, klass, context)
-        calculatedProperty = cp
-        cp.listeners.add(this)
-        return cp.value
+        try {
+            val cp = evaluate(expression, klass, context)
+            calculatedProperty = cp
+            cp.listeners.add(this)
+            return cp.value
+        } catch (e: Exception) {
+            println("*** Evaluating $expression")
+            throw e
+        }
     }
 
     override fun dump(): String {

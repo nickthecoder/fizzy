@@ -20,6 +20,9 @@ package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.prop.PropConstant
+import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
+import uk.co.nickthecoder.fizzy.util.ChangeListeners
+import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
 class Page(val document: Document)
     : Parent, HasChangeListeners<Page> {
@@ -38,9 +41,12 @@ class Page(val document: Document)
 
     override fun page() = this
 
-    override val transformation = PropConstant(Matrix33.identity)
+    override val fromLocalToParent = PropConstant(Matrix33.identity)
+    override val fromParentToLocal = PropConstant(Matrix33.identity)
+    override val fromLocalToPage = PropConstant(Matrix33.identity)
+    override val fromPageToLocal = PropConstant(Matrix33.identity)
 
-    fun findShape(id: String): Shape? {
+    fun findShape(id: Int): Shape? {
         children.forEach { shape ->
             val found = shape.findShape(id)
             if (found != null) return found

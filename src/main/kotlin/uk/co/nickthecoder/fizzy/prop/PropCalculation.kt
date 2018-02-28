@@ -38,10 +38,20 @@ abstract class PropCalculation<out T : Any>
         dirty = true
     }
 
+    private var isCalculating = false
+
     override val value: T
         get() : T {
             if (dirty) {
-                calculatedValue = eval()
+                if (isCalculating) {
+                    throw RuntimeException("Recursive evaluation of $this")
+                }
+                isCalculating = true
+                try {
+                    calculatedValue = eval()
+                } finally {
+                    isCalculating = false
+                }
                 dirty = false
             }
             return calculatedValue

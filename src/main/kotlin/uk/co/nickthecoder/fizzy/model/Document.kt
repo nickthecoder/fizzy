@@ -19,6 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
+import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
+import uk.co.nickthecoder.fizzy.util.ChangeListeners
+import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
 class Document : HasChangeListeners<Document> {
 
@@ -35,7 +38,7 @@ class Document : HasChangeListeners<Document> {
     val name: String
         get() = "New Document"
 
-    fun findShape(id: String): Shape? {
+    fun findShape(id: Int): Shape? {
         pages.forEach { page ->
             val found = page.findShape(id)
             if (found != null) {
@@ -45,8 +48,8 @@ class Document : HasChangeListeners<Document> {
         return null
     }
 
-    fun generateId(): String {
+    fun generateId(): Int {
         previousId++
-        return "shape$previousId"
+        return previousId
     }
 }

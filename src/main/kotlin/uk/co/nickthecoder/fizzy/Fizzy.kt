@@ -19,11 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy
 
 import javafx.application.Application
+import javafx.application.Platform
 import javafx.stage.Stage
 import uk.co.nickthecoder.fizzy.gui.MainWindow
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.Page
 import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.util.runLaterHandler
 
 /**
  * The JavaFX [Application] (i.e. the entry point for the program when using a gui.
@@ -31,15 +33,20 @@ import uk.co.nickthecoder.fizzy.model.Shape
 class Fizzy : Application() {
 
     override fun start(primaryStage: Stage) {
-        val mainWindow = MainWindow(primaryStage)
+        runLaterHandler = { Platform.runLater(it) }
 
         // For now, we create a test document to display.
         val doc = Document()
         val page = Page(doc)
-        Shape.createBox(page, "Dimension2(4cm,2cm)", "Dimension2(10cm,10cm)", true)
+        Shape.createBox(page, "Dimension2(4cm,2cm)", "Dimension2(10cm,10cm)")
         Shape.createBox(page, "Dimension2(4cm,2cm)", "Dimension2(10cm,14cm)")
-        Shape.createLine(page, "Dimension2(10cm,11cm)", "Dimension2(10cm,13cm)")
 
+        val line = Shape.createLine(page, "Dimension2(10cm,11cm)", "Dimension2(10cm,13cm)")
+        line.start.expression = "this.joinTo(1, Page.Shape1.Geometry1.Point1)"
+        line.end.expression = "this.joinTo(2, Page.Shape2.Geometry1.Point1)"
+        //line.end.expression = "this.joinAlong(Page#1 .Geometry1, 0.125)"
+
+        val mainWindow = MainWindow(primaryStage)
         mainWindow.addDocument(doc)
     }
 

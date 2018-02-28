@@ -16,12 +16,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-package uk.co.nickthecoder.fizzy.model
+package uk.co.nickthecoder.fizzy.util
 
-enum class ChangeType { CHANGE, ADD, REMOVE }
+class ChangeListeners<T> : Listeners<ChangeListener<T>>() {
 
-interface ChangeListener<in T> {
-
-    fun changed(item: T, changeType: ChangeType = ChangeType.CHANGE, obj: Any? = null)
-
+    fun fireChanged(item: T, changeType: ChangeType = ChangeType.CHANGE, obj: Any? = null) {
+        forEach { it.changed(item, changeType, obj) }
+    }
 }

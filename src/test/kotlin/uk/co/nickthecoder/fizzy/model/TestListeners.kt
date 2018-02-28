@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import org.junit.Test
+import uk.co.nickthecoder.fizzy.util.ChangeListener
+import uk.co.nickthecoder.fizzy.util.ChangeType
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
 class TestListeners : MyTestCase() {
@@ -158,16 +160,16 @@ class TestListeners : MyTestCase() {
 
     @Test
     fun testId() {
-        shape1a.id.value // Ensure not dirty
-        shape1b.id.value // Ensure not dirty
+        shape1a.name.value // Ensure not dirty
+        shape1b.name.value // Ensure not dirty
 
-        shape1a.id.value = "Shape1A"
+        shape1a.name.expression = "Shape1A"
         assertEquals(1, shape1aChanged)
         assertEquals(0, shape1bChanged)
         assertEquals(1, layer1Changed)
         assertEquals(1, pageChanged)
 
-        shape1b.id.value = "Shape1B"
+        shape1b.name.expression = "Shape1B"
         assertEquals(1, shape1aChanged)
         assertEquals(1, shape1bChanged)
         assertEquals(2, layer1Changed)
