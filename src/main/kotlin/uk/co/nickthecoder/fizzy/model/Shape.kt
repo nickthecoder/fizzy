@@ -25,6 +25,9 @@ import uk.co.nickthecoder.fizzy.evaluator.CompoundEvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
+import uk.co.nickthecoder.fizzy.model.geometry.Geometry
+import uk.co.nickthecoder.fizzy.model.geometry.LineTo
+import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.*
 

@@ -19,6 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import org.junit.Test
+import uk.co.nickthecoder.fizzy.model.geometry.Geometry
+import uk.co.nickthecoder.fizzy.model.geometry.LineTo
+import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.util.ChangeListener
 import uk.co.nickthecoder.fizzy.util.ChangeType
 import uk.co.nickthecoder.fizzy.util.MyTestCase

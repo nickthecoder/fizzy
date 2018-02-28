@@ -18,9 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-import uk.co.nickthecoder.fizzy.model.Geometry
-import uk.co.nickthecoder.fizzy.model.LineTo
-import uk.co.nickthecoder.fizzy.model.MoveTo
+import uk.co.nickthecoder.fizzy.model.geometry.Geometry
+import uk.co.nickthecoder.fizzy.model.geometry.LineTo
+import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 
 
 class GeometryPropType private constructor()

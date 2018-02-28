@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
+import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.prop.DimensionExpression
 import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
 

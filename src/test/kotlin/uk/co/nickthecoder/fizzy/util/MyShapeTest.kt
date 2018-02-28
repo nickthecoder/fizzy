@@ -20,6 +20,9 @@ package uk.co.nickthecoder.fizzy.util
 
 import uk.co.nickthecoder.fizzy.evaluator.Evaluator
 import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.model.geometry.Geometry
+import uk.co.nickthecoder.fizzy.model.geometry.LineTo
+import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 
 interface MyShapeTest {
 
