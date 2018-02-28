@@ -24,6 +24,9 @@ import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.RealShape
 import uk.co.nickthecoder.fizzy.prop.BooleanExpression
+import uk.co.nickthecoder.fizzy.prop.Prop
+import uk.co.nickthecoder.fizzy.prop.PropListener
+import uk.co.nickthecoder.fizzy.prop.PropValue
 import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
@@ -63,8 +66,16 @@ class Geometry
     val line = BooleanExpression("true")
 
     private val geometryPartsListener = ChangeAndCollectionListener(this, parts,
-            onAdded = { part -> part.geometry = this },
-            onRemoved = { part -> part.geometry = null }
+            onAdded = {
+                part ->
+                part.geometry = this
+                part.setContext(shape?.context ?: constantsContext)
+            },
+            onRemoved = {
+                part ->
+                part.geometry = null
+                part.setContext(constantsContext)
+            }
     )
 
     fun isAt(point: Dimension2, thickness: Dimension): Boolean {
@@ -143,4 +154,37 @@ class Geometry
         }
         return Dimension2.ZERO_mm
     }
+}
+
+class GeometryProp(geometry: Geometry)
+    : PropValue<Geometry>(geometry),
+        PropListener,
+        HasChangeListeners<GeometryProp> {
+
+    override val changeListeners = ChangeListeners<GeometryProp>()
+
+    /**
+     * When a [GeometryPart] is added/removed, make this [Prop] dirty.
+     * By doing so, if a calculation depends on this (i.e. it listens to me), then adding/removing parts will cause it
+     * to be re-evaluated. This can then make the final calculation take its data from a different [GeometryPart], as
+     * their indices have changed.
+     */
+    private val collectionListener = ChangeAndCollectionListener(this, geometry.parts,
+            onAdded = { propListeners.fireDirty(this) },
+            onRemoved = { propListeners.fireDirty(this) }
+    )
+
+    init {
+        geometry.fill.propListeners.add(this)
+        geometry.line.propListeners.add(this)
+    }
+
+    /**
+     * Any changes to the Geometry's data causes this [Prop]'s propListeners to be notified.
+     * The [GeometryProp]'s constructor adds itself to the listeners of each of [Geometry]'s [Prop]s.
+     */
+    override fun dirty(prop: Prop<*>) {
+        propListeners.fireDirty(this)
+    }
+
 }

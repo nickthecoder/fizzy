@@ -55,7 +55,8 @@ class ConnectionPoint(point: String, angle: String) {
 }
 
 class ConnectionPointProp(connectionPoint: ConnectionPoint)
-    : PropValue<ConnectionPoint>(connectionPoint), PropListener,
+    : PropValue<ConnectionPoint>(connectionPoint),
+        PropListener,
         HasChangeListeners<ConnectionPointProp> {
 
     override val changeListeners = ChangeListeners<ConnectionPointProp>()

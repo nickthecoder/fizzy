@@ -19,7 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.view
 
 import org.junit.Test
-import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.model.Document
+import uk.co.nickthecoder.fizzy.model.Page
+import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.util.MyShapeTest
@@ -37,7 +39,7 @@ class TestFindShapeAt : MyTestCase(), MyShapeTest {
         val box = createBox(page, "Dimension2(20mm,40mm)", "Dimension2(40mm, 120mm)")
         // Box from 30mm, 100m to 50mm, 140mm
 
-        box.geometries[0].fill.expression = "false"
+        box.geometries[0].value.fill.expression = "false"
 
         assertTrue(box.isAt(dimension2("Dimension2(40mm,100mm)")))
         assertEquals(box, page.findShapeAt(dimension2("Dimension2(40mm,100mm)")))
@@ -47,7 +49,7 @@ class TestFindShapeAt : MyTestCase(), MyShapeTest {
         assertNull(page.findShapeAt(dimension2("Dimension2(40mm,80mm)"))) // Too high
         assertNull(page.findShapeAt(dimension2("Dimension2(40mm,120mm)"))) // Middle of shape (which isn't filled).
 
-        box.geometries[0].fill.expression = "true"
+        box.geometries[0].value.fill.expression = "true"
         // Not that it is filled, the middle point should be be found.
         assertNull(page.findShapeAt(dimension2("Dimension2(0mm,100mm)"))) // Too left
         assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"))) // Too right
@@ -56,7 +58,7 @@ class TestFindShapeAt : MyTestCase(), MyShapeTest {
         assertEquals(box, page.findShapeAt(dimension2("Dimension2(40mm,120mm)"))) // Middle of shape (which is now filled).
 
         // An edge case. If we remove the last geometry part, making the left edge open, then the "Too Left" case is special
-        box.geometries[0].parts.removeLast()
+        box.geometries[0].value.parts.removeLast()
         assertNull(page.findShapeAt(dimension2("Dimension2(0mm,100mm)"))) // Too left - This is special!
         assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"))) // Too right
         assertNull(page.findShapeAt(dimension2("Dimension2(40mm,150mm)"))) // Too low
@@ -75,9 +77,9 @@ class TestFindShapeAt : MyTestCase(), MyShapeTest {
         val box = createBox(page, "Dimension2(20mm,40mm)", "Dimension2(40mm, 120mm)")
         // Box from 30mm, 100m to 50mm, 140mm
 
-        box.geometries[0].fill.expression = "true"
+        box.geometries[0].value.fill.expression = "true"
 
-        val geometry = box.geometries[0]
+        val geometry = box.geometries[0].value
         geometry.parts.clear()
         geometry.parts.add(MoveTo("Size * Vector2(1,1)"))
         geometry.parts.add(LineTo("Size * Vector2(0,1)"))

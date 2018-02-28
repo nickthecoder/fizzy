@@ -183,12 +183,12 @@ abstract class Shape(var parent: ShapeParent)
             box.transform.pin.expression = at
 
             val geometry = Geometry()
-            box.geometries.add(geometry)
             geometry.parts.add(MoveTo("Size * Vector2(0,0)"))
             geometry.parts.add(LineTo("Size * Vector2(1,0)"))
             geometry.parts.add(LineTo("Size * Vector2(1,1)"))
             geometry.parts.add(LineTo("Size * Vector2(0,1)"))
             geometry.parts.add(LineTo("Geometry1.Point1"))
+            box.addGeometry(geometry)
 
             if (fill) {
                 geometry.fill.expression = "true"
@@ -207,10 +207,9 @@ abstract class Shape(var parent: ShapeParent)
             line.lineWidth.expression = lineWidth
 
             val geometry = Geometry()
-            line.geometries.add(geometry)
-
             geometry.parts.add(MoveTo("Dimension2(0mm,LineWidth/2)"))
             geometry.parts.add(LineTo("Dimension2(Length,LineWidth/2)"))
+            line.addGeometry(geometry)
 
             return line
         }

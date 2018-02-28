@@ -35,8 +35,7 @@ interface MyShapeTest {
         box.size.expression = size
         box.transform.pin.expression = at
         val geometry = Geometry()
-        box.geometries.add(geometry)
-        // Make a box
+        box.addGeometry(geometry)
         geometry.parts.add(MoveTo("Size * Vector2(0,0)"))
         geometry.parts.add(LineTo("Size * Vector2(1,0)"))
         geometry.parts.add(LineTo("Size * Vector2(1,1)"))
@@ -54,8 +53,7 @@ interface MyShapeTest {
         line.lineWidth.expression = lineWidth
 
         val geometry = Geometry()
-        line.geometries.add(geometry)
-
+        line.addGeometry(geometry)
         geometry.parts.add(MoveTo("Dimension2(0mm,LineWidth/2)"))
         geometry.parts.add(LineTo("Dimension2(Length,LineWidth/2)"))
 

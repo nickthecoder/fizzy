@@ -1,7 +1,7 @@
 To Do
 =====
 
-Do NOT allow PropConstant to change value.
+
 
 Test ConnectionPoint
 

@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.model.geometry.Geometry
+import uk.co.nickthecoder.fizzy.model.geometry.GeometryProp
 import uk.co.nickthecoder.fizzy.prop.DimensionExpression
 import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
 
@@ -30,7 +31,7 @@ import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
 abstract class RealShape(parent: ShapeParent)
     : Shape(parent) {
 
-    val geometries = MutableFList<Geometry>()
+    val geometries = MutableFList<GeometryProp>()
 
     val connectionPoints = MutableFList<ConnectionPointProp>()
 
@@ -40,7 +41,7 @@ abstract class RealShape(parent: ShapeParent)
         val localPoint = transform.fromParentToLocal.value * point
 
         geometries.forEach { geo ->
-            if (geo.isAt(localPoint, lineWidth.value)) {
+            if (geo.value.isAt(localPoint, lineWidth.value)) {
                 return true
             }
         }
@@ -55,13 +56,17 @@ abstract class RealShape(parent: ShapeParent)
         // Automatically tell the child of the parent when it is added to the list (and set to null when removed)
         // Also bubble change events up the hierarchy.
         collectionListeners.add(ChangeAndCollectionListener(this, geometries,
-                onAdded = { geometry -> geometry.shape = this },
-                onRemoved = { geometry -> geometry.shape = null }
+                onAdded = { geometry -> geometry.value.shape = this },
+                onRemoved = { geometry -> geometry.value.shape = null }
         ))
         collectionListeners.add(ChangeAndCollectionListener(this, connectionPoints,
                 onAdded = { item -> item.value.shape = this },
                 onRemoved = { item -> item.value.shape = null }
         ))
+    }
+
+    fun addGeometry(geometry: Geometry) {
+        geometries.add(GeometryProp(geometry))
     }
 
     fun addConnectionPoint(connectionPoint: ConnectionPoint) {

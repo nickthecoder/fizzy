@@ -182,7 +182,7 @@ class TestListeners : MyTestCase() {
     @Test
     fun testGeometry() {
         val geometry = Geometry()
-        shape1a.geometries.add(geometry)
+        shape1a.addGeometry(geometry)
         assertEquals(1, shape1aChanged)
         assertEquals(0, shape1bChanged)
         assertEquals(1, layer1Changed)

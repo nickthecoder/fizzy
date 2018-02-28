@@ -19,7 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.view
 
 import javafx.application.Platform
-import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.model.Page
+import uk.co.nickthecoder.fizzy.model.RealShape
+import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.util.ChangeListener
@@ -66,7 +68,7 @@ class PageView(val page: Page, val dc: DrawContext)
 
                 shape.geometries.forEach { geometry ->
                     dc.beginPath()
-                    geometry.parts.forEach { part ->
+                    geometry.value.parts.forEach { part ->
                         when (part) {
                             is MoveTo -> dc.moveTo(part.point.value)
 
@@ -74,7 +76,7 @@ class PageView(val page: Page, val dc: DrawContext)
 
                         }
                     }
-                    dc.endPath(geometry.line.value, geometry.fill.value)
+                    dc.endPath(geometry.value.line.value, geometry.value.fill.value)
                 }
             }
 

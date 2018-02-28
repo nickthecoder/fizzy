@@ -25,6 +25,7 @@ import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
+import uk.co.nickthecoder.fizzy.prop.PropValue
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.ChangeType
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
@@ -85,4 +86,9 @@ abstract class GeometryPart
         }
 
     }
+}
+
+class GeometryPartProp(geometryPart: GeometryPart)
+    : PropValue<GeometryPart>(geometryPart) {
+
 }
