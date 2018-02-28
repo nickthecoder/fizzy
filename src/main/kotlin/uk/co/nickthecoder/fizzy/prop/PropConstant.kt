@@ -19,17 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.prop
 
 /**
- * TODO Do NOT allow the value to change.
+ * Holds a constant, immutable value. This should NOT be used with mutable types, unless nothing needs to know
+ * when changes occur.
+ *
  */
-class PropConstant<T : Any>(value: T) : AbstractProp<T>() {
+class PropConstant<T : Any>(override val value: T) : Prop<T> {
 
-    override var value: T = value
-        set(v) {
-            if (v != field) {
-                field = v
-                propListeners.fireDirty(this)
-            }
-        }
+    override val propListeners = PropListeners()
 
     override fun isConstant() = true
 
