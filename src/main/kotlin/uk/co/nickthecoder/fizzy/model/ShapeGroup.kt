@@ -21,7 +21,7 @@ package uk.co.nickthecoder.fizzy.model
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.prop.ShapeGroupPropType
 
-class ShapeGroup private constructor(parent: Parent)
+class ShapeGroup private constructor(parent: ShapeParent)
 
     : Shape(parent) {
 
@@ -30,7 +30,7 @@ class ShapeGroup private constructor(parent: Parent)
     override val transform = ShapeTransform(this)
 
     companion object {
-        fun create(parent: Parent): ShapeGroup {
+        fun create(parent: ShapeParent): ShapeGroup {
             val result = ShapeGroup(parent)
             result.postInit()
             return result

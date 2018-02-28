@@ -25,7 +25,7 @@ import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
 class Page(val document: Document)
-    : Parent, HasChangeListeners<Page> {
+    : ShapeParent, HasChangeListeners<Page> {
 
     override val changeListeners = ChangeListeners<Page>()
 

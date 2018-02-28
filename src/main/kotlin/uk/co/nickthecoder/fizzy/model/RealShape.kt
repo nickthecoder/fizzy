@@ -27,7 +27,7 @@ import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
 /**
  * The basis for Shape1d and Shape2d, i.e. the type of Shapes which have Geometries, ConnectionPoints etc.
  */
-abstract class RealShape(parent: Parent)
+abstract class RealShape(parent: ShapeParent)
     : Shape(parent) {
 
     val geometries = MutableFList<Geometry>()

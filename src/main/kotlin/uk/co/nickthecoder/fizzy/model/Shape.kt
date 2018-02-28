@@ -31,8 +31,8 @@ import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.*
 
-abstract class Shape(var parent: Parent)
-    : Parent, PropListener, HasChangeListeners<Shape> {
+abstract class Shape(var parent: ShapeParent)
+    : ShapeParent, PropListener, HasChangeListeners<Shape> {
 
     val id = PropConstant(parent.document().generateId())
 
@@ -176,7 +176,7 @@ abstract class Shape(var parent: Parent)
 
     companion object {
 
-        fun createBox(parent: Parent, size: String, at: String, fill: Boolean = false): Shape2d {
+        fun createBox(parent: ShapeParent, size: String, at: String, fill: Boolean = false): Shape2d {
 
             val box = Shape2d.create(parent)
             box.size.expression = size
@@ -199,7 +199,7 @@ abstract class Shape(var parent: Parent)
 
         // TODO We need to do something more sensible for the lineWidth.
         // Maybe when styles are in place, it will use a default style, rather than a hard coded value.
-        fun createLine(parent: Parent, start: String, end: String, lineWidth: String = "2mm"): Shape1d {
+        fun createLine(parent: ShapeParent, start: String, end: String, lineWidth: String = "2mm"): Shape1d {
             val line = Shape1d.create(parent)
 
             line.start.expression = start

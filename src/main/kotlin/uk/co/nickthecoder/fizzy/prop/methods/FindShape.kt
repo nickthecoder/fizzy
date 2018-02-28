@@ -18,12 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop.methods
 
-import uk.co.nickthecoder.fizzy.model.Parent
+import uk.co.nickthecoder.fizzy.model.ShapeParent
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.Prop
 
-class FindShape(prop: Prop<Parent>)
-    : SpecialMethod<Parent>(prop) {
+class FindShape(prop: Prop<ShapeParent>)
+    : SpecialMethod<ShapeParent>(prop) {
 
     lateinit var name: String
 

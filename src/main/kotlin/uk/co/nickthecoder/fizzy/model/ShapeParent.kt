@@ -21,7 +21,7 @@ package uk.co.nickthecoder.fizzy.model
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.prop.Prop
 
-interface Parent {
+interface ShapeParent {
 
     val children: MutableFList<Shape>
 

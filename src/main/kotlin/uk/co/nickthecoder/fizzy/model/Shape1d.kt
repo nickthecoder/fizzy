@@ -23,7 +23,7 @@ import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.PropCalculation2
 import uk.co.nickthecoder.fizzy.prop.Shape1dPropType
 
-class Shape1d private constructor(parent: Parent)
+class Shape1d private constructor(parent: ShapeParent)
     : RealShape(parent) {
 
     override val context = createContext(ThisContext(this, Shape1dPropType.instance))
@@ -48,7 +48,7 @@ class Shape1d private constructor(parent: Parent)
     }
 
     companion object {
-        fun create(parent: Parent): Shape1d {
+        fun create(parent: ShapeParent): Shape1d {
             val result = Shape1d(parent)
             result.postInit()
             return result
