@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.prop.methods.ConnectAlong
 import uk.co.nickthecoder.fizzy.prop.methods.ConnectTo
 import uk.co.nickthecoder.fizzy.prop.methods.FindShape
 import kotlin.reflect.KClass
@@ -76,6 +77,7 @@ abstract class RealShapePropType<T : RealShape>(klass: KClass<T>)
     override fun findMethod(prop: Prop<T>, name: String): PropMethod<in T>? {
         return when (name) {
             "connectTo" -> ConnectTo(prop)
+            "connectAlong" -> ConnectAlong(prop)
             else -> super.findMethod(prop, name)
         }
     }

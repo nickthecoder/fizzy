@@ -50,7 +50,7 @@ class Fizzy : Application() {
 
         val line = Shape.createLine(page, "Dimension2(10cm,11cm)", "Dimension2(10cm,13cm)")
         line.start.expression = "this.connectTo(Page.Shape1.ConnectionPoint2)"
-        line.end.expression = "this.connectTo( Page.Shape2.ConnectionPoint1 )"
+        line.end.expression = "this.connectAlong(Page.Shape2.Geometry1, 0.125)"
 
         val mainWindow = MainWindow(primaryStage)
         mainWindow.addDocument(doc)

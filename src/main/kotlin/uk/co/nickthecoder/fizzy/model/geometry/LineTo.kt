@@ -78,7 +78,9 @@ class LineTo(expression: String = "Dimension2(0mm, 0mm)")
      */
     override fun isCrossing(here: Dimension2, prev: Dimension2) = isCrossing(here, prev, point.value)
 
-    override fun pointAlong(prev: Dimension2, along: Double) = prev + (point.value - prev) / along
+    override fun pointAlong(prev: Dimension2, along: Double): Dimension2 {
+        return prev + (point.value - prev) * along
+    }
 
     override fun toString() = "LineTo point=${point.value}"
 }

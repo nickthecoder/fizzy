@@ -139,18 +139,20 @@ class Geometry
         }
 
         var partIndex = Math.floor(nonMoveCount * alongClipped).toInt()
-        val partAlong = alongClipped - partIndex / nonMoveCount
+        val partAlong = (alongClipped - partIndex.toDouble() / nonMoveCount) * nonMoveCount
 
         var prev: Dimension2? = null
         for (part in parts) {
-            if (partIndex == 0) {
-                if (prev != null) {
-                    return parts[partIndex].pointAlong(prev, partAlong)
+            if (part !is MoveTo) {
+                if (partIndex == 0) {
+                    if (prev != null) {
+                        return part.pointAlong(prev, partAlong)
+                    }
+                    break
                 }
-                break
+                partIndex--
             }
             prev = part.point.value
-            partIndex--
         }
         return Dimension2.ZERO_mm
     }
