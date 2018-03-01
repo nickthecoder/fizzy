@@ -21,13 +21,32 @@ package uk.co.nickthecoder.fizzy.prop.methods
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.prop.Prop
-import uk.co.nickthecoder.fizzy.prop.PropMethod2
 
 class ConnectAlong(prop: Prop<Shape>)
-    : PropMethod2<Shape, Geometry, Double>(prop, Geometry::class, Double::class, { geometry, along ->
+    : TypedMethod2<Shape, Geometry, Double>(prop, Geometry::class, Double::class) {
 
-    val otherShape = geometry.shape ?: throw RuntimeException("Geometry does not have a Shape")
-    val point = geometry.pointAlong(along)
-    prop.value.parent.fromPageToLocal.value * otherShape.fromLocalToPage.value * point
+    init {
+        listenTo(prop.value.parent.fromPageToLocal)
+    }
 
-})
+    override fun eval(a: Geometry, b: Double): Any {
+        val geometry = a
+        val along = b
+        val otherShape = geometry.shape ?: throw RuntimeException("Geometry does not have a Shape")
+        setShape(otherShape)
+        val point = geometry.pointAlong(along)
+        return prop.value.parent.fromPageToLocal.value * otherShape.fromLocalToPage.value * point
+    }
+
+    var prevShape: Shape? = null
+
+    fun setShape(shape: Shape) {
+        if (shape != prevShape) {
+            prevShape?.let {
+                unlistenTo(it.fromLocalToPage)
+            }
+            listenTo(shape.fromLocalToPage)
+        }
+    }
+
+}
