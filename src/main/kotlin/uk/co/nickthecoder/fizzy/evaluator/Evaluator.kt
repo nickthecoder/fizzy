@@ -310,7 +310,14 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
                 if (func == null) {
                     val property = context.findProp(token.text)
                     if (property == null) {
-                        throw EvaluationException("Identifier ${token.text} not found.", token.startIndex)
+                        // Allow method calls to "this" without actually writing "this."
+                        val thisProp = context.thisProp
+                        val method = thisProp?.method(token.text)
+                        if (method != null) {
+                            pushValue(method)
+                        } else {
+                            throw EvaluationException("Identifier ${token.text} not found.", token.startIndex)
+                        }
                     } else {
                         pushValue(property)
                     }

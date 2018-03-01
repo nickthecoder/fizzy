@@ -26,6 +26,8 @@ interface EvaluationContext {
 
     fun findProp(name: String): Prop<*>?
 
+    val thisProp: Prop<*>?
+
 }
 
 class CompoundEvaluationContext(val children: List<EvaluationContext>) : EvaluationContext {
@@ -39,6 +41,16 @@ class CompoundEvaluationContext(val children: List<EvaluationContext>) : Evaluat
         }
         return null
     }
+
+    override val thisProp: Prop<*>?
+        get() {
+            children.forEach { child ->
+                if (child.thisProp != null) {
+                    return child.thisProp
+                }
+            }
+            return null
+        }
 }
 
 class SimpleEvaluationContext(properties: Map<String, Prop<*>> = emptyMap())
@@ -47,11 +59,14 @@ class SimpleEvaluationContext(properties: Map<String, Prop<*>> = emptyMap())
 
     val properties = mutableMapOf<String, Prop<*>>()
 
+    override val thisProp: Prop<*>? = null
+
     init {
         this.properties.putAll(properties)
     }
 
     override fun findProp(name: String) = properties[name]
+
 
     fun putProp(name: String, prop: Prop<*>) {
         properties.put(name, prop)
@@ -67,11 +82,11 @@ class SimpleEvaluationContext(properties: Map<String, Prop<*>> = emptyMap())
 class ThisContext<T : Any>(val me: T, val type: PropType<T>)
     : EvaluationContext {
 
-    val meProp = PropConstant(me)
+    override val thisProp = PropConstant(me)
 
     override fun findProp(name: String): Prop<*>? {
-        if (name == "this") return meProp
-        return type.findField(meProp, name)
+        if (name == "this") return thisProp
+        return type.findField(thisProp, name)
     }
 }
 

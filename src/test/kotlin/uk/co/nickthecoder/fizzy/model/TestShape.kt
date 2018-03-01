@@ -47,6 +47,7 @@ class TestShape : MyTestCase(), MyShapeTest {
         assertEquals(0.0, test("rotation", "Rotation.Degrees"))
 
         assertEquals(inner, test("findShape", "this.findShape(\"inner\""))
+        assertEquals(inner, test("findShape2", "findShape(\"inner\""))
         assertEquals(inner, test("findShape", "Parent.findShape(\"inner\"")) // Recurse from Page downwards.
 
         box.lineWidth.expression = "3mm"
