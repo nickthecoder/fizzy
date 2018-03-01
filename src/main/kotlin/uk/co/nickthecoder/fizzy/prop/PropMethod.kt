@@ -102,7 +102,8 @@ open class PropMethod1<T : Any, A : Any>(
  * A and B are the types of the method's arguments.
  */
 open class PropMethod2<T : Any, A : Any, B : Any>(
-        prop: Prop<T>, val klassA: KClass<A>,
+        prop: Prop<T>,
+        val klassA: KClass<A>,
         val klassB: KClass<B>,
         val lambda: (A, B) -> Any)
 
@@ -122,5 +123,71 @@ open class PropMethod2<T : Any, A : Any, B : Any>(
 
         }
         throw RuntimeException("Expected arguments (${klassA.simpleName}, ${klassB.simpleName}), but found $arg")
+    }
+}
+
+/**
+ * A method which has 2 arguments.
+ * T is the type of the receiver object.
+ * A and B are the types of the method's arguments.
+ */
+open class PropMethod3<T : Any, A : Any, B : Any, C : Any>(
+        prop: Prop<T>,
+        val klassA: KClass<A>,
+        val klassB: KClass<B>,
+        val klassC: KClass<C>,
+        val lambda: (A, B, C) -> Any)
+
+    : PropMethod<T>(prop) {
+
+    override fun eval(arg: Prop<*>): Any {
+        if (arg is ArgList && arg.value.size == 3) {
+            val a = arg.value[0]
+            val b = arg.value[1]
+            val c = arg.value[2]
+
+            if (klassA.isInstance(a.value) && klassB.isInstance(b.value) && klassC.isInstance(c.value)) {
+                @Suppress("UNCHECKED_CAST")
+                val result = lambda(a.value as A, b.value as B, c.value as C)
+
+                return result
+            }
+
+        }
+        throw RuntimeException("Expected arguments (${klassA.simpleName}, ${klassB.simpleName}, ${klassC.simpleName}), but found $arg")
+    }
+}
+
+/**
+ * A method which has 2 arguments.
+ * T is the type of the receiver object.
+ * A and B are the types of the method's arguments.
+ */
+open class PropMethod4<T : Any, A : Any, B : Any, C : Any, D : Any>(
+        prop: Prop<T>,
+        val klassA: KClass<A>,
+        val klassB: KClass<B>,
+        val klassC: KClass<C>,
+        val klassD: KClass<D>,
+        val lambda: (A, B, C, D) -> Any)
+
+    : PropMethod<T>(prop) {
+
+    override fun eval(arg: Prop<*>): Any {
+        if (arg is ArgList && arg.value.size == 3) {
+            val a = arg.value[0]
+            val b = arg.value[1]
+            val c = arg.value[2]
+            val d = arg.value[3]
+
+            if (klassA.isInstance(a.value) && klassB.isInstance(b.value) && klassC.isInstance(c.value) && klassD.isInstance(d.value)) {
+                @Suppress("UNCHECKED_CAST")
+                val result = lambda(a.value as A, b.value as B, c.value as C, d.value as D)
+
+                return result
+            }
+
+        }
+        throw RuntimeException("Expected arguments (${klassA.simpleName}, ${klassB.simpleName}, ${klassC.simpleName}), but found $arg")
     }
 }

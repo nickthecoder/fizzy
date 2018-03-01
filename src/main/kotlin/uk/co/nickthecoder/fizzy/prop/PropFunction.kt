@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.evaluator.ArgList
+import uk.co.nickthecoder.fizzy.model.Color
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Vector2
@@ -49,9 +50,18 @@ class DummyPropType private constructor()
             "ln" -> PropFunction1(Double::class) { Math.log(it) }
             "log" -> PropFunction1(Double::class) { Math.log10(it) }
             "sqrt" -> PropFunction1(Double::class) { Math.sqrt(it) }
+
             "if" -> IfFunction()
+
             "Vector2" -> PropFunction2(Double::class, Double::class) { x, y -> Vector2(x, y) }
             "Dimension2" -> PropFunction2(Dimension::class, Dimension::class) { x, y -> Dimension2(x, y) }
+
+            "WebColor" -> PropFunction1(String::class) { Color.web(it) }
+            "WebColorA" -> PropFunction2(String::class, Double::class) { str, opacity -> Color.web(str, opacity) }
+            "RGB" -> PropFunction3(Double::class, Double::class, Double::class) { r, g, b -> Color(clamp0_1(r), clamp0_1(g), clamp0_1(b)) }
+            "RGBA" -> PropFunction4(Double::class, Double::class, Double::class, Double::class) { r, g, b, a -> Color(clamp0_1(r), clamp0_1(g), clamp0_1(b), clamp0_1(a)) }
+            "HSB" -> PropFunction3(Double::class, Double::class, Double::class) { h, s, b -> Color.hsb(h, clamp0_1(s), clamp0_1(b)) }
+            "HSBA" -> PropFunction4(Double::class, Double::class, Double::class, Double::class) { h, s, b, a -> Color.hsb(h, clamp0_1(s), clamp0_1(b), clamp0_1(a)) }
             else -> null
         }
     }
@@ -61,6 +71,8 @@ class DummyPropType private constructor()
     }
 }
 
+fun clamp0_1(v: Double) = Math.min(1.0, Math.max(0.0, v))
+fun clamp0_360(v: Double) = Math.min(1.0, Math.max(0.0, v))
 /**
  * The one and only instance of a [Prop] of type [Dummy] used as the [PropMethod]'s value when the 'method' is really a
  * function (and applies to nothing).
@@ -72,6 +84,12 @@ class PropFunction1<A : Any>(klassA: KClass<A>, lambda: (A) -> Any)
 
 class PropFunction2<A : Any, B : Any>(klassA: KClass<A>, klassB: KClass<B>, lambda: (A, B) -> Any)
     : PropMethod2<Dummy, A, B>(dummyInstance, klassA, klassB, lambda)
+
+class PropFunction3<A : Any, B : Any, C : Any>(klassA: KClass<A>, klassB: KClass<B>, klassC: KClass<C>, lambda: (A, B, C) -> Any)
+    : PropMethod3<Dummy, A, B, C>(dummyInstance, klassA, klassB, klassC, lambda)
+
+class PropFunction4<A : Any, B : Any, C : Any, D : Any>(klassA: KClass<A>, klassB: KClass<B>, klassC: KClass<C>, klassD: KClass<D>, lambda: (A, B, C, D) -> Any)
+    : PropMethod4<Dummy, A, B, C, D>(dummyInstance, klassA, klassB, klassC, klassD, lambda)
 
 class IfFunction : PropMethod<Dummy>(dummyInstance) {
 

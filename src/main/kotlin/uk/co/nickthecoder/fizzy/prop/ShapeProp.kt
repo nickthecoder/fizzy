@@ -71,6 +71,8 @@ abstract class RealShapePropType<T : RealShape>(klass: KClass<T>)
             "Geometry" -> PropConstant(prop.value.geometries)
             "ConnectionPoint" -> PropConstant(prop.value.connectionPoints)
             "LineWidth" -> prop.value.lineWidth
+            "LineColor" -> prop.value.lineColor
+            "FillColor" -> prop.value.fillColor
             else -> return super.findField(prop, name)
         }
     }

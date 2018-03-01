@@ -66,6 +66,9 @@ class PageView(val page: Page, val dc: DrawContext)
 
             if (shape is RealShape) {
 
+                dc.lineColor(shape.lineColor.value)
+                dc.fillColor(shape.fillColor.value)
+
                 shape.geometries.forEach { geometry ->
                     dc.beginPath()
                     geometry.value.parts.forEach { part ->

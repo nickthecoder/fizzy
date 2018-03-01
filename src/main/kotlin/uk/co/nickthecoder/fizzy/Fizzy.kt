@@ -44,9 +44,11 @@ class Fizzy : Application() {
 
         box1.addConnectionPoint(ConnectionPoint("(Geometry1.Point1 + Geometry1.Point2) / 2", "-90 deg"))
         box1.addConnectionPoint(ConnectionPoint("(Geometry1.Point3 + Geometry1.Point4) / 2", "90 deg"))
+        box1.fillColor.expression = "Color.yellow"
 
         box2.addConnectionPoint(ConnectionPoint("(Geometry1.Point1 + Geometry1.Point2) / 2", "-90 deg"))
         box2.addConnectionPoint(ConnectionPoint("(Geometry1.Point3 + Geometry1.Point4) / 2", "90 deg"))
+        box2.lineColor.expression = "Color.darkblue"
 
         val line = Shape.createLine(page, "Dimension2(10cm,11cm)", "Dimension2(10cm,13cm)")
         line.start.expression = "this.connectTo(Page.Shape1.ConnectionPoint2)"

@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.evaluator
 
+import uk.co.nickthecoder.fizzy.model.Color
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.prop.PropType
@@ -100,6 +101,7 @@ val constantsContext = SimpleEvaluationContext(
                 "MAX_DOUBLE" to PropConstant(Double.MAX_VALUE),
                 "MIN_DOUBLE" to PropConstant(-Double.MAX_VALUE), // Note, this is NOT the same as the badly named Java Double.MIN_VALUE
                 "SMALLEST_DOUBLE" to PropConstant(Double.MIN_VALUE),
-                "NaN" to PropConstant(Double.NaN)
+                "NaN" to PropConstant(Double.NaN),
+                "Color" to PropConstant(Color.BLACK) // This is a quick bodge to allow expressions such as : "Color.yellow"
         )
 )

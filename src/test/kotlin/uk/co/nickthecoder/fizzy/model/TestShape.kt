@@ -71,6 +71,12 @@ class TestShape : MyTestCase(), MyShapeTest {
         box.lineWidth.expression = "3mm"
         assertEquals(3.0, test("lineWidth", "LineWidth.mm"))
 
+        box.lineColor.expression = "Color.yellow"
+        assertEquals(Color.NamedColors["yellow"], test("lineColor", "LineColor"))
+
+        box.fillColor.expression = "Color.green"
+        assertEquals(Color.NamedColors["green"], test("fillColor", "FillColor"))
+
     }
 
 

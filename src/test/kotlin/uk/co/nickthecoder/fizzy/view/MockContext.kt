@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.view
 
 import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension
+import uk.co.nickthecoder.fizzy.model.Paint
 import uk.co.nickthecoder.fizzy.model.Vector2
 
 class MockContext : AbsoluteContext() {
@@ -35,6 +36,12 @@ class MockContext : AbsoluteContext() {
         buffer.append("L${point.terse()}\n")
     }
 
+
+    override fun fillColor(color: Paint) {
+    }
+
+    override fun lineColor(color: Paint) {
+    }
 
     override fun beginPath() {
         if (debug) {

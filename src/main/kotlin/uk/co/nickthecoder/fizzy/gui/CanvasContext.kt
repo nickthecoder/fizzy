@@ -20,10 +20,7 @@ package uk.co.nickthecoder.fizzy.gui
 
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
-import uk.co.nickthecoder.fizzy.model.Angle
-import uk.co.nickthecoder.fizzy.model.Dimension
-import uk.co.nickthecoder.fizzy.model.Dimension2
-import uk.co.nickthecoder.fizzy.model.Vector2
+import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.view.DrawContext
 
 class CanvasContext(canvas: Canvas)
@@ -39,6 +36,13 @@ class CanvasContext(canvas: Canvas)
         gc.restore()
     }
 
+    override fun fillColor(paint: Paint) {
+        gc.fill = convertPaint(paint)
+    }
+
+    override fun lineColor(paint: Paint) {
+        gc.stroke = convertPaint(paint)
+    }
 
     override fun translate(by: Dimension2) {
         gc.translate(by.x.inDefaultUnits, by.y.inDefaultUnits)
@@ -67,10 +71,10 @@ class CanvasContext(canvas: Canvas)
     }
 
     override fun endPath(stroke: Boolean, fill: Boolean) {
-        if(fill) {
+        if (fill) {
             gc.fill()
         }
-        if(stroke) {
+        if (stroke) {
             gc.stroke()
         }
     }
@@ -81,5 +85,12 @@ class CanvasContext(canvas: Canvas)
 
     override fun lineTo(point: Dimension2) {
         gc.lineTo(point.x.inDefaultUnits, point.y.inDefaultUnits)
+    }
+
+    fun convertPaint(paint: Paint): javafx.scene.paint.Paint {
+        if (paint is Color) {
+            return javafx.scene.paint.Color(paint.red, paint.green, paint.blue, paint.opacity)
+        }
+        throw IllegalArgumentException("Unknown paint type : ${paint.javaClass.name}")
     }
 }

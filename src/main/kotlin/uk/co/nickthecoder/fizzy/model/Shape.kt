@@ -190,6 +190,7 @@ abstract class Shape(var parent: ShapeParent)
             geometry.parts.add(LineTo("Size * Vector2(1,1)"))
             geometry.parts.add(LineTo("Size * Vector2(0,1)"))
             geometry.parts.add(LineTo("Geometry1.Point1"))
+            geometry.fill.expression = "true"
             box.addGeometry(geometry)
 
             if (fill) {

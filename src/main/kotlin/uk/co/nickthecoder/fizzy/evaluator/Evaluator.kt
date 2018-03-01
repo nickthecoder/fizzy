@@ -365,6 +365,7 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
             PropType.put(AnglePropType.instance)
             PropType.put(BooleanPropType.instance)
             PropType.put(ConnectionPointPropType.instance)
+            PropType.put(ColorPropType.instance)
             PropType.put(Dimension2PropType.instance)
             PropType.put(Dimension2PropType.instance)
             PropType.put(DoublePropType.instance)

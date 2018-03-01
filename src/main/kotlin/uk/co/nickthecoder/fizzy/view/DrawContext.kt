@@ -18,10 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.view
 
-import uk.co.nickthecoder.fizzy.model.Angle
-import uk.co.nickthecoder.fizzy.model.Dimension
-import uk.co.nickthecoder.fizzy.model.Dimension2
-import uk.co.nickthecoder.fizzy.model.Vector2
+import uk.co.nickthecoder.fizzy.model.*
 
 interface DrawContext {
 
@@ -35,6 +32,9 @@ interface DrawContext {
         restore()
         return this
     }
+
+    fun lineColor(color : Paint)
+    fun fillColor(color : Paint)
 
     fun translate(by: Dimension2)
     fun translate(x: Dimension, y: Dimension)

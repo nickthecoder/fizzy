@@ -53,8 +53,6 @@ private fun <T : Any> evaluate(expression: String, klass: KClass<T>, context: Ev
             PropCalculation1(prop as Prop<Dimension2>) { av -> Vector2(av.x.inDefaultUnits, av.y.inDefaultUnits) } as Prop<T>
 
     }
-
-
     throw EvaluationException("Expected type ${klass.simpleName}, but found ${prop.value.javaClass.kotlin.simpleName}", 0)
 }
 
