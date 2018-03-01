@@ -30,7 +30,7 @@ interface MyShapeTest {
 
     fun dimension2(expression: String) = Evaluator(expression).parse().value as Dimension2
 
-    fun createBox(parent: ShapeParent, size: String, at: String): Shape2d {
+    fun createBox(parent: ShapeParent, size: String = "Dimension2(10mm,10mm)", at: String = "Dimension2(0mm,0mm)"): Shape2d {
         val box = Shape2d.create(parent)
         box.size.expression = size
         box.transform.pin.expression = at

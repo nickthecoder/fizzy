@@ -4,6 +4,8 @@ To Do
 
 Add a "Scratch" section, and test connections via an IF
 
+Test simple access e.g. LineWidth - I think it may not detect changes!
+
 Make it so that the "this." isn't needed for connectTo and connectAlong.
     Update half the tests.
     If there's no ".", and no function, then check the context's "this", if it has one, check its methods.

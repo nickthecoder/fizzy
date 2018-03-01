@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
+import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.model.geometry.GeometryProp
 import uk.co.nickthecoder.fizzy.prop.DimensionExpression
@@ -34,6 +35,8 @@ abstract class RealShape(parent: ShapeParent)
     val geometries = MutableFList<GeometryProp>()
 
     val connectionPoints = MutableFList<ConnectionPointProp>()
+
+    val scratches = MutableFList<ScratchProp>()
 
     val lineWidth = DimensionExpression("2mm")
 
@@ -63,6 +66,10 @@ abstract class RealShape(parent: ShapeParent)
                 onAdded = { item -> item.value.shape = this },
                 onRemoved = { item -> item.value.shape = null }
         ))
+        collectionListeners.add(ChangeAndCollectionListener(this, scratches,
+                onAdded = { item -> item.value.setContext(context) },
+                onRemoved = { item -> item.value.setContext(constantsContext) }
+        ))
     }
 
     fun addGeometry(geometry: Geometry) {
@@ -71,5 +78,18 @@ abstract class RealShape(parent: ShapeParent)
 
     fun addConnectionPoint(connectionPoint: ConnectionPoint) {
         connectionPoints.add(ConnectionPointProp(connectionPoint))
+    }
+
+    fun addScratch(scratch: Scratch) {
+        scratches.add(ScratchProp(scratch))
+    }
+
+    fun findScratch(name: String): Scratch? {
+        scratches.forEach { scratchProp ->
+            if (scratchProp.value.name.value == name) {
+                return scratchProp.value
+            }
+        }
+        return null
     }
 }

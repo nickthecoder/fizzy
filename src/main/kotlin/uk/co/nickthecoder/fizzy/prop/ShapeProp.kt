@@ -21,6 +21,7 @@ package uk.co.nickthecoder.fizzy.prop
 import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.prop.methods.ConnectAlong
 import uk.co.nickthecoder.fizzy.prop.methods.ConnectTo
+import uk.co.nickthecoder.fizzy.prop.methods.FindScratch
 import uk.co.nickthecoder.fizzy.prop.methods.FindShape
 import kotlin.reflect.KClass
 
@@ -78,6 +79,7 @@ abstract class RealShapePropType<T : RealShape>(klass: KClass<T>)
         return when (name) {
             "connectTo" -> ConnectTo(prop)
             "connectAlong" -> ConnectAlong(prop)
+            "findScratch" -> FindScratch(prop)
             else -> super.findMethod(prop, name)
         }
     }
