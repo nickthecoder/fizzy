@@ -174,7 +174,7 @@ open class PropMethod4<T : Any, A : Any, B : Any, C : Any, D : Any>(
     : PropMethod<T>(prop) {
 
     override fun eval(arg: Prop<*>): Any {
-        if (arg is ArgList && arg.value.size == 3) {
+        if (arg is ArgList && arg.value.size == 4) {
             val a = arg.value[0]
             val b = arg.value[1]
             val c = arg.value[2]

@@ -2,6 +2,7 @@ To Do
 =====
 
 
+Test color fields/methods
 
 Rename XXProp files to XXXPropType
 
