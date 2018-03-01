@@ -18,29 +18,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop.methods
 
-import uk.co.nickthecoder.fizzy.model.ShapeParent
 import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.ShapeParent
 import uk.co.nickthecoder.fizzy.prop.Prop
 
 class FindShape(prop: Prop<ShapeParent>)
-    : SpecialMethod<ShapeParent>(prop) {
+    : TypedMethod1<ShapeParent, String>(prop, String::class) {
 
-    lateinit var name: String
-
-    override fun prepare(arg: Prop<*>) {
-        if (arg.isConstant() && arg.value is String) {
-            name = arg.value as String
-        }
-
-        throw RuntimeException("Expected arguments (String constant), but found $arg")
+    override fun eval(a: String): Any {
+        val shape = prop.value.findShape(a)
+        setShape(shape)
+        return shape ?: throw RuntimeException("Shape $a not found")
     }
 
-    override fun evaluate(): Any {
-        val shape = prop.value.findShape(name) ?: throw RuntimeException("Shape $name not found")
-        if (shape !== calculatedValue) {
-            calculatedValue?.let { unlistenTo((it as Shape).name) }
-            listenTo(shape.name)
+    var prevShape: Shape? = null
+
+    /**
+     * If the name changes, then we need to become dirty, because the name may now refer to a
+     * different Shape (or the expression should throw, because the named Shape no longer exists).
+     */
+    fun setShape(shape: Shape?) {
+        if (shape !== prevShape) {
+            prevShape?.let {
+                unlistenTo(it.name)
+            }
+            shape?.let {
+                listenTo(shape.name)
+            }
         }
-        return shape
     }
 }

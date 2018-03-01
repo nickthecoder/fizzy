@@ -20,7 +20,7 @@ class FindScratch(prop: Prop<RealShape>)
      * different Scratch (or the expression should throw, because the named Scratch no longer exists).
      */
     fun setScratch(scratch: Scratch?) {
-        if (scratch != prevScratch) {
+        if (scratch !== prevScratch) {
             prevScratch?.let {
                 unlistenTo(it.name)
                 unlistenTo(it.expression)

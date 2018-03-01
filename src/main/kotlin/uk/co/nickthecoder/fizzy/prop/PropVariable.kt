@@ -5,7 +5,7 @@ class PropVariable<T : Any>(initialValue: T)
 
     override var value: T = initialValue
         set(v) {
-            if (field != v) {
+            if (field !== v) {
                 field = v
                 propListeners.fireDirty(this)
             }

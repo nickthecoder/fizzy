@@ -36,7 +36,7 @@ abstract class Shape(var parent: ShapeParent)
 
     val id = PropConstant(parent.document().generateId())
 
-    val name = StringExpression("\"\"")
+    val name = PropVariable("")
 
     // Note, this is abstract to avoid leaking 'this' in the constructor, so it is only instantiated in final sub-classes
     abstract val context: EvaluationContext
@@ -167,9 +167,11 @@ abstract class Shape(var parent: ShapeParent)
      * Listens to the expression, so that when it changes, Shape's listeners are informed.
      * The expression's [EvaluationContext] is also set.
      */
-    protected fun listenTo(expression: PropExpression<*>) {
+    protected fun listenTo(expression: Prop<*>) {
         expression.propListeners.add(this)
-        expression.context = context
+        if (expression is PropExpression<*>) {
+            expression.context = context
+        }
     }
 
     override fun toString(): String = "Shape ${id.value}"

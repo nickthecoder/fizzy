@@ -26,6 +26,15 @@ abstract class MyTestCase : TestCase() {
 
     val tiny = 0.000001
 
+    fun assertFails(action: () -> Any) {
+        try {
+            action()
+        } catch (e: Exception) {
+            return
+        }
+        throw RuntimeException("Expected an Exception")
+    }
+
     fun assertFailsAt(position: Int, expression: () -> Any) {
         try {
             expression()
