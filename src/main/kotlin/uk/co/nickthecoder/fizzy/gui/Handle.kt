@@ -26,14 +26,8 @@ import uk.co.nickthecoder.fizzy.view.DrawContext
 abstract class Handle(val position: Dimension2) {
 
     abstract fun isFor(shape: Shape): Boolean
-    fun draw(dc: DrawContext) {
-        dc.use {
-            dc.translate(position)
-            draw2(dc)
-        }
-    }
 
-    open fun draw2(dc: DrawContext) {
+    open fun draw(dc: DrawContext) {
         dc.beginPath()
         dc.moveTo(-SIZE, -SIZE)
         dc.lineTo(SIZE, -SIZE)
@@ -58,10 +52,10 @@ open class ShapeHandle(val shape: Shape, position: Dimension2)
 class RotationHandle(shape: Shape, position: Dimension2)
     : ShapeHandle(shape, position) {
 
-    override fun draw2(dc: DrawContext) {
+    override fun draw(dc: DrawContext) {
         dc.use {
             dc.rotate(Angle.degrees(45.0))
-            super.draw2(dc)
+            super.draw(dc)
         }
     }
 }

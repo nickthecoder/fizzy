@@ -169,9 +169,10 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
             page.document.selection.forEach { shape ->
                 drawBoundingBox(shape)
             }
-            dc.use {
-                beginHandle()
-                handles.forEach { handle ->
+            handles.forEach { handle ->
+                dc.use {
+                    dc.translate(handle.position)
+                    beginHandle()
                     handle.draw(dc)
                 }
             }
@@ -207,13 +208,14 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
 
     fun beginSelection() {
         dc.lineColor(Color.web("#72c2e9"))
-        dc.lineWidth(2.0)
-        dc.lineDashes(5.0, 5.0)
+        dc.lineWidth(2.0 / drawingArea.scale)
+        dc.lineDashes(5.0)
     }
 
     fun beginHandle() {
         dc.lineColor(HANDLE_STROKE)
         dc.fillColor(HANDLE_FILL)
+        dc.scale(1.0 / drawingArea.scale)
         dc.lineWidth(1.0)
     }
 

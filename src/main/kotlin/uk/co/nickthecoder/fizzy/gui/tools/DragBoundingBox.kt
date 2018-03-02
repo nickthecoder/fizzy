@@ -35,8 +35,8 @@ class DragBoundingBox(glassCanvas: GlassCanvas, event: MouseEvent, val startPoin
         dc.use {
             dc.lineColor(GlassCanvas.BOUNDING_STROKE)
             dc.fillColor(GlassCanvas.BOUNDING_FILL)
-            dc.lineWidth(2.0)
-            dc.lineDashes(5.0)
+            dc.lineWidth(2.0 / glassCanvas.drawingArea.scale)
+            dc.lineDashes(5.0 / glassCanvas.drawingArea.scale)
             dc.rectangle(true, true, startPoint, endPoint)
         }
     }
