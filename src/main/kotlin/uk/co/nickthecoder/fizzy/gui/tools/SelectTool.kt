@@ -28,9 +28,7 @@ class SelectTool(glassCanvas: GlassCanvas)
 
     val selection = glassCanvas.page.document.selection
 
-    var mousePoressPoint = Dimension2.ZERO_mm
-
-    var dragging = false
+    var mousePressedPoint = Dimension2.ZERO_mm
 
     override fun onMouseClick(event: MouseEvent) {
 
@@ -64,30 +62,26 @@ class SelectTool(glassCanvas: GlassCanvas)
     }
 
     override fun onMousePressed(event: MouseEvent) {
-        mousePoressPoint = glassCanvas.toDimension2(event)
+        mousePressedPoint = glassCanvas.toDimension2(event)
     }
 
     override fun onMouseDragged(event: MouseEvent) {}
 
     override fun onDragDetected(event: MouseEvent) {
-        if (!dragging) {
-            val shape = glassCanvas.page.findShapeAt(glassCanvas.toDimension2(event))
-            if (shape == null) {
-                // TODO glassCanvas.tool = DragBoundingBox(glassCanvas, mousePressedPoint)
-                glassCanvas.tool.onMouseDragged(event)
-            } else {
-                if (!selection.contains(shape)) {
-                    selection.clear()
-                    selection.add(shape)
-                }
-                glassCanvas.tool = DragSelection(glassCanvas, mousePoressPoint)
-                glassCanvas.tool.onMouseDragged(event)
+        val shape = glassCanvas.page.findShapeAt(glassCanvas.toDimension2(event))
+        if (shape == null) {
+            glassCanvas.tool = DragBoundingBox(glassCanvas, event, mousePressedPoint)
+            glassCanvas.tool.onMouseDragged(event)
+        } else {
+            if (!selection.contains(shape)) {
+                selection.clear()
+                selection.add(shape)
             }
+            glassCanvas.tool = DragSelection(glassCanvas, mousePressedPoint)
+            glassCanvas.tool.onMouseDragged(event)
         }
         event.consume()
     }
 
-    override fun onMouseReleased(event: MouseEvent) {
-        dragging = false
-    }
+    override fun onMouseReleased(event: MouseEvent) {}
 }

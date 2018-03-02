@@ -56,15 +56,25 @@ interface DrawContext {
     fun endPath(stroke: Boolean, fill: Boolean)
 
     fun moveTo(point: Dimension2)
-    fun moveTo(x: Double, y : Double)
+    fun moveTo(x: Double, y: Double)
 
     fun lineTo(point: Dimension2)
-    fun lineTo(x: Double, y : Double)
+    fun lineTo(x: Double, y: Double)
 
     fun polygon(stroke: Boolean, fill: Boolean, vararg points: Dimension2) {
         beginPath()
         moveTo(points.last())
         points.forEach { lineTo(it) }
         endPath(stroke = stroke, fill = fill)
+    }
+
+    fun rectangle(stroke: Boolean, fill: Boolean, start: Dimension2, end: Dimension2) {
+        beginPath()
+        moveTo(start)
+        lineTo(end.x.inDefaultUnits, start.y.inDefaultUnits)
+        lineTo(end)
+        lineTo(start.x.inDefaultUnits, end.y.inDefaultUnits)
+        lineTo(start)
+        endPath(stroke, fill)
     }
 }

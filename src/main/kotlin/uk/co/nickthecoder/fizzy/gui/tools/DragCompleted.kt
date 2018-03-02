@@ -30,12 +30,4 @@ class DragCompleted(glassCanvas: GlassCanvas)
         event.consume()
     }
 
-    override fun onDragDetected(event: MouseEvent) {}
-
-    override fun onMouseDragged(event: MouseEvent) {}
-
-    override fun onMousePressed(event: MouseEvent) {}
-
-    override fun onMouseReleased(event: MouseEvent) {}
-
 }

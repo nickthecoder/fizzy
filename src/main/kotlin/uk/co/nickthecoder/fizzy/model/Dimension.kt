@@ -24,7 +24,7 @@ package uk.co.nickthecoder.fizzy.model
  *
  * Later on it could also be stored in yards/feet/inches/points too by adding extra values to the Units class.
  */
-class Dimension {
+class Dimension : Comparable<Dimension> {
 
     /**
      * The size stored in default units. Currently the default units are mm, but this may change, and therefore
@@ -116,6 +116,7 @@ class Dimension {
         return Dimension(inUnits(units) / b.inUnits(units), units, power - b.power)
     }
 
+
     fun ratio(b: Dimension): Double {
         assert(power == b.power)
         return inDefaultUnits / b.inDefaultUnits
@@ -132,6 +133,10 @@ class Dimension {
             return inDefaultUnits == other.inDefaultUnits
         }
         return false
+    }
+
+    override fun compareTo(other: Dimension): Int {
+        return inDefaultUnits.compareTo(other.inDefaultUnits)
     }
 
     // Note. This must return a format that is suitable for the Evaluator to parse when power==1.

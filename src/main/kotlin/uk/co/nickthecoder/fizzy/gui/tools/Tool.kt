@@ -20,13 +20,15 @@ package uk.co.nickthecoder.fizzy.gui.tools
 
 import javafx.scene.input.MouseEvent
 import uk.co.nickthecoder.fizzy.gui.GlassCanvas
+import uk.co.nickthecoder.fizzy.view.DrawContext
 
 abstract class Tool(val glassCanvas: GlassCanvas) {
 
-    abstract fun onMouseClick(event: MouseEvent)
-    abstract fun onMousePressed(event: MouseEvent)
-    abstract fun onMouseReleased(event: MouseEvent)
-    abstract fun onDragDetected(event: MouseEvent)
-    abstract fun onMouseDragged(event: MouseEvent)
+    open fun onMouseClick(event: MouseEvent) {}
+    open fun onMousePressed(event: MouseEvent) {}
+    open fun onMouseReleased(event: MouseEvent) {}
+    open fun onDragDetected(event: MouseEvent) {}
+    open fun onMouseDragged(event: MouseEvent) {}
 
+    open fun draw(dc: DrawContext) {}
 }

@@ -66,7 +66,7 @@ class GlassCanvas(var page: Page) {
     val shapeListener = object : ChangeListener<Shape> {
         override fun changed(item: Shape, changeType: ChangeType, obj: Any?) {
             dirty = true
-            if ( page.document.selection.contains(item)) {
+            if (page.document.selection.contains(item)) {
                 addShapeHandles(item)
             }
         }
@@ -110,12 +110,14 @@ class GlassCanvas(var page: Page) {
         page.document.selection.forEach { shape ->
             drawBoundingBox(shape)
         }
-        dc.use() {
+        dc.use {
             beginHandle()
             handles.forEach { handle ->
                 handle.draw(dc)
             }
         }
+        tool.draw(dc)
+
         dirty = false
     }
 
@@ -188,6 +190,18 @@ class GlassCanvas(var page: Page) {
                 shape.fromLocalToPage.value * (shape.size.value * Vector2(1.0, 1.0)),
                 shape.fromLocalToPage.value * (shape.size.value * Vector2(0.0, 1.0))
         )
+    }
+
+    fun isWithin(shape: Shape, a: Dimension2, b: Dimension2): Boolean {
+        if (shape is RealShape) {
+            shapeCorners(shape).forEach {
+                if (((it.x < a.x) xor (it.x > b.x)) || ((it.y < a.y) xor (it.y > b.y))) {
+                    return false
+                }
+            }
+            return true
+        }
+        return false
     }
 
     fun toDimension2(event: MouseEvent): Dimension2 {

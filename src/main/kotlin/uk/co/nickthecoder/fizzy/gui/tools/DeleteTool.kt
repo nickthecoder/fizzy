@@ -34,12 +34,5 @@ class DeleteTool(glassCanvas: GlassCanvas)
         }
     }
 
-    override fun onMouseDragged(event: MouseEvent) {}
-
-    override fun onDragDetected(event: MouseEvent) {}
-
-    override fun onMousePressed(event: MouseEvent) {}
-
-    override fun onMouseReleased(event: MouseEvent) {}
 }
 
