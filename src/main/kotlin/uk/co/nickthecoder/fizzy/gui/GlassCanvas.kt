@@ -117,7 +117,7 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
 
 
     fun onMousePressed(event: MouseEvent) {
-        if (event.button == MouseButton.SECONDARY || event.isMiddleButtonDown || event.isMetaDown || event.isAltDown || isConstrain(event)) {
+        if (event.button == MouseButton.SECONDARY || event.isMiddleButtonDown || event.isMetaDown || event.isAltDown) {
             dragging = true
             previousPoint = toPage(event)
             event.consume()

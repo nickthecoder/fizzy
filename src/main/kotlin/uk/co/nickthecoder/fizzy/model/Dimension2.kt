@@ -74,6 +74,8 @@ class Dimension2(val x: Dimension, val y: Dimension) {
         return Vector2(x.inDefaultUnits / l, y.inDefaultUnits / l)
     }
 
+    fun aspectRatio() = x.inDefaultUnits / y.inDefaultUnits
+
     /**
      * The angle of the vector. 0° is along the x axis, and +ve values are anticlockwise if the y axis is pointing upwards.
      *

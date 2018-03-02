@@ -41,7 +41,9 @@ abstract class Handle(var position: Dimension2) {
         return Math.abs(delta.x.inDefaultUnits) < NEAR / scale && Math.abs(delta.y.inDefaultUnits) < NEAR / scale
     }
 
-    abstract fun dragTo(pagePosition: Dimension2)
+    open fun beginDrag(pagePosition: Dimension2) {}
+
+    abstract fun dragTo(pagePosition: Dimension2, constrain: Boolean)
 
     companion object {
         val SIZE = 3.0

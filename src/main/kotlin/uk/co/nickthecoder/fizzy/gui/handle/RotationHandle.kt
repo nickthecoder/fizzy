@@ -16,7 +16,7 @@ class RotationHandle(shape: Shape, position: Dimension2)
         }
     }
 
-    override fun dragTo(pagePosition: Dimension2) {
+    override fun dragTo(pagePosition: Dimension2, constrain : Boolean) {
         val local = shape.fromPageToLocal.value * pagePosition
         val angle = (local - shape.transform.locPin.value).angle() + Angle.degrees(90.0)
         shape.document().history.makeChange(ChangeExpression(

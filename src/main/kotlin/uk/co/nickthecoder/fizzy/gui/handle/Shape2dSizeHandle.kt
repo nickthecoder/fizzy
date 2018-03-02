@@ -17,10 +17,16 @@ import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
 class Shape2dSizeHandle(val shape2d: Shape2d, position: Dimension2, val dx: Int, val dy: Int)
     : ShapeHandle(shape2d, position) {
 
-    override fun dragTo(pagePosition: Dimension2) {
+    var aspectRatio = 1.0
+
+    override fun beginDrag(pagePosition: Dimension2) {
+        aspectRatio = shape2d.size.value.aspectRatio()
+    }
+
+    override fun dragTo(pagePosition: Dimension2, constrain: Boolean) {
         val local = shape2d.fromPageToLocal.value * pagePosition
 
-        val deltaX = if (dx == 1) {
+        var deltaX = if (dx == 1) {
             local.x - shape2d.size.value.x
         } else if (dx == -1) {
             -local.x
@@ -28,18 +34,27 @@ class Shape2dSizeHandle(val shape2d: Shape2d, position: Dimension2, val dx: Int,
             Dimension.ZERO_mm
         }
 
-        val moveX = if (dx == 1) {
-            deltaX * (shape2d.transform.locPin.value.x / shape2d.size.value.x)
-        } else if (dx == -1) {
-            -deltaX * (shape2d.transform.locPin.value.x / shape2d.size.value.x)
+        var deltaY = if (dy == 1) {
+            local.y - shape2d.size.value.y
+        } else if (dy == -1) {
+            -local.y
         } else {
             Dimension.ZERO_mm
         }
 
-        val deltaY = if (dy == 1) {
-            local.y - shape2d.size.value.y
-        } else if (dy == -1) {
-            -local.y
+        if (constrain) {
+            if ((shape2d.size.value.x + deltaX) / aspectRatio > shape2d.size.value.y + deltaY) {
+                deltaX = (shape2d.size.value.y + deltaY) * aspectRatio - shape2d.size.value.x
+            } else {
+                deltaY = (shape2d.size.value.x + deltaX) / aspectRatio - shape2d.size.value.y
+            }
+        }
+
+
+        val moveX = if (dx == 1) {
+            deltaX * (shape2d.transform.locPin.value.x / shape2d.size.value.x)
+        } else if (dx == -1) {
+            -deltaX * (shape2d.transform.locPin.value.x / shape2d.size.value.x)
         } else {
             Dimension.ZERO_mm
         }

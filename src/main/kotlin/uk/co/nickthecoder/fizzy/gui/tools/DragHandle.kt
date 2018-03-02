@@ -12,9 +12,11 @@ class DragHandle(glassCanvas: GlassCanvas, val handle: Handle, startPosition: Di
 
     init {
         glassCanvas.page.document.history.beginBatch()
+        handle.beginDrag(startPosition)
     }
+
     override fun onMouseDragged(event: MouseEvent) {
-        handle.dragTo(glassCanvas.toPage(event) - offset)
+        handle.dragTo(glassCanvas.toPage(event) - offset, glassCanvas.isConstrain(event))
         glassCanvas.dirty = true // TODO REMOVE when handles are implemented correctly.
     }
 
