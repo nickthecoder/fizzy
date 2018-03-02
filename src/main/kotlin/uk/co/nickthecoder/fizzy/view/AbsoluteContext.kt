@@ -70,6 +70,10 @@ abstract class AbsoluteContext(scale: Double = 1.0) : DrawContext {
         state.transformation = state.transformation * Matrix33.scale(by.x, by.y)
     }
 
+    override fun scale(by: Double) {
+        state.transformation = state.transformation * Matrix33.scale(by, by)
+    }
+
     /**
      * Note. this doesn't work correctly if the x and y have been scaled differently!
      */

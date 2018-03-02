@@ -19,7 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.gui
 
 import javafx.scene.Node
+import javafx.scene.input.MouseEvent
 import javafx.scene.layout.StackPane
+import uk.co.nickthecoder.fizzy.model.Dimension
+import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Page
 
 /**
@@ -27,7 +30,8 @@ import uk.co.nickthecoder.fizzy.model.Page
  * Later, this may also contain other GUI elements such as rulers.
  *
  */
-class DrawingArea(page: Page) : BuildableNode {
+class DrawingArea(page: Page)
+    : BuildableNode {
 
     var page: Page = page
         set(v) {
@@ -37,11 +41,16 @@ class DrawingArea(page: Page) : BuildableNode {
             drawingCanvas.page = v
         }
 
-    val glassCanvas = GlassCanvas(page)
+    val glassCanvas = GlassCanvas(page, this)
 
-    val drawingCanvas = DrawingCanvas(page)
+    val drawingCanvas = DrawingCanvas(page, this)
+
+    var scale: Double = 1.0
+
+    var pan: Dimension2 = Dimension2.ZERO_mm
 
     private val stackPane = StackPane()
+
 
     override fun build(): Node {
         assert(stackPane.children.size == 0)
@@ -50,5 +59,25 @@ class DrawingArea(page: Page) : BuildableNode {
 
         return stackPane
     }
+
+    fun panBy(by: Dimension2) {
+        pan += by
+        glassCanvas.dirty = true
+        drawingCanvas.dirty = true
+    }
+
+    fun zoomOn(by: Double, atX: Double, atY: Double) {
+        val pagePoint = pixelsToPage(atX, atY)
+        scale *= by
+        pan += pixelsToPage(atX, atY) - pagePoint
+        glassCanvas.dirty = true
+        drawingCanvas.dirty = true
+    }
+
+    fun pixelsToPage(x: Double, y: Double): Dimension2 = Dimension2(
+            Dimension(x / scale - pan.x.inDefaultUnits),
+            Dimension(y / scale - pan.y.inDefaultUnits))
+
+    fun toPage(event: MouseEvent) = pixelsToPage(event.x, event.y)
 
 }

@@ -68,6 +68,10 @@ class CanvasContext(val canvas: Canvas)
         gc.scale(by.x, by.y)
     }
 
+    override fun scale(by: Double) {
+        gc.scale(by, by)
+    }
+
 
     override fun lineWidth(width: Dimension) {
         gc.lineWidth = width.inDefaultUnits

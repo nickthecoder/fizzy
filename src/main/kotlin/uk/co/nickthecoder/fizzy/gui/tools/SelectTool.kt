@@ -32,14 +32,14 @@ class SelectTool(glassCanvas: GlassCanvas)
 
     override fun onMouseClick(event: MouseEvent) {
 
-        val shapes = glassCanvas.page.findShapesAt(glassCanvas.toDimension2(event))
+        val shapes = glassCanvas.page.findShapesAt(glassCanvas.toPage(event))
         if (shapes.isEmpty()) {
             if (!glassCanvas.isAdjust(event)) {
                 selection.clear()
             }
         } else {
             val latest = selection.lastOrNull()
-            var shape: Shape? = null
+            val shape: Shape?
             if (shapes.size > 1 && shapes.contains(latest) && glassCanvas.isConstrain(event)) {
                 val i = shapes.indexOf(latest)
                 shape = if (i == 0) shapes.last() else shapes[i - 1]
@@ -62,13 +62,13 @@ class SelectTool(glassCanvas: GlassCanvas)
     }
 
     override fun onMousePressed(event: MouseEvent) {
-        mousePressedPoint = glassCanvas.toDimension2(event)
+        mousePressedPoint = glassCanvas.toPage(event)
     }
 
     override fun onMouseDragged(event: MouseEvent) {}
 
     override fun onDragDetected(event: MouseEvent) {
-        val shape = glassCanvas.page.findShapeAt(glassCanvas.toDimension2(event))
+        val shape = glassCanvas.page.findShapeAt(glassCanvas.toPage(event))
         if (shape == null) {
             glassCanvas.tool = DragBoundingBox(glassCanvas, event, mousePressedPoint)
             glassCanvas.tool.onMouseDragged(event)

@@ -1,15 +1,14 @@
 To Do
 =====
 
-Get shapes dragging in the GUI
+Create a ShapeGroup,
+    then look for all "is RealShape" and implement the other half.
+
+
+Create a mock master sheet toolbar, and use it to copy a stencil into the document.
 
 Soon
 ----
-
-History
-    Have a "begin" and "end" (maybe not the begin?) (A Batch/Moment).
-       then tell history about every cell that is being changed.
-       In fact, maybe do the changes VIA the history.
 
 Add more drawing tests
     Box in Box

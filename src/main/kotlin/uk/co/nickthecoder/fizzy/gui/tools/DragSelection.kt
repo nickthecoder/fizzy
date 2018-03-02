@@ -42,7 +42,7 @@ class DragSelection(glassCanvas: GlassCanvas, var previousPoint: Dimension2)
     override fun onDragDetected(event: MouseEvent) {}
 
     override fun onMouseDragged(event: MouseEvent) {
-        val now = glassCanvas.toDimension2(event)
+        val now = glassCanvas.toPage(event)
         val delta = now - previousPoint
 
         document.history.makeChange(MoveShapes(document.selection, delta))

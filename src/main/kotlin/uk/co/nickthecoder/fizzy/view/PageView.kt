@@ -18,45 +18,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.view
 
-import javafx.application.Platform
 import uk.co.nickthecoder.fizzy.model.Page
 import uk.co.nickthecoder.fizzy.model.RealShape
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
-import uk.co.nickthecoder.fizzy.util.ChangeListener
-import uk.co.nickthecoder.fizzy.util.ChangeType
 
-class PageView(val page: Page, val dc: DrawContext)
-    : ChangeListener<Page> {
-
-    private var dirty = true
-        set(v) {
-            if (v != field) {
-                field = v
-                if (v) {
-                    Platform.runLater { draw() }
-                }
-            }
-        }
-
-
-    init {
-        page.changeListeners.add(this)
-    }
-
-    override fun changed(item: Page, changeType: ChangeType, obj: Any?) {
-        dirty = true
-    }
+class PageView(val page: Page, val dc: DrawContext) {
 
     fun draw() {
-        dc.clear()
         dc.use {
             page.children.forEach { shape ->
                 drawShape(shape)
             }
-
-            dirty = false
         }
     }
 

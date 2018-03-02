@@ -2,7 +2,6 @@ package uk.co.nickthecoder.fizzy.gui.tools
 
 import javafx.scene.input.MouseEvent
 import uk.co.nickthecoder.fizzy.gui.GlassCanvas
-import uk.co.nickthecoder.fizzy.model.Color
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.view.DrawContext
 
@@ -20,7 +19,7 @@ class DragBoundingBox(glassCanvas: GlassCanvas, event: MouseEvent, val startPoin
     }
 
     override fun onMouseDragged(event: MouseEvent) {
-        endPoint = glassCanvas.toDimension2(event)
+        endPoint = glassCanvas.toPage(event)
         glassCanvas.dirty = true
     }
 
@@ -34,8 +33,8 @@ class DragBoundingBox(glassCanvas: GlassCanvas, event: MouseEvent, val startPoin
 
     override fun draw(dc: DrawContext) {
         dc.use {
-            dc.lineColor(Color.web("#72c2e9"))
-            dc.fillColor(Color.web("#72c2e9", 0.3).brighter())
+            dc.lineColor(GlassCanvas.BOUNDING_STROKE)
+            dc.fillColor(GlassCanvas.BOUNDING_FILL)
             dc.lineWidth(2.0)
             dc.lineDashes(5.0)
             dc.rectangle(true, true, startPoint, endPoint)

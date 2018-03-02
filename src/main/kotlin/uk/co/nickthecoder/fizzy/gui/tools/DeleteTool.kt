@@ -28,7 +28,7 @@ class DeleteTool(glassCanvas: GlassCanvas)
     val page = glassCanvas.page
 
     override fun onMouseClick(event: MouseEvent) {
-        val shape = page.findShapeAt(glassCanvas.toDimension2(event))
+        val shape = page.findShapeAt(glassCanvas.toPage(event))
         if (shape != null) {
             page.document.history.makeChange(DeleteShape(shape))
         }

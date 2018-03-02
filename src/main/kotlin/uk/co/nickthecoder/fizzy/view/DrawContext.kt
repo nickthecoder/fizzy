@@ -46,6 +46,7 @@ interface DrawContext {
     fun rotate(by: Angle)
 
     fun scale(by: Vector2)
+    fun scale(by: Double)
 
 
     fun lineWidth(width: Dimension)

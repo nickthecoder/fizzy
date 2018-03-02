@@ -21,17 +21,34 @@ package uk.co.nickthecoder.fizzy.gui
 import javafx.scene.Node
 import javafx.scene.canvas.Canvas
 import uk.co.nickthecoder.fizzy.model.Page
+import uk.co.nickthecoder.fizzy.util.ChangeListener
+import uk.co.nickthecoder.fizzy.util.ChangeType
+import uk.co.nickthecoder.fizzy.util.runLater
 import uk.co.nickthecoder.fizzy.view.PageView
 
 /**
  *
  */
-class DrawingCanvas(page: Page) : BuildableNode {
+class DrawingCanvas(page: Page, val drawingArea: DrawingArea)
+    : BuildableNode, ChangeListener<Page> {
 
     // TODO We need to fit the canvas to the correct size
     val canvas = Canvas(1000.0, 800.0)
 
     private var pageView = PageView(page, CanvasContext(canvas))
+
+    var dirty = false
+        set(v) {
+            if (field != v) {
+                field = v
+
+                if (v) {
+                    runLater {
+                        draw()
+                    }
+                }
+            }
+        }
 
     var page: Page = page
         set(v) {
@@ -40,8 +57,26 @@ class DrawingCanvas(page: Page) : BuildableNode {
             pageView.draw()
         }
 
+    init {
+        page.changeListeners.add(this)
+    }
+
+    override fun changed(item: Page, changeType: ChangeType, obj: Any?) {
+        dirty = true
+    }
+
     override fun build(): Node {
         pageView.draw()
         return canvas
+    }
+
+    fun draw() {
+        pageView.dc.clear()
+        pageView.dc.use {
+            pageView.dc.scale(drawingArea.scale)
+            pageView.dc.translate(drawingArea.pan)
+            pageView.draw()
+            dirty = false
+        }
     }
 }

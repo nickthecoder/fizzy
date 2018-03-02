@@ -21,6 +21,7 @@ package uk.co.nickthecoder.fizzy.gui
 import javafx.scene.Node
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
+import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
 import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
@@ -36,7 +37,7 @@ import uk.co.nickthecoder.fizzy.util.runLater
  * By drawing these onto a different [Canvas], the [Canvas] displaying the the document does not need
  * to be redrawn when the selection changes, or while dragging a bounding box.
  */
-class GlassCanvas(var page: Page) {
+class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
 
     var dirty = false
         set(v) {
@@ -90,34 +91,92 @@ class GlassCanvas(var page: Page) {
         }
     }
 
+    private var previousPoint = Dimension2.ZERO_mm
+
+    private var dragging = false
+
     init {
-        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED) { tool.onMouseClick(it) }
-        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED) { tool.onMousePressed(it) }
-        canvas.addEventHandler(MouseEvent.DRAG_DETECTED) { tool.onDragDetected(it) }
-        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED) { tool.onMouseDragged(it) }
-        canvas.addEventHandler(MouseEvent.MOUSE_RELEASED) { tool.onMouseReleased(it) }
+        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED) { onMousePressed(it) }
+        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED) { onMouseClicked(it) }
+        canvas.addEventHandler(MouseEvent.DRAG_DETECTED) { onDragDetected(it) }
+        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED) { onMouseDragged(it) }
+        canvas.addEventHandler(MouseEvent.MOUSE_RELEASED) { onMouseReleased(it) }
 
         (page.document.selection.listeners.add(selectionListener))
         page.document.selection.forEach {
             addShapeHandles(it)
         }
-        draw()
+        runLater {
+            draw()
+        }
+    }
+
+
+    fun onMousePressed(event: MouseEvent) {
+        if (event.button == MouseButton.SECONDARY || event.isMiddleButtonDown || event.isMetaDown || event.isAltDown || isConstrain(event)) {
+            dragging = true
+            previousPoint = toPage(event)
+            event.consume()
+        } else if (event.clickCount == 2) {
+            drawingArea.zoomOn(if (isAdjust(event)) 1.0 / 1.4 else 1.4, event.x, event.y)
+        } else {
+            tool.onMousePressed(event)
+        }
+    }
+
+    fun onMouseReleased(event: MouseEvent) {
+        if (dragging) {
+            event.consume()
+        } else {
+            tool.onMouseReleased(event)
+        }
+    }
+
+    fun onDragDetected(event: MouseEvent) {
+        if (dragging) {
+            event.consume()
+        } else {
+            tool.onDragDetected(event)
+        }
+    }
+
+    fun onMouseDragged(event: MouseEvent) {
+        if (dragging) {
+            val newPoint = toPage(event)
+            drawingArea.panBy(newPoint - previousPoint)
+            previousPoint = toPage(event)
+            event.consume()
+        } else {
+            tool.onMouseDragged(event)
+        }
+    }
+
+    fun onMouseClicked(event: MouseEvent) {
+        if (dragging) {
+            dragging = false
+            event.consume()
+        } else {
+            tool.onMouseClick(event)
+        }
     }
 
     fun draw() {
         dc.clear()
-
-        page.document.selection.forEach { shape ->
-            drawBoundingBox(shape)
-        }
         dc.use {
-            beginHandle()
-            handles.forEach { handle ->
-                handle.draw(dc)
-            }
-        }
-        tool.draw(dc)
+            dc.scale(drawingArea.scale)
+            dc.translate(drawingArea.pan)
 
+            page.document.selection.forEach { shape ->
+                drawBoundingBox(shape)
+            }
+            dc.use {
+                beginHandle()
+                handles.forEach { handle ->
+                    handle.draw(dc)
+                }
+            }
+            tool.draw(dc)
+        }
         dirty = false
     }
 
@@ -153,8 +212,8 @@ class GlassCanvas(var page: Page) {
     }
 
     fun beginHandle() {
-        dc.lineColor(Color.web("#72c2e9").darker())
-        dc.fillColor(Color.web("#72c2e9").brighter())
+        dc.lineColor(HANDLE_STROKE)
+        dc.fillColor(HANDLE_FILL)
         dc.lineWidth(1.0)
     }
 
@@ -204,9 +263,8 @@ class GlassCanvas(var page: Page) {
         return false
     }
 
-    fun toDimension2(event: MouseEvent): Dimension2 {
-        return Dimension2(Dimension(event.x), Dimension(event.y))
-    }
+    fun toPage(event: MouseEvent) = drawingArea.toPage(event)
+
 
     /**
      * Is this mouse event an adjustment? (When the shift key is down).
@@ -223,5 +281,11 @@ class GlassCanvas(var page: Page) {
 
     companion object {
         val ROTATE_DISTANCE = 40.0
+
+        val BLUE_BASE = "#72c2e9"
+        val HANDLE_STROKE = Color.web(BLUE_BASE).darker()
+        val HANDLE_FILL = Color.web(BLUE_BASE).brighter()
+        val BOUNDING_STROKE = Color.web(BLUE_BASE)
+        val BOUNDING_FILL = Color.web(BLUE_BASE, 0.3).brighter()
     }
 }
