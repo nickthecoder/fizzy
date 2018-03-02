@@ -29,7 +29,7 @@ class Shape2d private constructor(parent: ShapeParent)
 
     override val transform = ShapeTransform(this)
 
-    val size = Dimension2Expression("Dimension2(1mm,1mm)")
+    override val size = Dimension2Expression("Dimension2(1mm,1mm)")
 
     init {
         size.propListeners.add(this)

@@ -41,6 +41,10 @@ abstract class AbsoluteContext(scale: Double = 1.0) : DrawContext {
         return state.transformation.times(point.x.inDefaultUnits, point.y.inDefaultUnits)
     }
 
+    fun transform(x: Double, y: Double): Vector2 {
+        return state.transformation.times(x, y)
+    }
+
     override fun save() {
         stateStack.add(state)
     }
@@ -73,13 +77,23 @@ abstract class AbsoluteContext(scale: Double = 1.0) : DrawContext {
         state.lineWidth = transform(Dimension2(width, width)).length()
     }
 
-    override fun lineTo(point: Dimension2) {
-        absoluteLineTo(transform(point))
-    }
 
     override fun moveTo(point: Dimension2) {
         absoluteMoveTo(transform(point))
     }
+
+    override fun moveTo(x: Double, y: Double) {
+        absoluteMoveTo(transform(x, y))
+    }
+
+    override fun lineTo(point: Dimension2) {
+        absoluteLineTo(transform(point))
+    }
+
+    override fun lineTo(x: Double, y: Double) {
+        absoluteLineTo(transform(x, y))
+    }
+
 
     abstract fun absoluteMoveTo(point: Vector2)
 

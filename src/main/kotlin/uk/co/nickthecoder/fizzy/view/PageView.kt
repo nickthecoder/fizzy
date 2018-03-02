@@ -41,11 +41,16 @@ class PageView(val page: Page, val dc: DrawContext)
         }
 
 
+    init {
+        page.changeListeners.add(this)
+    }
+
     override fun changed(item: Page, changeType: ChangeType, obj: Any?) {
         dirty = true
     }
 
     fun draw() {
+        dc.clear()
         dc.use {
             page.children.forEach { shape ->
                 drawShape(shape)

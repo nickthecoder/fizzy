@@ -28,6 +28,8 @@ class MockContext : AbsoluteContext() {
     val buffer = StringBuffer()
     var debug = false
 
+    override fun clear() {}
+
     override fun absoluteMoveTo(point: Vector2) {
         buffer.append("M${point.terse()}\n")
     }
@@ -37,11 +39,13 @@ class MockContext : AbsoluteContext() {
     }
 
 
-    override fun fillColor(color: Paint) {
-    }
+    override fun fillColor(color: Paint) {}
 
-    override fun lineColor(color: Paint) {
-    }
+    override fun lineColor(color: Paint) {}
+
+    override fun lineDashes(vararg dashes: Double) {}
+
+    override fun lineWidth(width: Double) {}
 
     override fun beginPath() {
         if (debug) {

@@ -23,10 +23,14 @@ import javafx.scene.canvas.GraphicsContext
 import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.view.DrawContext
 
-class CanvasContext(canvas: Canvas)
+class CanvasContext(val canvas: Canvas)
     : DrawContext {
 
     val gc: GraphicsContext = canvas.graphicsContext2D
+
+    override fun clear() {
+        gc.clearRect(0.0, 0.0, canvas.width, canvas.height)
+    }
 
     override fun save() {
         gc.save()
@@ -42,6 +46,10 @@ class CanvasContext(canvas: Canvas)
 
     override fun lineColor(paint: Paint) {
         gc.stroke = convertPaint(paint)
+    }
+
+    override fun lineDashes(vararg dashes: Double) {
+        gc.setLineDashes(* dashes)
     }
 
     override fun translate(by: Dimension2) {
@@ -65,6 +73,10 @@ class CanvasContext(canvas: Canvas)
         gc.lineWidth = width.inDefaultUnits
     }
 
+    override fun lineWidth(width: Double) {
+        gc.lineWidth = width
+    }
+
 
     override fun beginPath() {
         gc.beginPath()
@@ -83,8 +95,16 @@ class CanvasContext(canvas: Canvas)
         gc.moveTo(point.x.inDefaultUnits, point.y.inDefaultUnits)
     }
 
+    override fun moveTo(x: Double, y: Double) {
+        gc.moveTo(x, y)
+    }
+
     override fun lineTo(point: Dimension2) {
         gc.lineTo(point.x.inDefaultUnits, point.y.inDefaultUnits)
+    }
+
+    override fun lineTo(x: Double, y: Double) {
+        gc.lineTo(x, y)
     }
 
     fun convertPaint(paint: Paint): javafx.scene.paint.Paint {

@@ -38,6 +38,8 @@ class Document : HasChangeListeners<Document> {
     val name: String
         get() = "New Document"
 
+    val selection = MutableFList<Shape>()
+
     fun findShape(id: Int): Shape? {
         pages.forEach { page ->
             val found = page.findShape(id)

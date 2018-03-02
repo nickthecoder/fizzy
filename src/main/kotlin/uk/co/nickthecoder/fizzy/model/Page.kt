@@ -70,4 +70,7 @@ class Page(val document: Document)
         }
         return null
     }
+
+    fun findShapesAt(point: Dimension2) = children.filter { it.isAt(point) }
+
 }

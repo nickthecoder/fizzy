@@ -34,7 +34,7 @@ class Shape1d private constructor(parent: ShapeParent)
 
     val end = Dimension2Expression("Dimension2(1mm,1mm)")
 
-    val size = Dimension2Expression("Dimension2((End-Start).Length,LineWidth)")
+    override val size = Dimension2Expression("Dimension2((End-Start).Length,LineWidth)")
 
     val length = PropCalculation2(start, end) { sv, ev -> (ev - sv).length() }
 

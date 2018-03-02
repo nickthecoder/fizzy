@@ -39,16 +39,15 @@ class Fizzy : Application() {
         // For now, we create a test document to display.
         val doc = Document()
         val page = Page(doc)
-        val box1 = Shape.createBox(page, "Dimension2(4cm,2cm)", "Dimension2(10cm,10cm)")
-        val box2 = Shape.createBox(page, "Dimension2(4cm,2cm)", "Dimension2(10cm,14cm)")
+        val box1 = Shape.createBox(page, "Dimension2(20cm,10cm)", "Dimension2(40cm,10cm)")
+        val box2 = Shape.createBox(page, "Dimension2(20cm,10cm)", "Dimension2(40cm,30cm)")
 
         box1.addConnectionPoint(ConnectionPoint("(Geometry1.Point1 + Geometry1.Point2) / 2", "-90 deg"))
         box1.addConnectionPoint(ConnectionPoint("(Geometry1.Point3 + Geometry1.Point4) / 2", "90 deg"))
-        box1.fillColor.expression = "Color.yellow"
 
         box2.addConnectionPoint(ConnectionPoint("(Geometry1.Point1 + Geometry1.Point2) / 2", "-90 deg"))
         box2.addConnectionPoint(ConnectionPoint("(Geometry1.Point3 + Geometry1.Point4) / 2", "90 deg"))
-        box2.lineColor.expression = "Color.darkblue"
+        box2.fillColor.expression = "Color.grey"
 
         val line = Shape.createLine(page, "Dimension2(10cm,11cm)", "Dimension2(10cm,13cm)")
         line.start.expression = "this.connectTo(Page.Shape1.ConnectionPoint2)"

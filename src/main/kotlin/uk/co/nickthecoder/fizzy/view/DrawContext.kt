@@ -22,6 +22,8 @@ import uk.co.nickthecoder.fizzy.model.*
 
 interface DrawContext {
 
+    fun clear()
+
     fun save()
 
     fun restore()
@@ -33,8 +35,10 @@ interface DrawContext {
         return this
     }
 
-    fun lineColor(color : Paint)
-    fun fillColor(color : Paint)
+    fun lineColor(color: Paint)
+    fun fillColor(color: Paint)
+
+    fun lineDashes(vararg dashes: Double)
 
     fun translate(by: Dimension2)
     fun translate(x: Dimension, y: Dimension)
@@ -45,14 +49,22 @@ interface DrawContext {
 
 
     fun lineWidth(width: Dimension)
-
+    fun lineWidth(width: Double)
 
     fun beginPath()
 
     fun endPath(stroke: Boolean, fill: Boolean)
 
     fun moveTo(point: Dimension2)
+    fun moveTo(x: Double, y : Double)
 
     fun lineTo(point: Dimension2)
+    fun lineTo(x: Double, y : Double)
 
+    fun polygon(stroke: Boolean, fill: Boolean, vararg points: Dimension2) {
+        beginPath()
+        moveTo(points.last())
+        points.forEach { lineTo(it) }
+        endPath(stroke = stroke, fill = fill)
+    }
 }

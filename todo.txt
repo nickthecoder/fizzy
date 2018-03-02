@@ -1,34 +1,26 @@
 To Do
 =====
 
-Rename XXProp files to XXXPropType
+Get shapes dragging in the GUI
 
 Soon
 ----
 
-Optimise isAt by checking the bounding box first.
-    Need to update the existing tests, so that the optimisation doesn't ruin the edge case tests!
+History
+    Have a "begin" and "end" (maybe not the begin?) (A Batch/Moment).
+       then tell history about every cell that is being changed.
+       In fact, maybe do the changes VIA the history.
 
 Add more drawing tests
     Box in Box
     Simple line
 
 Create tests for rotated shapes.
-Create tests for Shape1d s
-    Link a line from one shape to another, then move the shape.
-
-Implement FlipX & Y
-    Is there much point? Text will be reversed!
 
 Check that "Geometry1" becomes dirty when items are added/removed from the geometry list.
 
 DimensionExpression and Dimension2Expression to have an additional "expected power", which defaults to 1.
     Will error if other powers are returned
-
-Create a JavaFX application drawing pre-created shapes.
-    Add a Glass canvas to highlight the currently selected shape
-    Handles section : Points which can be dragged by the user
-    Snap section : Places that line ends can snap to
 
 Maybe
 -----
@@ -60,6 +52,12 @@ Layers
 Later
 -----
 
+Implement FlipX & Y
+    Is there much point? Text will be reversed!
+
+Optimise isAt by checking the bounding box first.
+    Need to update the existing tests, so that the optimisation doesn't ruin the edge case tests!
+
 Create an SVGDrawContext to convert to SVG.
     This can be used to in the unit tests ;-)
 
@@ -78,6 +76,10 @@ Be able to "click" a part of an expression and get to the definition.
 Consider a "isNear" method for Angle, Double, Dimension, Dimension2 and Vector (takes a 2nd parameter for the closeness). 
     Add a TINY (double) constant. Use TINY mm for a dimension??? (or just SHORT)
 
+Round corners without changing the Geometry.
+    Any time a corner is detected, replace it with a rounded corner
+    Probably done in the PageView.
+    Only applies to two LineTo s in succession?
 
 Problems
 --------
