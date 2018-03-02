@@ -63,11 +63,19 @@ class SelectTool(glassCanvas: GlassCanvas)
 
     override fun onMousePressed(event: MouseEvent) {
         mousePressedPoint = glassCanvas.toPage(event)
+        event.consume()
     }
 
-    override fun onMouseDragged(event: MouseEvent) {}
-
     override fun onDragDetected(event: MouseEvent) {
+
+        glassCanvas.handles.forEach { handle ->
+            if (handle.isAt(mousePressedPoint, glassCanvas.drawingArea.scale)) {
+                glassCanvas.tool = DragHandle(glassCanvas, handle, mousePressedPoint)
+                event.consume()
+                return
+            }
+        }
+
         val shape = glassCanvas.page.findShapeAt(glassCanvas.toPage(event))
         if (shape == null) {
             glassCanvas.tool = DragBoundingBox(glassCanvas, event, mousePressedPoint)

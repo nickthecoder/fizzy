@@ -18,6 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
+import uk.co.nickthecoder.fizzy.util.terse
+import uk.co.nickthecoder.fizzy.util.toExpression
+
 /**
  * Holds a length as a number with a given unit of measures.
  * For example, 1.5 meters could be stored as 1.5m or 1500mm or 150cm.
@@ -139,12 +142,17 @@ class Dimension : Comparable<Dimension> {
         return inDefaultUnits.compareTo(other.inDefaultUnits)
     }
 
-    // Note. This must return a format that is suitable for the Evaluator to parse when power==1.
+
+    /**
+     * Return in a format suitable for an expression.
+     */
+    fun toExpression() = "${inUnits(units).toExpression()} ${units.name}"
+
     override fun toString(): String {
         return if (power == 0.0) {
             "$inDefaultUnits"
         } else {
-            "${inUnits(units)} ${units.name}${if (power == 1.0) "" else "^$power"}"
+            "${inUnits(units).terse()} ${units.name}${if (power == 1.0) "" else "^$power"}"
         }
     }
 

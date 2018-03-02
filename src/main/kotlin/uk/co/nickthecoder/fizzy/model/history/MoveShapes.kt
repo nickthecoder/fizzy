@@ -24,7 +24,7 @@ class MoveShapes(shapes: List<Shape>, val delta: Dimension2) : Change {
 
     override fun redo() {
         changes.values.forEach {
-            it.shape.transform.pin.expression = it.newValue.toString()
+            it.shape.transform.pin.expression = it.newValue.toExpression()
         }
     }
 

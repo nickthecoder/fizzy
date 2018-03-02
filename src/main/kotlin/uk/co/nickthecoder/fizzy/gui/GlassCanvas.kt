@@ -55,7 +55,7 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
 
     private var selectionMargin = 10.0
 
-    private val handles = mutableListOf<Handle>()
+    val handles = mutableListOf<Handle>()
 
     var tool: Tool = SelectTool(this)
 
@@ -68,7 +68,7 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
         override fun changed(item: Shape, changeType: ChangeType, obj: Any?) {
             dirty = true
             if (page.document.selection.contains(item)) {
-                addShapeHandles(item)
+                createShapeHandles(item)
             }
         }
     }
@@ -80,7 +80,7 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
 
         override fun added(collection: FCollection<Shape>, item: Shape) {
             item.changeListeners.add(shapeListener)
-            addShapeHandles(item)
+            createShapeHandles(item)
             dirty = true
         }
 
@@ -104,7 +104,7 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
 
         (page.document.selection.listeners.add(selectionListener))
         page.document.selection.forEach {
-            addShapeHandles(it)
+            createShapeHandles(it)
         }
         runLater {
             draw()
@@ -188,12 +188,14 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
                 beginSelection()
                 val corners = shapeCorners(shape)
                 dc.polygon(true, false, *corners)
-                val r1 = (corners[0] + corners[1]) / 2.0
-                val r2 = r1 + (corners[1] - corners[2]).normalise() * Dimension(ROTATE_DISTANCE)
-                dc.beginPath()
-                dc.moveTo(r1)
-                dc.lineTo(r2)
-                dc.endPath(true, false)
+                if (shape is Shape2d) {
+                    val r1 = (corners[0] + corners[1]) / 2.0
+                    val r2 = r1 + (corners[1] - corners[2]).normalise() * Dimension(ROTATE_DISTANCE)
+                    dc.beginPath()
+                    dc.moveTo(r1)
+                    dc.lineTo(r2)
+                    dc.endPath(true, false)
+                }
             } else if (shape is ShapeGroup) {
 
             }
@@ -219,9 +221,10 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
         dc.lineWidth(1.0)
     }
 
-    fun addShapeHandles(shape: Shape) {
+    fun createShapeHandles(shape: Shape) {
         removeShapeHandles(shape)
-        if (shape is RealShape) {
+
+        if (shape is Shape2d) {
             val corners = shapeCorners(shape)
             handles.add(ShapeHandle(shape, corners[0]))
             handles.add(ShapeHandle(shape, corners[1]))
@@ -237,7 +240,13 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
                     (corners[0] + corners[1]) / 2.0 +
                             (corners[1] - corners[2]).normalise()
                                     * Dimension(ROTATE_DISTANCE)))
+
+        } else if (shape is Shape1d) {
+            val ends = shape1dEnds(shape)
+            handles.add(ShapeHandle(shape, ends[0]))
+            handles.add(ShapeHandle(shape, ends[1]))
         }
+
     }
 
     fun removeShapeHandles(shape: Shape) {
@@ -250,6 +259,13 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
                 shape.fromLocalToPage.value * (shape.size.value * Vector2(1.0, 0.0)),
                 shape.fromLocalToPage.value * (shape.size.value * Vector2(1.0, 1.0)),
                 shape.fromLocalToPage.value * (shape.size.value * Vector2(0.0, 1.0))
+        )
+    }
+
+    fun shape1dEnds(shape: Shape1d): Array<Dimension2> {
+        return arrayOf<Dimension2>(
+                shape.parent.fromLocalToPage.value * shape.start.value,
+                shape.parent.fromLocalToPage.value * shape.end.value
         )
     }
 

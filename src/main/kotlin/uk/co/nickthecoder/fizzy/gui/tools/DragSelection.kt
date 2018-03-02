@@ -55,7 +55,7 @@ class DragSelection(glassCanvas: GlassCanvas, var previousPoint: Dimension2)
         if (shape is Shape2d) {
             val oldPin = shape.transform.pin.value
             val newPin = oldPin + delta
-            shape.transform.pin.expression = newPin.toString()
+            shape.transform.pin.expression = newPin.toExpression()
         }
     }
 
