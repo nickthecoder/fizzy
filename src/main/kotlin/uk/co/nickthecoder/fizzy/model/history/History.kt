@@ -78,17 +78,19 @@ class History {
 
     fun endBatch() {
         currentBatch?.let {
-            if (savedIndex > currentIndex) {
-                // We've destroyed the redo that would take us back to the saved state.
-                savedIndex = -1
-            }
+            if (!it.changes.isEmpty()) {
+                if (savedIndex > currentIndex) {
+                    // We've destroyed the redo that would take us back to the saved state.
+                    savedIndex = -1
+                }
 
-            while (history.size > currentIndex) {
-                history.removeAt(history.size - 1)
+                while (history.size > currentIndex) {
+                    history.removeAt(history.size - 1)
+                }
+                history.add(currentIndex, it)
+                currentIndex++
             }
-            history.add(currentIndex, it)
             currentBatch = null
-            currentIndex++
         }
     }
 

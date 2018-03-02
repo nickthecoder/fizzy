@@ -10,6 +10,9 @@ class DragHandle(glassCanvas: GlassCanvas, val handle: Handle, startPosition: Di
 
     val offset = startPosition - handle.position
 
+    init {
+        glassCanvas.page.document.history.beginBatch()
+    }
     override fun onMouseDragged(event: MouseEvent) {
         handle.dragTo(glassCanvas.toPage(event) - offset)
         glassCanvas.dirty = true // TODO REMOVE when handles are implemented correctly.
@@ -17,5 +20,6 @@ class DragHandle(glassCanvas: GlassCanvas, val handle: Handle, startPosition: Di
 
     override fun onMouseReleased(event: MouseEvent) {
         glassCanvas.tool = DragCompleted(glassCanvas)
+        glassCanvas.page.document.history.endBatch()
     }
 }

@@ -3,7 +3,8 @@ package uk.co.nickthecoder.fizzy.model.history
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
 
-class MoveShapes(shapes: List<Shape>, val delta: Dimension2) : Change {
+class MoveShapes(shapes: List<Shape>, val delta: Dimension2)
+    : Change {
 
     class OldAndNew(val shape: Shape, val oldExpression: String, var newValue: Dimension2)
 
