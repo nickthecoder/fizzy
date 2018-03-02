@@ -45,5 +45,7 @@ class MoveTo(formula: String = "Dimension2(0mm, 0mm)")
 
     override fun pointAlong(prev: Dimension2, along: Double) = Dimension2.ZERO_mm
 
+    override fun copy(): GeometryPart = MoveTo(point.formula)
+
     override fun toString() = "MoveTo point=${point.value}"
 }

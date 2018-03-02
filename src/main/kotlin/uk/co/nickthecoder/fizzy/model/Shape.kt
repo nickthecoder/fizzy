@@ -141,7 +141,6 @@ abstract class Shape(var parent: ShapeParent)
         return null
     }
 
-
     /**
      * point should be in units of the parent (i.e. in the same units as this.transform.pin).
      * It is NOT in the coordinates used by the [Geometry] sections.
@@ -174,11 +173,22 @@ abstract class Shape(var parent: ShapeParent)
         }
     }
 
+    abstract fun copyInto(parent: ShapeParent): Shape
+
+    open protected fun populateShape(newShape: Shape) {
+        newShape.name.value = name.value
+        newShape.transform.locPin.formula = transform.locPin.formula
+        newShape.transform.rotation.formula = transform.rotation.formula
+        newShape.transform.pin.formula = transform.pin.formula
+        newShape.transform.scale.formula = transform.scale.formula
+        // TODO Copy children here.
+    }
+
     override fun toString(): String = "Shape ${id.value}"
 
     companion object {
 
-        fun createBox(parent: ShapeParent, size: String, at: String, fill: Boolean = false): Shape2d {
+        fun createBox(parent: ShapeParent, size: String, at: String, fillColor: String? = null): Shape2d {
 
             val box = Shape2d.create(parent)
             box.size.formula = size
@@ -193,7 +203,8 @@ abstract class Shape(var parent: ShapeParent)
             geometry.fill.formula = "true"
             box.addGeometry(geometry)
 
-            if (fill) {
+            if (fillColor != null) {
+                box.fillColor.formula = fillColor
                 geometry.fill.formula = "true"
             }
 

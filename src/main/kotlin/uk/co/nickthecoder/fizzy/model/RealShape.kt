@@ -65,7 +65,6 @@ abstract class RealShape(parent: ShapeParent)
         listenTo(lineColor)
         listenTo(fillColor)
         super.postInit()
-
         // Automatically tell the child of the parent when it is added to the list (and set to null when removed)
         // Also bubble change events up the hierarchy.
         collectionListeners.add(ChangeAndCollectionListener(this, geometries,
@@ -80,6 +79,33 @@ abstract class RealShape(parent: ShapeParent)
                 onAdded = { item -> item.value.setContext(context) },
                 onRemoved = { item -> item.value.setContext(constantsContext) }
         ))
+    }
+
+    override fun populateShape(newShape: Shape) {
+        if (newShape is RealShape) {
+            geometries.forEach { geometryProp ->
+                val geometry = geometryProp.value
+                val newGeometry = Geometry()
+                newGeometry.fill.formula = geometry.fill.formula
+                newGeometry.line.formula = geometry.line.formula
+                geometry.parts.forEach { part ->
+                    newGeometry.parts.add(part.copy())
+                }
+                newShape.addGeometry(newGeometry)
+            }
+            connectionPoints.forEach { connectionPointProp ->
+                val connectionPoint = connectionPointProp.value
+                newShape.addConnectionPoint(connectionPoint.copy())
+            }
+            scratches.forEach { scratchProp ->
+                val scratch = scratchProp.value
+                newShape.addScratch(scratch.copy())
+            }
+            newShape.lineWidth.formula = lineWidth.formula
+            newShape.size.formula = size.formula
+            newShape.lineColor.formula = lineColor.formula
+            newShape.fillColor.formula = fillColor.formula
+        }
     }
 
     fun addGeometry(geometry: Geometry) {

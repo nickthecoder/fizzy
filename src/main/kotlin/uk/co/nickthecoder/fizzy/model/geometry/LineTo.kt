@@ -82,5 +82,7 @@ class LineTo(formula: String = "Dimension2(0mm, 0mm)")
         return prev + (point.value - prev) * along
     }
 
+    override fun copy(): GeometryPart = LineTo(point.formula)
+
     override fun toString() = "LineTo point=${point.value}"
 }

@@ -38,6 +38,8 @@ class Scratch(name: String, formula: String) {
     fun setContext(context: EvaluationContext) {
         expression.context = context
     }
+
+    fun copy() = Scratch(name.value, expression.formula)
 }
 
 class ScratchProp(scratch: Scratch)

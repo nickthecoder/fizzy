@@ -29,7 +29,7 @@ interface ShapeParent {
 
     fun document(): Document
 
-    fun findShape(name: String) : Shape?
+    fun findShape(name: String): Shape?
 
     val fromLocalToParent: Prop<Matrix33>
 
@@ -38,4 +38,5 @@ interface ShapeParent {
     val fromLocalToPage: Prop<Matrix33>
 
     val fromPageToLocal: Prop<Matrix33>
+
 }

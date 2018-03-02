@@ -71,6 +71,8 @@ abstract class GeometryPart
 
     abstract fun pointAlong(prev: Dimension2, along: Double): Dimension2
 
+    abstract fun copy(): GeometryPart
+
     companion object {
 
         /**

@@ -1,14 +1,17 @@
 To Do
 =====
 
-Create a ShapeGroup,
-    then look for all "is RealShape" and implement the other half.
-
 
 Create a mock master sheet toolbar, and use it to copy a stencil into the document.
 
+When a shape is deleted, then the connections must be broken.
+    How?
+
 Soon
 ----
+
+Create a ShapeGroup,
+    then look for all "is RealShape" and implement the other half.
 
 Add more drawing tests
     Box in Box

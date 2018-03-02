@@ -31,10 +31,17 @@ class Shape2d private constructor(parent: ShapeParent)
 
     override val size = Dimension2Expression("Dimension2(1mm,1mm)")
 
+
     init {
         size.propListeners.add(this)
     }
 
+    override fun copyInto(parent: ShapeParent): Shape2d {
+        val newShape = Shape2d(parent)
+        newShape.postInit()
+        populateShape(newShape)
+        return newShape
+    }
 
     companion object {
         fun create(parent: ShapeParent): Shape2d {

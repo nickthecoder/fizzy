@@ -52,6 +52,7 @@ class ConnectionPoint(point: String, angle: String) {
             }
         }
 
+    fun copy() = ConnectionPoint(point.formula, direction.formula)
 }
 
 class ConnectionPointProp(connectionPoint: ConnectionPoint)

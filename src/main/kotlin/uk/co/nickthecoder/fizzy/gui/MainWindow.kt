@@ -28,6 +28,7 @@ import javafx.stage.Stage
 import javafx.stage.Window
 import uk.co.nickthecoder.fizzy.gui.tools.DeleteTool
 import uk.co.nickthecoder.fizzy.gui.tools.SelectTool
+import uk.co.nickthecoder.fizzy.gui.tools.StampShape2dTool
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.paratask.ParaTask
 import uk.co.nickthecoder.paratask.gui.MyTabPane
@@ -44,6 +45,11 @@ class MainWindow(val stage: Stage) : Window() {
     val redoButton = Button("Redo")
     val selectToolButton = Button("Select")
     val deleteToolButton = Button("Delete")
+    val boxToolButton = Button("Box")
+    val lineToolButton = Button("Line")
+
+    // TODO This is a temporary measure until proper stencils are created.
+    val fakeStencil = FakeStencil()
 
     init {
         stage.title = "Fizzy"
@@ -59,7 +65,8 @@ class MainWindow(val stage: Stage) : Window() {
         redoButton.onAction = EventHandler { tabs.selectedTab?.document?.history?.redo() }
         selectToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.glassCanvas?.let { it.tool = SelectTool(it) } }
         deleteToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.glassCanvas?.let { it.tool = DeleteTool(it) } }
-        toolBar.items.addAll(undoButton, redoButton, selectToolButton, deleteToolButton)
+        boxToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.glassCanvas?.let { it.tool = StampShape2dTool(it, fakeStencil.box) } }
+        toolBar.items.addAll(undoButton, redoButton, selectToolButton, deleteToolButton, boxToolButton)
 
         stage.show()
     }
