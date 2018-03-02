@@ -31,7 +31,9 @@ class Page(val document: Document)
 
     override val children = MutableFList<Shape>()
 
-    private val shapesListener = ChangeAndCollectionListener(this, children)
+    private val childrenListener = ChangeAndCollectionListener(this, children,
+            onAdded = { if (it.page() != this@Page) throw IllegalStateException("Added a $it to a different page") }
+    )
 
     init {
         document.pages.add(this)

@@ -33,7 +33,9 @@ class Document : HasChangeListeners<Document> {
 
     private var previousId = 0
 
-    private val pagesListener = ChangeAndCollectionListener(this, pages)
+    private val pagesListener = ChangeAndCollectionListener(this, pages,
+            onAdded = { if (it.document != this@Document) throw IllegalStateException("Added a page to the incorrect document") }
+    )
 
     // TODO When load/save is implemented, this should be the file name without the file extension.
     val name: String
