@@ -27,9 +27,9 @@ import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Vector2
 import kotlin.reflect.KClass
 
-private fun <T : Any> evaluate(expression: String, klass: KClass<T>, context: EvaluationContext): Prop<T> {
+private fun <T : Any> evaluate(formula: String, klass: KClass<T>, context: EvaluationContext): Prop<T> {
 
-    val prop = Evaluator(expression, context).parse()
+    val prop = Evaluator(formula, context).parse()
     val value = prop.value
 
     if (klass.isInstance(value)) {
@@ -56,11 +56,11 @@ private fun <T : Any> evaluate(expression: String, klass: KClass<T>, context: Ev
     throw EvaluationException("Expected type ${klass.simpleName}, but found ${prop.value.javaClass.kotlin.simpleName}", 0)
 }
 
-open class PropExpression<T : Any>(expression: String, val klass: KClass<T>, var context: EvaluationContext = constantsContext)
+open class PropExpression<T : Any>(formula: String, val klass: KClass<T>, var context: EvaluationContext = constantsContext)
 
     : PropCalculation<T>() {
 
-    var expression: String = expression
+    var formula: String = formula
         set(v) {
             field = v
             dirty = true
@@ -71,7 +71,7 @@ open class PropExpression<T : Any>(expression: String, val klass: KClass<T>, var
     override fun eval(): T {
         calculatedProperty?.propListeners?.remove(this)
         try {
-            val cp = evaluate(expression, klass, context)
+            val cp = evaluate(formula, klass, context)
             calculatedProperty = cp
             cp.propListeners.add(this)
             return cp.value
@@ -81,9 +81,9 @@ open class PropExpression<T : Any>(expression: String, val klass: KClass<T>, var
     }
 
     override fun dump(): String {
-        return "Expression : '$expression'"
+        return "Expression : '$formula'"
     }
 
-    override fun toString() = "='$expression'"
+    override fun toString() = "='$formula'"
 
 }

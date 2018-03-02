@@ -80,7 +80,7 @@ class TestListeners : MyTestCase() {
     @Test
     fun testSize() {
         shape1a.size.value // Ensure not dirty - without this, no change would be fired.
-        shape1a.size.expression = "Dimension2(1mm,1mm)"
+        shape1a.size.formula = "Dimension2(1mm,1mm)"
         assertEquals(1, shape1aChanged)
         assertEquals(0, shape1bChanged)
         assertEquals(1, layer1Changed)
@@ -91,14 +91,14 @@ class TestListeners : MyTestCase() {
         assertEquals(1, shape1aChanged) // Make sure the line above doesn't fire a change.
 
         // Change it for a 2nd time.
-        shape1a.size.expression = "Dimension2(1m,1m)"
+        shape1a.size.formula = "Dimension2(1m,1m)"
         assertEquals(2, shape1aChanged)
         assertEquals(2, layer1Changed)
         assertEquals(2, pageChanged)
 
         // Change it for a 3rd time.
         // But as it is already dirty, no additional change events should be fired.
-        shape1a.size.expression = "Dimension2(1cm,1cm)"
+        shape1a.size.formula = "Dimension2(1cm,1cm)"
         assertEquals(2, shape1aChanged)
         assertEquals(2, layer1Changed)
         assertEquals(2, pageChanged)
@@ -108,7 +108,7 @@ class TestListeners : MyTestCase() {
     @Test
     fun testPosition() {
         shape1a.transform.pin.value // Ensure not dirty
-        shape1a.transform.pin.expression = "Dimension2(1mm,1mm)"
+        shape1a.transform.pin.formula = "Dimension2(1mm,1mm)"
         assertEquals(1, shape1aChanged)
         assertEquals(0, shape1bChanged)
         assertEquals(1, layer1Changed)
@@ -119,7 +119,7 @@ class TestListeners : MyTestCase() {
     @Test
     fun testLocalPosition() {
         shape1a.transform.locPin.value // Ensure not dirty
-        shape1a.transform.locPin.expression = "Dimension2(1mm,1mm)"
+        shape1a.transform.locPin.formula = "Dimension2(1mm,1mm)"
         assertEquals(1, shape1aChanged)
         assertEquals(1, layer1Changed)
         assertEquals(1, pageChanged)
@@ -128,7 +128,7 @@ class TestListeners : MyTestCase() {
     @Test
     fun testScale() {
         shape1a.transform.scale.value // Ensure not dirty
-        shape1a.transform.scale.expression = "Vector2(1,)"
+        shape1a.transform.scale.formula = "Vector2(1,)"
         assertEquals(1, shape1aChanged)
         assertEquals(1, layer1Changed)
         assertEquals(1, pageChanged)
@@ -137,7 +137,7 @@ class TestListeners : MyTestCase() {
     @Test
     fun testRotation() {
         shape1a.transform.rotation.value // Ensure not dirty
-        shape1a.transform.rotation.expression = "30 deg"
+        shape1a.transform.rotation.formula = "30 deg"
         assertEquals(1, shape1aChanged)
         assertEquals(1, layer1Changed)
         assertEquals(1, pageChanged)
@@ -146,7 +146,7 @@ class TestListeners : MyTestCase() {
     @Test
     fun testStart() {
         shape1b.start.value // Ensure not dirty
-        shape1b.start.expression = "Dimension2(3m,2m)"
+        shape1b.start.formula = "Dimension2(3m,2m)"
         assertEquals(1, shape1bChanged)
         assertEquals(1, layer1Changed)
         assertEquals(1, pageChanged)
@@ -155,7 +155,7 @@ class TestListeners : MyTestCase() {
     @Test
     fun testEnd() {
         shape1b.start.value // Ensure not dirty
-        shape1b.start.expression = "Dimension2(3m,2m)"
+        shape1b.start.formula = "Dimension2(3m,2m)"
         assertEquals(1, shape1bChanged)
         assertEquals(1, layer1Changed)
         assertEquals(1, pageChanged)

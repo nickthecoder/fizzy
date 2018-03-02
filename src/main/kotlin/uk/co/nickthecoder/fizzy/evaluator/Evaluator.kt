@@ -22,7 +22,7 @@ import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.prop.*
 
 /**
- * Parses a expression (a [CharSequence]), converting it into a single [Prop].
+ * Parses a formula (a [CharSequence]), converting it into a single [Prop].
  *
  * Note that parsing is NOT the same as evaluating, and therefore parsing "2+2" does NOT return 4.
  * Instead, it will return a [PropCalculation] object. It will only be evaluated when [Prop.value] is first referenced.
@@ -156,7 +156,7 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
      * The operator is added to the operator stack, without further processing, because it may need future operators
      * to be applied first.
      *
-     * When the end of the expression is reached, the special "EndToken" is pushed. This is the lowest precedence,
+     * When the end of the formula is reached, the special "EndToken" is pushed. This is the lowest precedence,
      * and therefore causes all of the operators on the stack to be evaluated.
      */
     private fun push(token: Token) {

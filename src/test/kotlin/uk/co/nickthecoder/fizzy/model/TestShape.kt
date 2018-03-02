@@ -68,13 +68,13 @@ class TestShape : MyTestCase(), MyShapeTest {
         assertEquals(inner, test("findShape2", "findShape(\"inner\""))
         assertEquals(inner, test("findShape", "Parent.findShape(\"inner\"")) // Recurse from Page downwards.
 
-        box.lineWidth.expression = "3mm"
+        box.lineWidth.formula = "3mm"
         assertEquals(3.0, test("lineWidth", "LineWidth.mm"))
 
-        box.lineColor.expression = "Color.yellow"
+        box.lineColor.formula = "Color.yellow"
         assertEquals(Color.NamedColors["yellow"], test("lineColor", "LineColor"))
 
-        box.fillColor.expression = "Color.green"
+        box.fillColor.formula = "Color.green"
         assertEquals(Color.NamedColors["green"], test("fillColor", "FillColor"))
 
     }

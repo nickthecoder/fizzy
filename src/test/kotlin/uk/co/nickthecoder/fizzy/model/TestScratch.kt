@@ -57,9 +57,9 @@ class TestScratch : MyTestCase(), MyShapeTest {
         assertEquals(Angle.degrees(90.0), box.scratches[5].value.expression.value)
 
         // Change the values (and the types of the last two)
-        box.scratches[0].value.expression.expression = "80"
-        box.scratches[1].value.expression.expression = "60"
-        box.scratches[2].value.expression.expression = "40"
+        box.scratches[0].value.expression.formula = "80"
+        box.scratches[1].value.expression.formula = "60"
+        box.scratches[2].value.expression.formula = "40"
 
         // Note the indices are still switched!
         assertEquals(80.0, box.scratches[4].value.expression.value)

@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.util.terse
-import uk.co.nickthecoder.fizzy.util.toExpression
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class Angle private constructor(val radians: Double) {
 
@@ -46,7 +46,7 @@ class Angle private constructor(val radians: Double) {
         return other is Angle && other.radians == this.radians
     }
 
-    fun toExpression(): String = "${degrees.toExpression()} deg"
+    fun toFormula(): String = "${degrees.toFormula()} deg"
 
     override fun toString(): String = "${degrees.terse()} deg"
 

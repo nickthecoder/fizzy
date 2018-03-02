@@ -23,7 +23,7 @@ import uk.co.nickthecoder.fizzy.util.MyTestCase
 
 class TestBoolean : MyTestCase() {
 
-    fun parseBoolean(expression: String) = Evaluator(expression).parse().value as Boolean
+    fun parseBoolean(formula: String) = Evaluator(formula).parse().value as Boolean
 
     @Test
     fun testConstants() {

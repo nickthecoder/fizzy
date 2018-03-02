@@ -23,14 +23,14 @@ import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
-class Scratch(name: String, expression: String) {
+class Scratch(name: String, formula: String) {
 
     val name = PropVariable<String>(name)
 
-    val expression = PropExpression<Any>(expression, Any::class)
+    val expression = PropExpression<Any>(formula, Any::class)
 
     /**
-     * Used only as documentation of the Master Shape, and is NOT available for use in expressions.
+     * Used only as documentation of the Master Shape, and is NOT available for use in formulas.
      * Therefore it is not a [Prop].
      */
     var comment = ""

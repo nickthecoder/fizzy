@@ -102,6 +102,6 @@ val constantsContext = SimpleEvaluationContext(
                 "MIN_DOUBLE" to PropConstant(-Double.MAX_VALUE), // Note, this is NOT the same as the badly named Java Double.MIN_VALUE
                 "SMALLEST_DOUBLE" to PropConstant(Double.MIN_VALUE),
                 "NaN" to PropConstant(Double.NaN),
-                "Color" to PropConstant(Color.BLACK) // This is a quick bodge to allow expressions such as : "Color.yellow"
+                "Color" to PropConstant(Color.BLACK) // This is a quick bodge to allow formulas such as : "Color.yellow"
         )
 )

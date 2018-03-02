@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.evaluator
 
 import org.junit.Test
-import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.MyTestCase
@@ -208,7 +207,7 @@ class TestEvaluator : MyTestCase() {
 
         val b2 = Vector2Expression("Dimension2(6m,1m) / variable", context)
         assertEquals(3.0, b2.value.x, tiny)
-        variable.expression = "1m"
+        variable.formula = "1m"
         assertEquals(6.0, b2.value.x, tiny)
     }
 

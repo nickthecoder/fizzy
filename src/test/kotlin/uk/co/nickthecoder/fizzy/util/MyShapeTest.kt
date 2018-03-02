@@ -26,14 +26,14 @@ import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 
 interface MyShapeTest {
 
-    fun dimension(expression: String) = Evaluator(expression).parse().value as Dimension
+    fun dimension(formula: String) = Evaluator(formula).parse().value as Dimension
 
-    fun dimension2(expression: String) = Evaluator(expression).parse().value as Dimension2
+    fun dimension2(formula: String) = Evaluator(formula).parse().value as Dimension2
 
     fun createBox(parent: ShapeParent, size: String = "Dimension2(10mm,10mm)", at: String = "Dimension2(0mm,0mm)"): Shape2d {
         val box = Shape2d.create(parent)
-        box.size.expression = size
-        box.transform.pin.expression = at
+        box.size.formula = size
+        box.transform.pin.formula = at
         val geometry = Geometry()
         box.addGeometry(geometry)
         geometry.parts.add(MoveTo("Size * Vector2(0,0)"))
@@ -48,9 +48,9 @@ interface MyShapeTest {
     fun createLine(parent: ShapeParent, start: String, end: String, lineWidth: String = "2mm"): Shape1d {
         val line = Shape1d.create(parent)
 
-        line.start.expression = start
-        line.end.expression = end
-        line.lineWidth.expression = lineWidth
+        line.start.formula = start
+        line.end.formula = end
+        line.lineWidth.formula = lineWidth
 
         val geometry = Geometry()
         line.addGeometry(geometry)

@@ -52,7 +52,7 @@ abstract class GeometryPart
 
     internal abstract fun setContext(context: EvaluationContext)
 
-    abstract fun expression(): String
+    abstract fun formula(): String
 
     override val changeListeners = ChangeListeners<GeometryPart>()
 

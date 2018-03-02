@@ -75,8 +75,8 @@ class Shape2dSizeHandle(val shape2d: Shape2d, position: Dimension2, val dx: Int,
                 shape2d.size.value.y + deltaY)
 
         shape2d.document().history.makeChange(ChangeExpressions(listOf(
-                shape2d.size to newSize.toExpression(),
-                shape2d.transform.pin to newPin.toExpression()
+                shape2d.size to newSize.toFormula(),
+                shape2d.transform.pin to newPin.toFormula()
         )))
 
     }

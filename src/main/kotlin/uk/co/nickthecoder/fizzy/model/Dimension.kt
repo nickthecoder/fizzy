@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.util.terse
-import uk.co.nickthecoder.fizzy.util.toExpression
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 /**
  * Holds a length as a number with a given unit of measures.
@@ -144,9 +144,9 @@ class Dimension : Comparable<Dimension> {
 
 
     /**
-     * Return in a format suitable for an expression.
+     * Return in a format suitable for a formula.
      */
-    fun toExpression() = "${inUnits(units).toExpression()} ${units.name}"
+    fun toFormula() = "${inUnits(units).toFormula()} ${units.name}"
 
     override fun toString(): String {
         return if (power == 0.0) {

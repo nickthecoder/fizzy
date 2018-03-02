@@ -5,25 +5,25 @@ import uk.co.nickthecoder.fizzy.prop.PropExpression
 class ChangeExpressions(expressions: List<Pair<PropExpression<*>, String>>)
     : Change {
 
-    class State(val oldExpression: String, var newExpression: String)
+    class State(val oldFormula: String, var newFormula: String)
 
     val states = mutableMapOf<PropExpression<*>, State>()
 
     init {
         expressions.forEach { (expression, newValue) ->
-            states[expression] = State(expression.expression, newValue)
+            states[expression] = State(expression.formula, newValue)
         }
     }
 
     override fun redo() {
         states.forEach { expression, state ->
-            expression.expression = state.newExpression
+            expression.formula = state.newFormula
         }
     }
 
     override fun undo() {
         states.forEach { expression, state ->
-            expression.expression = state.oldExpression
+            expression.formula = state.oldFormula
         }
     }
 
@@ -33,9 +33,9 @@ class ChangeExpressions(expressions: List<Pair<PropExpression<*>, String>>)
             states.forEach { expression, myState ->
                 val otherState = other.states[expression]
                 if (otherState == null) {
-                    other.states[expression] = State(expression.expression, myState.newExpression)
+                    other.states[expression] = State(expression.formula, myState.newFormula)
                 } else {
-                    otherState.newExpression = myState.newExpression
+                    otherState.newFormula = myState.newFormula
                 }
             }
 

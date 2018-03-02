@@ -24,11 +24,11 @@ import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 
 
-class LineTo(expression: String = "Dimension2(0mm, 0mm)")
+class LineTo(formula: String = "Dimension2(0mm, 0mm)")
 
     : GeometryPart() {
 
-    override val point = Dimension2Expression(expression)
+    override val point = Dimension2Expression(formula)
 
     init {
         point.propListeners.add(this)
@@ -38,7 +38,7 @@ class LineTo(expression: String = "Dimension2(0mm, 0mm)")
         point.context = context
     }
 
-    override fun expression() = "LineTo point='${point.expression}'"
+    override fun formula() = "LineTo point='${point.formula}'"
 
     override fun isAlong(here: Dimension2, prev: Dimension2, thickness: Dimension): Boolean {
 

@@ -181,8 +181,8 @@ abstract class Shape(var parent: ShapeParent)
         fun createBox(parent: ShapeParent, size: String, at: String, fill: Boolean = false): Shape2d {
 
             val box = Shape2d.create(parent)
-            box.size.expression = size
-            box.transform.pin.expression = at
+            box.size.formula = size
+            box.transform.pin.formula = at
 
             val geometry = Geometry()
             geometry.parts.add(MoveTo("Size * Vector2(0,0)"))
@@ -190,11 +190,11 @@ abstract class Shape(var parent: ShapeParent)
             geometry.parts.add(LineTo("Size * Vector2(1,1)"))
             geometry.parts.add(LineTo("Size * Vector2(0,1)"))
             geometry.parts.add(LineTo("Geometry1.Point1"))
-            geometry.fill.expression = "true"
+            geometry.fill.formula = "true"
             box.addGeometry(geometry)
 
             if (fill) {
-                geometry.fill.expression = "true"
+                geometry.fill.formula = "true"
             }
 
             return box
@@ -205,9 +205,9 @@ abstract class Shape(var parent: ShapeParent)
         fun createLine(parent: ShapeParent, start: String, end: String, lineWidth: String = "2mm"): Shape1d {
             val line = Shape1d.create(parent)
 
-            line.start.expression = start
-            line.end.expression = end
-            line.lineWidth.expression = lineWidth
+            line.start.formula = start
+            line.end.formula = end
+            line.lineWidth.formula = lineWidth
 
             val geometry = Geometry()
             geometry.parts.add(MoveTo("Dimension2(0mm,LineWidth/2)"))

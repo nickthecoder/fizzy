@@ -42,9 +42,9 @@ class Shape1d private constructor(parent: ShapeParent)
         listenTo(start)
         listenTo(end)
         listenTo(size)
-        transform.locPin.expression = "Dimension2(Length*0.5, LineWidth * 0.5)"
-        transform.pin.expression = "(Start+End) * 0.5"
-        transform.rotation.expression = "(End-Start).Angle"
+        transform.locPin.formula = "Dimension2(Length*0.5, LineWidth * 0.5)"
+        transform.pin.formula = "(Start+End) * 0.5"
+        transform.rotation.formula = "(End-Start).Angle"
     }
 
     companion object {

@@ -6,7 +6,7 @@ import uk.co.nickthecoder.fizzy.model.Shape
 class MoveShapes(shapes: List<Shape>, val delta: Dimension2)
     : Change {
 
-    class OldAndNew(val shape: Shape, val oldExpression: String, var newValue: Dimension2)
+    class OldAndNew(val shape: Shape, val oldFormula: String, var newValue: Dimension2)
 
     val changes = mutableMapOf<Int, OldAndNew>()
 
@@ -19,19 +19,19 @@ class MoveShapes(shapes: List<Shape>, val delta: Dimension2)
     fun addShape(shape: Shape, delta: Dimension2) {
         changes[shape.id.value] = OldAndNew(
                 shape,
-                shape.transform.pin.expression,
+                shape.transform.pin.formula,
                 shape.transform.pin.value + delta)
     }
 
     override fun redo() {
         changes.values.forEach {
-            it.shape.transform.pin.expression = it.newValue.toExpression()
+            it.shape.transform.pin.formula = it.newValue.toFormula()
         }
     }
 
     override fun undo() {
         changes.values.forEach {
-            it.shape.transform.pin.expression = it.oldExpression
+            it.shape.transform.pin.formula = it.oldFormula
         }
     }
 

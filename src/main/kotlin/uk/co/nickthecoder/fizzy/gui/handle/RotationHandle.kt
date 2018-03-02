@@ -21,6 +21,6 @@ class RotationHandle(shape: Shape, position: Dimension2)
         val angle = (local - shape.transform.locPin.value).angle() + Angle.degrees(90.0)
         shape.document().history.makeChange(ChangeExpression(
                 shape.transform.rotation,
-                (shape.transform.rotation.value + angle).toExpression()))
+                (shape.transform.rotation.value + angle).toFormula()))
     }
 }

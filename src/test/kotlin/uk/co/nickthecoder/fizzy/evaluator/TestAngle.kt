@@ -115,13 +115,13 @@ class TestAngle : MyTestCase() {
         val value1 = variables.findProp("value1") as PropExpression<Double>
 
         assertEquals(100.0, a.value.degrees, tiny)
-        value1.expression = "100"
+        value1.formula = "100"
         assertEquals(80.0, a.value.degrees, tiny)
 
 
         val b = Evaluator("angle1.Degrees", context).parse() as Prop<Double>
         assertEquals(100.0, b.value, tiny)
-        value1.expression = "80"
+        value1.formula = "80"
         assertEquals(80.0, b.value, tiny)
     }
 

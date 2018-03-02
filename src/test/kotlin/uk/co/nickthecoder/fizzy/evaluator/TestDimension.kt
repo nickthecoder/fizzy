@@ -104,7 +104,7 @@ class TestDimension : MyTestCase() {
         val x = variables.findProp("x") as PropExpression<Double>
 
         assertEquals(43.0, a.value.mm, tiny)
-        x.expression = "5"
+        x.formula = "5"
         assertEquals(45.0, a.value.mm, tiny)
     }
 

@@ -118,7 +118,7 @@ class Dimension2(val x: Dimension, val y: Dimension) {
         return false
     }
 
-    fun toExpression() = "Dimension2(${x.toExpression()},${y.toExpression()})"
+    fun toFormula() = "Dimension2(${x.toFormula()},${y.toFormula()})"
 
     override fun toString() = "Dimension2($x , $y)"
 
