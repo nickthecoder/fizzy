@@ -29,10 +29,13 @@ class TestConnections : MyTestCase(), MyShapeTest {
     fun testConnectAlong() {
         val doc = Document()
         val page = Page(doc)
-val c = Color.BLACK
+        val c = Color.BLACK
         val box1 = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(0mm,0mm)") // @ -5,-10 to 5, 10
-        createBox(box1, "Dimension2(10mm,20mm)", "Dimension2(6mm,11mm)") // @ -4,-9 to 6, 11
+        page.children.add(box1)
+        val box2 = createBox(box1, "Dimension2(10mm,20mm)", "Dimension2(6mm,11mm)") // @ -4,-9 to 6, 11
+        box1.children.add(box2)
         val line = createLine(page, "Dimension2(0mm,0mm)", "Dimension2(0mm,0mm)")
+        page.children.add(line)
 
         // Note the "this." is optional, so I've left this one in, but removed the others.
         line.start.formula = "this.connectAlong(Page.Shape1.Geometry1, 0.025)" // 10th along 1st line
@@ -73,6 +76,9 @@ val c = Color.BLACK
         val box1 = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(0mm,0mm)") // @ -5,-10 to 5, 10
         val box2 = createBox(box1, "Dimension2(10mm,20mm)", "Dimension2(6mm,11mm)") // @ -4,-9 to 6, 11
         val line = createLine(page, "Dimension2(0mm,0mm)", "Dimension2(0mm,0mm)")
+        page.children.add(box1)
+        box1.children.add(box2)
+        page.children.add(line)
 
         box1.addConnectionPoint(ConnectionPoint("(Geometry1.Point1 + Geometry1.Point2) / 2", "0deg"))
         box1.addConnectionPoint(ConnectionPoint("(Geometry1.Point2 + Geometry1.Point3) / 2", "0deg"))

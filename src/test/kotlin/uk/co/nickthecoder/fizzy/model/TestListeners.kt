@@ -42,6 +42,11 @@ class TestListeners : MyTestCase() {
     var shape1aChanged = 0
     var shape1bChanged = 0
 
+    init {
+        layer1.children.add(shape1a)
+        layer1.children.add(shape1b)
+    }
+
     /**
      * This is a quick and dirty way of keeping a reference to the listeners, so that they don't get gc'd
      */

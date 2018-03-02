@@ -38,6 +38,7 @@ class TestFindShapeAt : MyTestCase(), MyShapeTest {
         val page = Page(doc)
         val box = createBox(page, "Dimension2(20mm,40mm)", "Dimension2(40mm, 120mm)")
         // Box from 30mm, 100m to 50mm, 140mm
+        page.children.add(box)
 
         box.geometries[0].value.fill.formula = "false"
 
@@ -75,6 +76,8 @@ class TestFindShapeAt : MyTestCase(), MyShapeTest {
         val doc = Document()
         val page = Page(doc)
         val box = createBox(page, "Dimension2(20mm,40mm)", "Dimension2(40mm, 120mm)")
+        page.children.add(box)
+
         // Box from 30mm, 100m to 50mm, 140mm
 
         box.geometries[0].value.fill.formula = "true"

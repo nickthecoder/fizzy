@@ -4,13 +4,11 @@ import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.ShapeParent
 
-class CreateShape(val copyFrom: Shape, val parent: ShapeParent, val position: Dimension2)
+class CreateShape(val newShape: Shape, val parent: ShapeParent, val position: Dimension2)
     : Change {
 
-    lateinit var newShape: Shape
-
     override fun redo() {
-        newShape = copyFrom.copyInto(parent)
+        parent.children.add(newShape)
         newShape.transform.pin.formula = position.toFormula()
     }
 

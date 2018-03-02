@@ -31,7 +31,8 @@ class TestPageView : MyTestCase(), MyShapeTest {
 
     @Test
     fun testSimpleBox() {
-        createBox(page, "Dimension2(4mm,10mm)", "Dimension2(6mm,28mm)")
+        val box = createBox(page, "Dimension2(4mm,10mm)", "Dimension2(6mm,28mm)")
+        page.children.add(box)
 
         val context = MockContext()
         val view = PageView(page, context)
@@ -51,6 +52,7 @@ class TestPageView : MyTestCase(), MyShapeTest {
     @Test
     fun testScaledBox() {
         val box1 = createBox(page, "Dimension2(120mm,240mm)", "Dimension2(0mm,0mm)")
+        page.children.add(box1)
         box1.transform.scale.formula = "Vector2(0.25, 0.5)"
         // Box1 is really 30mm,120 at 0,0
 
@@ -75,7 +77,10 @@ class TestPageView : MyTestCase(), MyShapeTest {
     fun testBoxInScaledBox() {
 
         val box1 = createBox(page, "Dimension2(120mm,240mm)", "Dimension2(0mm,0mm)")
-        createBox(box1, "Dimension2(24mm,40mm)", "Parent.LocPin") // At the center of box1
+        val box2 = createBox(box1, "Dimension2(24mm,40mm)", "Parent.LocPin") // At the center of box1
+        page.children.add(box1)
+        box1.children.add(box2)
+
         box1.transform.scale.formula = "Vector2(0.25, 0.5)"
         // Box 1 is really 30x120 at 0,0
         // Box 2 is really 30x20 at 0,0
@@ -104,7 +109,10 @@ class TestPageView : MyTestCase(), MyShapeTest {
 
     fun testTranslatedBoxInScaledBox() {
         val box1 = createBox(page, "Dimension2(120mm,240mm)", "Dimension2(0mm,0mm)")
-        createBox(box1, "Dimension2(24mm,40mm)", "Parent.LocPin + Dimension2(4mm,10mm)")
+        val box2 = createBox(box1, "Dimension2(24mm,40mm)", "Parent.LocPin + Dimension2(4mm,10mm)")
+        page.children.add(box1)
+        box1.children.add(box2)
+
         box1.transform.scale.formula = "Vector2(0.25, 0.5)"
         // Box 1 is really 30x120 at 0,0
         // Box 2 is really 30x20 at 1,5
@@ -135,6 +143,9 @@ class TestPageView : MyTestCase(), MyShapeTest {
     fun testScaledBoxInBox() {
         val box1 = createBox(page, "Dimension2(120mm,240mm)", "Dimension2(0mm,0mm)")
         val box2 = createBox(box1, "Dimension2(24mm,40mm)", "Parent.LocPin")
+        page.children.add(box1)
+        box1.children.add(box2)
+
         box2.transform.scale.formula = "Vector2(3,2)"
         // Box 1 is 120x240 at 0,0
         // Box 2 is 72x80 at 0,0
@@ -163,7 +174,8 @@ class TestPageView : MyTestCase(), MyShapeTest {
 
     @Test
     fun testLine() {
-        createLine(page, "Dimension2(4mm,14mm)", "Dimension2(16mm,26mm)", "6mm")
+        val line = createLine(page, "Dimension2(4mm,14mm)", "Dimension2(16mm,26mm)", "6mm")
+        page.children.add(line)
 
         val context = MockContext()
         val view = PageView(page, context)

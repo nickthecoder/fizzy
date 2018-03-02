@@ -35,6 +35,9 @@ class TestShape : MyTestCase(), MyShapeTest {
 
         val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(100mm,200mm)")
         val inner = createBox(box, "Dimension2(1mm,2mm)", "Dimension2(10mm,20mm)")
+        page.children.add(box)
+        box.children.add(inner)
+
         inner.name.value = "inner"
 
         fun test(name: String, exp: String): Any {
@@ -90,6 +93,9 @@ class TestShape : MyTestCase(), MyShapeTest {
 
         val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(100mm,200mm)")
         val inner = createBox(box, "Dimension2(1mm,2mm)", "Dimension2(10mm,20mm)")
+        page.children.add(box)
+        box.children.add(inner)
+
         inner.name.value = "inner"
 
         fun test(name: String, exp: String): Any {

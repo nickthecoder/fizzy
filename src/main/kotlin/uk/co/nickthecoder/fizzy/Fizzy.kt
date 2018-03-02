@@ -41,6 +41,8 @@ class Fizzy : Application() {
         val page = Page(doc)
         val box1 = Shape.createBox(page, "Dimension2(20cm,10cm)", "Dimension2(40cm,10cm)")
         val box2 = Shape.createBox(page, "Dimension2(20cm,10cm)", "Dimension2(40cm,30cm)")
+        page.children.add(box1)
+        page.children.add(box2)
 
         box1.addConnectionPoint(ConnectionPoint("(Geometry1.Point1 + Geometry1.Point2) / 2", "-90 deg"))
         box1.addConnectionPoint(ConnectionPoint("(Geometry1.Point3 + Geometry1.Point4) / 2", "90 deg"))
@@ -50,6 +52,8 @@ class Fizzy : Application() {
         box2.fillColor.formula = "Color.grey"
 
         val line = Shape.createLine(page, "Dimension2(10cm,11cm)", "Dimension2(10cm,13cm)")
+        page.children.add(line)
+
         line.start.formula = "this.connectTo(Page.Shape1.ConnectionPoint2)"
         line.end.formula = "this.connectAlong(Page.Shape2.Geometry1, 0.125)"
 

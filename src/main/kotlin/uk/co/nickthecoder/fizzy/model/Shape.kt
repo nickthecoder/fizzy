@@ -94,7 +94,6 @@ abstract class Shape(var parent: ShapeParent)
     open protected fun postInit() {
         listenTo(name)
         children.listeners.add(shapeListener)
-        parent.children.add(this)
     }
 
     protected fun createContext(thisContext: ThisContext<*>) = CompoundEvaluationContext(listOf(
