@@ -26,6 +26,8 @@ import javafx.scene.control.ToolBar
 import javafx.scene.layout.BorderPane
 import javafx.stage.Stage
 import javafx.stage.Window
+import uk.co.nickthecoder.fizzy.gui.tools.DeleteTool
+import uk.co.nickthecoder.fizzy.gui.tools.SelectTool
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.paratask.ParaTask
 import uk.co.nickthecoder.paratask.gui.MyTabPane
@@ -40,6 +42,8 @@ class MainWindow(val stage: Stage) : Window() {
 
     val undoButton = Button("Undo")
     val redoButton = Button("Redo")
+    val selectToolButton = Button("Select")
+    val deleteToolButton = Button("Delete")
 
     init {
         stage.title = "Fizzy"
@@ -53,7 +57,9 @@ class MainWindow(val stage: Stage) : Window() {
 
         undoButton.onAction = EventHandler { tabs.selectedTab?.document?.history?.undo() }
         redoButton.onAction = EventHandler { tabs.selectedTab?.document?.history?.redo() }
-        toolBar.items.addAll(undoButton, redoButton)
+        selectToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.glassCanvas?.let { it.tool = SelectTool(it) } }
+        deleteToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.glassCanvas?.let { it.tool = DeleteTool(it) } }
+        toolBar.items.addAll(undoButton, redoButton, selectToolButton, deleteToolButton)
 
         stage.show()
     }

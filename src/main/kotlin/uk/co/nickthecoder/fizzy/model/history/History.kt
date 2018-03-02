@@ -93,7 +93,13 @@ class History {
     }
 
     fun makeChange(change: Change) {
-        currentBatch?.makeChange(change)
+        currentBatch?.let {
+            it.makeChange(change)
+            return
+        }
+        beginBatch()
+        makeChange(change)
+        endBatch()
     }
 
 
