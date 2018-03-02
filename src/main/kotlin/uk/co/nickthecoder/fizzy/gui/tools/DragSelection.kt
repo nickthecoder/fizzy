@@ -23,12 +23,17 @@ import uk.co.nickthecoder.fizzy.gui.GlassCanvas
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.Shape2d
+import uk.co.nickthecoder.fizzy.model.history.MoveShapes
 
 
 class DragSelection(glassCanvas: GlassCanvas, var previousPoint: Dimension2)
     : Tool(glassCanvas) {
 
     val document = glassCanvas.page.document
+
+    init {
+        document.history.beginBatch()
+    }
 
     override fun onMouseClick(event: MouseEvent) {
 
@@ -39,9 +44,9 @@ class DragSelection(glassCanvas: GlassCanvas, var previousPoint: Dimension2)
     override fun onMouseDragged(event: MouseEvent) {
         val now = glassCanvas.toDimension2(event)
         val delta = now - previousPoint
-        document.selection.forEach {
-            move(it, delta)
-        }
+
+        document.history.makeChange(MoveShapes(document.selection, delta))
+
         previousPoint = now
         event.consume()
     }
@@ -57,6 +62,7 @@ class DragSelection(glassCanvas: GlassCanvas, var previousPoint: Dimension2)
     override fun onMousePressed(event: MouseEvent) {}
 
     override fun onMouseReleased(event: MouseEvent) {
+        document.history.endBatch()
         glassCanvas.tool = DragCompleted(glassCanvas)
         event.consume()
     }

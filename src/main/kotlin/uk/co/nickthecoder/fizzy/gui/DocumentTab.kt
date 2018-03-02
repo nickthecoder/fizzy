@@ -22,16 +22,16 @@ import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.Page
 import uk.co.nickthecoder.paratask.gui.MyTab
 
-class DocumentTab(doc: Document)
-    : MyTab(doc.name) {
+class DocumentTab(document: Document)
+    : MyTab(document.name) {
 
     init {
-        if (doc.pages.size == 0) {
-            doc.pages.add(Page(doc))
+        if (document.pages.size == 0) {
+            document.pages.add(Page(document))
         }
     }
 
-    val drawingArea = DrawingArea(doc.pages[0])
+    val drawingArea = DrawingArea(document.pages[0])
 
     val document: Document
         get() = drawingArea.page.document

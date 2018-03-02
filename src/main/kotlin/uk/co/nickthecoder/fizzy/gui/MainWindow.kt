@@ -18,7 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.gui
 
+import javafx.event.EventHandler
 import javafx.scene.Scene
+import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.ToolBar
 import javafx.scene.layout.BorderPane
@@ -36,6 +38,9 @@ class MainWindow(val stage: Stage) : Window() {
 
     val tabs = MyTabPane<DocumentTab>()
 
+    val undoButton = Button("Undo")
+    val redoButton = Button("Redo")
+
     init {
         stage.title = "Fizzy"
 
@@ -45,6 +50,10 @@ class MainWindow(val stage: Stage) : Window() {
         toolBar.items.add(Label("Toolbar"))
         stage.scene = Scene(borderPane, 800.0, 600.0)
         ParaTask.style(stage.scene)
+
+        undoButton.onAction = EventHandler { tabs.selectedTab?.document?.history?.undo() }
+        redoButton.onAction = EventHandler { tabs.selectedTab?.document?.history?.redo() }
+        toolBar.items.addAll(undoButton, redoButton)
 
         stage.show()
     }
