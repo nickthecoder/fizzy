@@ -25,6 +25,10 @@ import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
 import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.gui.handle.Handle
+import uk.co.nickthecoder.fizzy.gui.handle.RotationHandle
+import uk.co.nickthecoder.fizzy.gui.handle.Shape2dSizeHandle
+import uk.co.nickthecoder.fizzy.gui.handle.ShapeHandle
 import uk.co.nickthecoder.fizzy.gui.tools.SelectTool
 import uk.co.nickthecoder.fizzy.gui.tools.Tool
 import uk.co.nickthecoder.fizzy.model.*
@@ -226,15 +230,15 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
 
         if (shape is Shape2d) {
             val corners = shapeCorners(shape)
-            handles.add(ShapeHandle(shape, corners[0]))
-            handles.add(ShapeHandle(shape, corners[1]))
-            handles.add(ShapeHandle(shape, corners[2]))
-            handles.add(ShapeHandle(shape, corners[3]))
+            handles.add(Shape2dSizeHandle(shape, corners[0], -1, -1))
+            handles.add(Shape2dSizeHandle(shape, corners[1], 1, -1))
+            handles.add(Shape2dSizeHandle(shape, corners[2], 1, 1))
+            handles.add(Shape2dSizeHandle(shape, corners[3], -1, 1))
 
-            handles.add(ShapeHandle(shape, (corners[0] + corners[1]) / 2.0))
-            handles.add(ShapeHandle(shape, (corners[1] + corners[2]) / 2.0))
-            handles.add(ShapeHandle(shape, (corners[2] + corners[3]) / 2.0))
-            handles.add(ShapeHandle(shape, (corners[3] + corners[0]) / 2.0))
+            handles.add(Shape2dSizeHandle(shape, (corners[0] + corners[1]) / 2.0, 0, -1))
+            handles.add(Shape2dSizeHandle(shape, (corners[1] + corners[2]) / 2.0, 1, 0))
+            handles.add(Shape2dSizeHandle(shape, (corners[2] + corners[3]) / 2.0, 0, 1))
+            handles.add(Shape2dSizeHandle(shape, (corners[3] + corners[0]) / 2.0, -1, 0))
 
             handles.add(RotationHandle(shape,
                     (corners[0] + corners[1]) / 2.0 +

@@ -47,13 +47,8 @@ open class Listeners<T : Any> : Iterable<T> {
     }
 
     fun remove(listener: T) {
-        items.filter { it.get() === listener }.first()?.let {
-            try {
-                items.remove(it)
-            } catch (e: Exception) {
-                println("WARNING : Listener to be removed not found")
-                Thread.dumpStack()
-            }
+        items.filter { it.get() === listener }.firstOrNull()?.let {
+            items.remove(it)
         }
     }
 

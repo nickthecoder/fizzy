@@ -16,12 +16,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-package uk.co.nickthecoder.fizzy.gui
+package uk.co.nickthecoder.fizzy.gui.handle
 
-import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
-import uk.co.nickthecoder.fizzy.model.history.ChangeExpression
 import uk.co.nickthecoder.fizzy.view.DrawContext
 
 abstract class Handle(var position: Dimension2) {
@@ -48,35 +46,5 @@ abstract class Handle(var position: Dimension2) {
     companion object {
         val SIZE = 3.0
         val NEAR = SIZE + 1.0
-    }
-}
-
-open class ShapeHandle(val shape: Shape, position: Dimension2)
-    : Handle(position) {
-
-    override fun isFor(shape: Shape) = shape === this.shape
-
-    override fun dragTo(pagePosition: Dimension2) {
-        // TODO Implement properly
-        position = pagePosition
-    }
-}
-
-class RotationHandle(shape: Shape, position: Dimension2)
-    : ShapeHandle(shape, position) {
-
-    override fun draw(dc: DrawContext) {
-        dc.use {
-            dc.rotate(Angle.degrees(45.0))
-            super.draw(dc)
-        }
-    }
-
-    override fun dragTo(pagePosition: Dimension2) {
-        val local = shape.fromPageToLocal.value * pagePosition
-        val angle = (local - shape.transform.locPin.value).angle() + Angle.degrees(90.0)
-        shape.document().history.makeChange(ChangeExpression(
-                shape.transform.rotation,
-                (shape.transform.rotation.value + angle).toExpression()))
     }
 }
