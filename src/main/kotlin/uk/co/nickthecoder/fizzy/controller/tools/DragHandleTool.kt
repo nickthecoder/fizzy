@@ -34,7 +34,7 @@ class DragHandleTool(controller: Controller, val handle: Handle, startPosition: 
     }
 
     override fun onMouseDragged(event: CMouseEvent) {
-        handle.dragTo(event.point - offset, event.isConstrain)
+        handle.dragTo(event, event.point - offset)
     }
 
     override fun onMouseReleased(event: CMouseEvent) {

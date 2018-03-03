@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.controller.handle
 
+import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape2d
@@ -37,12 +38,12 @@ class Shape2dSizeHandle(val shape2d: Shape2d, position: Dimension2, val dx: Int,
 
     var aspectRatio = 1.0
 
-    override fun beginDrag(pagePosition: Dimension2) {
+    override fun beginDrag(startPoint: Dimension2) {
         aspectRatio = shape2d.size.value.aspectRatio()
     }
 
-    override fun dragTo(pagePosition: Dimension2, constrain: Boolean) {
-        val local = shape2d.fromPageToLocal.value * pagePosition
+    override fun dragTo(event: CMouseEvent, dragPoint: Dimension2) {
+        val local = shape2d.fromPageToLocal.value * dragPoint
 
         var deltaX = if (dx == 1) {
             local.x - shape2d.size.value.x
@@ -60,7 +61,7 @@ class Shape2dSizeHandle(val shape2d: Shape2d, position: Dimension2, val dx: Int,
             Dimension.ZERO_mm
         }
 
-        if (constrain) {
+        if (event.isConstrain) {
             if ((shape2d.size.value.x + deltaX) / aspectRatio > shape2d.size.value.y + deltaY) {
                 deltaX = (shape2d.size.value.y + deltaY) * aspectRatio - shape2d.size.value.x
             } else {

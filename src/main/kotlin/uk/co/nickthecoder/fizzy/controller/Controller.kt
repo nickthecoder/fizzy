@@ -174,4 +174,15 @@ class Controller(val page: Page) {
         return false
     }
 
+    companion object {
+
+        fun connectFormula(pagePoint: Dimension2, shape: Shape, scale: Double): String? {
+            shape.page().findNearestConnectionPoint(pagePoint, shape)?.let { (connectionPoint, distance) ->
+                if (distance < Handle.NEAR / scale) {
+                    connectionPoint.connectToFormula()?.let { return it }
+                }
+            }
+            return null
+        }
+    }
 }

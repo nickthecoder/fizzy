@@ -41,7 +41,9 @@ class MoveShapesTool(controller: Controller, var previousPoint: Dimension2)
         // We must move the lines first, because if they are joined, and the thing they join to is earlier,
         // then they will be moved twice.
         document.selection.filterIsInstance<Shape1d>().forEach { shape ->
+
             document.history.makeChange(
+
                     ChangeExpressions(listOf(
                             shape.start to (shape.start.value + delta).toFormula(),
                             shape.end to (shape.end.value + delta).toFormula()
@@ -63,6 +65,24 @@ class MoveShapesTool(controller: Controller, var previousPoint: Dimension2)
     }
 
     override fun onMouseReleased(event: CMouseEvent) {
+
+        // Connect any lines to nearby connection points
+        document.selection.filterIsInstance<Shape1d>().forEach { shape ->
+
+            Controller.connectFormula(shape.parent.fromLocalToPage.value * shape.start.value, shape, event.scale)?.let {
+                document.history.makeChange(
+                        ChangeExpressions(listOf(
+                                shape.start to it
+                        )))
+            }
+            Controller.connectFormula(shape.parent.fromLocalToPage.value * shape.end.value, shape, event.scale)?.let {
+                document.history.makeChange(
+                        ChangeExpressions(listOf(
+                                shape.end to it
+                        )))
+            }
+        }
+
         document.history.endBatch()
         controller.tool = SelectTool(controller)
     }

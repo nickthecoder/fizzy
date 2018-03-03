@@ -31,6 +31,29 @@ interface ShapeParent {
 
     fun findShape(name: String): Shape?
 
+    fun findNearestConnectionPoint(atPagePoint: Dimension2, exclude: Shape): Pair<ConnectionPoint, Double>? {
+        var nearest: ConnectionPoint? = null
+        var distance = Double.MAX_VALUE
+
+        children.forEach { child ->
+            if (child !== exclude && child is RealShape) {
+                child.connectionPoints.forEach { cpProp ->
+                    val d = (child.fromLocalToPage.value * cpProp.value.point.value - atPagePoint).length().inDefaultUnits
+                    if (d < distance) {
+                        nearest = cpProp.value
+                        distance = d
+                    }
+                }
+            }
+        }
+
+        if (nearest == null) {
+            return null
+        } else {
+            return Pair(nearest!!, distance)
+        }
+    }
+
     val fromLocalToParent: Prop<Matrix33>
 
     val fromParentToLocal: Prop<Matrix33>

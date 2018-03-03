@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.controller.handle
 
+import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
@@ -34,8 +35,8 @@ class RotationHandle(shape: Shape, position: Dimension2)
         }
     }
 
-    override fun dragTo(pagePosition: Dimension2, constrain : Boolean) {
-        val local = shape.fromPageToLocal.value * pagePosition
+    override fun dragTo(event: CMouseEvent, dragPoint: Dimension2) {
+        val local = shape.fromPageToLocal.value * dragPoint
         val angle = (local - shape.transform.locPin.value).angle() + Angle.degrees(90.0)
         shape.document().history.makeChange(ChangeExpression(
                 shape.transform.rotation,

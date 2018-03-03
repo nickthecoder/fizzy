@@ -306,6 +306,13 @@ abstract class Shape(var parent: ShapeParent)
                 geometry.fill.formula = "true"
             }
 
+            // Create connection points at each vertex
+            for (i in 0..sides - 1) {
+                val cp = ConnectionPoint("Geometry1.Point${i + 2}", "0deg")
+                poly.addConnectionPoint(cp)
+            }
+
+            //println(poly.metaData().joinToString(separator = "\n"))
             return poly
         }
     }

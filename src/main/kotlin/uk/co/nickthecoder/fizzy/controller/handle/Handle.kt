@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.controller.handle
 
+import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.view.DrawContext
@@ -41,9 +42,9 @@ abstract class Handle(var position: Dimension2) {
         return Math.abs(delta.x.inDefaultUnits) < NEAR / scale && Math.abs(delta.y.inDefaultUnits) < NEAR / scale
     }
 
-    open fun beginDrag(pagePosition: Dimension2) {}
+    open fun beginDrag(startPoint: Dimension2) {}
 
-    abstract fun dragTo(pagePosition: Dimension2, constrain: Boolean)
+    abstract fun dragTo(event: CMouseEvent, dragPoint: Dimension2)
 
     companion object {
         val SIZE = 3.0

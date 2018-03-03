@@ -32,7 +32,7 @@ class ConnectionPoint(point: String, angle: String) {
      */
     val direction = AngleExpression(angle)
 
-    var shape: Shape? = null
+    var shape: RealShape? = null
         set(v) {
             if (field != v) {
                 field?.let {
@@ -56,6 +56,20 @@ class ConnectionPoint(point: String, angle: String) {
         list.add(MetaData("Point", point, "ConnectionPoint", index))
         list.add(MetaData("Direction", direction, "ConnectionPoint", index))
     }
+
+    fun index(): Int {
+        shape?.let { shape ->
+            shape.connectionPoints.forEachIndexed { index, prop ->
+                val cp = prop.value
+                if (cp === this) {
+                    return index
+                }
+            }
+        }
+        return -1
+    }
+
+    fun connectToFormula() = shape?.let { "connectTo( Page.Shape${it.id.value}.ConnectionPoint${index() + 1} )" }
 
     fun copy() = ConnectionPoint(point.formula, direction.formula)
 }
