@@ -180,7 +180,8 @@ abstract class Shape(var parent: ShapeParent)
         newShape.transform.rotation.formula = transform.rotation.formula
         newShape.transform.pin.formula = transform.pin.formula
         newShape.transform.scale.formula = transform.scale.formula
-        // TODO Copy children here.
+
+        children.forEach { it.copyInto(newShape) }
     }
 
     override fun toString(): String = "Shape ${id.value}"
