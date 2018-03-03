@@ -22,8 +22,8 @@ import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.controller.handle.Handle
 import uk.co.nickthecoder.fizzy.controller.handle.RotationHandle
+import uk.co.nickthecoder.fizzy.controller.handle.Shape1dHandle
 import uk.co.nickthecoder.fizzy.controller.handle.Shape2dSizeHandle
-import uk.co.nickthecoder.fizzy.controller.handle.ShapeHandle
 import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
 import uk.co.nickthecoder.fizzy.controller.tools.Tool
 import uk.co.nickthecoder.fizzy.gui.GlassCanvas
@@ -58,7 +58,7 @@ class Controller(val page: Page) {
         override fun changed(item: Shape, changeType: ChangeType, obj: Any?) {
             if (page.document.selection.contains(item)) {
                 createShapeHandles(item)
-                dirty.value ++
+                dirty.value++
             }
         }
     }
@@ -137,8 +137,8 @@ class Controller(val page: Page) {
 
         } else if (shape is Shape1d) {
             val ends = shape1dEnds(shape)
-            handles.add(ShapeHandle(shape, ends[0]))
-            handles.add(ShapeHandle(shape, ends[1]))
+            handles.add(Shape1dHandle(shape, ends[0], false))
+            handles.add(Shape1dHandle(shape, ends[1], true))
         }
     }
 

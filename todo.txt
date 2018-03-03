@@ -1,7 +1,6 @@
 To Do
 =====
 
-
 When dragging a line, allow it to join to connection points
     Ditto for snapping to geometries (along).
 
