@@ -53,7 +53,12 @@ class DimensionPropType private constructor()
 }
 
 class DimensionExpression(expression: String, context: EvaluationContext = constantsContext)
-    : PropExpression<Dimension>(expression, Dimension::class, context)
+    : PropExpression<Dimension>(expression, Dimension::class, context) {
+
+    override fun copy() = DimensionExpression(formula, constantsContext)
+
+    override fun valueString() = value.toFormula()
+}
 
 fun dimensionConversion(a: Prop<*>, units: Dimension.Units, power: Double = 1.0): Prop<*> {
     if (a.value is Double) {

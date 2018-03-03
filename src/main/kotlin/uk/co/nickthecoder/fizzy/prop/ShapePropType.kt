@@ -43,6 +43,7 @@ abstract class ShapePropType<T : Shape>(klass: KClass<T>)
 
         return when (name) {
             "ID" -> PropConstant(prop.value.id.value.toDouble())
+            "Name" -> prop.value.name
             "Document" -> PropConstant(prop.value.document())
             "Page" -> PropConstant(prop.value.page())
             "Parent" -> PropConstant(prop.value.parent)

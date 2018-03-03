@@ -68,8 +68,13 @@ class AnglePropType private constructor()
 }
 
 
-class AngleExpression(expression: String, context: EvaluationContext = constantsContext)
-    : PropExpression<Angle>(expression, Angle::class, context)
+class AngleExpression(formula: String, context: EvaluationContext = constantsContext)
+    : PropExpression<Angle>(formula, Angle::class, context) {
+
+    override fun copy() = AngleExpression(formula, constantsContext)
+
+    override fun valueString() = value.toFormula()
+}
 
 fun degConversion(a: Prop<*>): Prop<*> {
     if (a.value is Double) {

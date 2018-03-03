@@ -18,6 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
+import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
+import uk.co.nickthecoder.fizzy.evaluator.constantsContext
+
 class StringPropType private constructor()
     : PropType<String>(String::class) {
 
@@ -77,4 +80,10 @@ class StringPropType private constructor()
     }
 }
 
-class StringExpression(expression: String) : PropExpression<String>(expression, String::class)
+class StringExpression(expression: String, context: EvaluationContext = constantsContext)
+    : PropExpression<String>(expression, String::class, context) {
+
+    override fun copy() = StringExpression(formula, constantsContext)
+
+    override fun valueString() = "\"$value\""
+}

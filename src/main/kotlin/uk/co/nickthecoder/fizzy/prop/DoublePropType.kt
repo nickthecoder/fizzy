@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class DoublePropType private constructor()
     : PropType<Double>(Double::class) {
@@ -30,4 +31,9 @@ class DoublePropType private constructor()
 }
 
 class DoubleExpression(expression: String, context: EvaluationContext = constantsContext)
-    : PropExpression<Double>(expression, Double::class, context)
+    : PropExpression<Double>(expression, Double::class, context) {
+
+    override fun copy() = DoubleExpression(formula, constantsContext)
+
+    override fun valueString() = value.toFormula()
+}

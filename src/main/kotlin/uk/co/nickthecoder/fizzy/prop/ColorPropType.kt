@@ -22,6 +22,7 @@ import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Color
 import uk.co.nickthecoder.fizzy.model.Paint
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class ColorPropType private constructor()
 
@@ -68,4 +69,15 @@ class ColorPropType private constructor()
 }
 
 class PaintExpression(expression: String, context: EvaluationContext = constantsContext)
-    : PropExpression<Paint>(expression, Paint::class, context)
+    : PropExpression<Paint>(expression, Paint::class, context) {
+
+    override fun copy() = PaintExpression(formula, constantsContext)
+
+    override fun valueString(): String {
+        val v = value
+        return when (v) {
+            is Color -> v.toFormula()
+            else -> v.toString()
+        }
+    }
+}

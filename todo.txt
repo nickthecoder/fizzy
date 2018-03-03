@@ -2,13 +2,22 @@ To Do
 =====
 
 
-Create a mock master sheet toolbar, and use it to copy a stencil into the document.
+Cannot add Shape ID, Name, nor Scratch Name, Comment
 
 When a shape is deleted, then the connections must be broken.
     How?
 
+TestShape has some tests commented out.
+
 Soon
 ----
+
+rename Geometry.line to stroke
+
+Test Shape.copyInto
+
+When copying an object give a "clone" boolean.
+    When set, the Expressions are linked to the master rather than being Strings.
 
 Create a ShapeGroup,
     then look for all "is RealShape" and implement the other half.
@@ -26,6 +35,9 @@ DimensionExpression and Dimension2Expression to have an additional "expected pow
 
 Maybe
 -----
+
+Add a limit to the number of items in History.
+   Each batch can be assigned a number, so memory hungy operations will cause History to dimish quicker.
 
 Can we create a single Shape, which is an N sided regular polygon? (or star).
     May also use the same system to create lines with N intermediate points.

@@ -22,8 +22,8 @@ import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
+import uk.co.nickthecoder.fizzy.model.MetaData
 import uk.co.nickthecoder.fizzy.model.RealShape
-import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.BooleanExpression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
@@ -78,6 +78,12 @@ class Geometry
                 part.setContext(constantsContext)
             }
     )
+
+    fun addMetaData(list: MutableList<MetaData>, sectionIndex: Int) {
+        list.add(MetaData("Fill", fill, "Geometry", sectionIndex))
+        list.add(MetaData("Line", line, "Geometry", sectionIndex))
+        parts.forEachIndexed { index, part -> part.addMetaData(list, sectionIndex, index) }
+    }
 
     fun isAt(point: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean {
 

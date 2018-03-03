@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.util.terse
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 /**
  * A unit-less 2 dimensional vector.
@@ -86,6 +87,8 @@ class Vector2(val x: Double, val y: Double) {
     }
 
     fun terse() = "${x.terse()},${y.terse()}"
+
+    fun toFormula() = "Vector2(${x.toFormula()},${y.toFormula()})"
 
     override fun toString() = "Vector2($x , $y)"
 

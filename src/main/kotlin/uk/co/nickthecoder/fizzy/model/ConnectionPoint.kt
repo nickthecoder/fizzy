@@ -52,6 +52,11 @@ class ConnectionPoint(point: String, angle: String) {
             }
         }
 
+    fun addMetaData(list: MutableList<MetaData>, index: Int) {
+        list.add(MetaData("Point", point, "ConnectionPoint", index))
+        list.add(MetaData("Direction", direction, "ConnectionPoint", index))
+    }
+
     fun copy() = ConnectionPoint(point.formula, direction.formula)
 }
 

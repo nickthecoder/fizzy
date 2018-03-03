@@ -21,8 +21,10 @@ package uk.co.nickthecoder.fizzy.model.geometry
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
+import uk.co.nickthecoder.fizzy.model.MetaData
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
+import uk.co.nickthecoder.fizzy.prop.StringExpression
 
 
 class MoveTo(formula: String = "Dimension2(0mm, 0mm)")
@@ -32,6 +34,10 @@ class MoveTo(formula: String = "Dimension2(0mm, 0mm)")
 
     init {
         point.propListeners.add(this)
+    }
+
+    override fun addMetaData(list: MutableList<MetaData>, sectionIndex: Int, rowIndex: Int) {
+        list.add(MetaData("Type", StringExpression("\"MoveTo\""), "Geometry", sectionIndex, rowIndex))
     }
 
     override fun setContext(context: EvaluationContext) {

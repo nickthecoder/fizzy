@@ -23,9 +23,9 @@ import uk.co.nickthecoder.fizzy.model.Page
 import uk.co.nickthecoder.fizzy.model.Shape
 
 /**
- * This is a temporary holder of shapes. Its used during devDeleteTool(it)elopment as a replacement for a proper set of stencils.
+ * Primitive shapes that are available without needing to load a stencil. Its master shapes are defined programmatically.
  */
-class FakeStencil {
+object PrimitiveStencil {
 
     val document = Document()
 

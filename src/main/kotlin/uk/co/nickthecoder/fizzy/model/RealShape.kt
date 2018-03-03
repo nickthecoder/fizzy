@@ -108,6 +108,16 @@ abstract class RealShape(parent: ShapeParent)
         }
     }
 
+    override fun addMetaData(list: MutableList<MetaData>) {
+        geometries.forEachIndexed { index, geometryProp -> geometryProp.value.addMetaData(list, index) }
+        connectionPoints.forEachIndexed { index, connectionPointProp -> connectionPointProp.value.addMetaData(list, index) }
+        scratches.forEachIndexed { index, scratchProp -> scratchProp.value.addMetaData(list, index) }
+        list.add(MetaData("LineWidth", lineWidth))
+        list.add(MetaData("Size", size))
+        list.add(MetaData("LineColor", lineColor))
+        list.add(MetaData("FillColor", fillColor))
+    }
+
     fun addGeometry(geometry: Geometry) {
         geometries.add(GeometryProp(geometry))
     }

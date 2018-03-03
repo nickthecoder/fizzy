@@ -28,9 +28,10 @@ class StampShape2dTool(glassCanvas: GlassCanvas, val masterShape: Shape2d)
 
     override fun onMouseClick(event: MouseEvent) {
         val newShape = masterShape.copyInto(glassCanvas.page)
+        newShape.transform.pin.formula = glassCanvas.toPage(event).toFormula()
 
         glassCanvas.page.document.history.makeChange(
-                CreateShape(newShape, glassCanvas.page, glassCanvas.toPage(event))
+                CreateShape(newShape, glassCanvas.page)
         )
     }
 }

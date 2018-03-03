@@ -56,7 +56,7 @@ private fun <T : Any> evaluate(formula: String, klass: KClass<T>, context: Evalu
     throw EvaluationException("Expected type ${klass.simpleName}, but found ${prop.value.javaClass.kotlin.simpleName}", 0)
 }
 
-open class PropExpression<T : Any>(formula: String, val klass: KClass<T>, var context: EvaluationContext = constantsContext)
+abstract class PropExpression<T : Any>(formula: String, val klass: KClass<T>, var context: EvaluationContext = constantsContext)
 
     : PropCalculation<T>() {
 
@@ -80,9 +80,17 @@ open class PropExpression<T : Any>(formula: String, val klass: KClass<T>, var co
         }
     }
 
+    fun forceRecalculation() {
+        dirty = true
+    }
+
     override fun dump(): String {
         return "Expression : '$formula'"
     }
+
+    abstract fun copy(): PropExpression<T>
+
+    abstract fun valueString(): String
 
     override fun toString() = "='$formula'"
 

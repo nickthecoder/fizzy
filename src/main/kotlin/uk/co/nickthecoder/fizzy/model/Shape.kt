@@ -184,6 +184,21 @@ abstract class Shape(var parent: ShapeParent)
         children.forEach { it.copyInto(newShape) }
     }
 
+    fun metaData(): List<MetaData> {
+        val result = mutableListOf<MetaData>()
+        addMetaData(result)
+        return result
+    }
+
+    open protected fun addMetaData(list: MutableList<MetaData>) {
+        list.add(MetaData("ID", DoubleExpression(id.toString())))
+        list.add(MetaData("Name", StringExpression(name.value)))
+        list.add(MetaData("Rotation", transform.rotation))
+        list.add(MetaData("Pin", transform.pin))
+        list.add(MetaData("LocPin", transform.locPin))
+        list.add(MetaData("Scale", transform.scale))
+    }
+
     override fun toString(): String = "Shape ${id.value}"
 
     companion object {

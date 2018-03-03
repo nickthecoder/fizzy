@@ -23,6 +23,7 @@ import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
+import kotlin.test.assertEquals
 
 interface MyShapeTest {
 
@@ -58,5 +59,18 @@ interface MyShapeTest {
         geometry.parts.add(LineTo("Dimension2(Length,LineWidth/2)"))
 
         return line
+    }
+
+    fun checkAllExpressions(shape: Shape) {
+        val list = shape.metaData()
+        list.forEach { metaData ->
+            val existingValue = metaData.cellExpression.valueString()
+            metaData.cellExpression.forceRecalculation()
+            val newValue = metaData.cellExpression.valueString()
+            if (existingValue != newValue) {
+                println("Inconsistant metadata : $metaData")
+            }
+            assertEquals(existingValue, newValue)
+        }
     }
 }

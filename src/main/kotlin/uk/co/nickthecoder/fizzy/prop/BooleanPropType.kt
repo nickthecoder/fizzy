@@ -30,4 +30,9 @@ class BooleanPropType private constructor()
 }
 
 class BooleanExpression(expression: String, context: EvaluationContext = constantsContext)
-    : PropExpression<Boolean>(expression, Boolean::class, context)
+    : PropExpression<Boolean>(expression, Boolean::class, context) {
+
+    override fun copy() = BooleanExpression(formula, constantsContext)
+
+    override fun valueString() = value.toString()
+}

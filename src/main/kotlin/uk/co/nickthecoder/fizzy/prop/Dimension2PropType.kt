@@ -51,4 +51,9 @@ class Dimension2PropType private constructor()
 }
 
 class Dimension2Expression(expression: String, context: EvaluationContext = constantsContext)
-    : PropExpression<Dimension2>(expression, Dimension2::class, context)
+    : PropExpression<Dimension2>(expression, Dimension2::class, context) {
+
+    override fun copy() = Dimension2Expression(formula, constantsContext)
+
+    override fun valueString() = value.toFormula()
+}

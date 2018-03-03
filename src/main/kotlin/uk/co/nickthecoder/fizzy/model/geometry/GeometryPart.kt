@@ -22,6 +22,7 @@ import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
+import uk.co.nickthecoder.fizzy.model.MetaData
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.Prop
@@ -50,6 +51,10 @@ abstract class GeometryPart
      * The end point for this geometry point.
      */
     abstract val point: Dimension2Expression
+
+    open fun addMetaData(list: MutableList<MetaData>, sectionIndex: Int, rowIndex: Int) {
+        list.add(MetaData("point", point, "Geometry", sectionIndex, rowIndex))
+    }
 
     internal abstract fun setContext(context: EvaluationContext)
 
