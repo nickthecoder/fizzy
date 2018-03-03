@@ -145,6 +145,7 @@ class Dimension : Comparable<Dimension> {
 
     /**
      * Return in a format suitable for a formula.
+     * Note. the space before the units is important for value of "NaN"
      */
     fun toFormula() = "${inUnits(units).toFormula()} ${units.name}"
 

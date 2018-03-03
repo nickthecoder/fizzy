@@ -203,7 +203,12 @@ abstract class Shape(var parent: ShapeParent)
 
     companion object {
 
-        fun createBox(parent: ShapeParent, size: String, at: String, fillColor: String? = null): Shape2d {
+        fun createBox(
+                parent: ShapeParent,
+                size: String,
+                at: String = "Dimension2(0mm,0mm)",
+                fillColor: String? = "Color.white")
+                : Shape2d {
 
             val box = Shape2d.create(parent)
             box.size.formula = size
@@ -228,7 +233,13 @@ abstract class Shape(var parent: ShapeParent)
 
         // TODO We need to do something more sensible for the lineWidth.
         // Maybe when styles are in place, it will use a default style, rather than a hard coded value.
-        fun createLine(parent: ShapeParent, start: String, end: String, lineWidth: String = "2mm"): Shape1d {
+        fun createLine(
+                parent: ShapeParent,
+                start: String,
+                end: String,
+                lineWidth: String = "2mm")
+                : Shape1d {
+
             val line = Shape1d.create(parent)
 
             line.start.formula = start
@@ -241,6 +252,61 @@ abstract class Shape(var parent: ShapeParent)
             line.addGeometry(geometry)
 
             return line
+        }
+
+        fun createPolygon(
+                parent: ShapeParent,
+                sides: Int,
+                radius: Dimension,
+                fillColor: String? = "Color.white",
+                at: String = "Dimension2(0mm,0mm)")
+                : Shape2d {
+
+            val poly = Shape2d.create(parent)
+            poly.transform.pin.formula = at
+
+            val unit = Dimension2(radius, Dimension.ZERO_mm)
+            val geometry = Geometry()
+            poly.addGeometry(geometry)
+
+            // Create points around (0,0)
+            for (i in 0..sides - 1) {
+                val point = unit.rotate(Angle.TAU * (i.toDouble() / sides))
+                geometry.parts.add(LineTo(point.toFormula()))
+            }
+
+            val minX = geometry.parts.minBy { it.point.value.x }
+            val minY = geometry.parts.minBy { it.point.value.y }
+
+            val maxX = geometry.parts.maxBy { it.point.value.x }
+            val maxY = geometry.parts.maxBy { it.point.value.y }
+
+            if (minX != null && minY != null && maxX != null && maxY != null) {
+
+                val shapeSize =
+                        Dimension2(maxX.point.value.x, maxY.point.value.y) -
+                                Dimension2(minX.point.value.x, minY.point.value.y)
+
+                poly.size.formula = shapeSize.toFormula()
+
+                // Translate them, so they are all +ve
+                // Also, make them reference Size, so that resizing works as expected.
+                val translate = Dimension2(-minX.point.value.x, -minY.point.value.y)
+                geometry.parts.forEach { part ->
+                    val ratio = (part.point.value + translate).ratio(shapeSize)
+                    part.point.formula = "Size * ${ratio.toFormula()}"
+                }
+                poly.transform.locPin.formula = "Size * ${(translate.ratio(shapeSize)).toFormula()}"
+            }
+            // Now complete the job by adding a MoveTo to the front
+            geometry.parts.add(0, MoveTo("Geometry1.Point${sides + 1}"))
+
+            if (fillColor != null) {
+                poly.fillColor.formula = fillColor
+                geometry.fill.formula = "true"
+            }
+
+            return poly
         }
     }
 

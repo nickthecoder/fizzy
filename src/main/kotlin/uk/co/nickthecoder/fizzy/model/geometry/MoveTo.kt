@@ -37,14 +37,13 @@ class MoveTo(formula: String = "Dimension2(0mm, 0mm)")
     }
 
     override fun addMetaData(list: MutableList<MetaData>, sectionIndex: Int, rowIndex: Int) {
+        super.addMetaData(list, sectionIndex, rowIndex)
         list.add(MetaData("Type", StringExpression("\"MoveTo\""), "Geometry", sectionIndex, rowIndex))
     }
 
     override fun setContext(context: EvaluationContext) {
         point.context = context
     }
-
-    override fun formula() = "LineTo point='${point.formula}'"
 
     override fun isAlong(shape: Shape?, here: Dimension2, prev: Dimension2, lineWidth: Dimension, minDistance: Dimension) = false
 

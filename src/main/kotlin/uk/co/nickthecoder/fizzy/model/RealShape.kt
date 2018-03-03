@@ -82,6 +82,8 @@ abstract class RealShape(parent: ShapeParent)
     }
 
     override fun populateShape(newShape: Shape) {
+        super.populateShape(newShape)
+
         if (newShape is RealShape) {
             geometries.forEach { geometryProp ->
                 val geometry = geometryProp.value

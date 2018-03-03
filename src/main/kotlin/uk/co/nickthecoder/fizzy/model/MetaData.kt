@@ -32,12 +32,21 @@ data class MetaData(
     fun accessString(): String {
         val result = StringBuffer()
         sectionName?.let { result.append(sectionName) }
-        sectionIndex?.let { result.append("$it") }
+        sectionIndex?.let { result.append(it + 1) }
         sectionName?.let { result.append(".") }
         result.append(cellName)
+        rowIndex?.let { result.append(it + 1) }
         return result.toString()
     }
 
-    override fun toString(): String = "${accessString()} : ${cellExpression.formula} = ${cellExpression.valueString()}"
+    override fun toString(): String {
+        var valueString: String
+        try {
+            valueString = cellExpression.valueString()
+        } catch (e: Exception) {
+            valueString = "ERROR"
+        }
+        return "${accessString()} : ${cellExpression.formula} = ${valueString}"
+    }
 
 }

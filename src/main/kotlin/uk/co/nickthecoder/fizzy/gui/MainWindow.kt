@@ -31,6 +31,7 @@ import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
 import uk.co.nickthecoder.fizzy.controller.tools.StampShape1dTool
 import uk.co.nickthecoder.fizzy.controller.tools.StampShape2dTool
 import uk.co.nickthecoder.fizzy.model.Document
+import uk.co.nickthecoder.fizzy.model.PrimitiveStencil
 import uk.co.nickthecoder.paratask.ParaTask
 import uk.co.nickthecoder.paratask.gui.MyTabPane
 
@@ -48,6 +49,7 @@ class MainWindow(val stage: Stage) : Window() {
     val deleteToolButton = Button("Delete")
     val boxToolButton = Button("Box")
     val lineToolButton = Button("Line")
+    val pentagonToolButton = Button("Pentagon")
 
     init {
         stage.title = "Fizzy"
@@ -65,8 +67,12 @@ class MainWindow(val stage: Stage) : Window() {
         deleteToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = DeleteTool(it) } }
         boxToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = StampShape2dTool(it, PrimitiveStencil.box) } }
         lineToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = StampShape1dTool(it, PrimitiveStencil.line) } }
+        pentagonToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = StampShape2dTool(it, PrimitiveStencil.pentagon) } }
 
-        toolBar.items.addAll(undoButton, redoButton, selectToolButton, deleteToolButton, boxToolButton, lineToolButton)
+        toolBar.items.addAll(
+                undoButton, redoButton,
+                selectToolButton, deleteToolButton,
+                boxToolButton, lineToolButton, pentagonToolButton)
 
         stage.show()
     }

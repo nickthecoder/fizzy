@@ -16,11 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-package uk.co.nickthecoder.fizzy.gui
-
-import uk.co.nickthecoder.fizzy.model.Document
-import uk.co.nickthecoder.fizzy.model.Page
-import uk.co.nickthecoder.fizzy.model.Shape
+package uk.co.nickthecoder.fizzy.model
 
 /**
  * Primitive shapes that are available without needing to load a stencil. Its master shapes are defined programmatically.
@@ -31,8 +27,9 @@ object PrimitiveStencil {
 
     val page = Page(document)
 
-    val box = Shape.createBox(page, "Dimension2(200mm,100mm)", "Dimension2(0mm,0mm)", fillColor = "Color.yellow")
+    val box = Shape.createBox(page, "Dimension2(200mm,100mm)")
 
-    val line = Shape.createLine(page, "Dimension2(0mm,mcm)", "Dimension2(10mm,0mm)")
+    val line = Shape.createLine(page, "Dimension2(0mm,0mm)", "Dimension2(10mm,0mm)")
 
+    val pentagon = Shape.createPolygon(page, 5, Dimension(60.0, Dimension.Units.mm))
 }

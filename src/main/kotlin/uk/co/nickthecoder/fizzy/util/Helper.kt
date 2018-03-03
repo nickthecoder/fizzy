@@ -27,7 +27,7 @@ val formulaDoubleFormat = DecimalFormat("0.#########")
 
 fun Double.terse(): String = terseDoubleFormat.format(this)
 
-fun Double.toFormula(): String = formulaDoubleFormat.format(this)
+fun Double.toFormula(): String = if (this.isNaN()) "NaN" else formulaDoubleFormat.format(this)
 
 fun Color.toFormula(): String =
         if (this.isOpaque())

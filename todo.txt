@@ -1,9 +1,6 @@
 To Do
 =====
 
-Get rid of the "onMouseClicked" event after a drag.
-    Delete DragComplete tool
-
 
 When dragging a line, allow it to join to connection points
     Ditto for snapping to geometries (along).
@@ -41,10 +38,25 @@ Add more drawing tests
 
 Create tests for rotated shapes.
 
+Create tests for each of the Tools
+
 Check that "Geometry1" becomes dirty when items are added/removed from the geometry list.
 
 DimensionExpression and Dimension2Expression to have an additional "expected power", which defaults to 1.
     Will error if other powers are returned
+
+
+Rounded corners
+    Where two lines meet, back off a little, and draw a circular arc.
+    Only do this in the PaeView (let isAt ignore the roundedness)?
+    What about pointAlong? That MUST use it.
+    If the line is not long enough, then go back HALF way, and use a smaller diameter circle.
+    Can cache the data in MoveTo and LineTo, and clear the cache whenever the Geometry changes.
+    Don't do it for other types of GeometryParts (such as bezier/arc etc).
+    Note. MoveTo needs to look for the MoveTo or end-of-list and use the previous as its partner.
+        Everything else uses the previous as its partner.
+    Similarly, bevelled corners (which may be easier to write first!)
+    Do this for internal/external corners, or both.
 
 Maybe
 -----

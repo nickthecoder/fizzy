@@ -53,12 +53,10 @@ abstract class GeometryPart
     abstract val point: Dimension2Expression
 
     open fun addMetaData(list: MutableList<MetaData>, sectionIndex: Int, rowIndex: Int) {
-        list.add(MetaData("point", point, "Geometry", sectionIndex, rowIndex))
+        list.add(MetaData("Point", point, "Geometry", sectionIndex, rowIndex))
     }
 
     internal abstract fun setContext(context: EvaluationContext)
-
-    abstract fun formula(): String
 
     override val changeListeners = ChangeListeners<GeometryPart>()
 
