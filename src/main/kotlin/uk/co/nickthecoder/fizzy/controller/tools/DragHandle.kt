@@ -38,7 +38,7 @@ class DragHandle(controller: Controller, val handle: Handle, startPosition: Dime
     }
 
     override fun onMouseReleased(event: CMouseEvent) {
-        controller.tool = DragCompleted(controller)
+        controller.tool = SelectTool(controller)
         controller.page.document.history.endBatch()
     }
 }

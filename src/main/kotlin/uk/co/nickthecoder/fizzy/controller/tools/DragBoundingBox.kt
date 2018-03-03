@@ -49,7 +49,7 @@ class DragBoundingBox(controller: Controller, event: CMouseEvent, val startPoint
         controller.page.children.filter { controller.isWithin(it, startPoint, endPoint) }.forEach {
             selection.add(it)
         }
-        controller.tool = DragCompleted(controller)
+        controller.tool = SelectTool(controller)
         controller.dirty.value++
     }
 

@@ -30,6 +30,10 @@ class StampShape1dTool(controller: Controller, val masterShape: Shape1d)
     var start: Dimension2? = null
     var newShape: Shape1d? = null
 
+    init {
+        controller.page.document.selection.clear()
+    }
+
     override fun onMousePressed(event: CMouseEvent) {
         start = event.point
         controller.page.document.history.beginBatch()

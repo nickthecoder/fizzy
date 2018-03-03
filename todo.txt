@@ -1,8 +1,6 @@
 To Do
 =====
 
-Need some way to force the GlassController to redraw during a bounding box drag (etc).
-
 Get rid of the "onMouseClicked" event after a drag.
     Delete DragComplete tool
 

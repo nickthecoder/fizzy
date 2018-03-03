@@ -76,6 +76,14 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
 
     private var previousPoint = Dimension2.ZERO_mm
 
+    private var panning = false
+
+    /**
+     * Use to ignore the spurious onMouseClicked event at the end of a drag.
+     * It seems that PRESS, MOVE RELEASE also produces an onMouseClicked event at the end.
+     * IMHO, this is NOT a click, and so I want to ignore it.
+     * Set inside [onDragDetected], reset inside [onMousePressed] and [onMouseClicked].
+     */
     private var dragging = false
 
     var dirty: Boolean = false
@@ -119,51 +127,62 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
             drawingArea.scale)
 
     fun onMousePressed(event: MouseEvent) {
+        dragging = false
+
         if (event.button == MouseButton.SECONDARY || event.isMiddleButtonDown || event.isMetaDown || event.isAltDown) {
-            dragging = true
+            panning = true
             previousPoint = toPage(event)
-            event.consume()
         } else if (event.clickCount == 2) {
             drawingArea.zoomOn(if (convertEvent(event).isAdjust) 1.0 / 1.4 else 1.4, event.x, event.y)
         } else {
             drawingArea.controller.onMousePressed(convertEvent(event))
         }
+        event.consume()
     }
 
     fun onMouseReleased(event: MouseEvent) {
-        if (dragging) {
-            event.consume()
-        } else {
+        if (!panning) {
             drawingArea.controller.onMouseReleased(convertEvent(event))
         }
+        event.consume()
     }
 
     fun onDragDetected(event: MouseEvent) {
-        if (dragging) {
+        dragging = true
+
+        if (panning) {
             event.consume()
         } else {
             drawingArea.controller.onDragDetected(convertEvent(event))
         }
+        event.consume()
     }
 
     fun onMouseDragged(event: MouseEvent) {
-        if (dragging) {
+        if (panning) {
             val newPoint = toPage(event)
             drawingArea.panBy(newPoint - previousPoint)
             previousPoint = toPage(event)
-            event.consume()
         } else {
             drawingArea.controller.onMouseDragged(convertEvent(event))
         }
+        event.consume()
     }
 
     fun onMouseClicked(event: MouseEvent) {
+        // Ignore the spurious onMouseClicked event that JavaFX spits out at the end of a drag. Grr.
         if (dragging) {
-            dragging = false
             event.consume()
+            dragging = false
+            return
+        }
+
+        if (panning) {
+            panning = false
         } else {
             drawingArea.controller.onMouseClicked(convertEvent(event))
         }
+        event.consume()
     }
 
     fun draw() {

@@ -26,6 +26,10 @@ import uk.co.nickthecoder.fizzy.model.history.CreateShape
 class StampShape2dTool(controller: Controller, val masterShape: Shape2d)
     : Tool(controller) {
 
+    init {
+        controller.page.document.selection.clear()
+    }
+
     override fun onMouseClicked(event: CMouseEvent) {
         val newShape = masterShape.copyInto(controller.page)
         newShape.transform.pin.formula = event.point.toFormula()

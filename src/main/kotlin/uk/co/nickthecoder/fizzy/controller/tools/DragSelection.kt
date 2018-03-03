@@ -54,7 +54,7 @@ class DragSelection(controller: Controller, var previousPoint: Dimension2)
 
     override fun onMouseReleased(event: CMouseEvent) {
         document.history.endBatch()
-        controller.tool = DragCompleted(controller)
+        controller.tool = SelectTool(controller)
     }
 
 }
