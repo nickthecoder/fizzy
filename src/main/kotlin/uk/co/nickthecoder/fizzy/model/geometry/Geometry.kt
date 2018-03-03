@@ -31,6 +31,7 @@ import uk.co.nickthecoder.fizzy.prop.PropValue
 import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class Geometry
 
@@ -85,7 +86,7 @@ class Geometry
         parts.forEachIndexed { index, part -> part.addMetaData(list, sectionIndex, index) }
     }
 
-    fun isAt(point: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean {
+    fun isAt(localPoint: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean {
 
         var prev: Dimension2? = null
 
@@ -94,7 +95,7 @@ class Geometry
         if (fill.value && parts.size > 2) {
             parts.forEach { part ->
                 prev?.let {
-                    if (part.isCrossing(point, it)) {
+                    if (part.isCrossing(localPoint, it)) {
                         oddEven = !oddEven
                     }
                 }
@@ -105,7 +106,7 @@ class Geometry
             val first = parts[0].point.value
             val last = parts[parts.size - 1].point.value
             if (first != last) {
-                if (first != last && GeometryPart.isCrossing(point, last, first)) {
+                if (first != last && GeometryPart.isCrossing(localPoint, last, first)) {
                     oddEven = !oddEven
                 }
             }
@@ -115,18 +116,55 @@ class Geometry
         }
 
         if (line.value) {
-            prev = null
+            return isAlong(localPoint, lineWidth, minDistance)
+        }
+
+        return false
+    }
+
+    fun isAlong(localPoint: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean {
+        var prev: Dimension2? = null
+
+        if (line.value) {
             parts.forEach { part ->
                 prev?.let {
-                    if (part.isAlong(shape, point, it, lineWidth, minDistance)) {
+                    if (part.isAlong(shape, localPoint, it, lineWidth, minDistance)) {
                         return true
                     }
                 }
                 prev = part.point.value
             }
         }
-
         return false
+    }
+
+    /**
+     * If the point given is far away then return null.
+     * Otherwise, return the distance is page coordinates, and the amount along.
+     */
+    fun findAlong(localPoint: Dimension2): Pair<Double, Double>? {
+        if (isAlong(localPoint, Dimension.ZERO_mm, Dimension(5.0))) {
+            return Pair(0.0, 0.0)
+        }
+        return null
+    }
+
+    fun index(): Int {
+        shape?.let {
+            it.geometries.forEachIndexed { index, prop ->
+                if (prop.value === this) {
+                    return index
+                }
+            }
+        }
+        return -1
+    }
+
+    fun connectAlongFormula(along: Double): String? {
+        shape?.let {
+            return "connectAlong( Page.Shape${it.id.value}.Geometry${index() + 1}, ${along.toFormula()})"
+        }
+        return null
     }
 
     /**

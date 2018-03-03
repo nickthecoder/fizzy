@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
+import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.prop.Prop
 
 interface ShapeParent {
@@ -51,6 +52,38 @@ interface ShapeParent {
             return null
         } else {
             return Pair(nearest!!, distance)
+        }
+    }
+
+    /**
+     * Finds the nearest geometry that a point can be connected to.
+     * Returns the Geometry, the distance and the amount along.
+     */
+    fun findNearestConnectionGeometry(atPagePoint: Dimension2, exclude: Shape): Triple<Geometry, Double, Double>? {
+        var nearest: Geometry? = null
+        var nearestDistance = Double.MAX_VALUE
+        var nearestAlong = 0.0
+
+        children.forEach { child ->
+            if (child !== exclude && child is RealShape) {
+                val localPoint = child.fromPageToLocal.value * atPagePoint
+
+                child.geometries.forEach { gProp ->
+                    gProp.value.findAlong(localPoint)?.let { (distance, along) ->
+                        if (distance < nearestDistance) {
+                            nearest = gProp.value
+                            nearestAlong = along
+                            nearestDistance = distance
+                        }
+                    }
+                }
+            }
+        }
+
+        if (nearest == null) {
+            return null
+        } else {
+            return Triple(nearest!!, nearestDistance, nearestAlong)
         }
     }
 

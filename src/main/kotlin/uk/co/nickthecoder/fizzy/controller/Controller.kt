@@ -177,11 +177,21 @@ class Controller(val page: Page) {
     companion object {
 
         fun connectFormula(pagePoint: Dimension2, shape: Shape, scale: Double): String? {
+
+            // Look for connection points
             shape.page().findNearestConnectionPoint(pagePoint, shape)?.let { (connectionPoint, distance) ->
                 if (distance < Handle.NEAR / scale) {
                     connectionPoint.connectToFormula()?.let { return it }
                 }
             }
+
+            // Look for geometries that can be connected to.
+            shape.page().findNearestConnectionGeometry(pagePoint, shape)?.let { (geometry, distance, along) ->
+                if (distance < Handle.NEAR / scale) {
+                    geometry.connectAlongFormula(along)?.let { return it }
+                }
+            }
+
             return null
         }
     }

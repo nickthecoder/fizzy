@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
-import javafx.scene.paint.Color
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.util.MyShapeTest
 import uk.co.nickthecoder.fizzy.util.MyTestCase
@@ -29,7 +28,6 @@ class TestConnections : MyTestCase(), MyShapeTest {
     fun testConnectAlong() {
         val doc = Document()
         val page = Page(doc)
-        val c = Color.BLACK
         val box1 = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(0mm,0mm)") // @ -5,-10 to 5, 10
         page.children.add(box1)
         val box2 = createBox(box1, "Dimension2(10mm,20mm)", "Dimension2(6mm,11mm)") // @ -4,-9 to 6, 11
