@@ -23,6 +23,10 @@ import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.Shape2d
 import uk.co.nickthecoder.fizzy.model.history.CreateShape
 
+/**
+ * Adds a shape to the document by clicking. The size of the shape is determined by the masterShape.
+ * See [GrowShape2dTool] for an alternative, where the size of the new shape is determined by dragging.
+ */
 class StampShape2dTool(controller: Controller, val masterShape: Shape2d)
     : Tool(controller) {
 

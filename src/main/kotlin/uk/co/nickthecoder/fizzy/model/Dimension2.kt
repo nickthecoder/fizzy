@@ -81,6 +81,15 @@ class Dimension2(val x: Dimension, val y: Dimension) {
 
     fun aspectRatio() = x.inDefaultUnits / y.inDefaultUnits
 
+    fun keepAspectRatio(aspectRatio: Double): Dimension2 {
+        val ratio = x.inDefaultUnits / y.inDefaultUnits
+        if (ratio > aspectRatio) {
+            return Dimension2(x / ratio * aspectRatio, y)
+        } else {
+            return Dimension2(x, y * ratio / aspectRatio)
+        }
+    }
+
     /**
      * The angle of the vector. 0° is along the x axis, and +ve values are anticlockwise if the y axis is pointing upwards.
      *

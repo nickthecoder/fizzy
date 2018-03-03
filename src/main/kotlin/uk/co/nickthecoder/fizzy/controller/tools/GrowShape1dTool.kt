@@ -24,7 +24,10 @@ import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape1d
 import uk.co.nickthecoder.fizzy.model.history.CreateShape
 
-class StampShape1dTool(controller: Controller, val masterShape: Shape1d)
+/**
+ * Adds a Shape1d to the document by dragging.
+ */
+class GrowShape1dTool(controller: Controller, val masterShape: Shape1d)
     : Tool(controller) {
 
     var start: Dimension2? = null

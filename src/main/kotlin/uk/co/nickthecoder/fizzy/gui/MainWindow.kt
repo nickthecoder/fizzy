@@ -26,10 +26,7 @@ import javafx.scene.control.ToolBar
 import javafx.scene.layout.BorderPane
 import javafx.stage.Stage
 import javafx.stage.Window
-import uk.co.nickthecoder.fizzy.controller.tools.DeleteTool
-import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
-import uk.co.nickthecoder.fizzy.controller.tools.StampShape1dTool
-import uk.co.nickthecoder.fizzy.controller.tools.StampShape2dTool
+import uk.co.nickthecoder.fizzy.controller.tools.*
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.PrimitiveStencil
 import uk.co.nickthecoder.paratask.ParaTask
@@ -47,6 +44,7 @@ class MainWindow(val stage: Stage) : Window() {
     val redoButton = Button("Redo")
     val selectToolButton = Button("Select")
     val deleteToolButton = Button("Delete")
+    val stampToolButton = Button("Stamp")
     val boxToolButton = Button("Box")
     val lineToolButton = Button("Line")
     val pentagonToolButton = Button("Pentagon")
@@ -65,13 +63,15 @@ class MainWindow(val stage: Stage) : Window() {
         redoButton.onAction = EventHandler { tabs.selectedTab?.document?.history?.redo() }
         selectToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = SelectTool(it) } }
         deleteToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = DeleteTool(it) } }
-        boxToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = StampShape2dTool(it, PrimitiveStencil.box) } }
-        lineToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = StampShape1dTool(it, PrimitiveStencil.line) } }
-        pentagonToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = StampShape2dTool(it, PrimitiveStencil.pentagon) } }
+        stampToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = StampShape2dTool(it, PrimitiveStencil.box) } }
+        boxToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape2dTool(it, PrimitiveStencil.box) } }
+        lineToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape1dTool(it, PrimitiveStencil.line) } }
+        pentagonToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape2dTool(it, PrimitiveStencil.pentagon) } }
 
         toolBar.items.addAll(
                 undoButton, redoButton,
                 selectToolButton, deleteToolButton,
+                stampToolButton,
                 boxToolButton, lineToolButton, pentagonToolButton)
 
         stage.show()
