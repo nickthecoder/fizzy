@@ -20,46 +20,25 @@ package uk.co.nickthecoder.fizzy.controller.tools
 
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
-import uk.co.nickthecoder.fizzy.gui.GlassCanvas
+import uk.co.nickthecoder.fizzy.controller.handle.Handle
 import uk.co.nickthecoder.fizzy.model.Dimension2
-import uk.co.nickthecoder.fizzy.view.DrawContext
 
-/**
- * Drags a rectangle, and selects all shapes wholly contained within it.
- */
-class DragBoundingBox(controller: Controller, event: CMouseEvent, val startPoint: Dimension2)
+class DragHandleTool(controller: Controller, val handle: Handle, startPosition: Dimension2)
     : Tool(controller) {
 
-    var endPoint = startPoint
-
-    val selection = controller.page.document.selection
+    val offset = startPosition - handle.position
 
     init {
-        if (!event.isAdjust) {
-            selection.clear()
-        }
+        controller.page.document.history.beginBatch()
+        handle.beginDrag(startPosition)
     }
 
     override fun onMouseDragged(event: CMouseEvent) {
-        endPoint = event.point
-        controller.dirty.value++
+        handle.dragTo(event.point - offset, event.isConstrain)
     }
 
     override fun onMouseReleased(event: CMouseEvent) {
-        controller.page.children.filter { controller.isWithin(it, startPoint, endPoint) }.forEach {
-            selection.add(it)
-        }
         controller.tool = SelectTool(controller)
-        controller.dirty.value++
-    }
-
-    override fun draw(dc: DrawContext) {
-        dc.use {
-            dc.lineColor(GlassCanvas.BOUNDING_STROKE)
-            dc.fillColor(GlassCanvas.BOUNDING_FILL)
-            dc.lineWidth(2.0 / controller.scale)
-            dc.lineDashes(5.0 / controller.scale)
-            dc.rectangle(true, true, startPoint, endPoint)
-        }
+        controller.page.document.history.endBatch()
     }
 }

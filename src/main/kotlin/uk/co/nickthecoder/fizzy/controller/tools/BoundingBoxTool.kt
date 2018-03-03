@@ -20,41 +20,46 @@ package uk.co.nickthecoder.fizzy.controller.tools
 
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
+import uk.co.nickthecoder.fizzy.gui.GlassCanvas
 import uk.co.nickthecoder.fizzy.model.Dimension2
-import uk.co.nickthecoder.fizzy.model.Shape
-import uk.co.nickthecoder.fizzy.model.Shape2d
-import uk.co.nickthecoder.fizzy.model.history.MoveShapes
+import uk.co.nickthecoder.fizzy.view.DrawContext
 
-
-class DragSelection(controller: Controller, var previousPoint: Dimension2)
+/**
+ * Drags a rectangle, and selects all shapes wholly contained within it.
+ */
+class BoundingBoxTool(controller: Controller, event: CMouseEvent, val startPoint: Dimension2)
     : Tool(controller) {
 
-    val document = controller.page.document
+    var endPoint = startPoint
+
+    val selection = controller.page.document.selection
 
     init {
-        document.history.beginBatch()
-    }
-
-    override fun onMouseDragged(event: CMouseEvent) {
-        val now = event.point
-        val delta = now - previousPoint
-
-        document.history.makeChange(MoveShapes(document.selection, delta))
-
-        previousPoint = now
-    }
-
-    fun move(shape: Shape, delta: Dimension2) {
-        if (shape is Shape2d) {
-            val oldPin = shape.transform.pin.value
-            val newPin = oldPin + delta
-            shape.transform.pin.formula = newPin.toFormula()
+        if (!event.isAdjust) {
+            selection.clear()
         }
     }
 
-    override fun onMouseReleased(event: CMouseEvent) {
-        document.history.endBatch()
-        controller.tool = SelectTool(controller)
+    override fun onMouseDragged(event: CMouseEvent) {
+        endPoint = event.point
+        controller.dirty.value++
     }
 
+    override fun onMouseReleased(event: CMouseEvent) {
+        controller.page.children.filter { controller.isWithin(it, startPoint, endPoint) }.forEach {
+            selection.add(it)
+        }
+        controller.tool = SelectTool(controller)
+        controller.dirty.value++
+    }
+
+    override fun draw(dc: DrawContext) {
+        dc.use {
+            dc.lineColor(GlassCanvas.BOUNDING_STROKE)
+            dc.fillColor(GlassCanvas.BOUNDING_FILL)
+            dc.lineWidth(2.0 / controller.scale)
+            dc.lineDashes(5.0 / controller.scale)
+            dc.rectangle(true, true, startPoint, endPoint)
+        }
+    }
 }

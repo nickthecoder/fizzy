@@ -68,21 +68,21 @@ class SelectTool(controller: Controller)
 
         controller.handles.forEach { handle ->
             if (handle.isAt(mousePressedPoint, event.scale)) {
-                controller.tool = DragHandle(controller, handle, mousePressedPoint)
+                controller.tool = DragHandleTool(controller, handle, mousePressedPoint)
                 return
             }
         }
 
         val shape = controller.page.findShapeAt(event.point, controller.minDistance)
         if (shape == null) {
-            controller.tool = DragBoundingBox(controller, event, mousePressedPoint)
+            controller.tool = BoundingBoxTool(controller, event, mousePressedPoint)
             controller.tool.onMouseDragged(event)
         } else {
             if (!selection.contains(shape)) {
                 selection.clear()
                 selection.add(shape)
             }
-            controller.tool = DragSelection(controller, mousePressedPoint)
+            controller.tool = MoveShapesTool(controller, mousePressedPoint)
             controller.tool.onMouseDragged(event)
         }
     }

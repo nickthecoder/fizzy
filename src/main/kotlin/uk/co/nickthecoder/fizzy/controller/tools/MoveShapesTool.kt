@@ -20,25 +20,41 @@ package uk.co.nickthecoder.fizzy.controller.tools
 
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
-import uk.co.nickthecoder.fizzy.controller.handle.Handle
 import uk.co.nickthecoder.fizzy.model.Dimension2
+import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.Shape2d
+import uk.co.nickthecoder.fizzy.model.history.MoveShapes
 
-class DragHandle(controller: Controller, val handle: Handle, startPosition: Dimension2)
+
+class MoveShapesTool(controller: Controller, var previousPoint: Dimension2)
     : Tool(controller) {
 
-    val offset = startPosition - handle.position
+    val document = controller.page.document
 
     init {
-        controller.page.document.history.beginBatch()
-        handle.beginDrag(startPosition)
+        document.history.beginBatch()
     }
 
     override fun onMouseDragged(event: CMouseEvent) {
-        handle.dragTo(event.point - offset, event.isConstrain)
+        val now = event.point
+        val delta = now - previousPoint
+
+        document.history.makeChange(MoveShapes(document.selection, delta))
+
+        previousPoint = now
+    }
+
+    fun move(shape: Shape, delta: Dimension2) {
+        if (shape is Shape2d) {
+            val oldPin = shape.transform.pin.value
+            val newPin = oldPin + delta
+            shape.transform.pin.formula = newPin.toFormula()
+        }
     }
 
     override fun onMouseReleased(event: CMouseEvent) {
+        document.history.endBatch()
         controller.tool = SelectTool(controller)
-        controller.page.document.history.endBatch()
     }
+
 }
