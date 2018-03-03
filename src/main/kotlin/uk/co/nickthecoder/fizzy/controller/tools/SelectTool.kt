@@ -16,38 +16,38 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-package uk.co.nickthecoder.fizzy.gui.tools
+package uk.co.nickthecoder.fizzy.controller.tools
 
-import javafx.scene.input.MouseEvent
-import uk.co.nickthecoder.fizzy.gui.GlassCanvas
+import uk.co.nickthecoder.fizzy.controller.CMouseEvent
+import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
 
-class SelectTool(glassCanvas: GlassCanvas)
-    : Tool(glassCanvas) {
+class SelectTool(controller: Controller)
+    : Tool(controller) {
 
-    val selection = glassCanvas.page.document.selection
+    val selection = controller.page.document.selection
 
     var mousePressedPoint = Dimension2.ZERO_mm
 
-    override fun onMouseClick(event: MouseEvent) {
+    override fun onMouseClicked(event: CMouseEvent) {
 
-        val shapes = glassCanvas.page.findShapesAt(glassCanvas.toPage(event), glassCanvas.minDistance)
+        val shapes = controller.page.findShapesAt(event.point, controller.minDistance)
         if (shapes.isEmpty()) {
-            if (!glassCanvas.isAdjust(event)) {
+            if (!event.isAdjust) {
                 selection.clear()
             }
         } else {
             val latest = selection.lastOrNull()
             val shape: Shape?
-            if (shapes.size > 1 && shapes.contains(latest) && glassCanvas.isConstrain(event)) {
+            if (shapes.size > 1 && shapes.contains(latest) && event.isConstrain) {
                 val i = shapes.indexOf(latest)
                 shape = if (i == 0) shapes.last() else shapes[i - 1]
             } else {
                 shape = shapes.last()
             }
 
-            if (glassCanvas.isAdjust(event)) {
+            if (event.isAdjust) {
                 if (selection.contains(shape)) {
                     selection.remove(shape)
                 } else {
@@ -58,38 +58,33 @@ class SelectTool(glassCanvas: GlassCanvas)
                 selection.add(shape)
             }
         }
-        event.consume()
     }
 
-    override fun onMousePressed(event: MouseEvent) {
-        mousePressedPoint = glassCanvas.toPage(event)
-        event.consume()
+    override fun onMousePressed(event: CMouseEvent) {
+        mousePressedPoint = event.point
     }
 
-    override fun onDragDetected(event: MouseEvent) {
+    override fun onDragDetected(event: CMouseEvent) {
 
-        glassCanvas.handles.forEach { handle ->
-            if (handle.isAt(mousePressedPoint, glassCanvas.drawingArea.scale)) {
-                glassCanvas.tool = DragHandle(glassCanvas, handle, mousePressedPoint)
-                event.consume()
+        controller.handles.forEach { handle ->
+            if (handle.isAt(mousePressedPoint, event.scale)) {
+                controller.tool = DragHandle(controller, handle, mousePressedPoint)
                 return
             }
         }
 
-        val shape = glassCanvas.page.findShapeAt(glassCanvas.toPage(event), glassCanvas.minDistance)
+        val shape = controller.page.findShapeAt(event.point, controller.minDistance)
         if (shape == null) {
-            glassCanvas.tool = DragBoundingBox(glassCanvas, event, mousePressedPoint)
-            glassCanvas.tool.onMouseDragged(event)
+            controller.tool = DragBoundingBox(controller, event, mousePressedPoint)
+            controller.tool.onMouseDragged(event)
         } else {
             if (!selection.contains(shape)) {
                 selection.clear()
                 selection.add(shape)
             }
-            glassCanvas.tool = DragSelection(glassCanvas, mousePressedPoint)
-            glassCanvas.tool.onMouseDragged(event)
+            controller.tool = DragSelection(controller, mousePressedPoint)
+            controller.tool.onMouseDragged(event)
         }
-        event.consume()
     }
 
-    override fun onMouseReleased(event: MouseEvent) {}
 }

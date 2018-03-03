@@ -16,19 +16,16 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-package uk.co.nickthecoder.fizzy.gui.tools
+package uk.co.nickthecoder.fizzy.controller.tools
 
-import javafx.scene.input.MouseEvent
-import uk.co.nickthecoder.fizzy.gui.GlassCanvas
-import uk.co.nickthecoder.fizzy.view.DrawContext
+import uk.co.nickthecoder.fizzy.controller.CMouseEvent
+import uk.co.nickthecoder.fizzy.controller.Controller
 
-abstract class Tool(val glassCanvas: GlassCanvas) {
+class DragCompleted(controller: Controller)
+    : Tool(controller) {
 
-    open fun onMouseClick(event: MouseEvent) {}
-    open fun onMousePressed(event: MouseEvent) {}
-    open fun onMouseReleased(event: MouseEvent) {}
-    open fun onDragDetected(event: MouseEvent) {}
-    open fun onMouseDragged(event: MouseEvent) {}
+    override fun onMouseClicked(event: CMouseEvent) {
+        controller.tool = SelectTool(controller)
+    }
 
-    open fun draw(dc: DrawContext) {}
 }

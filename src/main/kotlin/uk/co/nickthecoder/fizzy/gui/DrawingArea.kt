@@ -21,6 +21,7 @@ package uk.co.nickthecoder.fizzy.gui
 import javafx.scene.Node
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.StackPane
+import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Page
@@ -30,16 +31,10 @@ import uk.co.nickthecoder.fizzy.model.Page
  * Later, this may also contain other GUI elements such as rulers.
  *
  */
-class DrawingArea(page: Page)
+class DrawingArea(val page: Page)
     : BuildableNode {
 
-    var page: Page = page
-        set(v) {
-            assert(page.document === v.document)
-            field = v
-            glassCanvas.page = v
-            drawingCanvas.page = v
-        }
+    val controller = Controller(page)
 
     val glassCanvas = GlassCanvas(page, this)
 
@@ -62,7 +57,7 @@ class DrawingArea(page: Page)
 
     fun panBy(by: Dimension2) {
         pan += by
-        glassCanvas.dirty = true
+        controller.dirty.value ++
         drawingCanvas.dirty = true
     }
 
@@ -70,7 +65,7 @@ class DrawingArea(page: Page)
         val pagePoint = pixelsToPage(atX, atY)
         scale *= by
         pan += pixelsToPage(atX, atY) - pagePoint
-        glassCanvas.dirty = true
+        controller.dirty.value ++
         drawingCanvas.dirty = true
     }
 

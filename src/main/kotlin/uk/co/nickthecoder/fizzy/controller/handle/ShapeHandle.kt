@@ -16,23 +16,16 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-package uk.co.nickthecoder.fizzy.gui.tools
+package uk.co.nickthecoder.fizzy.controller.handle
 
-import javafx.scene.input.MouseEvent
-import uk.co.nickthecoder.fizzy.gui.GlassCanvas
-import uk.co.nickthecoder.fizzy.model.history.DeleteShape
+import uk.co.nickthecoder.fizzy.model.Dimension2
+import uk.co.nickthecoder.fizzy.model.Shape
 
-class DeleteTool(glassCanvas: GlassCanvas)
-    : Tool(glassCanvas) {
+// TODO Make this abstract
+open class ShapeHandle(val shape: Shape, position: Dimension2)
+    : Handle(position) {
 
-    val page = glassCanvas.page
+    override fun isFor(shape: Shape) = shape === this.shape
 
-    override fun onMouseClick(event: MouseEvent) {
-        val shape = page.findShapeAt(glassCanvas.toPage(event), glassCanvas.minDistance)
-        if (shape != null) {
-            page.document.history.makeChange(DeleteShape(shape))
-        }
-    }
-
+    override fun dragTo(pagePosition: Dimension2, constrain: Boolean) {} // TODO Remove
 }
-

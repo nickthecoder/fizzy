@@ -16,39 +16,32 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-package uk.co.nickthecoder.fizzy.gui.tools
+package uk.co.nickthecoder.fizzy.controller.tools
 
-import javafx.scene.input.MouseEvent
-import uk.co.nickthecoder.fizzy.gui.GlassCanvas
+import uk.co.nickthecoder.fizzy.controller.CMouseEvent
+import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.Shape2d
 import uk.co.nickthecoder.fizzy.model.history.MoveShapes
 
 
-class DragSelection(glassCanvas: GlassCanvas, var previousPoint: Dimension2)
-    : Tool(glassCanvas) {
+class DragSelection(controller: Controller, var previousPoint: Dimension2)
+    : Tool(controller) {
 
-    val document = glassCanvas.page.document
+    val document = controller.page.document
 
     init {
         document.history.beginBatch()
     }
 
-    override fun onMouseClick(event: MouseEvent) {
-
-    }
-
-    override fun onDragDetected(event: MouseEvent) {}
-
-    override fun onMouseDragged(event: MouseEvent) {
-        val now = glassCanvas.toPage(event)
+    override fun onMouseDragged(event: CMouseEvent) {
+        val now = event.point
         val delta = now - previousPoint
 
         document.history.makeChange(MoveShapes(document.selection, delta))
 
         previousPoint = now
-        event.consume()
     }
 
     fun move(shape: Shape, delta: Dimension2) {
@@ -59,12 +52,9 @@ class DragSelection(glassCanvas: GlassCanvas, var previousPoint: Dimension2)
         }
     }
 
-    override fun onMousePressed(event: MouseEvent) {}
-
-    override fun onMouseReleased(event: MouseEvent) {
+    override fun onMouseReleased(event: CMouseEvent) {
         document.history.endBatch()
-        glassCanvas.tool = DragCompleted(glassCanvas)
-        event.consume()
+        controller.tool = DragCompleted(controller)
     }
 
 }

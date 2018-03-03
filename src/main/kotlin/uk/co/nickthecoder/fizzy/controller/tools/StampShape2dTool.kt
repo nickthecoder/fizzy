@@ -16,22 +16,22 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-package uk.co.nickthecoder.fizzy.gui.tools
+package uk.co.nickthecoder.fizzy.controller.tools
 
-import javafx.scene.input.MouseEvent
-import uk.co.nickthecoder.fizzy.gui.GlassCanvas
+import uk.co.nickthecoder.fizzy.controller.CMouseEvent
+import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.Shape2d
 import uk.co.nickthecoder.fizzy.model.history.CreateShape
 
-class StampShape2dTool(glassCanvas: GlassCanvas, val masterShape: Shape2d)
-    : Tool(glassCanvas) {
+class StampShape2dTool(controller: Controller, val masterShape: Shape2d)
+    : Tool(controller) {
 
-    override fun onMouseClick(event: MouseEvent) {
-        val newShape = masterShape.copyInto(glassCanvas.page)
-        newShape.transform.pin.formula = glassCanvas.toPage(event).toFormula()
+    override fun onMouseClicked(event: CMouseEvent) {
+        val newShape = masterShape.copyInto(controller.page)
+        newShape.transform.pin.formula = event.point.toFormula()
 
-        glassCanvas.page.document.history.makeChange(
-                CreateShape(newShape, glassCanvas.page)
+        controller.page.document.history.makeChange(
+                CreateShape(newShape, controller.page)
         )
     }
 }

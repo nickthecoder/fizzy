@@ -16,30 +16,29 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-package uk.co.nickthecoder.fizzy.gui.tools
+package uk.co.nickthecoder.fizzy.controller.tools
 
-import javafx.scene.input.MouseEvent
-import uk.co.nickthecoder.fizzy.gui.GlassCanvas
-import uk.co.nickthecoder.fizzy.gui.handle.Handle
+import uk.co.nickthecoder.fizzy.controller.CMouseEvent
+import uk.co.nickthecoder.fizzy.controller.Controller
+import uk.co.nickthecoder.fizzy.controller.handle.Handle
 import uk.co.nickthecoder.fizzy.model.Dimension2
 
-class DragHandle(glassCanvas: GlassCanvas, val handle: Handle, startPosition: Dimension2)
-    : Tool(glassCanvas) {
+class DragHandle(controller: Controller, val handle: Handle, startPosition: Dimension2)
+    : Tool(controller) {
 
     val offset = startPosition - handle.position
 
     init {
-        glassCanvas.page.document.history.beginBatch()
+        controller.page.document.history.beginBatch()
         handle.beginDrag(startPosition)
     }
 
-    override fun onMouseDragged(event: MouseEvent) {
-        handle.dragTo(glassCanvas.toPage(event) - offset, glassCanvas.isConstrain(event))
-        glassCanvas.dirty = true // TODO REMOVE when handles are implemented correctly.
+    override fun onMouseDragged(event: CMouseEvent) {
+        handle.dragTo(event.point - offset, event.isConstrain)
     }
 
-    override fun onMouseReleased(event: MouseEvent) {
-        glassCanvas.tool = DragCompleted(glassCanvas)
-        glassCanvas.page.document.history.endBatch()
+    override fun onMouseReleased(event: CMouseEvent) {
+        controller.tool = DragCompleted(controller)
+        controller.page.document.history.endBatch()
     }
 }

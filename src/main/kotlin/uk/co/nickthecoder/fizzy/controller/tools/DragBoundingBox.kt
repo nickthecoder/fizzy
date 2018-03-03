@@ -16,45 +16,49 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-package uk.co.nickthecoder.fizzy.gui.tools
+package uk.co.nickthecoder.fizzy.controller.tools
 
-import javafx.scene.input.MouseEvent
+import uk.co.nickthecoder.fizzy.controller.CMouseEvent
+import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.gui.GlassCanvas
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.view.DrawContext
 
-class DragBoundingBox(glassCanvas: GlassCanvas, event: MouseEvent, val startPoint: Dimension2)
-    : Tool(glassCanvas) {
+/**
+ * Drags a rectangle, and selects all shapes wholly contained within it.
+ */
+class DragBoundingBox(controller: Controller, event: CMouseEvent, val startPoint: Dimension2)
+    : Tool(controller) {
 
     var endPoint = startPoint
 
-    val selection = glassCanvas.page.document.selection
+    val selection = controller.page.document.selection
 
     init {
-        if (!glassCanvas.isAdjust(event)) {
+        if (!event.isAdjust) {
             selection.clear()
         }
     }
 
-    override fun onMouseDragged(event: MouseEvent) {
-        endPoint = glassCanvas.toPage(event)
-        glassCanvas.dirty = true
+    override fun onMouseDragged(event: CMouseEvent) {
+        endPoint = event.point
+        controller.dirty.value++
     }
 
-    override fun onMouseReleased(event: MouseEvent) {
-        glassCanvas.page.children.filter { glassCanvas.isWithin(it, startPoint, endPoint) }.forEach {
+    override fun onMouseReleased(event: CMouseEvent) {
+        controller.page.children.filter { controller.isWithin(it, startPoint, endPoint) }.forEach {
             selection.add(it)
         }
-        glassCanvas.tool = DragCompleted(glassCanvas)
-        glassCanvas.dirty = true
+        controller.tool = DragCompleted(controller)
+        controller.dirty.value++
     }
 
     override fun draw(dc: DrawContext) {
         dc.use {
             dc.lineColor(GlassCanvas.BOUNDING_STROKE)
             dc.fillColor(GlassCanvas.BOUNDING_FILL)
-            dc.lineWidth(2.0 / glassCanvas.drawingArea.scale)
-            dc.lineDashes(5.0 / glassCanvas.drawingArea.scale)
+            dc.lineWidth(2.0 / controller.scale)
+            dc.lineDashes(5.0 / controller.scale)
             dc.rectangle(true, true, startPoint, endPoint)
         }
     }

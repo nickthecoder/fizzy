@@ -16,16 +16,23 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-package uk.co.nickthecoder.fizzy.gui.handle
+package uk.co.nickthecoder.fizzy.controller.tools
 
-import uk.co.nickthecoder.fizzy.model.Dimension2
-import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.controller.CMouseEvent
+import uk.co.nickthecoder.fizzy.controller.Controller
+import uk.co.nickthecoder.fizzy.model.history.DeleteShape
 
-// TODO Make this abstract
-open class ShapeHandle(val shape: Shape, position: Dimension2)
-    : Handle(position) {
+class DeleteTool(controller: Controller)
+    : Tool(controller) {
 
-    override fun isFor(shape: Shape) = shape === this.shape
+    val page = controller.page
 
-    override fun dragTo(pagePosition: Dimension2, constrain: Boolean) {} // TODO Remove
+    override fun onMouseClicked(event: CMouseEvent) {
+        val shape = page.findShapeAt(event.point, controller.minDistance)
+        if (shape != null) {
+            page.document.history.makeChange(DeleteShape(shape))
+        }
+    }
+
 }
+

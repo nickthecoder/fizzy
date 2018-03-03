@@ -188,6 +188,11 @@ class Color : Paint {
     }
 
     /**
+     * Create a new Color that is a more transparent version of this Color
+     */
+    fun transparent(opacity: Double = 0.5) = deriveColor(0.0, 1.0, 1.0, opacity)
+
+    /**
      * Creates a new Color that is a brighter version of this Color.
      */
     fun brighter(): Color {

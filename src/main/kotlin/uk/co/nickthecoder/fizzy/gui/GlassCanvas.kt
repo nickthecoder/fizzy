@@ -20,18 +20,14 @@ package uk.co.nickthecoder.fizzy.gui
 
 import javafx.scene.Node
 import javafx.scene.canvas.Canvas
-import javafx.scene.canvas.GraphicsContext
 import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
 import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
-import uk.co.nickthecoder.fizzy.gui.handle.Handle
-import uk.co.nickthecoder.fizzy.gui.handle.RotationHandle
-import uk.co.nickthecoder.fizzy.gui.handle.Shape2dSizeHandle
-import uk.co.nickthecoder.fizzy.gui.handle.ShapeHandle
-import uk.co.nickthecoder.fizzy.gui.tools.SelectTool
-import uk.co.nickthecoder.fizzy.gui.tools.Tool
+import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.prop.Prop
+import uk.co.nickthecoder.fizzy.prop.PropListener
 import uk.co.nickthecoder.fizzy.util.ChangeListener
 import uk.co.nickthecoder.fizzy.util.ChangeType
 import uk.co.nickthecoder.fizzy.util.runLater
@@ -41,17 +37,8 @@ import uk.co.nickthecoder.fizzy.util.runLater
  * By drawing these onto a different [Canvas], the [Canvas] displaying the the document does not need
  * to be redrawn when the selection changes, or while dragging a bounding box.
  */
-class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
+class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
 
-    var dirty = false
-        set(v) {
-            if (field != v) {
-                field = v
-                if (v) {
-                    runLater { draw() }
-                }
-            }
-        }
     // TODO We need to fit the canvas to the correct size
     val canvas = Canvas(1000.0, 800.0)
 
@@ -59,16 +46,6 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
 
     private var selectionMargin = 10.0
 
-    val handles = mutableListOf<Handle>()
-
-    var tool: Tool = SelectTool(this)
-
-    /**
-     * The minimum distance away from a line for it to be considered close enough to select it.
-     * This should be scaled with
-     */
-    val minDistance: Dimension
-        get() = Dimension(4.0) / drawingArea.scale
 
     fun build(): Node = canvas
 
@@ -78,9 +55,6 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
     val shapeListener = object : ChangeListener<Shape> {
         override fun changed(item: Shape, changeType: ChangeType, obj: Any?) {
             dirty = true
-            if (page.document.selection.contains(item)) {
-                createShapeHandles(item)
-            }
         }
     }
 
@@ -91,13 +65,11 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
 
         override fun added(collection: FCollection<Shape>, item: Shape) {
             item.changeListeners.add(shapeListener)
-            createShapeHandles(item)
             dirty = true
         }
 
         override fun removed(collection: FCollection<Shape>, item: Shape) {
             item.changeListeners.remove(shapeListener)
-            removeShapeHandles(item)
             dirty = true
         }
     }
@@ -106,22 +78,45 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
 
     private var dragging = false
 
+    var dirty: Boolean = false
+        set(v) {
+            if (field != v) {
+                field = v
+                if (v) {
+                    runLater { draw() }
+                }
+            }
+        }
+
+    private val dirtyListener = object : PropListener {
+        override fun dirty(prop: Prop<*>) {
+            dirty = true
+        }
+    }
+
     init {
+        drawingArea.controller.dirty.propListeners.add(dirtyListener)
+
         canvas.addEventHandler(MouseEvent.MOUSE_PRESSED) { onMousePressed(it) }
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED) { onMouseClicked(it) }
         canvas.addEventHandler(MouseEvent.DRAG_DETECTED) { onDragDetected(it) }
         canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED) { onMouseDragged(it) }
         canvas.addEventHandler(MouseEvent.MOUSE_RELEASED) { onMouseReleased(it) }
 
-        (page.document.selection.listeners.add(selectionListener))
-        page.document.selection.forEach {
-            createShapeHandles(it)
-        }
+        page.document.selection.listeners.add(selectionListener)
         runLater {
             draw()
         }
     }
 
+    fun toPage(event: MouseEvent) = drawingArea.toPage(event)
+
+    fun convertEvent(event: MouseEvent) = CMouseEvent(
+            toPage(event),
+            event.button.ordinal,
+            event.isShiftDown,
+            event.isControlDown,
+            drawingArea.scale)
 
     fun onMousePressed(event: MouseEvent) {
         if (event.button == MouseButton.SECONDARY || event.isMiddleButtonDown || event.isMetaDown || event.isAltDown) {
@@ -129,9 +124,9 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
             previousPoint = toPage(event)
             event.consume()
         } else if (event.clickCount == 2) {
-            drawingArea.zoomOn(if (isAdjust(event)) 1.0 / 1.4 else 1.4, event.x, event.y)
+            drawingArea.zoomOn(if (convertEvent(event).isAdjust) 1.0 / 1.4 else 1.4, event.x, event.y)
         } else {
-            tool.onMousePressed(event)
+            drawingArea.controller.onMousePressed(convertEvent(event))
         }
     }
 
@@ -139,7 +134,7 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
         if (dragging) {
             event.consume()
         } else {
-            tool.onMouseReleased(event)
+            drawingArea.controller.onMouseReleased(convertEvent(event))
         }
     }
 
@@ -147,7 +142,7 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
         if (dragging) {
             event.consume()
         } else {
-            tool.onDragDetected(event)
+            drawingArea.controller.onDragDetected(convertEvent(event))
         }
     }
 
@@ -158,7 +153,7 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
             previousPoint = toPage(event)
             event.consume()
         } else {
-            tool.onMouseDragged(event)
+            drawingArea.controller.onMouseDragged(convertEvent(event))
         }
     }
 
@@ -167,7 +162,7 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
             dragging = false
             event.consume()
         } else {
-            tool.onMouseClick(event)
+            drawingArea.controller.onMouseClicked(convertEvent(event))
         }
     }
 
@@ -180,14 +175,14 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
             page.document.selection.forEach { shape ->
                 drawBoundingBox(shape)
             }
-            handles.forEach { handle ->
+            drawingArea.controller.handles.forEach { handle ->
                 dc.use {
                     dc.translate(handle.position)
                     beginHandle()
                     handle.draw(dc)
                 }
             }
-            tool.draw(dc)
+            drawingArea.controller.tool.draw(dc)
         }
         dirty = false
     }
@@ -197,7 +192,7 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
 
             if (shape is RealShape) {
                 beginSelection()
-                val corners = shapeCorners(shape)
+                val corners = drawingArea.controller.shapeCorners(shape)
                 dc.polygon(true, false, *corners)
                 if (shape is Shape2d) {
                     val r1 = (corners[0] + corners[1]) / 2.0
@@ -213,14 +208,8 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
         }
     }
 
-    fun use(gc: GraphicsContext, action: () -> Unit) {
-        gc.save()
-        action()
-        gc.restore()
-    }
-
     fun beginSelection() {
-        dc.lineColor(Color.web("#72c2e9"))
+        dc.lineColor(BLUE_BASE)
         dc.lineWidth(2.0 / drawingArea.scale)
         dc.lineDashes(5.0 / drawingArea.scale)
     }
@@ -232,89 +221,15 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
         dc.lineWidth(1.0)
     }
 
-    fun createShapeHandles(shape: Shape) {
-        removeShapeHandles(shape)
-
-        if (shape is Shape2d) {
-            val corners = shapeCorners(shape)
-            handles.add(Shape2dSizeHandle(shape, corners[0], -1, -1))
-            handles.add(Shape2dSizeHandle(shape, corners[1], 1, -1))
-            handles.add(Shape2dSizeHandle(shape, corners[2], 1, 1))
-            handles.add(Shape2dSizeHandle(shape, corners[3], -1, 1))
-
-            handles.add(Shape2dSizeHandle(shape, (corners[0] + corners[1]) / 2.0, 0, -1))
-            handles.add(Shape2dSizeHandle(shape, (corners[1] + corners[2]) / 2.0, 1, 0))
-            handles.add(Shape2dSizeHandle(shape, (corners[2] + corners[3]) / 2.0, 0, 1))
-            handles.add(Shape2dSizeHandle(shape, (corners[3] + corners[0]) / 2.0, -1, 0))
-
-            handles.add(RotationHandle(shape,
-                    (corners[0] + corners[1]) / 2.0 +
-                            (corners[1] - corners[2]).normalise()
-                                    * Dimension(ROTATE_DISTANCE)))
-
-        } else if (shape is Shape1d) {
-            val ends = shape1dEnds(shape)
-            handles.add(ShapeHandle(shape, ends[0]))
-            handles.add(ShapeHandle(shape, ends[1]))
-        }
-
-    }
-
-    fun removeShapeHandles(shape: Shape) {
-        handles.removeIf { it.isFor(shape) }
-    }
-
-    fun shapeCorners(shape: RealShape): Array<Dimension2> {
-        return arrayOf<Dimension2>(
-                shape.fromLocalToPage.value * Dimension2.ZERO_mm,
-                shape.fromLocalToPage.value * (shape.size.value * Vector2(1.0, 0.0)),
-                shape.fromLocalToPage.value * (shape.size.value * Vector2(1.0, 1.0)),
-                shape.fromLocalToPage.value * (shape.size.value * Vector2(0.0, 1.0))
-        )
-    }
-
-    fun shape1dEnds(shape: Shape1d): Array<Dimension2> {
-        return arrayOf<Dimension2>(
-                shape.parent.fromLocalToPage.value * shape.start.value,
-                shape.parent.fromLocalToPage.value * shape.end.value
-        )
-    }
-
-    fun isWithin(shape: Shape, a: Dimension2, b: Dimension2): Boolean {
-        if (shape is RealShape) {
-            shapeCorners(shape).forEach {
-                if (((it.x < a.x) xor (it.x > b.x)) || ((it.y < a.y) xor (it.y > b.y))) {
-                    return false
-                }
-            }
-            return true
-        }
-        return false
-    }
-
-    fun toPage(event: MouseEvent) = drawingArea.toPage(event)
-
-
-    /**
-     * Is this mouse event an adjustment? (When the shift key is down).
-     * Used to add/remove items to/from the selection rather than replace the selection with a single item.
-     */
-    fun isAdjust(event: MouseEvent) = event.isShiftDown
-
-    /**
-     * Is this mouse event constrained? (When the control key is down).
-     * The SelectTool uses it to select a shape hidden under a another shape.
-     * The rezise tools will use it keep the same aspect ratio.
-     */
-    fun isConstrain(event: MouseEvent) = event.isControlDown
 
     companion object {
         val ROTATE_DISTANCE = 40.0
 
-        val BLUE_BASE = "#72c2e9"
-        val HANDLE_STROKE = Color.web(BLUE_BASE).darker()
-        val HANDLE_FILL = Color.web(BLUE_BASE).brighter()
-        val BOUNDING_STROKE = Color.web(BLUE_BASE)
-        val BOUNDING_FILL = Color.web(BLUE_BASE, 0.3).brighter()
+        val BLUE_BASE_STRING = "#72c2e9"
+        val BLUE_BASE = Color.web(BLUE_BASE_STRING)
+        val HANDLE_STROKE = BLUE_BASE.darker()
+        val HANDLE_FILL = BLUE_BASE.brighter()
+        val BOUNDING_STROKE = BLUE_BASE
+        val BOUNDING_FILL = BLUE_BASE.transparent(0.3).brighter()
     }
 }

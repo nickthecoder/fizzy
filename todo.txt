@@ -1,8 +1,18 @@
 To Do
 =====
 
+Need some way to force the GlassController to redraw during a bounding box drag (etc).
 
-Cannot add Shape ID, Name, nor Scratch Name, Comment
+Get rid of the "onMouseClicked" event after a drag.
+    Delete DragComplete tool
+
+
+When dragging a line, allow it to join to connection points
+    Ditto for snapping to geometries (along).
+
+When dragging lines :
+    Show connection points on Glass as tiny x
+    Show connecting geometries on Glass as a semi-transparent thickish line.
 
 When a shape is deleted, then the connections must be broken.
     How?
@@ -11,6 +21,11 @@ TestShape has some tests commented out.
 
 Soon
 ----
+
+Refactor GlassCanvas
+    Create a non-gui interface that can be used from unit tests
+    The unit tests should be able to invoke any Tools (so the Tools are non-gui too).
+    Will need my own "Event" class, which can have isContrained and isAdjustment.
 
 rename Geometry.line to stroke
 

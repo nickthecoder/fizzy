@@ -16,49 +16,48 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-package uk.co.nickthecoder.fizzy.gui.tools
+package uk.co.nickthecoder.fizzy.controller.tools
 
-import javafx.scene.input.MouseEvent
-import uk.co.nickthecoder.fizzy.gui.GlassCanvas
+import uk.co.nickthecoder.fizzy.controller.CMouseEvent
+import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape1d
 import uk.co.nickthecoder.fizzy.model.history.CreateShape
 
-class StampShape1dTool(glassCanvas: GlassCanvas, val masterShape: Shape1d)
-    : Tool(glassCanvas) {
+class StampShape1dTool(controller: Controller, val masterShape: Shape1d)
+    : Tool(controller) {
 
     var start: Dimension2? = null
     var newShape: Shape1d? = null
 
-    override fun onMousePressed(event: MouseEvent) {
-        start = glassCanvas.toPage(event)
-        glassCanvas.page.document.history.beginBatch()
+    override fun onMousePressed(event: CMouseEvent) {
+        start = event.point
+        controller.page.document.history.beginBatch()
     }
 
-    override fun onDragDetected(event: MouseEvent) {
-        val newShape = masterShape.copyInto(glassCanvas.page) as Shape1d
+    override fun onDragDetected(event: CMouseEvent) {
+        val newShape = masterShape.copyInto(controller.page) as Shape1d
         newShape.start.formula = (start ?: Dimension2.ZERO_mm).toFormula()
-        newShape.start.formula = glassCanvas.toPage(event).toFormula()
+        newShape.start.formula = event.point.toFormula()
 
         this.newShape = newShape
 
-        glassCanvas.page.document.history.makeChange(
-                CreateShape(newShape, glassCanvas.page)
+        controller.page.document.history.makeChange(
+                CreateShape(newShape, controller.page)
         )
     }
 
-    override fun onMouseDragged(event: MouseEvent) {
+    override fun onMouseDragged(event: CMouseEvent) {
         newShape?.let {
             // Note, we don't need to change the end point using a Change, because the Batch will only be completed
             // when the drag is completed. At which point the end point is set correctly.
             // glassCanvas.page.document.history.makeChange(ChangeExpression(it.end, glassCanvas.toPage(event).toFormula()))
-            it.end.formula = glassCanvas.toPage(event).toFormula()
+            it.end.formula = event.point.toFormula()
         }
     }
 
-    override fun onMouseReleased(event: MouseEvent) {
+    override fun onMouseReleased(event: CMouseEvent) {
         newShape = null
-        glassCanvas.page.document.history.endBatch()
-        // glassCanvas.tool = DragCompleted(glassCanvas)
+        controller.page.document.history.endBatch()
     }
 }
