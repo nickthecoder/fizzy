@@ -21,9 +21,8 @@ package uk.co.nickthecoder.fizzy.controller.tools
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.Dimension2
-import uk.co.nickthecoder.fizzy.model.Shape
-import uk.co.nickthecoder.fizzy.model.Shape2d
-import uk.co.nickthecoder.fizzy.model.history.MoveShapes
+import uk.co.nickthecoder.fizzy.model.Shape1d
+import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
 
 
 class MoveShapesTool(controller: Controller, var previousPoint: Dimension2)
@@ -39,17 +38,28 @@ class MoveShapesTool(controller: Controller, var previousPoint: Dimension2)
         val now = event.point
         val delta = now - previousPoint
 
-        document.history.makeChange(MoveShapes(document.selection, delta))
+        // We must move the lines first, because if they are joined, and the thing they join to is earlier,
+        // then they will be moved twice.
+        document.selection.filterIsInstance<Shape1d>().forEach { shape ->
+            document.history.makeChange(
+                    ChangeExpressions(listOf(
+                            shape.start to (shape.start.value + delta).toFormula(),
+                            shape.end to (shape.end.value + delta).toFormula()
+                    ))
+            )
+        }
+        document.selection.forEach { shape ->
+            if (shape !is Shape1d) {
+                document.history.makeChange(
+                        ChangeExpressions(
+                                listOf(shape.transform.pin to (shape.transform.pin.value + delta).toFormula())
+                        )
+                )
+            }
+        }
+        //document.history.makeChange(MoveShapes(document.selection, delta))
 
         previousPoint = now
-    }
-
-    fun move(shape: Shape, delta: Dimension2) {
-        if (shape is Shape2d) {
-            val oldPin = shape.transform.pin.value
-            val newPin = oldPin + delta
-            shape.transform.pin.formula = newPin.toFormula()
-        }
     }
 
     override fun onMouseReleased(event: CMouseEvent) {

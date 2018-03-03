@@ -1,6 +1,8 @@
 To Do
 =====
 
+Bug. Joined Lines become disjoint when dragged with a rectangle.
+
 When dragging a line, allow it to join to connection points
     Ditto for snapping to geometries (along).
 
