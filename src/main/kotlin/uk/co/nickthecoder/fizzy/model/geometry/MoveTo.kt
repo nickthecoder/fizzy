@@ -21,6 +21,7 @@ package uk.co.nickthecoder.fizzy.model.geometry
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
+import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 
 
@@ -39,7 +40,7 @@ class MoveTo(formula: String = "Dimension2(0mm, 0mm)")
 
     override fun formula() = "LineTo point='${point.formula}'"
 
-    override fun isAlong(here: Dimension2, prev: Dimension2, thickness: Dimension) = false
+    override fun isAlong(shape: Shape?, here: Dimension2, prev: Dimension2, lineWidth: Dimension, minDistance: Dimension) = false
 
     override fun isCrossing(here: Dimension2, prev: Dimension2) = false
 

@@ -48,16 +48,16 @@ abstract class RealShape(parent: ShapeParent)
 
     val fillColor = PaintExpression("Color.white")
 
-    override fun isAt(point: Dimension2): Boolean {
+    override fun isAt(point: Dimension2, minDistance: Dimension): Boolean {
         val localPoint = transform.fromParentToLocal.value * point
 
         geometries.forEach { geo ->
-            if (geo.value.isAt(localPoint, lineWidth.value)) {
+            if (geo.value.isAt(localPoint, lineWidth.value, minDistance)) {
                 return true
             }
         }
 
-        return super.isAt(point)
+        return super.isAt(point, minDistance)
     }
 
     override fun postInit() {

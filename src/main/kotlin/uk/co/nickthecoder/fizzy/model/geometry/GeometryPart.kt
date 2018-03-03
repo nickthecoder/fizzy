@@ -22,6 +22,7 @@ import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
+import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
@@ -65,7 +66,7 @@ abstract class GeometryPart
      * The thickness is the distance away [here] can be, and still be considered touching.
      * [here] is usually the shapes lineWidth, or greater if that is too thin.
      */
-    abstract fun isAlong(here: Dimension2, prev: Dimension2, thickness: Dimension): Boolean
+    abstract fun isAlong(shape: Shape?, here: Dimension2, prev: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean
 
     abstract fun isCrossing(here: Dimension2, prev: Dimension2): Boolean
 

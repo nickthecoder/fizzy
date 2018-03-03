@@ -74,6 +74,11 @@ class Dimension2(val x: Dimension, val y: Dimension) {
         return Vector2(x.inDefaultUnits / l, y.inDefaultUnits / l)
     }
 
+    fun normalise2(): Dimension2 {
+        val l = length().inDefaultUnits
+        return Dimension2(Dimension(x.inDefaultUnits / l), Dimension(y.inDefaultUnits / l))
+    }
+
     fun aspectRatio() = x.inDefaultUnits / y.inDefaultUnits
 
     /**

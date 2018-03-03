@@ -32,7 +32,7 @@ class SelectTool(glassCanvas: GlassCanvas)
 
     override fun onMouseClick(event: MouseEvent) {
 
-        val shapes = glassCanvas.page.findShapesAt(glassCanvas.toPage(event))
+        val shapes = glassCanvas.page.findShapesAt(glassCanvas.toPage(event), glassCanvas.minDistance)
         if (shapes.isEmpty()) {
             if (!glassCanvas.isAdjust(event)) {
                 selection.clear()
@@ -76,7 +76,7 @@ class SelectTool(glassCanvas: GlassCanvas)
             }
         }
 
-        val shape = glassCanvas.page.findShapeAt(glassCanvas.toPage(event))
+        val shape = glassCanvas.page.findShapeAt(glassCanvas.toPage(event), glassCanvas.minDistance)
         if (shape == null) {
             glassCanvas.tool = DragBoundingBox(glassCanvas, event, mousePressedPoint)
             glassCanvas.tool.onMouseDragged(event)

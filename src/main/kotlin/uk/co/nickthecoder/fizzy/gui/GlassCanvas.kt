@@ -63,6 +63,13 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
 
     var tool: Tool = SelectTool(this)
 
+    /**
+     * The minimum distance away from a line for it to be considered close enough to select it.
+     * This should be scaled with
+     */
+    val minDistance: Dimension
+        get() = Dimension(4.0) / drawingArea.scale
+
     fun build(): Node = canvas
 
     /**
@@ -215,7 +222,7 @@ class GlassCanvas(var page: Page, val drawingArea: DrawingArea) {
     fun beginSelection() {
         dc.lineColor(Color.web("#72c2e9"))
         dc.lineWidth(2.0 / drawingArea.scale)
-        dc.lineDashes(5.0)
+        dc.lineDashes(5.0 / drawingArea.scale)
     }
 
     fun beginHandle() {

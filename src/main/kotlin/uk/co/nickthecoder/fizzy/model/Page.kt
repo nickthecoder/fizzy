@@ -64,15 +64,15 @@ class Page(val document: Document)
         return null
     }
 
-    fun findShapeAt(point: Dimension2): Shape? {
+    fun findShapeAt(point: Dimension2, minDistance: Dimension): Shape? {
         children.forEach { shape ->
-            if (shape.isAt(point)) {
+            if (shape.isAt(point, minDistance)) {
                 return shape
             }
         }
         return null
     }
 
-    fun findShapesAt(point: Dimension2) = children.filter { it.isAt(point) }
+    fun findShapesAt(point: Dimension2, minDistance: Dimension) = children.filter { it.isAt(point, minDistance) }
 
 }

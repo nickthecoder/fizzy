@@ -23,6 +23,7 @@ import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.RealShape
+import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.BooleanExpression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
@@ -78,7 +79,7 @@ class Geometry
             }
     )
 
-    fun isAt(point: Dimension2, thickness: Dimension): Boolean {
+    fun isAt(point: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean {
 
         var prev: Dimension2? = null
 
@@ -111,7 +112,7 @@ class Geometry
             prev = null
             parts.forEach { part ->
                 prev?.let {
-                    if (part.isAlong(point, it, thickness)) {
+                    if (part.isAlong(shape, point, it, lineWidth, minDistance)) {
                         return true
                     }
                 }

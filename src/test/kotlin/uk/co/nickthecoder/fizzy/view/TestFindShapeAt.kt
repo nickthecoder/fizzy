@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.view
 
 import org.junit.Test
+import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.Page
 import uk.co.nickthecoder.fizzy.model.Shape
@@ -42,29 +43,43 @@ class TestFindShapeAt : MyTestCase(), MyShapeTest {
 
         box.geometries[0].value.fill.formula = "false"
 
-        assertTrue(box.isAt(dimension2("Dimension2(40mm,100mm)")))
-        assertEquals(box, page.findShapeAt(dimension2("Dimension2(40mm,100mm)")))
-        assertNull(page.findShapeAt(dimension2("Dimension2(0mm,100mm)"))) // Too left
-        assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"))) // Too right
-        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,150mm)"))) // Too low
-        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,80mm)"))) // Too high
-        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,120mm)"))) // Middle of shape (which isn't filled).
+        assertTrue(box.isAt(dimension2("Dimension2(40mm,100mm)"), Dimension.ZERO_mm))
+        assertEquals(box, page.findShapeAt(dimension2("Dimension2(40mm,100mm)"), Dimension.ZERO_mm))
+        assertNull(page.findShapeAt(dimension2("Dimension2(0mm,100mm)"), Dimension.ZERO_mm)) // Too left
+        assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"), Dimension.ZERO_mm)) // Too right
+        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,150mm)"), Dimension.ZERO_mm)) // Too low
+        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,80mm)"), Dimension.ZERO_mm)) // Too high
+        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,120mm)"), Dimension.ZERO_mm)) // Middle of shape (which isn't filled).
 
         box.geometries[0].value.fill.formula = "true"
         // Not that it is filled, the middle point should be be found.
-        assertNull(page.findShapeAt(dimension2("Dimension2(0mm,100mm)"))) // Too left
-        assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"))) // Too right
-        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,150mm)"))) // Too low
-        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,80mm)"))) // Too high
-        assertEquals(box, page.findShapeAt(dimension2("Dimension2(40mm,120mm)"))) // Middle of shape (which is now filled).
+        assertNull(page.findShapeAt(dimension2("Dimension2(0mm,100mm)"), Dimension.ZERO_mm)) // Too left
+        assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"), Dimension.ZERO_mm)) // Too right
+        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,150mm)"), Dimension.ZERO_mm)) // Too low
+        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,80mm)"), Dimension.ZERO_mm)) // Too high
+        assertEquals(box, page.findShapeAt(dimension2("Dimension2(40mm,120mm)"), Dimension.ZERO_mm)) // Middle of shape (which is now filled).
 
         // An edge case. If we remove the last geometry part, making the left edge open, then the "Too Left" case is special
         box.geometries[0].value.parts.removeLast()
-        assertNull(page.findShapeAt(dimension2("Dimension2(0mm,100mm)"))) // Too left - This is special!
-        assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"))) // Too right
-        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,150mm)"))) // Too low
-        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,80mm)"))) // Too high
-        assertEquals(box, page.findShapeAt(dimension2("Dimension2(40mm,120mm)"))) // Middle of shape (which is now filled).
+        assertNull(page.findShapeAt(dimension2("Dimension2(0mm,100mm)"), Dimension.ZERO_mm)) // Too left - This is special!
+        assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"), Dimension.ZERO_mm)) // Too right
+        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,150mm)"), Dimension.ZERO_mm)) // Too low
+        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,80mm)"), Dimension.ZERO_mm)) // Too high
+        assertEquals(box, page.findShapeAt(dimension2("Dimension2(40mm,120mm)"), Dimension.ZERO_mm)) // Middle of shape (which is now filled).
+    }
+
+    @Test
+    fun testThinLine() {
+        val doc = Document()
+        val page = Page(doc)
+        val line = createLine(page, "Dimension2(20mm,40mm)", "Dimension2(40mm, 40mm)", "0.1mm")
+        page.children.add(line)
+
+        assertEquals(line, page.findShapeAt(dimension2("Dimension2(30mm,40mm)"), Dimension.ZERO_mm))
+        // We need to select the thin like by clicking CLOSE to it.
+        assertEquals(null, page.findShapeAt(dimension2("Dimension2(30mm,41mm)"), Dimension(0.0)))
+        assertEquals(line, page.findShapeAt(dimension2("Dimension2(30mm,41mm)"), Dimension(1.1)))
+
     }
 
     /**
@@ -90,19 +105,19 @@ class TestFindShapeAt : MyTestCase(), MyShapeTest {
         geometry.parts.add(LineTo("Size * Vector2(1,0)"))
         geometry.parts.add(LineTo("Geometry1.Point1"))
 
-        assertNull(page.findShapeAt(dimension2("Dimension2(0mm,100mm)"))) // Too left
-        assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"))) // Too right
-        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,150mm)"))) // Too low
-        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,80mm)"))) // Too high
-        assertEquals(box, page.findShapeAt(dimension2("Dimension2(40mm,120mm)")))
+        assertNull(page.findShapeAt(dimension2("Dimension2(0mm,100mm)"), Dimension.ZERO_mm)) // Too left
+        assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"), Dimension.ZERO_mm)) // Too right
+        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,150mm)"), Dimension.ZERO_mm)) // Too low
+        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,80mm)"), Dimension.ZERO_mm)) // Too high
+        assertEquals(box, page.findShapeAt(dimension2("Dimension2(40mm,120mm)"), Dimension.ZERO_mm))
 
         // Now open the right side of the box, and we should STILL find it.
         geometry.parts.removeLast()
-        assertNull(page.findShapeAt(dimension2("Dimension2(0mm,100mm)"))) // Too left
-        assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"))) // Too right - This is special
-        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,150mm)"))) // Too low
-        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,80mm)"))) // Too high
-        assertEquals(box, page.findShapeAt(dimension2("Dimension2(40mm,120mm)")))
+        assertNull(page.findShapeAt(dimension2("Dimension2(0mm,100mm)"), Dimension.ZERO_mm)) // Too left
+        assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"), Dimension.ZERO_mm)) // Too right - This is special
+        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,150mm)"), Dimension.ZERO_mm)) // Too low
+        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,80mm)"), Dimension.ZERO_mm)) // Too high
+        assertEquals(box, page.findShapeAt(dimension2("Dimension2(40mm,120mm)"), Dimension.ZERO_mm))
 
         // I could test removing all four sides, but I know that the right side is the tricky edge case!
         // Also, removing the left edge is done in testSimpleBox.

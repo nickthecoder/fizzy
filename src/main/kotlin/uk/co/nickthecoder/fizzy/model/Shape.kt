@@ -149,11 +149,11 @@ abstract class Shape(var parent: ShapeParent)
      * Returns true iff this geometry is close to the given point, or if any of the descendants isAt the point.
      *
      */
-    open fun isAt(point: Dimension2): Boolean {
+    open fun isAt(point: Dimension2, minDistance: Dimension): Boolean {
         val localPoint = transform.fromParentToLocal.value * point
 
         children.forEach { child ->
-            if (child.isAt(localPoint)) {
+            if (child.isAt(localPoint, minDistance)) {
                 return true
             }
         }
