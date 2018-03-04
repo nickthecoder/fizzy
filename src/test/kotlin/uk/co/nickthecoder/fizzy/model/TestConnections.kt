@@ -117,9 +117,14 @@ class TestConnections : MyTestCase(), MyShapeTest {
         val page = Page(doc)
 
         val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(0mm,0mm)") // @ -5,-10 to 5, 10
+        val box2 = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(1mm,0mm)")
         val line = createLine(page, "Dimension2(0mm,0mm)", "Dimension2(0mm,0mm)")
         page.children.add(box)
+        page.children.add(box2)
         page.children.add(line)
+        
+        // Only allow connections to box, not to box2
+        box.geometries[0].value.connect.formula = "true"
 
         /*
         // Half way along the first line

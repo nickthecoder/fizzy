@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import org.junit.Test
+import uk.co.nickthecoder.fizzy.prop.BooleanExpression
 import uk.co.nickthecoder.fizzy.prop.DoubleExpression
 import uk.co.nickthecoder.fizzy.prop.PaintExpression
 import uk.co.nickthecoder.fizzy.prop.StringExpression
@@ -37,11 +38,7 @@ class TestShape : MyTestCase(), MyShapeTest {
         val page = Page(doc)
 
         val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(100mm,200mm)")
-        val inner = createBox(box, "Dimension2(1mm,2mm)", "Dimension2(10mm,20mm)")
         page.children.add(box)
-        box.children.add(inner)
-
-        inner.name.value = "inner"
 
         fun testDouble(name: String, exp: String): Any {
             box.addScratch(Scratch(name, DoubleExpression(exp)))
@@ -50,6 +47,11 @@ class TestShape : MyTestCase(), MyShapeTest {
 
         fun testPaint(name: String, exp: String): Any {
             box.addScratch(Scratch(name, PaintExpression(exp)))
+            return box.findScratch(name)!!.expression.value
+        }
+
+        fun testBoolean(name: String, exp: String): Any {
+            box.addScratch(Scratch(name, BooleanExpression(exp)))
             return box.findScratch(name)!!.expression.value
         }
 
@@ -88,6 +90,20 @@ class TestShape : MyTestCase(), MyShapeTest {
         box.fillColor.formula = "Color.green"
         assertEquals(Color.NamedColors["green"], testPaint("fillColor", "FillColor"))
 
+        box.geometries[0].value.fill.formula = "true"
+        assertEquals(true, testBoolean("fill1", "Geometry1.Fill"))
+        box.geometries[0].value.fill.formula = "false"
+        assertEquals(false, testBoolean("fill2", "Geometry1.Fill"))
+
+        box.geometries[0].value.line.formula = "true"
+        assertEquals(true, testBoolean("line1", "Geometry1.Line"))
+        box.geometries[0].value.line.formula = "false"
+        assertEquals(false, testBoolean("line2", "Geometry1.Line"))
+
+        box.geometries[0].value.connect.formula = "true"
+        assertEquals(true, testBoolean("connect1", "Geometry1.Connect"))
+        box.geometries[0].value.connect.formula = "false"
+        assertEquals(false, testBoolean("connect2", "Geometry1.Connect"))
     }
 
 

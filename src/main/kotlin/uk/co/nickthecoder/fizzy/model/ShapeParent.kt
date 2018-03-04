@@ -71,23 +71,27 @@ interface ShapeParent {
 
                 child.geometries.forEach { gProp ->
                     val geometry = gProp.value
-                    // TODO Add test for connectable.
-                    var prev: Dimension2? = null
 
-                    var moveToCount = 0
-                    geometry.parts.forEachIndexed { index, part ->
-                        if (part is MoveTo) moveToCount++
+                    // Ignore geometries that cannot be connected to.
+                    if (geometry.connect.value) {
 
-                        prev?.let {
-                            val result = part.checkAlong(child, localPoint, it)
-                            if (result != null && result.first < nearestDistance) {
-                                val nonMoveCount = geometry.parts.count { it !is MoveTo }
-                                nearest = geometry
-                                nearestDistance = result.first
-                                nearestAlong = (index - moveToCount).toDouble() / nonMoveCount.toDouble() + result.second / nonMoveCount
+                        var prev: Dimension2? = null
+
+                        var moveToCount = 0
+                        geometry.parts.forEachIndexed { index, part ->
+                            if (part is MoveTo) moveToCount++
+
+                            prev?.let {
+                                val result = part.checkAlong(child, localPoint, it)
+                                if (result != null && result.first < nearestDistance) {
+                                    val nonMoveCount = geometry.parts.count { it !is MoveTo }
+                                    nearest = geometry
+                                    nearestDistance = result.first
+                                    nearestAlong = (index - moveToCount).toDouble() / nonMoveCount.toDouble() + result.second / nonMoveCount
+                                }
                             }
+                            prev = part.point.value
                         }
-                        prev = part.point.value
                     }
                 }
             }

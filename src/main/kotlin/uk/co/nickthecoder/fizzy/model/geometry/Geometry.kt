@@ -66,6 +66,7 @@ class Geometry
 
     val fill = BooleanExpression("false")
     val line = BooleanExpression("true")
+    val connect = BooleanExpression("false")
 
     private val geometryPartsListener = ChangeAndCollectionListener(this, parts,
             onAdded = {
@@ -94,6 +95,7 @@ class Geometry
     fun addMetaData(list: MutableList<MetaData>, sectionIndex: Int) {
         list.add(MetaData("Fill", fill, "Geometry", sectionIndex))
         list.add(MetaData("Line", line, "Geometry", sectionIndex))
+        list.add(MetaData("Connect", line, "Geometry", sectionIndex))
         parts.forEachIndexed { index, part -> part.addMetaData(list, sectionIndex, index) }
     }
 
@@ -205,6 +207,7 @@ class GeometryProp(geometry: Geometry)
     init {
         geometry.fill.propListeners.add(this)
         geometry.line.propListeners.add(this)
+        geometry.connect.propListeners.add(this)
     }
 
     /**

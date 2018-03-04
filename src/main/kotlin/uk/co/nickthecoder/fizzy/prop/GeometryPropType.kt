@@ -28,10 +28,17 @@ class GeometryPropType private constructor()
 
     override fun findField(prop: Prop<Geometry>, name: String): Prop<*>? {
 
-        // Allow access to any of the Geometries parts, without the hassle of ".parts.xxx"
-        val partsProp = FListProp(prop.value.parts)
-        val found = partsProp.field(name)
-        return found ?: super.findField(prop, name)
+        return when (name) {
+            "Fill" -> prop.value.fill
+            "Line" -> prop.value.line
+            "Connect" -> prop.value.connect
+            else -> {
+                // Allow access to any of the Geometries parts, without the hassle of ".parts.xxx"
+                val partsProp = FListProp(prop.value.parts)
+                val found = partsProp.field(name)
+                found ?: super.findField(prop, name)
+            }
+        }
     }
 
     companion object {
