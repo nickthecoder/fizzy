@@ -95,10 +95,10 @@ class TestShape : MyTestCase(), MyShapeTest {
         box.geometries[0].value.fill.formula = "false"
         assertEquals(false, testBoolean("fill2", "Geometry1.Fill"))
 
-        box.geometries[0].value.line.formula = "true"
-        assertEquals(true, testBoolean("line1", "Geometry1.Line"))
-        box.geometries[0].value.line.formula = "false"
-        assertEquals(false, testBoolean("line2", "Geometry1.Line"))
+        box.geometries[0].value.stroke.formula = "true"
+        assertEquals(true, testBoolean("stroke1", "Geometry1.Stroke"))
+        box.geometries[0].value.stroke.formula = "false"
+        assertEquals(false, testBoolean("stroke2", "Geometry1.Stroke"))
 
         box.geometries[0].value.connect.formula = "true"
         assertEquals(true, testBoolean("connect1", "Geometry1.Connect"))

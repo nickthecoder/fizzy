@@ -30,7 +30,7 @@ class GeometryPropType private constructor()
 
         return when (name) {
             "Fill" -> prop.value.fill
-            "Line" -> prop.value.line
+            "Stroke" -> prop.value.stroke
             "Connect" -> prop.value.connect
             else -> {
                 // Allow access to any of the Geometries parts, without the hassle of ".parts.xxx"

@@ -44,7 +44,8 @@ class Geometry
             if (field != v) {
                 field?.let {
                     fill.propListeners.remove(it)
-                    line.propListeners.add(it)
+                    stroke.propListeners.add(it)
+                    connect.propListeners.add(it)
                 }
 
                 field = v
@@ -53,10 +54,12 @@ class Geometry
                     val context = v?.context ?: constantsContext
                     part.setContext(context)
                     fill.context = context
-                    line.context = context
+                    stroke.context = context
+                    connect.context = context
                     if (v != null) {
                         fill.propListeners.add(v)
-                        line.propListeners.add(v)
+                        stroke.propListeners.add(v)
+                        connect.propListeners.add(v)
                     }
                 }
             }
@@ -65,7 +68,7 @@ class Geometry
     var parts = MutableFList<GeometryPart>()
 
     val fill = BooleanExpression("false")
-    val line = BooleanExpression("true")
+    val stroke = BooleanExpression("true")
     val connect = BooleanExpression("false")
 
     private val geometryPartsListener = ChangeAndCollectionListener(this, parts,
@@ -94,8 +97,8 @@ class Geometry
 
     fun addMetaData(list: MutableList<MetaData>, sectionIndex: Int) {
         list.add(MetaData("Fill", fill, "Geometry", sectionIndex))
-        list.add(MetaData("Line", line, "Geometry", sectionIndex))
-        list.add(MetaData("Connect", line, "Geometry", sectionIndex))
+        list.add(MetaData("Stroke", stroke, "Geometry", sectionIndex))
+        list.add(MetaData("Connect", connect, "Geometry", sectionIndex))
         parts.forEachIndexed { index, part -> part.addMetaData(list, sectionIndex, index) }
     }
 
@@ -128,7 +131,7 @@ class Geometry
             }
         }
 
-        if (line.value) {
+        if (stroke.value) {
             prev = null
             parts.forEach { part ->
                 prev?.let {
@@ -206,7 +209,7 @@ class GeometryProp(geometry: Geometry)
 
     init {
         geometry.fill.propListeners.add(this)
-        geometry.line.propListeners.add(this)
+        geometry.stroke.propListeners.add(this)
         geometry.connect.propListeners.add(this)
     }
 

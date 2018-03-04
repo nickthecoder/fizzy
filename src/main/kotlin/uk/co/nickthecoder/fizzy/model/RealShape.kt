@@ -89,7 +89,7 @@ abstract class RealShape(parent: ShapeParent)
                 val geometry = geometryProp.value
                 val newGeometry = Geometry()
                 newGeometry.fill.formula = geometry.fill.formula
-                newGeometry.line.formula = geometry.line.formula
+                newGeometry.stroke.formula = geometry.stroke.formula
                 geometry.parts.forEach { part ->
                     newGeometry.parts.add(part.copy())
                 }
