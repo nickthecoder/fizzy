@@ -43,23 +43,28 @@ class GrowShape1dTool(controller: Controller, val masterShape: Shape1d)
     }
 
     override fun onDragDetected(event: CMouseEvent) {
-        val newShape = masterShape.copyInto(controller.page) as Shape1d
-        newShape.start.formula = (start ?: Dimension2.ZERO_mm).toFormula()
-        newShape.start.formula = event.point.toFormula()
+        start?.let { start ->
+            val newShape = masterShape.copyInto(controller.page) as Shape1d
 
-        this.newShape = newShape
+            // Either a connection to another shape, or the point of the onMousePressed event.
+            newShape.start.formula = Controller.connectFormula(start, newShape, event.scale) ?: start.toFormula()
+            newShape.end.formula = event.point.toFormula()
 
-        controller.page.document.history.makeChange(
-                CreateShape(newShape, controller.page)
-        )
+            this.newShape = newShape
+
+            controller.page.document.history.makeChange(
+                    CreateShape(newShape, controller.page)
+            )
+        }
     }
 
     override fun onMouseDragged(event: CMouseEvent) {
         newShape?.let {
             // Note, we don't need to change the end point using a Change, because the Batch will only be completed
             // when the drag is completed. At which point the end point is set correctly.
-            // glassCanvas.page.document.history.makeChange(ChangeExpression(it.end, glassCanvas.toPage(event).toFormula()))
-            it.end.formula = event.point.toFormula()
+
+            // Either a connection to another shape, or the point of the mouse event.
+            it.end.formula = Controller.connectFormula(event.point, it, event.scale) ?: event.point.toFormula()
         }
     }
 
