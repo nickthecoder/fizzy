@@ -49,7 +49,7 @@ class Controller(val page: Page) {
      * This should be scaled with
      */
     val minDistance: Dimension
-        get() = Dimension(4.0) / scale
+        get() = LINE_NEAR / scale
 
     /**
      * Listen to the currently selected shapes. When they change, we need to draw their handles and bounding box etc.
@@ -176,23 +176,28 @@ class Controller(val page: Page) {
 
     companion object {
 
+        val HANDLE_SIZE = 3.0 // Half width (or height) of handles excluding the stroke.
+        val HANDLE_NEAR = HANDLE_SIZE + 2.0 // The size when testing if the mouse is at the handle
+        val LINE_NEAR = Dimension(4.0) // The distance away from a line, and still be able to select it.
+
         fun connectFormula(pagePoint: Dimension2, shape: Shape, scale: Double): String? {
 
             // Look for connection points
             shape.page().findNearestConnectionPoint(pagePoint, shape)?.let { (connectionPoint, distance) ->
-                if (distance < Handle.NEAR / scale) {
+                if (distance < HANDLE_NEAR / scale) {
                     connectionPoint.connectToFormula()?.let { return it }
                 }
             }
 
             // Look for geometries that can be connected to.
             shape.page().findNearestConnectionGeometry(pagePoint, shape)?.let { (geometry, distance, along) ->
-                if (distance < Handle.NEAR / scale) {
+                if (distance < HANDLE_NEAR / scale) {
                     geometry.connectAlongFormula(along)?.let { return it }
                 }
             }
 
             return null
+
         }
     }
 }

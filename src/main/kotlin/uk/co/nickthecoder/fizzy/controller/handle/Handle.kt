@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.controller.handle
 
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
+import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.view.DrawContext
@@ -29,25 +30,21 @@ abstract class Handle(var position: Dimension2) {
 
     open fun draw(dc: DrawContext) {
         dc.beginPath()
-        dc.moveTo(-SIZE, -SIZE)
-        dc.lineTo(SIZE, -SIZE)
-        dc.lineTo(SIZE, SIZE)
-        dc.lineTo(-SIZE, SIZE)
-        dc.lineTo(-SIZE, -SIZE)
+        dc.moveTo(-Controller.HANDLE_SIZE, -Controller.HANDLE_SIZE)
+        dc.lineTo(Controller.HANDLE_SIZE, -Controller.HANDLE_SIZE)
+        dc.lineTo(Controller.HANDLE_SIZE, Controller.HANDLE_SIZE)
+        dc.lineTo(-Controller.HANDLE_SIZE, Controller.HANDLE_SIZE)
+        dc.lineTo(-Controller.HANDLE_SIZE, -Controller.HANDLE_SIZE)
         dc.endPath(true, true)
     }
 
     fun isAt(point: Dimension2, scale: Double): Boolean {
         val delta = (point - position) / scale
-        return Math.abs(delta.x.inDefaultUnits) < NEAR / scale && Math.abs(delta.y.inDefaultUnits) < NEAR / scale
+        return Math.abs(delta.x.inDefaultUnits) < Controller.HANDLE_NEAR / scale && Math.abs(delta.y.inDefaultUnits) < Controller.HANDLE_NEAR / scale
     }
 
     open fun beginDrag(startPoint: Dimension2) {}
 
     abstract fun dragTo(event: CMouseEvent, dragPoint: Dimension2)
 
-    companion object {
-        val SIZE = 3.0
-        val NEAR = SIZE + 1.0
-    }
 }
