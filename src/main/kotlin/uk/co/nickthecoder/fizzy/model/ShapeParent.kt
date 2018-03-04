@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.model.geometry.Geometry
+import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.prop.Prop
 
 interface ShapeParent {
@@ -69,12 +70,24 @@ interface ShapeParent {
                 val localPoint = child.fromPageToLocal.value * atPagePoint
 
                 child.geometries.forEach { gProp ->
-                    gProp.value.findAlong(localPoint)?.let { (distance, along) ->
-                        if (distance < nearestDistance) {
-                            nearest = gProp.value
-                            nearestAlong = along
-                            nearestDistance = distance
+                    val geometry = gProp.value
+                    // TODO Add test for connectable.
+                    var prev: Dimension2? = null
+
+                    var moveToCount = 0
+                    geometry.parts.forEachIndexed { index, part ->
+                        if (part is MoveTo) moveToCount++
+
+                        prev?.let {
+                            val result = part.checkAlong(child, localPoint, it)
+                            if (result != null && result.first < nearestDistance) {
+                                val nonMoveCount = geometry.parts.count { it !is MoveTo }
+                                nearest = geometry
+                                nearestDistance = result.first
+                                nearestAlong = (index - moveToCount).toDouble() / nonMoveCount.toDouble() + result.second / nonMoveCount
+                            }
                         }
+                        prev = part.point.value
                     }
                 }
             }

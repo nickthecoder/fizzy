@@ -71,6 +71,8 @@ abstract class GeometryPart
      */
     abstract fun isAlong(shape: Shape?, here: Dimension2, prev: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean
 
+    abstract fun checkAlong(shape: Shape, here: Dimension2, prev: Dimension2): Pair<Double,Double>?
+
     abstract fun isCrossing(here: Dimension2, prev: Dimension2): Boolean
 
     abstract fun pointAlong(prev: Dimension2, along: Double): Dimension2

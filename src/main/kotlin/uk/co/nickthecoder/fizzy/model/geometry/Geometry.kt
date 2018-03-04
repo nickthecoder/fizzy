@@ -80,6 +80,17 @@ class Geometry
             }
     )
 
+    fun index(): Int {
+        shape?.let {
+            it.geometries.forEachIndexed { index, prop ->
+                if (prop.value === this) {
+                    return index
+                }
+            }
+        }
+        return -1
+    }
+
     fun addMetaData(list: MutableList<MetaData>, sectionIndex: Int) {
         list.add(MetaData("Fill", fill, "Geometry", sectionIndex))
         list.add(MetaData("Line", line, "Geometry", sectionIndex))
@@ -116,16 +127,7 @@ class Geometry
         }
 
         if (line.value) {
-            return isAlong(localPoint, lineWidth, minDistance)
-        }
-
-        return false
-    }
-
-    fun isAlong(localPoint: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean {
-        var prev: Dimension2? = null
-
-        if (line.value) {
+            prev = null
             parts.forEach { part ->
                 prev?.let {
                     if (part.isAlong(shape, localPoint, it, lineWidth, minDistance)) {
@@ -135,29 +137,8 @@ class Geometry
                 prev = part.point.value
             }
         }
+
         return false
-    }
-
-    /**
-     * If the point given is far away then return null.
-     * Otherwise, return the distance is page coordinates, and the amount along.
-     */
-    fun findAlong(localPoint: Dimension2): Pair<Double, Double>? {
-        if (isAlong(localPoint, Dimension.ZERO_mm, Dimension(5.0))) {
-            return Pair(0.0, 0.0)
-        }
-        return null
-    }
-
-    fun index(): Int {
-        shape?.let {
-            it.geometries.forEachIndexed { index, prop ->
-                if (prop.value === this) {
-                    return index
-                }
-            }
-        }
-        return -1
     }
 
     fun connectAlongFormula(along: Double): String? {

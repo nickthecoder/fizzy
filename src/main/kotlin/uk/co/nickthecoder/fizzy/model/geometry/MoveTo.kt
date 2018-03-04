@@ -47,6 +47,8 @@ class MoveTo(formula: String = "Dimension2(0mm, 0mm)")
 
     override fun isAlong(shape: Shape?, here: Dimension2, prev: Dimension2, lineWidth: Dimension, minDistance: Dimension) = false
 
+    override fun checkAlong(shape: Shape, here: Dimension2, prev: Dimension2): Pair<Double, Double>? = null
+
     override fun isCrossing(here: Dimension2, prev: Dimension2) = false
 
     override fun pointAlong(prev: Dimension2, along: Double) = Dimension2.ZERO_mm

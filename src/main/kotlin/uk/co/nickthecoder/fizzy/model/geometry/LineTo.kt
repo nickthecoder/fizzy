@@ -80,7 +80,7 @@ class LineTo(formula: String = "Dimension2(0mm, 0mm)")
         if (shape == null) return false
 
         // What follows is my own invention, and is probably very inefficient.
-        val AB2 = ABx * ABx + ABy + ABy // The square of the length AB.
+        val AB2 = ABx * ABx + ABy * ABy // The square of the length AB.
         val AD2 = ACdotAB * ACdotAB / AB2 // Use the dot product from earlier to find the length AD (squared).
         val DCsquared = ACsquared - AD2 // Using pythagoras we have the distance of the point from the line.
         val vDCsquared = Vector2(ABy, ABx).normalise() * DCsquared * Dimension(1.0) // Turn this into a vector in the direction of DC
@@ -89,8 +89,59 @@ class LineTo(formula: String = "Dimension2(0mm, 0mm)")
         // We add the local vector vDCsquared, and then convert it back into page coordinates.
         val onPage2 = (shape.fromLocalToPage.value * (shape.fromPageToLocal.value * Dimension2.ZERO_mm + vDCsquared)).length()
         // If the length of this vector is less than the minimum distance, we must have been close enough to the line.
-        return onPage2 < minDistance * minDistance
+        return Math.abs(onPage2.inDefaultUnits) < minDistance.inDefaultUnits * minDistance.inDefaultUnits
 
+    }
+
+    override fun checkAlong(shape: Shape, here: Dimension2, prev: Dimension2): Pair<Double, Double>? {
+
+        // Using the following diagram given by Henry. A is prev, B is myPoint and C is here :
+        // https://math.stackexchange.com/questions/60070/checking-whether-a-point-lies-on-a-wide-line-segment
+        // We then use the formula given by "Did".
+
+        val myPoint = point.value
+        // The distance between this point and the previous point
+        val ABx = myPoint.x.inDefaultUnits - prev.x.inDefaultUnits
+        val ABy = myPoint.y.inDefaultUnits - prev.y.inDefaultUnits
+
+        // The distance from the point being tested and the previous point.
+        val ACx = here.x.inDefaultUnits - prev.x.inDefaultUnits
+        val ACy = here.y.inDefaultUnits - prev.y.inDefaultUnits
+        // (here-prev) dot-product (myPoint-prev)
+        // -30 * 20 + 0 * 0
+
+        val ACdotAB = ACx * ABx + ACy * ABy // The length of AD
+
+        // Is it beyond the line segment's ends?
+        if (ACdotAB < 0) return null
+        val ABsquared = ABx * ABx + ABy * ABy
+        if (ACdotAB > ABsquared) return null
+
+        val ACsquared = ACx * ACx + ACy * ACy
+
+        // But what if the lineWidth is very narrow. We need to compare the vector DC (in the diagram linked above)
+        // with the given minThickness then DC is transformed to page coordinates.
+
+        // What follows is my own invention, and is probably very inefficient.
+        val AB2 = ABx * ABx + ABy * ABy // The square of the length AB.
+        val AD2 = ACdotAB * ACdotAB / AB2 // Use the dot product from earlier to find the length AD (squared).
+        val DCsquared = ACsquared - AD2 // Using pythagoras we have the distance of the point from the line.
+        val vDC = Vector2(ABy, ABx).normalise() * Math.sqrt(DCsquared) * Dimension(1.0) // Turn this into a vector in the direction of DC
+
+        // Now we take (0,0) on the page, and convert it to local coordinates.
+        // We add the local vector vDCsquared, and then convert it back into page coordinates.
+        val onPage = (shape.fromLocalToPage.value * (shape.fromPageToLocal.value * Dimension2.ZERO_mm + vDC)).length()
+        val ratio = Math.sqrt(AD2) / Math.sqrt(AB2)
+
+        /*
+        println("Here $here compare to $prev  ->  $myPoint")
+        println("AB = $ABx,$ABy AC = $ACx , $ACy")
+        println("ACdotAB = $ACdotAB  AB2 = $AB2  DCsquared = $DCsquared")
+        println("ACsquared = $ACsquared  AD2 = $AD2  DCsquared = $DCsquared  vDC = $vDC")
+        println( "onPage = $onPage, ratio = $ratio")
+        println("\n")
+        */
+        return Pair(onPage.inDefaultUnits, ratio)
     }
 
     /**

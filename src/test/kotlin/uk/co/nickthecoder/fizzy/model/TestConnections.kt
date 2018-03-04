@@ -111,4 +111,74 @@ class TestConnections : MyTestCase(), MyShapeTest {
         assertEquals(13.0, line.start.value.y.mm, tiny)
     }
 
+    @Test
+    fun testFindNearestConnectionGeometry() {
+        val doc = Document()
+        val page = Page(doc)
+
+        val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(0mm,0mm)") // @ -5,-10 to 5, 10
+        val line = createLine(page, "Dimension2(0mm,0mm)", "Dimension2(0mm,0mm)")
+        page.children.add(box)
+        page.children.add(line)
+
+        /*
+        // Half way along the first line
+        val triple1 = page.findNearestConnectionGeometry(dimension2("Dimension2(0mm,-10mm)"), line)
+        assertNotNull(triple1)
+        assertEquals(box.geometries[0].value, triple1!!.first)
+        assertEquals(0.0, triple1!!.second, tiny)
+        assertEquals(0.125, triple1!!.third, tiny)
+
+        // Half way along the second line
+        val triple2 = page.findNearestConnectionGeometry(dimension2("Dimension2(5mm,0mm)"), line)
+        assertNotNull(triple2)
+        assertEquals(box.geometries[0].value, triple2!!.first)
+        assertEquals(0.0, triple2!!.second, tiny)
+        assertEquals(0.375, triple2!!.third, tiny)
+
+        // Half way along the third line
+        val triple3 = page.findNearestConnectionGeometry(dimension2("Dimension2(0mm,10mm)"), line)
+        assertNotNull(triple3)
+        assertEquals(box.geometries[0].value, triple3!!.first)
+        assertEquals(0.0, triple3!!.second, tiny)
+        assertEquals(0.625, triple3!!.third, tiny)
+
+        // Half way along the last line
+        val triple4 = page.findNearestConnectionGeometry(dimension2("Dimension2(-5mm,0mm)"), line)
+        assertNotNull(triple4)
+        assertEquals(box.geometries[0].value, triple4!!.first)
+        assertEquals(0.0, triple4!!.second, tiny)
+        assertEquals(0.875, triple4!!.third, tiny)
+        */
+
+        fun testNear(point: String): Boolean {
+            val d2 = dimension2("Dimension2($point)")
+            val triple = page.findNearestConnectionGeometry(d2, line)
+            if (triple == null) {
+                return false
+            } else {
+                return triple.second < 3.0
+            }
+        }
+
+        // The center is too far
+        assertFalse(testNear("0mm,0mm"))
+
+        // Now test that near hits work
+        assertTrue(testNear("-4mm,0mm"))
+        assertTrue(testNear("-6mm,0mm"))
+        assertFalse(testNear("-10mm,0mm"))
+
+        assertTrue(testNear("4mm,0mm"))
+        assertTrue(testNear("6mm,0mm"))
+        assertFalse(testNear("10mm,0mm"))
+
+        assertTrue(testNear("0mm,9mm"))
+        assertTrue(testNear("0mm,11mm"))
+        assertFalse(testNear("0mm,15mm"))
+
+        assertTrue(testNear("0mm,-9mm"))
+        assertTrue(testNear("0mm,-11mm"))
+        assertFalse(testNear("0mm,-15mm"))
+    }
 }

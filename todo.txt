@@ -97,6 +97,8 @@ Implement FlipX & Y
     Is there much point? Text will be reversed!
 
 Optimise isAt by checking the bounding box first.
+    Do we want this? It wouldn't allow a shape to have part sticking out of it? e.g. a resistor with wires hanging out each end.
+        It doesn't seem bad right now!
     Need to update the existing tests, so that the optimisation doesn't ruin the edge case tests!
 
 Create an SVGDrawContext to convert to SVG.
