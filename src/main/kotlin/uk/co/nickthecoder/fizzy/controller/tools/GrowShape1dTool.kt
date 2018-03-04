@@ -37,6 +37,15 @@ class GrowShape1dTool(controller: Controller, val masterShape: Shape1d)
         controller.page.document.selection.clear()
     }
 
+    override fun beginTool() {
+        controller.showConnectionPoints.value = true
+    }
+
+    override fun endTool() {
+        controller.showConnectionPoints.value = false
+        controller.highlightGeometry.value = Controller.NO_GEOMETRY
+    }
+
     override fun onMousePressed(event: CMouseEvent) {
         start = event.point
         controller.page.document.history.beginBatch()
@@ -47,7 +56,9 @@ class GrowShape1dTool(controller: Controller, val masterShape: Shape1d)
             val newShape = masterShape.copyInto(controller.page) as Shape1d
 
             // Either a connection to another shape, or the point of the onMousePressed event.
-            newShape.start.formula = Controller.connectFormula(start, newShape, event.scale) ?: start.toFormula()
+            val connectFormula = Controller.connectFormula(start, newShape, event.scale)
+
+            newShape.start.formula = connectFormula ?: start.toFormula()
             newShape.end.formula = event.point.toFormula()
 
             this.newShape = newShape
@@ -64,11 +75,16 @@ class GrowShape1dTool(controller: Controller, val masterShape: Shape1d)
             // when the drag is completed. At which point the end point is set correctly.
 
             // Either a connection to another shape, or the point of the mouse event.
-            it.end.formula = Controller.connectFormula(event.point, it, event.scale) ?: event.point.toFormula()
+            val (connectFormula, _, geometry) = Controller.connectData(event.point, it, event.scale)
+
+            controller.highlightGeometry.value = geometry ?: Controller.NO_GEOMETRY
+
+            it.end.formula = connectFormula ?: event.point.toFormula()
         }
     }
 
     override fun onMouseReleased(event: CMouseEvent) {
+        controller.highlightGeometry.value = Controller.NO_GEOMETRY
         newShape = null
         controller.page.document.history.endBatch()
     }

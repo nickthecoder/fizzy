@@ -25,7 +25,11 @@ import javafx.scene.input.MouseEvent
 import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
+import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.model.geometry.Geometry
+import uk.co.nickthecoder.fizzy.model.geometry.LineTo
+import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
 import uk.co.nickthecoder.fizzy.util.ChangeListener
@@ -104,6 +108,8 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
 
     init {
         drawingArea.controller.dirty.propListeners.add(dirtyListener)
+        drawingArea.controller.showConnectionPoints.propListeners.add(dirtyListener)
+        drawingArea.controller.highlightGeometry.propListeners.add(dirtyListener)
 
         canvas.addEventHandler(MouseEvent.MOUSE_PRESSED) { onMousePressed(it) }
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED) { onMouseClicked(it) }
@@ -202,8 +208,58 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
                 }
             }
             drawingArea.controller.tool.draw(dc)
+
+
+            if (drawingArea.controller.showConnectionPoints.value) {
+                page.children.filterIsInstance<RealShape>().forEach { shape ->
+                    shape.connectionPoints.forEach { drawConnectionPoint(it.value) }
+                }
+            }
+
+            if (drawingArea.controller.highlightGeometry.value !== Controller.NO_GEOMETRY) {
+                highlightGeometry(drawingArea.controller.highlightGeometry.value)
+            }
         }
+        
         dirty = false
+    }
+
+    fun highlightGeometry(geometry: Geometry) {
+        geometry.shape?.let { shape ->
+            dc.use() {
+                dc.lineWidth(4.0 / drawingArea.scale)
+                dc.lineColor(GREEN_BASE)
+
+                dc.beginPath()
+                geometry.parts.forEach { part ->
+                    val pagePoint = shape.fromLocalToPage.value * part.point.value
+                    when (part) {
+                        is MoveTo -> dc.moveTo(pagePoint)
+                        is LineTo -> dc.lineTo(pagePoint)
+                        else -> dc.lineTo(pagePoint)
+                    }
+                }
+                dc.endPath(true, false)
+            }
+        }
+    }
+
+
+    fun drawConnectionPoint(connectionPoint: ConnectionPoint) {
+        val pagePoint = connectionPoint.shape!!.fromLocalToPage.value * connectionPoint.point.value
+        dc.use {
+            dc.translate(pagePoint)
+            dc.scale(4.0 / drawingArea.scale)
+            dc.lineColor(BLUE_BASE)
+            dc.lineWidth(0.5)
+
+            dc.beginPath()
+            dc.moveTo(-1.0, -1.0)
+            dc.lineTo(1.0, 1.0)
+            dc.moveTo(-1.0, 1.0)
+            dc.lineTo(1.0, -1.0)
+            dc.endPath(stroke = true, fill = false)
+        }
     }
 
     fun drawBoundingBox(shape: Shape) {
@@ -244,8 +300,9 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
     companion object {
         val ROTATE_DISTANCE = 40.0
 
-        val BLUE_BASE_STRING = "#72c2e9"
-        val BLUE_BASE = Color.web(BLUE_BASE_STRING)
+        val GREEN_BASE = Color.web("#32cd32")
+
+        val BLUE_BASE = Color.web("#72c2e9")
         val HANDLE_STROKE = BLUE_BASE.darker()
         val HANDLE_FILL = BLUE_BASE.brighter()
         val BOUNDING_STROKE = BLUE_BASE

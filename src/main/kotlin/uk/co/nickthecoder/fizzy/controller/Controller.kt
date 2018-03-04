@@ -28,6 +28,7 @@ import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
 import uk.co.nickthecoder.fizzy.controller.tools.Tool
 import uk.co.nickthecoder.fizzy.gui.GlassCanvas
 import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.prop.PropVariable
 import uk.co.nickthecoder.fizzy.util.ChangeListener
 import uk.co.nickthecoder.fizzy.util.ChangeType
@@ -41,6 +42,11 @@ class Controller(val page: Page) {
     var scale = 1.0
 
     var tool: Tool = SelectTool(this)
+        set(v) {
+            field.endTool()
+            v.beginTool()
+            field = v
+        }
 
     val handles = mutableListOf<Handle>()
 
@@ -87,7 +93,20 @@ class Controller(val page: Page) {
      */
     val dirty = PropVariable(0)
 
+    /**
+     * When set, the connection points of all shapes should be shown as tiny crosses.
+     */
+    val showConnectionPoints = PropVariable(false)
+
+    /**
+     * When dragging a line end point, if it hovers over a connectable geometry, then
+     * set this to it, and GlassCanvas will highlight it. Reset it back to [NO_GEOMETRY]
+     * afterwards.
+     */
+    val highlightGeometry = PropVariable(NO_GEOMETRY)
+
     init {
+        tool.beginTool()
         page.document.selection.listeners.add(selectionListener)
         page.document.selection.forEach {
             createShapeHandles(it)
@@ -137,8 +156,8 @@ class Controller(val page: Page) {
 
         } else if (shape is Shape1d) {
             val ends = shape1dEnds(shape)
-            handles.add(Shape1dHandle(shape, ends[0], false))
-            handles.add(Shape1dHandle(shape, ends[1], true))
+            handles.add(Shape1dHandle(shape, ends[0], this, false))
+            handles.add(Shape1dHandle(shape, ends[1], this, true))
         }
     }
 
@@ -176,27 +195,34 @@ class Controller(val page: Page) {
 
     companion object {
 
+        val NO_GEOMETRY = Geometry()
+
         val HANDLE_SIZE = 3.0 // Half width (or height) of handles excluding the stroke.
         val HANDLE_NEAR = HANDLE_SIZE + 2.0 // The size when testing if the mouse is at the handle
         val LINE_NEAR = Dimension(4.0) // The distance away from a line, and still be able to select it.
 
+
         fun connectFormula(pagePoint: Dimension2, shape: Shape, scale: Double): String? {
+            return connectData(pagePoint, shape, scale).first
+        }
+
+        fun connectData(pagePoint: Dimension2, shape: Shape, scale: Double): Triple<String?, ConnectionPoint?, Geometry?> {
 
             // Look for connection points
             shape.page().findNearestConnectionPoint(pagePoint, shape)?.let { (connectionPoint, distance) ->
                 if (distance < HANDLE_NEAR / scale) {
-                    connectionPoint.connectToFormula()?.let { return it }
+                    return Triple(connectionPoint.connectToFormula(), connectionPoint, null)
                 }
             }
 
             // Look for geometries that can be connected to.
             shape.page().findNearestConnectionGeometry(pagePoint, shape)?.let { (geometry, distance, along) ->
                 if (distance < HANDLE_NEAR / scale) {
-                    geometry.connectAlongFormula(along)?.let { return it }
+                    return Triple(geometry.connectAlongFormula(along), null, geometry)
                 }
             }
 
-            return null
+            return Triple(null, null, null)
 
         }
     }

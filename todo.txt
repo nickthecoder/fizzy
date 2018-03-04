@@ -2,15 +2,6 @@ To Do
 =====
 
 
-Redo isAt using page coordinates, so that the distance check is easier???
-
-When dragging a line, allow it to join to connection points
-    Ditto for snapping to geometries (along).
-
-When dragging lines :
-    Show connection points on Glass as tiny x
-    Show connecting geometries on Glass as a semi-transparent thickish line.
-
 When a shape is deleted, then the connections must be broken.
     How?
 

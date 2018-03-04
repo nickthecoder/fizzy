@@ -31,4 +31,15 @@ abstract class Tool(val controller: Controller) {
     open fun onMouseDragged(event: CMouseEvent) {}
 
     open fun draw(dc: DrawContext) {}
+
+    /**
+     * Called when the tool is the current tool of the [Controller]
+     */
+    open fun beginTool() {}
+
+    /**
+     * Called when a tool is no longer active.
+     */
+    open fun endTool() {}
+
 }

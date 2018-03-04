@@ -21,6 +21,7 @@ package uk.co.nickthecoder.fizzy.controller.tools
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.controller.handle.Handle
+import uk.co.nickthecoder.fizzy.controller.handle.Shape1dHandle
 import uk.co.nickthecoder.fizzy.model.Dimension2
 
 class DragHandleTool(controller: Controller, val handle: Handle, startPosition: Dimension2)
@@ -31,6 +32,19 @@ class DragHandleTool(controller: Controller, val handle: Handle, startPosition: 
     init {
         controller.page.document.history.beginBatch()
         handle.beginDrag(startPosition)
+    }
+
+    override fun beginTool() {
+        if (handle is Shape1dHandle) {
+            controller.showConnectionPoints.value = true
+        }
+    }
+
+    override fun endTool() {
+        if (handle is Shape1dHandle) {
+            controller.showConnectionPoints.value = false
+            controller.highlightGeometry.value = Controller.NO_GEOMETRY
+        }
     }
 
     override fun onMouseDragged(event: CMouseEvent) {
