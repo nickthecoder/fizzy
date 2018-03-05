@@ -30,6 +30,8 @@ import uk.co.nickthecoder.fizzy.model.history.CreateShape
 class GrowShape2dTool(controller: Controller, val masterShape: Shape2d)
     : Tool(controller) {
 
+    override val cursor: ToolCursor = ToolCursor.GROW
+
     var startPoint: Dimension2? = null
 
     var newShape: Shape2d? = null
@@ -76,7 +78,12 @@ class GrowShape2dTool(controller: Controller, val masterShape: Shape2d)
 
     override fun onMouseReleased(event: CMouseEvent) {
         controller.page.document.history.endBatch()
+        newShape?.let {
+            it.document().selection.clear()
+            it.document().selection.add(it)
+        }
         newShape = null
         startPoint = null
+        controller.tool = SelectTool(controller)
     }
 }

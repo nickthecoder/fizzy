@@ -26,6 +26,7 @@ import uk.co.nickthecoder.fizzy.model.ConnectionPoint
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.Page
 import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.prop.expressionExceptionHandler
 import uk.co.nickthecoder.fizzy.util.runLaterHandler
 
 /**
@@ -35,6 +36,7 @@ class Fizzy : Application() {
 
     override fun start(primaryStage: Stage) {
         runLaterHandler = { Platform.runLater(it) }
+        expressionExceptionHandler = { pe, message -> println("Failed to evaluate ${pe.formula} : $message") }
 
         // For now, we create a test document to display.
         val doc = Document()

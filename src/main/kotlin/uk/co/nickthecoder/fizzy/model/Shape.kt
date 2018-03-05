@@ -332,7 +332,7 @@ abstract class Shape(var parent: ShapeParent)
                 poly.addConnectionPoint(cp)
             }
 
-            println(poly.metaData().joinToString(separator = "\n"))
+            //println(poly.metaData().joinToString(separator = "\n"))
             return poly
         }
     }

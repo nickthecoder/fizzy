@@ -20,18 +20,51 @@ package uk.co.nickthecoder.fizzy.controller.tools
 
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
+import uk.co.nickthecoder.fizzy.model.RealShape
+import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.history.DeleteShape
 
 class DeleteTool(controller: Controller)
     : Tool(controller) {
 
-    val page = controller.page
+    override val cursor = ToolCursor.DELETE
 
-    override fun onMouseClicked(event: CMouseEvent) {
-        val shape = page.findShapeAt(event.point, controller.minDistance)
-        if (shape != null) {
-            page.document.history.makeChange(DeleteShape(shape))
+    private var pressedShape: Shape? = null
+
+    override fun onMouseMoved(event: CMouseEvent) {
+        val shape = controller.page.findShapeAt(event.point, controller.minDistance)
+        if (shape == null) {
+            controller.highlightGeometry.value = Controller.NO_GEOMETRY
+        } else {
+            if (shape is RealShape) {
+                controller.highlightGeometry.value = shape.geometries[0].value
+            }
         }
+    }
+
+    override fun onMousePressed(event: CMouseEvent) {
+        controller.page.findShapeAt(event.point, controller.minDistance)?.let {
+            pressedShape = it
+        }
+    }
+
+    override fun onMouseDragged(event: CMouseEvent) {
+        val draggedShaped = controller.page.findShapeAt(event.point, controller.minDistance)
+        if (draggedShaped === pressedShape) {
+            if (draggedShaped is RealShape) {
+                controller.highlightGeometry.value = draggedShaped.geometries[0].value
+            }
+        } else {
+            controller.highlightGeometry.value = Controller.NO_GEOMETRY
+        }
+    }
+
+    override fun onMouseReleased(event: CMouseEvent) {
+        val releasedShape = controller.page.findShapeAt(event.point, controller.minDistance)
+        if (releasedShape != null && releasedShape == pressedShape) {
+            controller.page.document.history.makeChange(DeleteShape(releasedShape))
+        }
+        controller.highlightGeometry.value = Controller.NO_GEOMETRY
     }
 
 }

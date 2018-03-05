@@ -30,6 +30,8 @@ import uk.co.nickthecoder.fizzy.model.history.CreateShape
 class GrowShape1dTool(controller: Controller, val masterShape: Shape1d)
     : Tool(controller) {
 
+    override val cursor = ToolCursor.GROW
+
     var start: Dimension2? = null
     var newShape: Shape1d? = null
 

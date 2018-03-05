@@ -22,13 +22,20 @@ import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.view.DrawContext
 
+enum class ToolCursor {
+        DEFAULT, GROW, STAMP, MOVE, DELETE
+}
+
 abstract class Tool(val controller: Controller) {
+
+    open val cursor = ToolCursor.DEFAULT
 
     open fun onMouseClicked(event: CMouseEvent) {}
     open fun onMousePressed(event: CMouseEvent) {}
     open fun onMouseReleased(event: CMouseEvent) {}
     open fun onDragDetected(event: CMouseEvent) {}
     open fun onMouseDragged(event: CMouseEvent) {}
+    open fun onMouseMoved(event: CMouseEvent) {}
 
     open fun draw(dc: DrawContext) {}
 

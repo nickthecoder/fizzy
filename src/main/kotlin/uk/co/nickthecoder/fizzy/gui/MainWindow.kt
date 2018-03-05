@@ -47,6 +47,7 @@ class MainWindow(val stage: Stage) : Window() {
     val boxToolButton = Button("Box")
     val lineToolButton = Button("Line")
     val pentagonToolButton = Button("Pentagon")
+    val starToolButton = Button("Star")
 
     init {
         stage.title = "Fizzy"
@@ -65,12 +66,13 @@ class MainWindow(val stage: Stage) : Window() {
         boxToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape2dTool(it, PrimitiveStencil.box) } }
         lineToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape1dTool(it, PrimitiveStencil.line) } }
         pentagonToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape2dTool(it, PrimitiveStencil.pentagon) } }
+        starToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape2dTool(it, PrimitiveStencil.star) } }
 
         toolBar.items.addAll(
                 undoButton, redoButton,
                 selectToolButton, deleteToolButton,
                 stampToolButton,
-                boxToolButton, lineToolButton, pentagonToolButton)
+                boxToolButton, lineToolButton, pentagonToolButton, starToolButton)
 
         stage.show()
     }

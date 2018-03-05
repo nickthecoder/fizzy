@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.gui
 
+import javafx.scene.Cursor
 import javafx.scene.Node
 import javafx.scene.canvas.Canvas
 import javafx.scene.input.MouseButton
@@ -26,6 +27,7 @@ import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
+import uk.co.nickthecoder.fizzy.controller.tools.ToolCursor
 import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
@@ -82,6 +84,8 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
 
     private var panning = false
 
+    private var prePanCursor = Cursor.DEFAULT
+
     /**
      * Use to ignore the spurious onMouseClicked event at the end of a drag.
      * It seems that PRESS, MOVE RELEASE also produces an onMouseClicked event at the end.
@@ -106,7 +110,21 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
         }
     }
 
+    private val cursorListener = object : PropListener {
+        override fun dirty(prop: Prop<*>) {
+            canvas.cursor = when (drawingArea.controller.cursorProp.value) {
+                ToolCursor.DEFAULT -> Cursor.DEFAULT
+                ToolCursor.STAMP -> Cursor.HAND // Replace this with a better one!
+                ToolCursor.DELETE -> Cursor.OPEN_HAND // Replace this with a better one!
+                ToolCursor.GROW -> Cursor.CROSSHAIR
+                ToolCursor.MOVE -> Cursor.CLOSED_HAND
+            }
+        }
+    }
+
     init {
+        drawingArea.controller.cursorProp.propListeners.add(cursorListener)
+
         drawingArea.controller.dirty.propListeners.add(dirtyListener)
         drawingArea.controller.showConnectionPoints.propListeners.add(dirtyListener)
         drawingArea.controller.highlightGeometry.propListeners.add(dirtyListener)
@@ -116,6 +134,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
         canvas.addEventHandler(MouseEvent.DRAG_DETECTED) { onDragDetected(it) }
         canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED) { onMouseDragged(it) }
         canvas.addEventHandler(MouseEvent.MOUSE_RELEASED) { onMouseReleased(it) }
+        canvas.addEventHandler(MouseEvent.MOUSE_MOVED) { onMouseMoved(it) }
 
         page.document.selection.listeners.add(selectionListener)
         runLater {
@@ -137,6 +156,8 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
 
         if (event.button == MouseButton.SECONDARY || event.isMiddleButtonDown || event.isMetaDown || event.isAltDown) {
             panning = true
+            prePanCursor = canvas.cursor
+            canvas.cursor = Cursor.CLOSED_HAND
             previousPoint = toPage(event)
         } else if (event.clickCount == 2) {
             drawingArea.zoomOn(if (convertEvent(event).isAdjust) 1.0 / 1.4 else 1.4, event.x, event.y)
@@ -147,8 +168,18 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
     }
 
     fun onMouseReleased(event: MouseEvent) {
-        if (!panning) {
+        if (panning) {
+            canvas.cursor = prePanCursor
+            panning = false
+        } else {
             drawingArea.controller.onMouseReleased(convertEvent(event))
+        }
+        event.consume()
+    }
+
+    fun onMouseMoved(event: MouseEvent) {
+        if (!panning) {
+            drawingArea.controller.onMouseMoved(convertEvent(event))
         }
         event.consume()
     }
@@ -220,7 +251,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
                 highlightGeometry(drawingArea.controller.highlightGeometry.value)
             }
         }
-        
+
         dirty = false
     }
 

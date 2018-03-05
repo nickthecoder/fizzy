@@ -23,6 +23,7 @@ import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.controller.handle.*
 import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
 import uk.co.nickthecoder.fizzy.controller.tools.Tool
+import uk.co.nickthecoder.fizzy.controller.tools.ToolCursor
 import uk.co.nickthecoder.fizzy.gui.GlassCanvas
 import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.model.geometry.Geometry
@@ -43,7 +44,10 @@ class Controller(val page: Page) {
             field.endTool()
             v.beginTool()
             field = v
+            cursorProp.value = v.cursor
         }
+
+    val cursorProp = PropVariable<ToolCursor>(tool.cursor)
 
     val handles = mutableListOf<Handle>()
 
@@ -116,6 +120,10 @@ class Controller(val page: Page) {
 
     fun onMouseReleased(event: CMouseEvent) {
         tool.onMouseReleased(event)
+    }
+
+    fun onMouseMoved(event: CMouseEvent) {
+        tool.onMouseMoved(event)
     }
 
     fun onMouseClicked(event: CMouseEvent) {

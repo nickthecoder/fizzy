@@ -1,19 +1,8 @@
 To Do
 =====
 
-
-ControlPoints
-    Free (can move anywhere)
-    Line (along a single line of a given angle)
-    Rotation (fixed distance away, from a point)
-    Along geometry
-        This is different to the rest of them!!!
-    
-    All of them can be bound to a given rect???
-        Need "MIN_DIM" and "MAX_DIM" constants.
-
-
 Instead of findScratch("Name") allow Scratch.Name
+    Maybe Scratches should be in a Map rather than a List?
 
 When scaling by only x or only y, and contraining, then scale by ratios i.e 1/3 1/2 1 2 3 etc
 
@@ -26,6 +15,10 @@ Soon
 ----
 
 Test Shape.copyInto
+
+When expressions fail, set a flag on the expression, and tell a handler about the error.
+    During testing, the handler can throw an exception.
+    End of testRenameShape
 
 When copying an object give a "clone" boolean.
     When set, the Expressions are linked to the master rather than being Strings.
@@ -58,6 +51,22 @@ Rounded corners
         Everything else uses the previous as its partner.
     Similarly, bevelled corners (which may be easier to write first!)
     Do this for internal/external corners, or both.
+
+
+Line end type. pointy, rounded, mitred??? Use rounded for polygon, and pointy for box.
+
+ControlPoints
+    Free (can move anywhere)
+    Line (along a single line of a given angle)
+    Rotation (fixed distance away, from a point)
+    Along geometry
+        This is different to the rest of them!!!
+
+    When scaling a shape, scale the ControlPoint relative to "relative", which will often be LocPin???    
+    All of them can be bound to a given rect???
+        Need "MIN_DIM" and "MAX_DIM" constants.
+
+    Must test scaling using Shape2dHandle, Shape1dHandle and Grow varieties too.
 
 Maybe
 -----

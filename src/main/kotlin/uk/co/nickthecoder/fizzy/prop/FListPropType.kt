@@ -67,7 +67,7 @@ class FListPropType private constructor()
     companion object {
         val instance = FListPropType()
 
-        private val nameNumber = Pattern.compile("(.*)([0-9])+")
+        private val nameNumber = Pattern.compile("(.*?)([0-9]+)")
     }
 }
 

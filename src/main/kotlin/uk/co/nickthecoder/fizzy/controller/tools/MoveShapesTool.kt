@@ -28,6 +28,8 @@ import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
 class MoveShapesTool(controller: Controller, var previousPoint: Dimension2)
     : Tool(controller) {
 
+    override val cursor: ToolCursor = ToolCursor.MOVE
+
     val document = controller.page.document
 
     init {

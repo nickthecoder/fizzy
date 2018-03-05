@@ -33,6 +33,8 @@ object PrimitiveStencil {
 
     val pentagon = Shape.createPolygon(page, 5, Dimension(60.0, Dimension.Units.mm))
 
+    val star = Shape.createPolygon(page, 5, Dimension(60.0, Dimension.Units.mm), star = true)
+
     val pentangle = Shape.createPolygon(page, 5, Dimension(60.0, Dimension.Units.mm), star = true)
 
     init {

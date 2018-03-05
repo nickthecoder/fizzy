@@ -70,7 +70,7 @@ abstract class PropExpression<T : Any>(formula: String, val klass: KClass<T>, va
 
     var calculatedProperty: Prop<T>? = null
 
-    abstract fun constant( value : T)
+    abstract fun constant(value: T)
 
     override fun eval(): T {
         calculatedProperty?.propListeners?.remove(this)
@@ -80,6 +80,7 @@ abstract class PropExpression<T : Any>(formula: String, val klass: KClass<T>, va
             cp.propListeners.add(this)
             return cp.value
         } catch (e: Exception) {
+            expressionExceptionHandler(this, e.message)
             return defaultValue
         }
     }
@@ -98,4 +99,11 @@ abstract class PropExpression<T : Any>(formula: String, val klass: KClass<T>, va
 
     override fun toString() = "='$formula'"
 
+}
+
+class PropExpressionException(propExpression: PropExpression<*>, message: String?)
+    : Exception("Error in expression ${propExpression.formula}" + if (message == null) "" else " " + message)
+
+var expressionExceptionHandler: (PropExpression<*>, String?) -> Unit = { propExpression, message ->
+    throw PropExpressionException(propExpression, message)
 }

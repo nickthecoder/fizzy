@@ -33,6 +33,9 @@ class TestPolygon : MyTestCase(), MyShapeTest {
         page.children.add(poly2)
         page.children.add(poly1)
 
+        assertEquals( testDouble(poly1, "Geometry1.Point1.X.mm"), testDouble(poly1, "ConnectionPoint.Point1.X.mm"))
+        assertEquals( testDouble(poly1, "Geometry1.Point10.X.mm"), testDouble(poly1, "ConnectionPoint.Point10.X.mm"))
+
         // Rotating poly2 should match the un-rotated poly1
         poly2.transform.rotation.formula = (Angle.TAU / 5.0).toFormula()
         assertSamePoint(poly2.geometries[0].value.parts[0], poly1.geometries[0].value.parts[2])
@@ -52,7 +55,6 @@ class TestPolygon : MyTestCase(), MyShapeTest {
 
         // Move the control point to make a pentangle pattern.
         poly1.controlPoints[0].value.point.formula = poly1.geometries[0].value.parts[4].point.value.toFormula()
-        println(poly1.metaData().joinToString(separator = "\n"))
         assertEquals(0.0, testDouble(poly1, "(ControlPoint.Point1.X - Geometry1.Point5.X).mm"), tiny)
         assertEquals(0.0, testDouble(poly1, "(Geometry1.Point2.X - Geometry1.Point5.X).mm"), tiny)
         assertEquals(0.0, testDouble(poly1, "(Geometry1.Point4.X - Geometry1.Point7.X).mm"), tiny)

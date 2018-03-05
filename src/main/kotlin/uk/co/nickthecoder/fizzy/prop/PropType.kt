@@ -73,7 +73,7 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
     companion object {
         val propertyTypes = mutableMapOf<KClass<*>, PropType<*>>()
 
-        private val nameNumber = Pattern.compile("(.*)([0-9])+")
+        private val nameNumber = Pattern.compile("(.*?)([0-9]+)")
 
         fun field(prop: Prop<*>, fieldName: String): Prop<*>? {
             return propertyTypes[prop.value.javaClass.kotlin]?.findField2(prop, fieldName)

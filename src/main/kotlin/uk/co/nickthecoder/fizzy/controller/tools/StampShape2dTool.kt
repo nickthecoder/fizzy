@@ -30,6 +30,8 @@ import uk.co.nickthecoder.fizzy.model.history.CreateShape
 class StampShape2dTool(controller: Controller, val masterShape: Shape2d)
     : Tool(controller) {
 
+    override val cursor = ToolCursor.STAMP
+
     init {
         controller.page.document.selection.clear()
     }
