@@ -20,10 +20,7 @@ package uk.co.nickthecoder.fizzy.controller
 
 import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
-import uk.co.nickthecoder.fizzy.controller.handle.Handle
-import uk.co.nickthecoder.fizzy.controller.handle.RotationHandle
-import uk.co.nickthecoder.fizzy.controller.handle.Shape1dHandle
-import uk.co.nickthecoder.fizzy.controller.handle.Shape2dSizeHandle
+import uk.co.nickthecoder.fizzy.controller.handle.*
 import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
 import uk.co.nickthecoder.fizzy.controller.tools.Tool
 import uk.co.nickthecoder.fizzy.gui.GlassCanvas
@@ -137,27 +134,34 @@ class Controller(val page: Page) {
     fun createShapeHandles(shape: Shape) {
         removeShapeHandles(shape)
 
-        if (shape is Shape2d) {
-            val corners = shapeCorners(shape)
-            handles.add(Shape2dSizeHandle(shape, corners[0], -1, -1))
-            handles.add(Shape2dSizeHandle(shape, corners[1], 1, -1))
-            handles.add(Shape2dSizeHandle(shape, corners[2], 1, 1))
-            handles.add(Shape2dSizeHandle(shape, corners[3], -1, 1))
+        if (shape is RealShape) {
 
-            handles.add(Shape2dSizeHandle(shape, (corners[0] + corners[1]) / 2.0, 0, -1))
-            handles.add(Shape2dSizeHandle(shape, (corners[1] + corners[2]) / 2.0, 1, 0))
-            handles.add(Shape2dSizeHandle(shape, (corners[2] + corners[3]) / 2.0, 0, 1))
-            handles.add(Shape2dSizeHandle(shape, (corners[3] + corners[0]) / 2.0, -1, 0))
+            if (shape is Shape2d) {
+                val corners = shapeCorners(shape)
+                handles.add(Shape2dSizeHandle(shape, corners[0], -1, -1))
+                handles.add(Shape2dSizeHandle(shape, corners[1], 1, -1))
+                handles.add(Shape2dSizeHandle(shape, corners[2], 1, 1))
+                handles.add(Shape2dSizeHandle(shape, corners[3], -1, 1))
 
-            handles.add(RotationHandle(shape,
-                    (corners[0] + corners[1]) / 2.0 +
-                            (corners[1] - corners[2]).normalise()
-                                    * Dimension(GlassCanvas.ROTATE_DISTANCE)))
+                handles.add(Shape2dSizeHandle(shape, (corners[0] + corners[1]) / 2.0, 0, -1))
+                handles.add(Shape2dSizeHandle(shape, (corners[1] + corners[2]) / 2.0, 1, 0))
+                handles.add(Shape2dSizeHandle(shape, (corners[2] + corners[3]) / 2.0, 0, 1))
+                handles.add(Shape2dSizeHandle(shape, (corners[3] + corners[0]) / 2.0, -1, 0))
 
-        } else if (shape is Shape1d) {
-            val ends = shape1dEnds(shape)
-            handles.add(Shape1dHandle(shape, ends[0], this, false))
-            handles.add(Shape1dHandle(shape, ends[1], this, true))
+                handles.add(RotationHandle(shape,
+                        (corners[0] + corners[1]) / 2.0 +
+                                (corners[1] - corners[2]).normalise()
+                                        * Dimension(GlassCanvas.ROTATE_DISTANCE)))
+
+            } else if (shape is Shape1d) {
+                val ends = shape1dEnds(shape)
+                handles.add(Shape1dHandle(shape, ends[0], this, false))
+                handles.add(Shape1dHandle(shape, ends[1], this, true))
+            }
+
+            shape.controlPoints.forEach { prop ->
+                handles.add(ControlPointHandle(shape, prop.value))
+            }
         }
     }
 

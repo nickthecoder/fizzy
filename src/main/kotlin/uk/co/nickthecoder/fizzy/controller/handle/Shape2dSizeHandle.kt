@@ -45,6 +45,7 @@ class Shape2dSizeHandle(val shape2d: Shape2d, position: Dimension2, val dx: Int,
     override fun dragTo(event: CMouseEvent, dragPoint: Dimension2) {
         val local = shape2d.fromPageToLocal.value * dragPoint
 
+        // Calculate how much the shape's SIZE will increase by
         var deltaX = if (dx == 1) {
             local.x - shape2d.size.value.x
         } else if (dx == -1) {
@@ -69,7 +70,7 @@ class Shape2dSizeHandle(val shape2d: Shape2d, position: Dimension2, val dx: Int,
             }
         }
 
-
+        // Calculate how much the shape will MOVE by
         val moveX = if (dx == 1) {
             deltaX * (shape2d.transform.locPin.value.x / shape2d.size.value.x)
         } else if (dx == -1) {
@@ -86,9 +87,11 @@ class Shape2dSizeHandle(val shape2d: Shape2d, position: Dimension2, val dx: Int,
             Dimension.ZERO_mm
         }
 
+
         val newPin =
                 shape2d.fromLocalToParent.value *
                         (shape2d.fromParentToLocal.value * shape2d.transform.pin.value + Dimension2(moveX, moveY))
+        val oldSize = shape2d.size.value
         val newSize = Dimension2(
                 shape2d.size.value.x + deltaX,
                 shape2d.size.value.y + deltaY)
@@ -97,6 +100,16 @@ class Shape2dSizeHandle(val shape2d: Shape2d, position: Dimension2, val dx: Int,
                 shape2d.size to newSize.toFormula(),
                 shape2d.transform.pin to newPin.toFormula()
         )))
+
+        // Move the control points.
+        shape2d.controlPoints.forEach { prop ->
+            val cp = prop.value
+            val newPoint = (cp.point.value) * (newSize / oldSize)
+            shape2d.document().history.makeChange(ChangeExpressions(listOf(
+                    cp.point to newPoint.toFormula()
+            )))
+        }
+
 
     }
 

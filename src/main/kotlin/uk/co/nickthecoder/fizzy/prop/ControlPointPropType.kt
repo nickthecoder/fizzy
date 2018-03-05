@@ -18,20 +18,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-import uk.co.nickthecoder.fizzy.model.ConnectionPoint
+import uk.co.nickthecoder.fizzy.model.ControlPoint
 
-class ConnectionPointPropType private constructor()
-    : PropType<ConnectionPoint>(ConnectionPoint::class) {
+class ControlPointPropType private constructor()
+    : PropType<ControlPoint>(ControlPoint::class) {
 
-    override fun findField(prop: Prop<ConnectionPoint>, name: String): Prop<*>? {
+    override fun findField(prop: Prop<ControlPoint>, name: String): Prop<*>? {
         return when (name) {
             "Point" -> prop.value.point
-            "Direction" -> prop.value.direction
             else -> super.findField(prop, name)
         }
     }
 
     companion object {
-        val instance = ConnectionPointPropType()
+        val instance = ControlPointPropType()
     }
 }

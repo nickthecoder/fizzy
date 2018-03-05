@@ -38,6 +38,8 @@ abstract class RealShape(parent: ShapeParent)
 
     val connectionPoints = MutableFList<ConnectionPointProp>()
 
+    val controlPoints = MutableFList<ControlPointProp>()
+
     val scratches = MutableFList<ScratchProp>()
 
     val lineWidth = DimensionExpression("2mm")
@@ -75,6 +77,10 @@ abstract class RealShape(parent: ShapeParent)
                 onAdded = { item -> item.value.shape = this },
                 onRemoved = { item -> item.value.shape = null }
         ))
+        collectionListeners.add(ChangeAndCollectionListener(this, controlPoints,
+                onAdded = { item -> item.value.shape = this },
+                onRemoved = { item -> item.value.shape = null }
+        ))
         collectionListeners.add(ChangeAndCollectionListener(this, scratches,
                 onAdded = { item -> item.value.setContext(context) },
                 onRemoved = { item -> item.value.setContext(constantsContext) }
@@ -93,6 +99,10 @@ abstract class RealShape(parent: ShapeParent)
                 val connectionPoint = connectionPointProp.value
                 newShape.addConnectionPoint(connectionPoint.copy())
             }
+            controlPoints.forEach { controlPointProp ->
+                val controlPoint = controlPointProp.value
+                newShape.addControlPoint(controlPoint.copy())
+            }
             scratches.forEach { scratchProp ->
                 val scratch = scratchProp.value
                 newShape.addScratch(scratch.copy())
@@ -107,6 +117,7 @@ abstract class RealShape(parent: ShapeParent)
     override fun addMetaData(list: MutableList<MetaData>) {
         geometries.forEachIndexed { index, geometryProp -> geometryProp.value.addMetaData(list, index) }
         connectionPoints.forEachIndexed { index, connectionPointProp -> connectionPointProp.value.addMetaData(list, index) }
+        controlPoints.forEachIndexed { index, controlPointProp -> controlPointProp.value.addMetaData(list, index) }
         scratches.forEachIndexed { index, scratchProp -> scratchProp.value.addMetaData(list, index) }
         list.add(MetaData("LineWidth", lineWidth))
         list.add(MetaData("Size", size))
@@ -120,6 +131,10 @@ abstract class RealShape(parent: ShapeParent)
 
     fun addConnectionPoint(connectionPoint: ConnectionPoint) {
         connectionPoints.add(ConnectionPointProp(connectionPoint))
+    }
+
+    fun addControlPoint(controlPoint: ControlPoint) {
+        controlPoints.add(ControlPointProp(controlPoint))
     }
 
     fun addScratch(scratch: Scratch) {

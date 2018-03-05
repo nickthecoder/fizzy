@@ -1,6 +1,7 @@
 To Do
 =====
 
+
 ControlPoints
     Free (can move anywhere)
     Line (along a single line of a given angle)
@@ -12,6 +13,7 @@ ControlPoints
         Need "MIN_DIM" and "MAX_DIM" constants.
 
 
+When scaling by only x or only y, and contraining, then scale by ratios i.e 1/3 1/2 1 2 3 etc
 
 When a shape is deleted, then the connections must be broken.
     How?

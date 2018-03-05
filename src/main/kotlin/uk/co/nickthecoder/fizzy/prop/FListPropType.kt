@@ -29,7 +29,7 @@ class FListPropType private constructor()
 
     override fun findField(prop: Prop<FList<out Any>>, name: String): Prop<*>? {
         return when (name) {
-            "Size" -> PropCalculation1(prop) { v -> v.size }
+            "Size" -> PropCalculation1(prop) { v -> v.size.toDouble() }
             else -> return findField(prop.value, name) ?: super.findField(prop, name)
         }
     }
@@ -48,8 +48,12 @@ class FListPropType private constructor()
             val index = matcher.group(2).toInt()
             if (index > 0 && index <= list.size) {
                 list [index - 1]?.let { item ->
-
-                    val field = PropType.field(PropConstant(item), fieldName)
+                    // The "IF" is to allow for list lists of Props or lists of actual values.
+                    val field = if (item is Prop<*>) {
+                        PropType.field(PropConstant(item.value), fieldName)
+                    } else {
+                        PropType.field(PropConstant(item), fieldName)
+                    }
                     if (field != null) {
                         return field
                     }

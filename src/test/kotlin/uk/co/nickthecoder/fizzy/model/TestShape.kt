@@ -40,9 +40,9 @@ class TestShape : MyTestCase(), MyShapeTest {
         val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(100mm,200mm)")
         page.children.add(box)
 
-        fun testDouble(name: String, exp: String): Any {
+        fun testDouble(name: String, exp: String): Double {
             box.addScratch(Scratch(name, DoubleExpression(exp)))
-            return box.findScratch(name)!!.expression.value
+            return box.findScratch(name)!!.expression.value as Double
         }
 
         fun testPaint(name: String, exp: String): Any {
@@ -104,6 +104,24 @@ class TestShape : MyTestCase(), MyShapeTest {
         assertEquals(true, testBoolean("connect1", "Geometry1.Connect"))
         box.geometries[0].value.connect.formula = "false"
         assertEquals(false, testBoolean("connect2", "Geometry1.Connect"))
+
+        // ControlPoints
+        box.addControlPoint(ControlPoint("Dimension2(2mm,3mm)"))
+        box.addControlPoint(ControlPoint("Dimension2(5mm,6mm)"))
+        assertEquals(2.0, testDouble("control1X", "ControlPoint.Point1.X.mm"))
+        assertEquals(3.0, testDouble("control1Y", "ControlPoint.Point1.Y.mm"))
+        assertEquals(5.0, testDouble("control2X", "ControlPoint.Point2.X.mm"))
+        assertEquals(6.0, testDouble("control2Y", "ControlPoint.Point2.Y.mm"))
+
+        // ConnectionPoints
+        box.addConnectionPoint(ConnectionPoint("Dimension2(7mm,8mm)", "45deg"))
+        box.addConnectionPoint(ConnectionPoint("Dimension2(9mm,10mm)", "60deg"))
+        assertEquals(7.0, testDouble("connection1X", "ConnectionPoint.Point1.X.mm"))
+        assertEquals(8.0, testDouble("connection1Y", "ConnectionPoint.Point1.Y.mm"))
+        assertEquals(45.0, testDouble("connection1Dir", "ConnectionPoint.Direction1.Degrees"), tiny)
+        assertEquals(9.0, testDouble("connection2X", "ConnectionPoint.Point2.X.mm"))
+        assertEquals(10.0, testDouble("connection2Y", "ConnectionPoint.Point2.Y.mm"))
+        assertEquals(60.0, testDouble("connection2Dir", "ConnectionPoint.Direction2.Degrees"), tiny)
     }
 
 

@@ -259,6 +259,7 @@ abstract class Shape(var parent: ShapeParent)
                 parent: ShapeParent,
                 sides: Int,
                 radius: Dimension,
+                star: Boolean = true,
                 fillColor: String? = "Color.white",
                 at: String = "Dimension2(0mm,0mm)")
                 : Shape2d {
@@ -271,9 +272,15 @@ abstract class Shape(var parent: ShapeParent)
             poly.addGeometry(geometry)
 
             // Create points around (0,0)
+            var first = true
             for (i in 0..sides - 1) {
                 val point = unit.rotate(Angle.TAU * (i.toDouble() / sides))
-                geometry.parts.add(LineTo(point.toFormula()))
+                if (first) {
+                    geometry.parts.add(MoveTo(point.toFormula()))
+                    first = false
+                } else {
+                    geometry.parts.add(LineTo(point.toFormula()))
+                }
             }
 
             val minX = geometry.parts.minBy { it.point.value.x }
@@ -299,18 +306,30 @@ abstract class Shape(var parent: ShapeParent)
                 }
                 poly.transform.locPin.formula = "Size * ${(translate.ratio(shapeSize)).toFormula()}"
             }
-            // Now complete the job by adding a MoveTo to the front
-            geometry.parts.add(0, MoveTo("Geometry1.Point${sides + 1}"))
+
+            if (star) {
+                // Create connection points at each vertex
+                for (i in 0..sides - 1) {
+                    val cp = ConnectionPoint("Geometry1.Point${i + 2}", "0deg")
+                    poly.addConnectionPoint(cp)
+                }
+
+                // Add extra geometries for the inner vertices of the star
+                for (i in 0..sides - 1) {
+                    geometry.parts.add(i * 2 + 1, LineTo("LocPin + ( (ControlPoint.Point1 - LocPin) / Size).rotate( $i / $sides * TAU rad ) * Size"))
+                }
+
+                // Create a control point between 1st two outer points
+                poly.addControlPoint(ControlPoint("(Geometry1.Point1 + Geometry1.Point3)/2"))
+
+            }
+
+            // Now complete the job by adding a LineTo to the end
+            geometry.parts.add(LineTo("Geometry1.Point1"))
 
             if (fillColor != null) {
                 poly.fillColor.formula = fillColor
                 geometry.fill.formula = "true"
-            }
-
-            // Create connection points at each vertex
-            for (i in 0..sides - 1) {
-                val cp = ConnectionPoint("Geometry1.Point${i + 2}", "0deg")
-                poly.addConnectionPoint(cp)
             }
 
             //println(poly.metaData().joinToString(separator = "\n"))
@@ -319,4 +338,3 @@ abstract class Shape(var parent: ShapeParent)
     }
 
 }
-

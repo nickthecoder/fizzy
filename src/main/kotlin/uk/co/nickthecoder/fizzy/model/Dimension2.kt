@@ -79,7 +79,7 @@ class Dimension2(val x: Dimension, val y: Dimension) {
         return Dimension2(Dimension(x.inDefaultUnits / l), Dimension(y.inDefaultUnits / l))
     }
 
-    fun aspectRatio() = x.inDefaultUnits / y.inDefaultUnits
+    fun aspectRatio() = if (x.inDefaultUnits == 0.0 && y.inDefaultUnits == 0.0) 1.0 else x.inDefaultUnits / y.inDefaultUnits
 
     fun keepAspectRatio(aspectRatio: Double): Dimension2 {
         val ratio = x.inDefaultUnits / y.inDefaultUnits

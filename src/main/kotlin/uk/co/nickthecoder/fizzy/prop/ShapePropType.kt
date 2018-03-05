@@ -71,6 +71,7 @@ abstract class RealShapePropType<T : RealShape>(klass: KClass<T>)
         return when (name) {
             "Geometry" -> PropConstant(prop.value.geometries)
             "ConnectionPoint" -> PropConstant(prop.value.connectionPoints)
+            "ControlPoint" -> PropConstant(prop.value.controlPoints)
             "LineWidth" -> prop.value.lineWidth
             "LineColor" -> prop.value.lineColor
             "FillColor" -> prop.value.fillColor
