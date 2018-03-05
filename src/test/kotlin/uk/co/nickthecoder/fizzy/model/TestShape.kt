@@ -97,14 +97,12 @@ class TestShape : MyTestCase(), MyShapeTest {
         assertEquals(6.0, testDouble(box, "ControlPoint.Point2.Y.mm"))
 
         // ConnectionPoints
-        box.addConnectionPoint(ConnectionPoint("Dimension2(7mm,8mm)", "45deg"))
-        box.addConnectionPoint(ConnectionPoint("Dimension2(9mm,10mm)", "60deg"))
+        box.addConnectionPoint(ConnectionPoint("Dimension2(7mm,8mm)"))
+        box.addConnectionPoint(ConnectionPoint("Dimension2(9mm,10mm)"))
         assertEquals(7.0, testDouble(box, "ConnectionPoint.Point1.X.mm"))
         assertEquals(8.0, testDouble(box, "ConnectionPoint.Point1.Y.mm"))
-        assertEquals(45.0, testDouble(box, "ConnectionPoint.Direction1.Degrees"), tiny)
         assertEquals(9.0, testDouble(box, "ConnectionPoint.Point2.X.mm"))
         assertEquals(10.0, testDouble(box, "ConnectionPoint.Point2.Y.mm"))
-        assertEquals(60.0, testDouble(box, "ConnectionPoint.Direction2.Degrees"), tiny)
     }
 
 

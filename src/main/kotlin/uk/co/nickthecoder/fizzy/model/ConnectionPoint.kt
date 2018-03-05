@@ -19,42 +19,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
-import uk.co.nickthecoder.fizzy.prop.*
+import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
+import uk.co.nickthecoder.fizzy.prop.Prop
+import uk.co.nickthecoder.fizzy.prop.PropListener
+import uk.co.nickthecoder.fizzy.prop.PropValue
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
-class ConnectionPoint(point: String, angle: String) {
+class ConnectionPoint(point: String) {
 
     val point = Dimension2Expression(point)
-
-    /**
-     * The preferred angle of lines coming out of this ConnectionPoint.
-     */
-    val direction = AngleExpression(angle)
 
     var shape: RealShape? = null
         set(v) {
             if (field != v) {
                 field?.let {
                     point.propListeners.remove(it)
-                    direction.propListeners.remove(it)
                 }
                 field = v
 
                 val context = v?.context ?: constantsContext
                 point.context = context
-                direction.context = context
 
                 if (v != null) {
                     point.propListeners.add(v)
-                    direction.propListeners.add(v)
                 }
             }
         }
 
     fun addMetaData(list: MutableList<MetaData>, index: Int) {
         list.add(MetaData("Point", point, "ConnectionPoint", index))
-        list.add(MetaData("Direction", direction, "ConnectionPoint", index))
     }
 
     fun index(): Int {
@@ -71,7 +65,7 @@ class ConnectionPoint(point: String, angle: String) {
 
     fun connectToFormula() = shape?.let { "connectTo( Page.Shape${it.id.value}.ConnectionPoint${index() + 1} )" }
 
-    fun copy() = ConnectionPoint(point.formula, direction.formula)
+    fun copy() = ConnectionPoint(point.formula)
 }
 
 class ConnectionPointProp(connectionPoint: ConnectionPoint)
@@ -83,7 +77,6 @@ class ConnectionPointProp(connectionPoint: ConnectionPoint)
 
     init {
         connectionPoint.point.propListeners.add(this)
-        connectionPoint.direction.propListeners.add(this)
     }
 
     /**

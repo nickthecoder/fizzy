@@ -78,10 +78,10 @@ class TestConnections : MyTestCase(), MyShapeTest {
         box1.children.add(box2)
         page.children.add(line)
 
-        box1.addConnectionPoint(ConnectionPoint("(Geometry1.Point1 + Geometry1.Point2) / 2", "0deg"))
-        box1.addConnectionPoint(ConnectionPoint("(Geometry1.Point2 + Geometry1.Point3) / 2", "0deg"))
+        box1.addConnectionPoint(ConnectionPoint("(Geometry1.Point1 + Geometry1.Point2) / 2"))
+        box1.addConnectionPoint(ConnectionPoint("(Geometry1.Point2 + Geometry1.Point3) / 2"))
 
-        box2.addConnectionPoint(ConnectionPoint("(Geometry1.Point3 + Geometry1.Point4) / 2", "0deg"))
+        box2.addConnectionPoint(ConnectionPoint("(Geometry1.Point3 + Geometry1.Point4) / 2"))
 
         line.start.formula = "connectTo(Page.Shape1.ConnectionPoint1)"
         assertEquals(0.0, line.start.value.x.mm, tiny)
