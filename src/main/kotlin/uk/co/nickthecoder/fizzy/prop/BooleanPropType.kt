@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class BooleanPropType private constructor()
     : PropType<Boolean>(Boolean::class) {
@@ -31,6 +32,12 @@ class BooleanPropType private constructor()
 
 class BooleanExpression(expression: String, context: EvaluationContext = constantsContext)
     : PropExpression<Boolean>(expression, Boolean::class, context) {
+
+    override val defaultValue = false
+
+    override fun constant(value: Boolean) {
+        formula = value.toFormula()
+    }
 
     override fun copy() = BooleanExpression(formula, constantsContext)
 

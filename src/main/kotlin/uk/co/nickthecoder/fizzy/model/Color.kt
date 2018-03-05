@@ -24,6 +24,8 @@
  */
 package uk.co.nickthecoder.fizzy.model
 
+import uk.co.nickthecoder.fizzy.util.toFormula
+
 /*
  * This code was taken from JavaFx's Color class. Therefore I have kept the
  * original GPL2 only copyright notice.
@@ -449,6 +451,13 @@ class Color : Paint {
         val a = Math.round(opacity * 255.0).toInt()
         return to32BitInteger(r, g, b, a)
     }
+
+
+    override fun toFormula() =
+            if (this.isOpaque())
+                "RGB(${this.red.toFormula()},${this.green.toFormula()},${this.blue.toFormula()})"
+            else
+                "RGBA(${this.red.toFormula()},${this.green.toFormula()},${this.blue.toFormula()},${this.opacity.toFormula()})"
 
     /**
      * Returns a string representation of this `Color`.

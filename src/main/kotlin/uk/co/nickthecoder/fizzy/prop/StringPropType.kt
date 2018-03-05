@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class StringPropType private constructor()
     : PropType<String>(String::class) {
@@ -82,6 +83,12 @@ class StringPropType private constructor()
 
 class StringExpression(expression: String, context: EvaluationContext = constantsContext)
     : PropExpression<String>(expression, String::class, context) {
+
+    override val defaultValue = ""
+
+    override fun constant(value: String) {
+        formula = value.toFormula()
+    }
 
     override fun copy() = StringExpression(formula, constantsContext)
 

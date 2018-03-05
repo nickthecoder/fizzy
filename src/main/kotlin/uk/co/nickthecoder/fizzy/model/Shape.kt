@@ -259,28 +259,24 @@ abstract class Shape(var parent: ShapeParent)
                 parent: ShapeParent,
                 sides: Int,
                 radius: Dimension,
-                star: Boolean = true,
+                star: Boolean = false,
                 fillColor: String? = "Color.white",
                 at: String = "Dimension2(0mm,0mm)")
                 : Shape2d {
 
             val poly = Shape2d.create(parent)
             poly.transform.pin.formula = at
+            poly.transform.locPin.formula = Dimension2.ZERO_mm.toFormula()
 
             val unit = Dimension2(radius, Dimension.ZERO_mm)
             val geometry = Geometry()
             poly.addGeometry(geometry)
 
             // Create points around (0,0)
-            var first = true
-            for (i in 0..sides - 1) {
+            geometry.parts.add(LineTo("Dimension2(${radius.toFormula()},0mm)"))
+            for (i in 1..sides) {
                 val point = unit.rotate(Angle.TAU * (i.toDouble() / sides))
-                if (first) {
-                    geometry.parts.add(MoveTo(point.toFormula()))
-                    first = false
-                } else {
-                    geometry.parts.add(LineTo(point.toFormula()))
-                }
+                geometry.parts.add(LineTo(point))
             }
 
             val minX = geometry.parts.minBy { it.point.value.x }
@@ -297,26 +293,27 @@ abstract class Shape(var parent: ShapeParent)
 
                 poly.size.formula = shapeSize.toFormula()
 
+                val translate = Dimension2(-minX.point.value.x, -minY.point.value.y)
+                poly.addScratch(Scratch("MagicRatio", Vector2Expression(
+                        Vector2(1.0, (maxY.point.value.y - minY.point.value.y).ratio(maxX.point.value.x - minX.point.value.x)))))
+
+                poly.transform.locPin.formula = "Size * ${translate.ratio(shapeSize).toFormula()}"
+                //poly.transform.locPin.formula = "Size / 2 / findScratch(\"MagicRatio\")"
+
                 // Translate them, so they are all +ve
                 // Also, make them reference Size, so that resizing works as expected.
-                val translate = Dimension2(-minX.point.value.x, -minY.point.value.y)
                 geometry.parts.forEach { part ->
                     val ratio = (part.point.value + translate).ratio(shapeSize)
                     part.point.formula = "Size * ${ratio.toFormula()}"
                 }
-                poly.transform.locPin.formula = "Size * ${(translate.ratio(shapeSize)).toFormula()}"
             }
 
             if (star) {
-                // Create connection points at each vertex
-                for (i in 0..sides - 1) {
-                    val cp = ConnectionPoint("Geometry1.Point${i + 2}", "0deg")
-                    poly.addConnectionPoint(cp)
-                }
 
                 // Add extra geometries for the inner vertices of the star
                 for (i in 0..sides - 1) {
-                    geometry.parts.add(i * 2 + 1, LineTo("LocPin + ( (ControlPoint.Point1 - LocPin) / Size).rotate( $i / $sides * TAU rad ) * Size"))
+                    //geometry.parts.add(i * 2 + 1, LineTo("LocPin + ( (ControlPoint.Point1 - LocPin) / Size).rotate( ($i / $sides * TAU) rad ) * Size"))
+                    geometry.parts.add(i * 2 + 1, LineTo("LocPin + ( (ControlPoint.Point1 - LocPin) / Size * findScratch(\"MagicRatio\") ).rotate( ($i / $sides * TAU) rad ) * Size / findScratch(\"MagicRatio\")"))
                 }
 
                 // Create a control point between 1st two outer points
@@ -324,15 +321,18 @@ abstract class Shape(var parent: ShapeParent)
 
             }
 
-            // Now complete the job by adding a LineTo to the end
-            geometry.parts.add(LineTo("Geometry1.Point1"))
-
             if (fillColor != null) {
                 poly.fillColor.formula = fillColor
                 geometry.fill.formula = "true"
             }
 
-            //println(poly.metaData().joinToString(separator = "\n"))
+            // Create connection points at each vertex
+            for (i in 0..geometry.parts.size - 1) {
+                val cp = ConnectionPoint("Geometry1.Point${i + 1}", "0deg")
+                poly.addConnectionPoint(cp)
+            }
+
+            println(poly.metaData().joinToString(separator = "\n"))
             return poly
         }
     }

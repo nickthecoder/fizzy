@@ -33,6 +33,12 @@ class DoublePropType private constructor()
 class DoubleExpression(expression: String, context: EvaluationContext = constantsContext)
     : PropExpression<Double>(expression, Double::class, context) {
 
+    override val defaultValue = 0.0
+
+    override fun constant(value: Double) {
+        formula = value.toFormula()
+    }
+
     override fun copy() = DoubleExpression(formula, constantsContext)
 
     override fun valueString() = value.toFormula()

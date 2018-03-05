@@ -55,6 +55,12 @@ class DimensionPropType private constructor()
 class DimensionExpression(expression: String, context: EvaluationContext = constantsContext)
     : PropExpression<Dimension>(expression, Dimension::class, context) {
 
+    override val defaultValue = Dimension.ZERO_mm
+
+    override fun constant(value: Dimension) {
+        formula = value.toFormula()
+    }
+
     override fun copy() = DimensionExpression(formula, constantsContext)
 
     override fun valueString() = value.toFormula()

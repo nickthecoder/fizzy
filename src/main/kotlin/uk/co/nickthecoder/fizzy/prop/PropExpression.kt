@@ -66,7 +66,11 @@ abstract class PropExpression<T : Any>(formula: String, val klass: KClass<T>, va
             dirty = true
         }
 
+    abstract val defaultValue: T
+
     var calculatedProperty: Prop<T>? = null
+
+    abstract fun constant( value : T)
 
     override fun eval(): T {
         calculatedProperty?.propListeners?.remove(this)
@@ -76,7 +80,7 @@ abstract class PropExpression<T : Any>(formula: String, val klass: KClass<T>, va
             cp.propListeners.add(this)
             return cp.value
         } catch (e: Exception) {
-            throw e
+            return defaultValue
         }
     }
 

@@ -28,6 +28,8 @@ class LineTo(formula: String = "Dimension2(0mm, 0mm)")
 
     : GeometryPart() {
 
+    constructor(point: Dimension2) : this(point.toFormula())
+
     override val point = Dimension2Expression(formula)
 
     init {

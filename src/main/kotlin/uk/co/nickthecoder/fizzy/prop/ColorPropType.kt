@@ -71,6 +71,12 @@ class ColorPropType private constructor()
 class PaintExpression(expression: String, context: EvaluationContext = constantsContext)
     : PropExpression<Paint>(expression, Paint::class, context) {
 
+    override val defaultValue = Color.BLACK
+
+    override fun constant(value: Paint) {
+        formula = value.toFormula()
+    }
+
     override fun copy() = PaintExpression(formula, constantsContext)
 
     override fun valueString(): String {

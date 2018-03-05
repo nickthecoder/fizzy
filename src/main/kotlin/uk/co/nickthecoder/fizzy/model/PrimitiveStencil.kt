@@ -32,4 +32,10 @@ object PrimitiveStencil {
     val line = Shape.createLine(page, "Dimension2(0mm,0mm)", "Dimension2(10mm,0mm)")
 
     val pentagon = Shape.createPolygon(page, 5, Dimension(60.0, Dimension.Units.mm))
+
+    val pentangle = Shape.createPolygon(page, 5, Dimension(60.0, Dimension.Units.mm), star = true)
+
+    init {
+        pentangle.controlPoints[0].value.point.formula = pentangle.geometries[0].value.parts[4].point.value.toFormula()
+    }
 }

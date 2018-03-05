@@ -18,19 +18,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.util
 
-import uk.co.nickthecoder.fizzy.model.Color
 import java.text.DecimalFormat
 
 val terseDoubleFormat = DecimalFormat("0.####")
 
 val formulaDoubleFormat = DecimalFormat("0.#########")
 
-fun Double.terse(): String = terseDoubleFormat.format(this)
+fun Double.terse() = terseDoubleFormat.format(this)
 
-fun Double.toFormula(): String = if (this.isNaN()) "NaN" else formulaDoubleFormat.format(this)
+fun Double.toFormula() = if (this.isNaN()) "NaN" else formulaDoubleFormat.format(this)
 
-fun Color.toFormula(): String =
-        if (this.isOpaque())
-            "RGB(${this.red.toFormula()},${this.green.toFormula()},${this.blue.toFormula()})"
-        else
-            "RGBA(${this.red.toFormula()},${this.green.toFormula()},${this.blue.toFormula()},${this.opacity.toFormula()})"
+fun Boolean.toFormula() = this.toString()
+
+fun String.toFormula() = "\"${this.replace("\"", "\\\"")}\""

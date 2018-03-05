@@ -18,18 +18,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.util
 
+import junit.framework.TestCase
 import uk.co.nickthecoder.fizzy.evaluator.Evaluator
 import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.model.geometry.Geometry
+import uk.co.nickthecoder.fizzy.model.geometry.GeometryPart
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import kotlin.test.assertEquals
+
+private val tiny = 0.000001
 
 interface MyShapeTest {
 
     fun dimension(formula: String) = Evaluator(formula).parse().value as Dimension
 
     fun dimension2(formula: String) = Evaluator(formula).parse().value as Dimension2
+
+
+    fun testDouble(shape: Shape, exp: String): Double {
+        return Evaluator(exp, shape.context).parse().value as Double
+    }
+
+    fun testBoolean(shape: Shape, exp: String): Boolean {
+        return Evaluator(exp, shape.context).parse().value as Boolean
+    }
+
+    fun testPaint(shape: Shape, exp: String): Paint {
+        return Evaluator(exp, shape.context).parse().value as Paint
+    }
+
 
     fun createBox(parent: ShapeParent, size: String = "Dimension2(10mm,10mm)", at: String = "Dimension2(0mm,0mm)"): Shape2d {
         val box = Shape2d.create(parent)
@@ -59,6 +77,13 @@ interface MyShapeTest {
         geometry.parts.add(LineTo("Dimension2(Length,LineWidth/2)"))
 
         return line
+    }
+
+    fun assertSamePoint(a: GeometryPart, b: GeometryPart) {
+        val localA = a.geometry!!.shape!!.fromLocalToPage.value * a.point.value
+        val localB = b.geometry!!.shape!!.fromLocalToPage.value * b.point.value
+        TestCase.assertEquals(localA.x.inDefaultUnits, localB.x.inDefaultUnits, tiny)
+        TestCase.assertEquals(localA.y.inDefaultUnits, localB.y.inDefaultUnits, tiny)
     }
 
     fun checkAllExpressions(shape: Shape) {

@@ -19,9 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import org.junit.Test
-import uk.co.nickthecoder.fizzy.prop.BooleanExpression
 import uk.co.nickthecoder.fizzy.prop.DoubleExpression
-import uk.co.nickthecoder.fizzy.prop.PaintExpression
 import uk.co.nickthecoder.fizzy.prop.StringExpression
 import uk.co.nickthecoder.fizzy.util.MyShapeTest
 import uk.co.nickthecoder.fizzy.util.MyTestCase
@@ -40,21 +38,6 @@ class TestShape : MyTestCase(), MyShapeTest {
         val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(100mm,200mm)")
         page.children.add(box)
 
-        fun testDouble(name: String, exp: String): Double {
-            box.addScratch(Scratch(name, DoubleExpression(exp)))
-            return box.findScratch(name)!!.expression.value as Double
-        }
-
-        fun testPaint(name: String, exp: String): Any {
-            box.addScratch(Scratch(name, PaintExpression(exp)))
-            return box.findScratch(name)!!.expression.value
-        }
-
-        fun testBoolean(name: String, exp: String): Any {
-            box.addScratch(Scratch(name, BooleanExpression(exp)))
-            return box.findScratch(name)!!.expression.value
-        }
-
         // Now use scratches to test each property.
         // These in the same order as they appear in ShapePropType
 
@@ -66,62 +49,62 @@ class TestShape : MyTestCase(), MyShapeTest {
 
         //assertEquals(page, test("parent", "Parent"))
 
-        assertEquals(100.0, testDouble("pinX", "Pin.X.mm"))
-        assertEquals(200.0, testDouble("pinY", "Pin.Y.mm"))
+        assertEquals(100.0, testDouble(box, "Pin.X.mm"))
+        assertEquals(200.0, testDouble(box, "Pin.Y.mm"))
 
-        assertEquals(5.0, testDouble("locPinX", "LocPin.X.mm"))
-        assertEquals(10.0, testDouble("locPinY", "LocPin.Y.mm"))
+        assertEquals(5.0, testDouble(box, "LocPin.X.mm"))
+        assertEquals(10.0, testDouble(box, "LocPin.Y.mm"))
 
-        assertEquals(1.0, testDouble("scaleX", "Scale.X"))
-        assertEquals(1.0, testDouble("scaleY", "Scale.Y"))
+        assertEquals(1.0, testDouble(box, "Scale.X"))
+        assertEquals(1.0, testDouble(box, "Scale.Y"))
 
-        assertEquals(0.0, testDouble("rotation", "Rotation.Degrees"))
+        assertEquals(0.0, testDouble(box, "Rotation.Degrees"))
 
         //assertEquals(inner, test("findShape", "this.findShape(\"inner\""))
         //assertEquals(inner, test("findShape2", "findShape(\"inner\""))
         //assertEquals(inner, test("findShape", "Parent.findShape(\"inner\"")) // Recurse from Page downwards.
 
         box.lineWidth.formula = "3mm"
-        assertEquals(3.0, testDouble("lineWidth", "LineWidth.mm"))
+        assertEquals(3.0, testDouble(box, "LineWidth.mm"))
 
         box.lineColor.formula = "Color.yellow"
-        assertEquals(Color.NamedColors["yellow"], testPaint("lineColor", "LineColor"))
+        assertEquals(Color.NamedColors["yellow"], testPaint(box, "LineColor"))
 
         box.fillColor.formula = "Color.green"
-        assertEquals(Color.NamedColors["green"], testPaint("fillColor", "FillColor"))
+        assertEquals(Color.NamedColors["green"], testPaint(box, "FillColor"))
 
         box.geometries[0].value.fill.formula = "true"
-        assertEquals(true, testBoolean("fill1", "Geometry1.Fill"))
+        assertEquals(true, testBoolean(box, "Geometry1.Fill"))
         box.geometries[0].value.fill.formula = "false"
-        assertEquals(false, testBoolean("fill2", "Geometry1.Fill"))
+        assertEquals(false, testBoolean(box, "Geometry1.Fill"))
 
         box.geometries[0].value.stroke.formula = "true"
-        assertEquals(true, testBoolean("stroke1", "Geometry1.Stroke"))
+        assertEquals(true, testBoolean(box, "Geometry1.Stroke"))
         box.geometries[0].value.stroke.formula = "false"
-        assertEquals(false, testBoolean("stroke2", "Geometry1.Stroke"))
+        assertEquals(false, testBoolean(box, "Geometry1.Stroke"))
 
         box.geometries[0].value.connect.formula = "true"
-        assertEquals(true, testBoolean("connect1", "Geometry1.Connect"))
+        assertEquals(true, testBoolean(box, "Geometry1.Connect"))
         box.geometries[0].value.connect.formula = "false"
-        assertEquals(false, testBoolean("connect2", "Geometry1.Connect"))
+        assertEquals(false, testBoolean(box, "Geometry1.Connect"))
 
         // ControlPoints
         box.addControlPoint(ControlPoint("Dimension2(2mm,3mm)"))
         box.addControlPoint(ControlPoint("Dimension2(5mm,6mm)"))
-        assertEquals(2.0, testDouble("control1X", "ControlPoint.Point1.X.mm"))
-        assertEquals(3.0, testDouble("control1Y", "ControlPoint.Point1.Y.mm"))
-        assertEquals(5.0, testDouble("control2X", "ControlPoint.Point2.X.mm"))
-        assertEquals(6.0, testDouble("control2Y", "ControlPoint.Point2.Y.mm"))
+        assertEquals(2.0, testDouble(box, "ControlPoint.Point1.X.mm"))
+        assertEquals(3.0, testDouble(box, "ControlPoint.Point1.Y.mm"))
+        assertEquals(5.0, testDouble(box, "ControlPoint.Point2.X.mm"))
+        assertEquals(6.0, testDouble(box, "ControlPoint.Point2.Y.mm"))
 
         // ConnectionPoints
         box.addConnectionPoint(ConnectionPoint("Dimension2(7mm,8mm)", "45deg"))
         box.addConnectionPoint(ConnectionPoint("Dimension2(9mm,10mm)", "60deg"))
-        assertEquals(7.0, testDouble("connection1X", "ConnectionPoint.Point1.X.mm"))
-        assertEquals(8.0, testDouble("connection1Y", "ConnectionPoint.Point1.Y.mm"))
-        assertEquals(45.0, testDouble("connection1Dir", "ConnectionPoint.Direction1.Degrees"), tiny)
-        assertEquals(9.0, testDouble("connection2X", "ConnectionPoint.Point2.X.mm"))
-        assertEquals(10.0, testDouble("connection2Y", "ConnectionPoint.Point2.Y.mm"))
-        assertEquals(60.0, testDouble("connection2Dir", "ConnectionPoint.Direction2.Degrees"), tiny)
+        assertEquals(7.0, testDouble(box, "ConnectionPoint.Point1.X.mm"))
+        assertEquals(8.0, testDouble(box, "ConnectionPoint.Point1.Y.mm"))
+        assertEquals(45.0, testDouble(box, "ConnectionPoint.Direction1.Degrees"), tiny)
+        assertEquals(9.0, testDouble(box, "ConnectionPoint.Point2.X.mm"))
+        assertEquals(10.0, testDouble(box, "ConnectionPoint.Point2.Y.mm"))
+        assertEquals(60.0, testDouble(box, "ConnectionPoint.Direction2.Degrees"), tiny)
     }
 
 

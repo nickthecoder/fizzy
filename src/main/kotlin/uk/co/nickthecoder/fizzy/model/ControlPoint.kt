@@ -48,7 +48,7 @@ class ControlPoint(point: String) {
         }
 
     fun addMetaData(list: MutableList<MetaData>, index: Int) {
-        list.add(MetaData("Point", point, "ConnectionPoint", index))
+        list.add(MetaData("Point", point, "ControlPoint", index))
     }
 
     fun index(): Int {

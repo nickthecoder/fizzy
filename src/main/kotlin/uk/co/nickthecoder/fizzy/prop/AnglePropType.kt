@@ -71,6 +71,12 @@ class AnglePropType private constructor()
 class AngleExpression(formula: String, context: EvaluationContext = constantsContext)
     : PropExpression<Angle>(formula, Angle::class, context) {
 
+    override val defaultValue = Angle.ZERO
+
+    override fun constant(value: Angle) {
+        formula = value.toFormula()
+    }
+
     override fun copy() = AngleExpression(formula, constantsContext)
 
     override fun valueString() = value.toFormula()

@@ -61,7 +61,7 @@ class MainWindow(val stage: Stage) : Window() {
         redoButton.onAction = EventHandler { tabs.selectedTab?.document?.history?.redo() }
         selectToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = SelectTool(it) } }
         deleteToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = DeleteTool(it) } }
-        stampToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = StampShape2dTool(it, PrimitiveStencil.box) } }
+        stampToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = StampShape2dTool(it, PrimitiveStencil.pentangle) } }
         boxToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape2dTool(it, PrimitiveStencil.box) } }
         lineToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape1dTool(it, PrimitiveStencil.line) } }
         pentagonToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape2dTool(it, PrimitiveStencil.pentagon) } }

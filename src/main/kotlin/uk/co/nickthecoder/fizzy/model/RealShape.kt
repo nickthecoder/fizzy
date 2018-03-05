@@ -115,6 +115,7 @@ abstract class RealShape(parent: ShapeParent)
     }
 
     override fun addMetaData(list: MutableList<MetaData>) {
+        super.addMetaData(list)
         geometries.forEachIndexed { index, geometryProp -> geometryProp.value.addMetaData(list, index) }
         connectionPoints.forEachIndexed { index, connectionPointProp -> connectionPointProp.value.addMetaData(list, index) }
         controlPoints.forEachIndexed { index, controlPointProp -> controlPointProp.value.addMetaData(list, index) }
