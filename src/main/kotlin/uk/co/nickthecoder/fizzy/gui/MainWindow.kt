@@ -21,7 +21,6 @@ package uk.co.nickthecoder.fizzy.gui
 import javafx.event.EventHandler
 import javafx.scene.Scene
 import javafx.scene.control.Button
-import javafx.scene.control.Label
 import javafx.scene.control.ToolBar
 import javafx.scene.layout.BorderPane
 import javafx.stage.Stage
@@ -55,7 +54,6 @@ class MainWindow(val stage: Stage) : Window() {
         borderPane.top = toolBar
         borderPane.center = tabs
 
-        toolBar.items.add(Label("Toolbar"))
         stage.scene = Scene(borderPane, 800.0, 600.0)
         ParaTask.style(stage.scene)
 

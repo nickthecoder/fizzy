@@ -1,6 +1,17 @@
 To Do
 =====
 
+ControlPoints
+    Free (can move anywhere)
+    Line (along a single line of a given angle)
+    Rotation (fixed distance away, from a point)
+    Along geometry
+        This is different to the rest of them!!!
+    
+    All of them can be bound to a given rect???
+        Need "MIN_DIM" and "MAX_DIM" constants.
+
+
 
 When a shape is deleted, then the connections must be broken.
     How?
@@ -9,13 +20,6 @@ TestShape has some tests commented out.
 
 Soon
 ----
-
-Refactor GlassCanvas
-    Create a non-gui interface that can be used from unit tests
-    The unit tests should be able to invoke any Tools (so the Tools are non-gui too).
-    Will need my own "Event" class, which can have isContrained and isAdjustment.
-
-rename Geometry.line to stroke
 
 Test Shape.copyInto
 
@@ -53,6 +57,8 @@ Rounded corners
 
 Maybe
 -----
+
+Lines joined from the MIDDLE. But when arc is created it should connect differently
 
 Add a limit to the number of items in History.
    Each batch can be assigned a number, so memory hungy operations will cause History to dimish quicker.

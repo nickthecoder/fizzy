@@ -87,13 +87,7 @@ abstract class RealShape(parent: ShapeParent)
         if (newShape is RealShape) {
             geometries.forEach { geometryProp ->
                 val geometry = geometryProp.value
-                val newGeometry = Geometry()
-                newGeometry.fill.formula = geometry.fill.formula
-                newGeometry.stroke.formula = geometry.stroke.formula
-                geometry.parts.forEach { part ->
-                    newGeometry.parts.add(part.copy())
-                }
-                newShape.addGeometry(newGeometry)
+                newShape.addGeometry(geometry.copy())
             }
             connectionPoints.forEach { connectionPointProp ->
                 val connectionPoint = connectionPointProp.value

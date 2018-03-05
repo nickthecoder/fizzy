@@ -187,6 +187,18 @@ class Geometry
         }
         return Dimension2.ZERO_mm
     }
+
+    fun copy(): Geometry {
+        val newGeometry = Geometry()
+        newGeometry.fill.formula = fill.formula
+        newGeometry.stroke.formula = stroke.formula
+        newGeometry.connect.formula = connect.formula
+        parts.forEach { part ->
+            newGeometry.parts.add(part.copy())
+        }
+        return newGeometry
+    }
+
 }
 
 class GeometryProp(geometry: Geometry)
