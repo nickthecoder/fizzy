@@ -50,8 +50,14 @@ class Dimension2PropType private constructor()
     }
 }
 
-class Dimension2Expression(expression: String, context: EvaluationContext = constantsContext)
-    : PropExpression<Dimension2>(expression, Dimension2::class, context) {
+class Dimension2Expression
+    : PropExpression<Dimension2> {
+
+    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Dimension2::class, context)
+
+    constructor(pointValue: Dimension2, context: EvaluationContext = constantsContext) : this(pointValue.toFormula(), context)
+
+    constructor(other: Dimension2Expression) : super(other, Dimension2::class)
 
     override val defaultValue = Dimension2.ZERO_mm
 
@@ -59,7 +65,7 @@ class Dimension2Expression(expression: String, context: EvaluationContext = cons
         formula = value.toFormula()
     }
 
-    override fun copy() = Dimension2Expression(formula, constantsContext)
+    override fun copy(link: Boolean) = if (link) Dimension2Expression(this) else Dimension2Expression(formula)
 
     override fun valueString() = value.toFormula()
 }

@@ -87,30 +87,30 @@ abstract class RealShape(parent: ShapeParent)
         ))
     }
 
-    override fun populateShape(newShape: Shape) {
-        super.populateShape(newShape)
+    override fun populateShape(newShape: Shape, link: Boolean) {
+        super.populateShape(newShape, link)
 
         if (newShape is RealShape) {
             geometries.forEach { geometryProp ->
                 val geometry = geometryProp.value
-                newShape.addGeometry(geometry.copy())
+                newShape.addGeometry(geometry.copy(link))
             }
             connectionPoints.forEach { connectionPointProp ->
                 val connectionPoint = connectionPointProp.value
-                newShape.addConnectionPoint(connectionPoint.copy())
+                newShape.addConnectionPoint(connectionPoint.copy(link))
             }
             controlPoints.forEach { controlPointProp ->
                 val controlPoint = controlPointProp.value
-                newShape.addControlPoint(controlPoint.copy())
+                newShape.addControlPoint(controlPoint.copy(link))
             }
             scratches.forEach { scratchProp ->
                 val scratch = scratchProp.value
-                newShape.addScratch(scratch.copy())
+                newShape.addScratch(scratch.copy(link))
             }
-            newShape.lineWidth.formula = lineWidth.formula
-            newShape.size.formula = size.formula
-            newShape.lineColor.formula = lineColor.formula
-            newShape.fillColor.formula = fillColor.formula
+            newShape.lineWidth.copyFrom(lineWidth,link)
+            newShape.size.copyFrom(size,link)
+            newShape.lineColor.copyFrom(lineColor,link)
+            newShape.fillColor.copyFrom(fillColor,link)
         }
     }
 

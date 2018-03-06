@@ -30,8 +30,12 @@ class DoublePropType private constructor()
     }
 }
 
-class DoubleExpression(expression: String, context: EvaluationContext = constantsContext)
-    : PropExpression<Double>(expression, Double::class, context) {
+class DoubleExpression
+    : PropExpression<Double> {
+
+    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Double::class, context)
+
+    constructor(other: DoubleExpression) : super(other, Double::class)
 
     override val defaultValue = 0.0
 
@@ -39,7 +43,7 @@ class DoubleExpression(expression: String, context: EvaluationContext = constant
         formula = value.toFormula()
     }
 
-    override fun copy() = DoubleExpression(formula, constantsContext)
+    override fun copy(link: Boolean) = if (link) DoubleExpression(this) else DoubleExpression(formula, constantsContext)
 
     override fun valueString() = value.toFormula()
 }

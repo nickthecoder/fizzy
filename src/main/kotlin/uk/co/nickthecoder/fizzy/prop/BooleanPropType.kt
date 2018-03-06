@@ -30,8 +30,12 @@ class BooleanPropType private constructor()
     }
 }
 
-class BooleanExpression(expression: String, context: EvaluationContext = constantsContext)
-    : PropExpression<Boolean>(expression, Boolean::class, context) {
+class BooleanExpression
+    : PropExpression<Boolean> {
+
+    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Boolean::class, context)
+
+    constructor(other: BooleanExpression) : super(other.formula, Boolean::class)
 
     override val defaultValue = false
 
@@ -39,7 +43,7 @@ class BooleanExpression(expression: String, context: EvaluationContext = constan
         formula = value.toFormula()
     }
 
-    override fun copy() = BooleanExpression(formula, constantsContext)
+    override fun copy(link: Boolean) = if (link) BooleanExpression(formula) else BooleanExpression(formula)
 
     override fun valueString() = value.toString()
 }

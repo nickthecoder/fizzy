@@ -23,7 +23,7 @@ import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
-class Scratch(name: String, val expression: PropExpression<*>) {
+class Scratch(name: String, val expression: PropExpression<*>, comment: String = "") {
 
     val name = PropVariable<String>(name)
 
@@ -31,7 +31,7 @@ class Scratch(name: String, val expression: PropExpression<*>) {
      * Used only as documentation of the Master Shape, and is NOT available for use in formulas.
      * Therefore it is not a [Prop].
      */
-    var comment = ""
+    var comment = comment
 
     fun addMetaData(list: MutableList<MetaData>, index: Int) {
         list.add(MetaData("Name", StringExpression(name.value), "Scratch", index))
@@ -43,7 +43,7 @@ class Scratch(name: String, val expression: PropExpression<*>) {
         expression.context = context
     }
 
-    fun copy() = Scratch(name.value, expression.copy())
+    fun copy(link: Boolean) = Scratch(name.value, expression.copy(link), comment)
 }
 
 class ScratchProp(scratch: Scratch)

@@ -26,9 +26,12 @@ import uk.co.nickthecoder.fizzy.prop.PropValue
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
-class ControlPoint(point: String) {
+class ControlPoint(val point: Dimension2Expression) {
 
-    val point = Dimension2Expression(point)
+    constructor(pointFormula: String) : this(Dimension2Expression(pointFormula))
+
+    constructor(pointValue: Dimension2) : this(Dimension2Expression(pointValue))
+
 
     var shape: RealShape? = null
         set(v) {
@@ -70,7 +73,7 @@ class ControlPoint(point: String) {
      */
     fun constrain(localPoint: Dimension2): Dimension2 = localPoint
 
-    fun copy() = ControlPoint(point.formula)
+    fun copy(link: Boolean) = ControlPoint(point.copy(link))
 }
 
 class ControlPointProp(controlPoint: ControlPoint)

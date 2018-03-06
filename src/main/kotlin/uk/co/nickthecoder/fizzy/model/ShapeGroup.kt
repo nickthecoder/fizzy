@@ -29,10 +29,10 @@ class ShapeGroup private constructor(parent: ShapeParent)
 
     override val transform = ShapeTransform(this)
 
-    override fun copyInto(parent: ShapeParent): Shape {
+    override fun copyInto(parent: ShapeParent, link: Boolean): Shape {
         val newShape = ShapeGroup(parent)
         newShape.postInit()
-        populateShape(newShape)
+        populateShape(newShape, link)
         return newShape
     }
 

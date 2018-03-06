@@ -68,8 +68,12 @@ class AnglePropType private constructor()
 }
 
 
-class AngleExpression(formula: String, context: EvaluationContext = constantsContext)
-    : PropExpression<Angle>(formula, Angle::class, context) {
+class AngleExpression
+    : PropExpression<Angle> {
+
+    constructor(formula: String, context: EvaluationContext = constantsContext) : super(formula, Angle::class, context)
+
+    constructor(other: AngleExpression) : super(other.formula, Angle::class)
 
     override val defaultValue = Angle.ZERO
 
@@ -77,7 +81,7 @@ class AngleExpression(formula: String, context: EvaluationContext = constantsCon
         formula = value.toFormula()
     }
 
-    override fun copy() = AngleExpression(formula, constantsContext)
+    override fun copy(link: Boolean) = if (link) AngleExpression(this) else AngleExpression(formula)
 
     override fun valueString() = value.toFormula()
 }

@@ -193,14 +193,14 @@ class TestListeners : MyTestCase() {
         assertEquals(1, layer1Changed)
         assertEquals(1, pageChanged)
 
-        val mt = MoveTo()
+        val mt = MoveTo("Dimension(0mm,0mm)")
         geometry.parts.add(mt)
         assertEquals(2, shape1aChanged)
         assertEquals(0, shape1bChanged)
         assertEquals(2, layer1Changed)
         assertEquals(2, pageChanged)
 
-        val lt = LineTo()
+        val lt = LineTo("Dimension(0mm,0mm)")
         geometry.parts.add(lt)
         assertEquals(3, shape1aChanged)
         assertEquals(0, shape1bChanged)

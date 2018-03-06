@@ -22,7 +22,6 @@ import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Color
 import uk.co.nickthecoder.fizzy.model.Paint
-import uk.co.nickthecoder.fizzy.util.toFormula
 
 class ColorPropType private constructor()
 
@@ -68,16 +67,20 @@ class ColorPropType private constructor()
 
 }
 
-class PaintExpression(expression: String, context: EvaluationContext = constantsContext)
-    : PropExpression<Paint>(expression, Paint::class, context) {
+class PaintExpression
+    : PropExpression<Paint> {
 
     override val defaultValue = Color.BLACK
+
+    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Paint::class, context)
+
+    constructor(other: PaintExpression) : super(other, Paint::class)
 
     override fun constant(value: Paint) {
         formula = value.toFormula()
     }
 
-    override fun copy() = PaintExpression(formula, constantsContext)
+    override fun copy(link: Boolean) = if (link) PaintExpression(this) else PaintExpression(formula)
 
     override fun valueString(): String {
         val v = value

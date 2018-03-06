@@ -188,13 +188,13 @@ class Geometry
         return Dimension2.ZERO_mm
     }
 
-    fun copy(): Geometry {
+    fun copy(link: Boolean): Geometry {
         val newGeometry = Geometry()
-        newGeometry.fill.formula = fill.formula
-        newGeometry.stroke.formula = stroke.formula
-        newGeometry.connect.formula = connect.formula
+        newGeometry.fill.copyFrom(fill, link)
+        newGeometry.stroke.copyFrom(stroke, link)
+        newGeometry.connect.copyFrom(connect, link)
         parts.forEach { part ->
-            newGeometry.parts.add(part.copy())
+            newGeometry.parts.add(part.copy(link))
         }
         return newGeometry
     }

@@ -60,15 +60,42 @@ abstract class PropExpression<T : Any>(formula: String, val klass: KClass<T>, va
 
     : PropCalculation<T>() {
 
+    constructor(other: PropExpression<T>, klass: KClass<T>, context: EvaluationContext = constantsContext)
+            : this(other.formula, klass, context) {
+        linkedTo = other
+        other.propListeners.add(linkedListener)
+    }
+
+    private var linkedTo: PropExpression<T>? = null
+
     var formula: String = formula
+        get() = linkedTo?.formula ?: field
         set(v) {
             field = v
+            linkedTo?.propListeners?.remove(this)
+            linkedTo = null
             dirty = true
         }
 
+    private val linkedListener = object : PropListener {
+        override fun dirty(prop: Prop<*>) {
+            dirty = true
+        }
+    }
+
     abstract val defaultValue: T
 
-    var calculatedProperty: Prop<T>? = null
+    private var calculatedProperty: Prop<T>? = null
+
+    fun copyFrom(other: PropExpression<T>, link: Boolean) {
+        if (link) {
+            linkedTo = other
+            other.propListeners.add(linkedListener)
+            dirty = true
+        } else {
+            formula = other.formula
+        }
+    }
 
     abstract fun constant(value: T)
 
@@ -93,12 +120,11 @@ abstract class PropExpression<T : Any>(formula: String, val klass: KClass<T>, va
         return "Expression : '$formula'"
     }
 
-    abstract fun copy(): PropExpression<T>
+    abstract fun copy(link: Boolean): PropExpression<T>
 
     abstract fun valueString(): String
 
     override fun toString() = "='$formula'"
-
 }
 
 class PropExpressionException(propExpression: PropExpression<*>, message: String?)

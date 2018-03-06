@@ -27,12 +27,13 @@ import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.StringExpression
 
 
-class MoveTo(formula: String = "Dimension2(0mm, 0mm)")
+class MoveTo(override val point: Dimension2Expression)
     : GeometryPart() {
+
+    constructor(pointFormula: String) : this(Dimension2Expression(pointFormula))
 
     constructor(point: Dimension2) : this(point.toFormula())
 
-    override val point = Dimension2Expression(formula)
 
     init {
         point.propListeners.add(this)
@@ -55,7 +56,7 @@ class MoveTo(formula: String = "Dimension2(0mm, 0mm)")
 
     override fun pointAlong(prev: Dimension2, along: Double) = Dimension2.ZERO_mm
 
-    override fun copy(): GeometryPart = MoveTo(point.formula)
+    override fun copy(link: Boolean): GeometryPart = MoveTo(point.copy(link))
 
     override fun toString() = "MoveTo point=${point.value}"
 }

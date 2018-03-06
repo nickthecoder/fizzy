@@ -39,5 +39,12 @@ object PrimitiveStencil {
 
     init {
         pentangle.controlPoints[0].value.point.formula = pentangle.geometries[0].value.parts[4].point.value.toFormula()
+
+        page.children.add(box)
+        page.children.add(line)
+        page.children.add(pentagon)
+        page.children.add(star)
+        page.children.add(pentangle)
+
     }
 }

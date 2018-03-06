@@ -26,9 +26,9 @@ import uk.co.nickthecoder.fizzy.prop.PropValue
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
-class ConnectionPoint(point: String) {
+class ConnectionPoint(val point: Dimension2Expression) {
 
-    val point = Dimension2Expression(point)
+    constructor(pointFormula: String) : this(Dimension2Expression(pointFormula))
 
     var shape: RealShape? = null
         set(v) {
@@ -65,7 +65,8 @@ class ConnectionPoint(point: String) {
 
     fun connectToFormula() = shape?.let { "connectTo( Page.Shape${it.id.value}.ConnectionPoint${index() + 1} )" }
 
-    fun copy() = ConnectionPoint(point.formula)
+    fun copy(link: Boolean) = ConnectionPoint(point.copy(link))
+
 }
 
 class ConnectionPointProp(connectionPoint: ConnectionPoint)

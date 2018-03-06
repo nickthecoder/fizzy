@@ -36,10 +36,10 @@ class Shape2d private constructor(parent: ShapeParent)
         size.propListeners.add(this)
     }
 
-    override fun copyInto(parent: ShapeParent): Shape2d {
+    override fun copyInto(parent: ShapeParent, link: Boolean): Shape2d {
         val newShape = Shape2d(parent)
         newShape.postInit()
-        populateShape(newShape)
+        populateShape(newShape, link)
         return newShape
     }
 

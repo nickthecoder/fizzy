@@ -6,19 +6,12 @@ Instead of findScratch("Name") allow Scratch.Name
 
 When scaling by only x or only y, and contraining, then scale by ratios i.e 1/3 1/2 1 2 3 etc
 
-When a shape is deleted, then the connections must be broken.
-    How?
-
 TestShape has some tests commented out.
 
 Soon
 ----
 
 Test Shape.copyInto
-
-When expressions fail, set a flag on the expression, and tell a handler about the error.
-    During testing, the handler can throw an exception.
-    End of testRenameShape
 
 When copying an object give a "clone" boolean.
     When set, the Expressions are linked to the master rather than being Strings.
@@ -137,6 +130,12 @@ Round corners without changing the Geometry.
 Problems
 --------
 
+When a shape is deleted, then the connections must be broken.
+    How?
+    I don't think it is a problem. If the end is moved, it will take on a new value.
+    Saving won't be a problem either, as it will save the cached value as well as the broken formula.
+    Note. We must save the "next Shape ID", otherwise reloading a document may reuse the same ID.
+
 How are Shapes and Master Shapes related?
     I want Shapes to change if their Master Shape changes, therefore they have to be linked.
     Some properties of a Shape can be changed per-Shape (such as Pin and its control points, its text etc)
@@ -158,41 +157,8 @@ Font sizes and Real-World sizes
         Units cannot be an enum, because "point" would be defined differently.
         The EvaluationContext can have this special unit (and the corresponding "Conversion" within it).
 
-How is a line end (or a control point???) joined to another Shape's value?
-    Using a special Join( shape, point ), where point is in a value relative to the shape's coordinates.
-       This can calculate the point in the document, and then convert it back into local units.
-    Ditto for JoinAlong( shape, pointA, pointB, along ), where along is usually 0..1
-    Recalculated whenever the shape changes (or any of its ancestors - eek, I currently only go UPWARDS).
-
-Should Prop<String>'s head and tail methods be safe? i.e. should they error if the string is too short?
-
-Shape has an ID, which can be referenced by expressions in other Shapes.
-    How do we change the expression TEXT when the ID is changed?
-    When Evaluator is run, any time a Shape's ID is used, add a listener to the Shape's ID
-        The listener knows the position of the token, and so the expression can be updated ;-)
-    Clear the listeners before evaluating the expression and/or when the expression is changed.
-    Are ShapeIDs unique to the whole document, or can a Shape inside a group share an ID with a Shape within a different group?
-
 How are 2 shapes combined into one?
     Maybe the size is forced to a new constant, and each geometry item is recreated, so that the values stay the same, but the calculation is based on the new size.
-
-How does a line join to two boxes at their edges?
-    Instead of trying to head directly from each box center, snap to the edge, remembering the ratio.
-    So you can snap to the middle of the edge with a ratio of 0.5, and the left with a ratio of 0.
-        Then each end of the line can be independent.
-    i.e. we don't snap to a BOX, but instead snap to a LINE
-    We could also snap to an ellipse (with the option of setting the start and end angle of the curve.
-
-    Snap points should also contain direction(s) of entry, so that lines can intelligently connect.
-        e.g. a horizontal resistor has a 0deg on the left and 180deg on the right.
-
-    Could also snap to a Geometry section.
-        e.g. a box have 4 lines, so a ratio of 1/8th would be half way along the 1st line.
-        Each GeometryPart has an "end point" (which is just the "point" for LineTo and MoveTo)
-        Geometry can have an "along(n)" method, which calculates the snap point for a given "along" value.
-            Would be constrained to 0..1
-        Each GeometryPart has an along( from : Dimenion, n ) where from will be the previous part's end point.
-        Note. GraphicsContext's arcTo and bezierCurveTo do use the previous point in the path :-)
 
 Can a zig-zag connecting line have any number of segments?
     Joining two components, the zig zag can head out and in using the snap points' directions, but we may want many "way points".
@@ -202,8 +168,7 @@ Can a zig-zag connecting line have any number of segments?
 How should text be stored?
     Maybe every shape can (optionally) have a single piece of text associated with it.
         Except groups???
-        Maybe only Shape2d has text
-    Should the text have independent rotation?
+    Should the text have independent rotation? Yes
     The text is often a "property" of the top-level shape, in which case, how is the text edited from the
         properties dialog AND the GUI?
         Using the GUI : If text is editable AND the expression is a simple link, then edit the item the link points to.

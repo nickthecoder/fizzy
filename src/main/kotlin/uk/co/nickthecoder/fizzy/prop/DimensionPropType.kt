@@ -52,8 +52,12 @@ class DimensionPropType private constructor()
     }
 }
 
-class DimensionExpression(expression: String, context: EvaluationContext = constantsContext)
-    : PropExpression<Dimension>(expression, Dimension::class, context) {
+class DimensionExpression
+    : PropExpression<Dimension> {
+
+    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Dimension::class, context)
+
+    constructor(other: DimensionExpression) : super(other, Dimension::class)
 
     override val defaultValue = Dimension.ZERO_mm
 
@@ -61,7 +65,7 @@ class DimensionExpression(expression: String, context: EvaluationContext = const
         formula = value.toFormula()
     }
 
-    override fun copy() = DimensionExpression(formula, constantsContext)
+    override fun copy(link: Boolean) = if (link) DimensionExpression(formula) else DimensionExpression(formula)
 
     override fun valueString() = value.toFormula()
 }

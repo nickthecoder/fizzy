@@ -22,10 +22,7 @@ import javafx.application.Application
 import javafx.application.Platform
 import javafx.stage.Stage
 import uk.co.nickthecoder.fizzy.gui.MainWindow
-import uk.co.nickthecoder.fizzy.model.ConnectionPoint
-import uk.co.nickthecoder.fizzy.model.Document
-import uk.co.nickthecoder.fizzy.model.Page
-import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.prop.expressionExceptionHandler
 import uk.co.nickthecoder.fizzy.util.runLaterHandler
 
@@ -61,6 +58,7 @@ class Fizzy : Application() {
 
         val mainWindow = MainWindow(primaryStage)
         mainWindow.addDocument(doc)
+        mainWindow.addDocument(PrimitiveStencil.document)
     }
 
     companion object {

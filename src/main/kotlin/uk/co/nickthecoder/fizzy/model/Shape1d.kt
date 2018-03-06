@@ -47,10 +47,10 @@ class Shape1d private constructor(parent: ShapeParent)
         transform.rotation.formula = "(End-Start).Angle"
     }
 
-    override fun copyInto(parent: ShapeParent): Shape {
+    override fun copyInto(parent: ShapeParent, link: Boolean): Shape {
         val newShape = Shape1d(parent)
         newShape.postInit()
-        populateShape(newShape)
+        populateShape(newShape, link)
         return newShape
     }
 

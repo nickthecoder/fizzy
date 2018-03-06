@@ -172,16 +172,16 @@ abstract class Shape(var parent: ShapeParent)
         }
     }
 
-    abstract fun copyInto(parent: ShapeParent): Shape
+    abstract fun copyInto(parent: ShapeParent, link: Boolean): Shape
 
-    open protected fun populateShape(newShape: Shape) {
+    open protected fun populateShape(newShape: Shape, link: Boolean) {
         newShape.name.value = name.value
-        newShape.transform.locPin.formula = transform.locPin.formula
-        newShape.transform.rotation.formula = transform.rotation.formula
-        newShape.transform.pin.formula = transform.pin.formula
-        newShape.transform.scale.formula = transform.scale.formula
+        newShape.transform.locPin.copyFrom(transform.locPin, link)
+        newShape.transform.rotation.copyFrom(transform.rotation, link)
+        newShape.transform.pin.copyFrom(transform.pin, link)
+        newShape.transform.scale.copyFrom(transform.scale, link)
 
-        children.forEach { it.copyInto(newShape) }
+        children.forEach { it.copyInto(newShape, link) }
     }
 
     fun metaData(): List<MetaData> {

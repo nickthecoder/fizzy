@@ -49,7 +49,7 @@ class GrowShape2dTool(controller: Controller, val masterShape: Shape2d)
 
     override fun onDragDetected(event: CMouseEvent) {
         startPoint?.let {
-            val newShape = masterShape.copyInto(controller.page)
+            val newShape = masterShape.copyInto(controller.page, true)
             newShape.size.formula = Dimension2.ZERO_mm.toFormula()
             newShape.transform.pin.formula = it.toFormula()
 

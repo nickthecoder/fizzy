@@ -48,6 +48,7 @@ class MainWindow(val stage: Stage) : Window() {
     val lineToolButton = Button("Line")
     val pentagonToolButton = Button("Pentagon")
     val starToolButton = Button("Star")
+    val debugButton = Button("Debug")
 
     init {
         stage.title = "Fizzy"
@@ -67,17 +68,29 @@ class MainWindow(val stage: Stage) : Window() {
         lineToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape1dTool(it, PrimitiveStencil.line) } }
         pentagonToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape2dTool(it, PrimitiveStencil.pentagon) } }
         starToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape2dTool(it, PrimitiveStencil.star) } }
+        debugButton.onAction = EventHandler { debug() }
 
         toolBar.items.addAll(
                 undoButton, redoButton,
                 selectToolButton, deleteToolButton,
                 stampToolButton,
-                boxToolButton, lineToolButton, pentagonToolButton, starToolButton)
+                boxToolButton, lineToolButton, pentagonToolButton, starToolButton,
+                debugButton
+        )
 
         stage.show()
     }
 
     fun addDocument(doc: Document) {
         tabs.add(DocumentTab(doc))
+    }
+
+    fun debug() {
+        tabs.selectedTab?.let { tab ->
+            tab.document.pages[0].children.forEach { shape ->
+                println("---------------");
+                println(shape.metaData().joinToString(separator = "\n"))
+            }
+        }
     }
 }

@@ -81,8 +81,12 @@ class StringPropType private constructor()
     }
 }
 
-class StringExpression(expression: String, context: EvaluationContext = constantsContext)
-    : PropExpression<String>(expression, String::class, context) {
+class StringExpression
+    : PropExpression<String> {
+
+    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, String::class, context)
+
+    constructor(other: StringExpression) : super(other, String::class)
 
     override val defaultValue = ""
 
@@ -90,7 +94,7 @@ class StringExpression(expression: String, context: EvaluationContext = constant
         formula = value.toFormula()
     }
 
-    override fun copy() = StringExpression(formula, constantsContext)
+    override fun copy(link: Boolean) = if (link) StringExpression(this) else StringExpression(formula)
 
     override fun valueString() = "\"$value\""
 }
