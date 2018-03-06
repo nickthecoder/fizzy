@@ -298,7 +298,6 @@ abstract class Shape(var parent: ShapeParent)
                         Vector2(1.0, (maxY.point.value.y - minY.point.value.y).ratio(maxX.point.value.x - minX.point.value.x)))))
 
                 poly.transform.locPin.formula = "Size * ${translate.ratio(shapeSize).toFormula()}"
-                //poly.transform.locPin.formula = "Size / 2 / findScratch(\"MagicRatio\")"
 
                 // Translate them, so they are all +ve
                 // Also, make them reference Size, so that resizing works as expected.
@@ -312,8 +311,7 @@ abstract class Shape(var parent: ShapeParent)
 
                 // Add extra geometries for the inner vertices of the star
                 for (i in 0..sides - 1) {
-                    //geometry.parts.add(i * 2 + 1, LineTo("LocPin + ( (ControlPoint.Point1 - LocPin) / Size).rotate( ($i / $sides * TAU) rad ) * Size"))
-                    geometry.parts.add(i * 2 + 1, LineTo("LocPin + ( (ControlPoint.Point1 - LocPin) / Size * findScratch(\"MagicRatio\") ).rotate( ($i / $sides * TAU) rad ) * Size / findScratch(\"MagicRatio\")"))
+                    geometry.parts.add(i * 2 + 1, LineTo("LocPin + ( (ControlPoint.Point1 - LocPin) / Size * Scratch.MagicRatio ).rotate( ($i / $sides * TAU) rad ) * Size / Scratch.MagicRatio"))
                 }
 
                 // Create a control point between 1st two outer points

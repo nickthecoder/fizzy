@@ -22,9 +22,7 @@ import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.model.geometry.GeometryProp
-import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
-import uk.co.nickthecoder.fizzy.prop.DimensionExpression
-import uk.co.nickthecoder.fizzy.prop.PaintExpression
+import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
 
 
@@ -107,10 +105,10 @@ abstract class RealShape(parent: ShapeParent)
                 val scratch = scratchProp.value
                 newShape.addScratch(scratch.copy(link))
             }
-            newShape.lineWidth.copyFrom(lineWidth,link)
-            newShape.size.copyFrom(size,link)
-            newShape.lineColor.copyFrom(lineColor,link)
-            newShape.fillColor.copyFrom(fillColor,link)
+            newShape.lineWidth.copyFrom(lineWidth, link)
+            newShape.size.copyFrom(size, link)
+            newShape.lineColor.copyFrom(lineColor, link)
+            newShape.fillColor.copyFrom(fillColor, link)
         }
     }
 

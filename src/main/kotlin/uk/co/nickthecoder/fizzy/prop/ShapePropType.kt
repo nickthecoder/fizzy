@@ -72,6 +72,7 @@ abstract class RealShapePropType<T : RealShape>(klass: KClass<T>)
             "Geometry" -> PropConstant(prop.value.geometries)
             "ConnectionPoint" -> PropConstant(prop.value.connectionPoints)
             "ControlPoint" -> PropConstant(prop.value.controlPoints)
+            "Scratch" -> PropConstant(prop.value.scratches)
             "LineWidth" -> prop.value.lineWidth
             "LineColor" -> prop.value.lineColor
             "FillColor" -> prop.value.fillColor

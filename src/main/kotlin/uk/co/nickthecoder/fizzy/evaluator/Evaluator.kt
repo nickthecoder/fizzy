@@ -377,6 +377,7 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
             PropType.put(LineToPropType.instance)
             PropType.put(MoveToPropType.instance)
             PropType.put(PagePropType.instance)
+            PropType.put(ScratchListPropType.instance)
             PropType.put(Shape1dPropType.instance)
             PropType.put(Shape2dPropType.instance)
             PropType.put(ShapeGroupPropType.instance)
