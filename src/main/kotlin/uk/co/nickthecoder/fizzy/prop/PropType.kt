@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
+import uk.co.nickthecoder.fizzy.collection.CollectionListener
+import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.collection.FList
 import java.util.regex.Pattern
 import kotlin.reflect.KClass
@@ -29,27 +31,22 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
         // To make accessing list properties easier, we can give the list's property name, and the number of the item
         // within the list as one identifier.
         // e.g. myShape.Geometry1
-        // Will look for a property called "Geometry" in myShape, and if it is an FList, then find item number 1
+        // Will look for a property called "Geometry" in myShape, and if it is an FList, then find row number 1
         // (which is index 0).
         //
         // Note, there is similar functionality in FListPropType, but it does something different!
         val matcher = nameNumber.matcher(name)
         if (matcher.matches()) {
             val fieldName = matcher.group(1)
-            val index = matcher.group(2).toInt()
+            val row = matcher.group(2).toInt()
 
             val field = prop.field(fieldName)
             if (field != null) {
                 val fieldValue = field.value
                 if (fieldValue is FList<*>) {
-                    if (index > 0 && index <= fieldValue.size) {
-                        val itemProp = PropCalculation1(prop) { fieldValue[index - 1]!! }
-                        val value = itemProp.value
-                        if (value is Prop<*>) {
-                            return value
-                        } else {
-                            return itemProp
-                        }
+                    if (row > 0 && row <= fieldValue.size) {
+                        @Suppress("UNCHECKED_CAST")
+                        return ListIndexAccess(fieldValue as FList<Any>, row - 1)
                     }
                 }
             }
@@ -90,5 +87,52 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
         fun put(propertyType: PropType<*>, klass: KClass<*>) {
             propertyTypes.put(klass, propertyType)
         }
+    }
+}
+
+
+class ListIndexAccess(val list: FList<Any>, val index: Int)
+    : PropCalculation<Any>(), CollectionListener<Any> {
+
+    override val propListenerOwner = "ListIndexAccess"
+
+    init {
+        list.listeners.add(this)
+    }
+
+    protected fun finalize() {
+        // TODO Remove println
+        println("------------LIA is being finalized")
+    }
+
+    var oldProp: Prop<*>? = null
+
+    override fun added(collection: FCollection<Any>, item: Any) {
+        dirty = true
+    }
+
+    override fun removed(collection: FCollection<Any>, item: Any) {
+        // TODO Remove println
+        println("############### LIA Removed, therefore dirty")
+        dirty = true
+    }
+
+    override fun eval(): Any {
+        val item = list[index]
+        // The "IF" is to allow for list lists of Props or lists of actual values.
+        return if (item is Prop<*>) {
+            if (oldProp != item) {
+                oldProp?.let { unlistenTo(it) }
+                listenTo(item)
+                oldProp = item
+            }
+            item.value
+        } else {
+            item
+        }
+    }
+
+    override fun toString(): String {
+        return "ListIndexAccess oldProp : ${oldProp} and a list."
     }
 }

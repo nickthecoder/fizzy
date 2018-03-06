@@ -27,10 +27,10 @@ class Vector2PropType private constructor() : PropType<Vector2>(Vector2::class) 
 
     override fun findField(prop: Prop<Vector2>, name: String): Prop<*>? {
         return when (name) {
-            "X" -> PropField(prop) { prop.value.x }
-            "Y" -> PropField(prop) { prop.value.y }
-            "Angle" -> PropField(prop) { prop.value.angle() }
-            "Length" -> PropField(prop) { prop.value.length() }
+            "X" -> PropField("Vector2.X", prop) { prop.value.x }
+            "Y" -> PropField("Vector2.Y", prop) { prop.value.y }
+            "Angle" -> PropField("Vector2.Angle", prop) { prop.value.angle() }
+            "Length" -> PropField("Vector2.Length", prop) { prop.value.length() }
             else -> super.findField(prop, name)
         }
     }

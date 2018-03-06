@@ -27,8 +27,10 @@ import uk.co.nickthecoder.fizzy.model.RealShape
 import uk.co.nickthecoder.fizzy.prop.BooleanExpression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
-import uk.co.nickthecoder.fizzy.prop.PropValue
-import uk.co.nickthecoder.fizzy.util.*
+import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
+import uk.co.nickthecoder.fizzy.util.ChangeListeners
+import uk.co.nickthecoder.fizzy.util.HasChangeListeners
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class Geometry
 
@@ -102,6 +104,9 @@ class Geometry
     override fun dirty(prop: Prop<*>) {
         changeListeners.fireChanged(this)
     }
+
+    override val propListenerOwner = "Geometry"
+
 
     fun index(): Int {
         shape?.let {

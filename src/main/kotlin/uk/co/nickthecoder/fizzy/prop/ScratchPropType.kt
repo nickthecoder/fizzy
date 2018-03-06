@@ -15,6 +15,8 @@ class ScratchProp(scratch: Scratch)
 
     override val changeListeners = ChangeListeners<ScratchProp>()
 
+    override val propListenerOwner = "ScratchProp"
+
     init {
         scratch.name.propListeners.add(this)
         scratch.expression.propListeners.add(this)
@@ -52,6 +54,8 @@ class ScratchListPropType private constructor()
 
 class FindScratchField(val scratchList: ScratchList, val name: String)
     : PropCalculation<Any>(), CollectionListener<ScratchProp> {
+
+    override val propListenerOwner = "FindScratchField"
 
     /**
      * If the scratch is removed, we need to become dirty!

@@ -29,10 +29,10 @@ class Dimension2PropType private constructor()
     override fun findField(prop: Prop<Dimension2>, name: String): Prop<*>? {
 
         return when (name) {
-            "X" -> PropField(prop) { prop.value.x }
-            "Y" -> PropField(prop) { prop.value.y }
-            "Length" -> PropField(prop) { prop.value.length() }
-            "Angle" -> PropField(prop) { prop.value.angle() }
+            "X" -> PropField("Dimension2.X", prop) { prop.value.x }
+            "Y" -> PropField("Dimension2.Y", prop) { prop.value.y }
+            "Length" -> PropField("Dimension2.Length", prop) { prop.value.length() }
+            "Angle" -> PropField("Dimension2.Angle", prop) { prop.value.angle() }
             else -> return super.findField(prop, name)
         }
     }

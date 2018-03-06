@@ -64,6 +64,8 @@ class ShapeTransform(val shape: Shape) {
             rotation.propListeners.add(this)
         }
 
+        override val propListenerOwner = "fromParentToLocal"
+
         override fun eval() =
                 Matrix33.translate(locPin.value.x.inDefaultUnits, locPin.value.y.inDefaultUnits) *
                         Matrix33.scale(1.0 / scale.value.x, 1.0 / scale.value.y) *
@@ -85,6 +87,8 @@ class ShapeTransform(val shape: Shape) {
             rotation.propListeners.add(this)
         }
 
+        override val propListenerOwner = "fromLocalToParent"
+
         override fun eval() =
                 Matrix33.translate(pin.value.x.inDefaultUnits, pin.value.y.inDefaultUnits) *
                         Matrix33.rotate(rotation.value) *
@@ -102,6 +106,8 @@ class ShapeTransform(val shape: Shape) {
             fromLocalToParent.propListeners.add(this)
         }
 
+        override val propListenerOwner = "fromLocalToPage"
+
         override fun eval() =
                 shape.parent.fromLocalToPage.value * fromLocalToParent.value
     }
@@ -113,6 +119,8 @@ class ShapeTransform(val shape: Shape) {
             shape.parent.fromPageToLocal.propListeners.add(this)
             fromParentToLocal.propListeners.add(this)
         }
+
+        override val propListenerOwner = "fromPageToLocal"
 
         override fun eval() =
                 shape.parent.fromPageToLocal.value * fromParentToLocal.value

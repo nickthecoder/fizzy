@@ -64,6 +64,9 @@ abstract class GeometryPart
         changeListeners.fireChanged(this, ChangeType.CHANGE, prop)
     }
 
+    override val propListenerOwner = "GeometryPart"
+
+
     /**
      * Does the point touch the line given by this part of the geometry.
      * The thickness is the distance away [here] can be, and still be considered touching.

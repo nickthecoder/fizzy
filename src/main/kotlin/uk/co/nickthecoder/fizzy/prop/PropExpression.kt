@@ -81,6 +81,9 @@ abstract class PropExpression<T : Any>(formula: String, val klass: KClass<T>, va
         override fun dirty(prop: Prop<*>) {
             dirty = true
         }
+
+        override val propListenerOwner = "PropExpression.linkedListener"
+
     }
 
     abstract val defaultValue: T
@@ -99,25 +102,27 @@ abstract class PropExpression<T : Any>(formula: String, val klass: KClass<T>, va
 
     abstract fun constant(value: T)
 
+    override fun dirty(prop: Prop<*>) {
+        super.dirty(prop)
+    }
+
+    override val propListenerOwner = "PropExpression : $formula"
+
     override fun eval(): T {
         calculatedProperty?.propListeners?.remove(this)
         try {
             val cp = evaluate(formula, klass, context)
             calculatedProperty = cp
-            cp.propListeners.add(this)
+            listenTo(cp)
             return cp.value
         } catch (e: Exception) {
-            expressionExceptionHandler(this, e.message)
+            expressionExceptionHandler(this, e)
             return defaultValue
         }
     }
 
     fun forceRecalculation() {
         dirty = true
-    }
-
-    override fun dump(): String {
-        return "Expression : '$formula'"
     }
 
     abstract fun copy(link: Boolean): PropExpression<T>
@@ -127,9 +132,9 @@ abstract class PropExpression<T : Any>(formula: String, val klass: KClass<T>, va
     override fun toString() = "='$formula'"
 }
 
-class PropExpressionException(propExpression: PropExpression<*>, message: String?)
-    : Exception("Error in expression ${propExpression.formula}" + if (message == null) "" else " " + message)
+class PropExpressionException(propExpression: PropExpression<*>, e: Exception)
+    : Exception("Error in expression ${propExpression.formula}", e)
 
-var expressionExceptionHandler: (PropExpression<*>, String?) -> Unit = { propExpression, message ->
-    throw PropExpressionException(propExpression, message)
+var expressionExceptionHandler: (PropExpression<*>, Exception) -> Unit = { propExpression, exception ->
+    throw PropExpressionException(propExpression, exception)
 }

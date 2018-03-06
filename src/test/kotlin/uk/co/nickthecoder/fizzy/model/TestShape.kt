@@ -19,6 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import org.junit.Test
+import uk.co.nickthecoder.fizzy.model.geometry.Geometry
+import uk.co.nickthecoder.fizzy.model.geometry.LineTo
+import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
+import uk.co.nickthecoder.fizzy.prop.DimensionExpression
 import uk.co.nickthecoder.fizzy.prop.DoubleExpression
 import uk.co.nickthecoder.fizzy.prop.StringExpression
 import uk.co.nickthecoder.fizzy.util.MyTestCase
@@ -193,6 +197,31 @@ class TestShape : MyTestCase() {
         assertEquals(0.0, box.scratches[0].value.expression.value)
         box.geometries[0].parts.removeAt(0)
         assertEquals(10.0, box.scratches[0].value.expression.value)
+
+    }
+
+    @Test
+    fun testDeleteGeometry() {
+        val doc = Document()
+        val page = Page(doc)
+
+        val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(100mm,200mm)")
+        page.children.add(box)
+        val geometry = Geometry()
+        geometry.parts.add(MoveTo("Dimension2(-20mm, -30mm)"))
+        geometry.parts.add(LineTo("Dimension2(-40mm, -30mm)"))
+        box.geometries.add(geometry)
+
+        println("A")
+        box.addScratch(Scratch("G2", DimensionExpression("Geometry2.Point1.X")))
+        assertEquals(Dimension(-20.0), box.scratches[0].value.expression.value)
+        println("B\n\n\n\n\n")
+        box.geometries.removeAt(0)
+        println("C")
+        println("Exp calcProp= ${box.scratches[0].value.expression.calculatedProperty}")
+        println("is CP dirty? = ${box.scratches[0].value.expression.dirty}")
+        assertFails { println("G2 : ${box.scratches[0].value.expression.value}") }
+        println("D")
 
     }
 }

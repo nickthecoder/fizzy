@@ -203,8 +203,6 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
                         popOperator()
                         val methodName = (popValue() as FieldOrMethodName).value
                         if (values.size == 0) {
-                            println("### B2")
-
                             // I don't think this can ever happen.
                             throw EvaluationException("No value to apply method $methodName", token.startIndex)
                         }

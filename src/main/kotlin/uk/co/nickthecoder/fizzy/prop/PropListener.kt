@@ -27,4 +27,6 @@ interface PropListener {
      */
     fun dirty(prop: Prop<*>)
 
+    val propListenerOwner : String
+
 }

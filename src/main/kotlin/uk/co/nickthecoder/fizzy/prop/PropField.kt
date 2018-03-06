@@ -20,17 +20,25 @@ package uk.co.nickthecoder.fizzy.prop
 
 /**
  * Dynamically evaluates a field value of a Prop.
- * This is a dynamically calculated value. Therefore, if the underlying Prop<Angle> changes its
+ * This is a dynamically calculated value. Therefore, if the underlying Prop changes its
  * value, the the [PropField] will also update.
  */
 class PropField<T : Any>(
+        val name: String, // This is only to aid debugging.
         val prop: Prop<T>,
         val lambda: (Prop<T>) -> Any)
 
     : PropCalculation<Any>() {
 
+    override val propListenerOwner = "PropField"
+
     init {
         prop.propListeners.add(this)
+    }
+
+    override fun dirty(prop: Prop<*>) {
+        println("*** $this has been called dirty")
+        super.dirty(prop)
     }
 
     override fun isConstant() = prop.isConstant()
@@ -38,6 +46,6 @@ class PropField<T : Any>(
     override fun eval(): Any = lambda(prop)
 
     override fun toString(): String {
-        return "Field"
+        return "{ Field $name of ${prop} }"
     }
 }

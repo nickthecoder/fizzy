@@ -35,8 +35,6 @@ interface Prop<out T : Any> {
 
     val propListeners: PropListeners
 
-    fun dump(): String = value.toString()
-
     fun isConstant() = false
 
     fun field(name: String): Prop<*>? = PropType.field(this, name)

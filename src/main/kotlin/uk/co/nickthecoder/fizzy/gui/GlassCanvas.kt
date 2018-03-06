@@ -108,6 +108,8 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
         override fun dirty(prop: Prop<*>) {
             dirty = true
         }
+
+        override val propListenerOwner = "GlassCanvas"
     }
 
     private val cursorListener = object : PropListener {
@@ -120,6 +122,9 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
                 ToolCursor.MOVE -> Cursor.CLOSED_HAND
             }
         }
+
+        override val propListenerOwner = "GlassCanvas.cursorListener"
+
     }
 
     init {
