@@ -83,12 +83,18 @@ abstract class PropExpression<T : Any>(formula: String, val klass: KClass<T>, va
         }
 
         override val propListenerOwner = "PropExpression.linkedListener"
-
     }
 
     abstract val defaultValue: T
 
     private var calculatedProperty: Prop<T>? = null
+
+    fun debug() {
+        println("\nPropExpression.debug")
+        println("cp # ${calculatedProperty?.hashCode()} = ${calculatedProperty}")
+        println("Dirty? $dirty value = $value cp's value : $calculatedProperty?.value")
+        println()
+    }
 
     fun copyFrom(other: PropExpression<T>, link: Boolean) {
         if (link) {

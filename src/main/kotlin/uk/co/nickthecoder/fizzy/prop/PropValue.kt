@@ -28,6 +28,6 @@ open class PropValue<T : Any>(override val value: T)
 
     override val propListeners = PropListeners()
 
-    override fun toString() = "Value : $value"
+    override fun toString() = "Value"
 
 }

@@ -193,11 +193,10 @@ class TestShape : MyTestCase() {
         val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(100mm,200mm)")
         page.children.add(box)
 
-        box.addScratch(Scratch("G2", DoubleExpression("Geometry1.Point1.X.mm")))
-        assertEquals(0.0, box.scratches[0].value.expression.value)
+        box.addScratch(Scratch("G2", DimensionExpression("Geometry1.Point1.X")))
+        assertEquals(Dimension(0.0), box.scratches[0].value.expression.value)
         box.geometries[0].parts.removeAt(0)
-        assertEquals(10.0, box.scratches[0].value.expression.value)
-
+        assertEquals(Dimension(10.0), box.scratches[0].value.expression.value)
     }
 
     @Test
@@ -212,16 +211,10 @@ class TestShape : MyTestCase() {
         geometry.parts.add(LineTo("Dimension2(-40mm, -30mm)"))
         box.geometries.add(geometry)
 
-        println("A")
         box.addScratch(Scratch("G2", DimensionExpression("Geometry2.Point1.X")))
         assertEquals(Dimension(-20.0), box.scratches[0].value.expression.value)
-        println("B\n\n\n\n\n")
         box.geometries.removeAt(0)
-        println("C")
-        println("Exp calcProp= ${box.scratches[0].value.expression.calculatedProperty}")
-        println("is CP dirty? = ${box.scratches[0].value.expression.dirty}")
         assertFails { println("G2 : ${box.scratches[0].value.expression.value}") }
-        println("D")
 
     }
 }

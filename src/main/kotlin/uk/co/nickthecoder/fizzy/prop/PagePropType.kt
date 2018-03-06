@@ -29,7 +29,7 @@ class PagePropType private constructor()
             try {
                 val id = name.substring(5).toInt()
                 val shape = prop.value.findShape(id) ?: throw RuntimeException("Shape $id not found")
-                return PropConstant(shape)
+                return PropValue(shape)
             } catch (e: NumberFormatException) {
                 // Do nothing
             }

@@ -35,15 +35,12 @@ class GeometryPropType private constructor()
             "Stroke" -> prop.value.stroke
             "Connect" -> prop.value.connect
             else -> {
-                println("Looking for $name for GeometryPropType")
                 // Allow access to any of the Geometries parts, without the hassle of ".parts.xxx"
                 val partsListProp = PropValue(prop.value.parts)
                 val foundField = partsListProp.field(name)
                 if (foundField == null) {
-                    println("Nope")
                     super.findField(prop, name)
                 } else {
-                    println("Yep")
                     // Note. "prop" even will be of type ListPropertyAccess, as that is the only way to get here.
                     @Suppress("UNCHECKED_CAST")
                     GeometryPartsFieldProp(prop, foundField as Prop<FList<GeometryPart>>)
@@ -63,6 +60,7 @@ class GeometryPartsFieldProp(val propGeometry: Prop<Geometry>, val wrappedField:
     init {
         if (propGeometry is PropListener) {
             propGeometry.propListeners.add(this)
+            wrappedField.propListeners.add(this)
         }
     }
 
@@ -70,8 +68,9 @@ class GeometryPartsFieldProp(val propGeometry: Prop<Geometry>, val wrappedField:
         return wrappedField.value
     }
 
-    override val propListenerOwner: String
-        get() = "GeometryPartsFieldProp"
+    override val propListenerOwner: String = "GeometryPartsFieldProp"
+
+    override fun toString() = "GeometryPartsFieldProp of $propGeometry wrapping ${wrappedField}"
 }
 
 class MoveToPropType private constructor()

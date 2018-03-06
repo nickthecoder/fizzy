@@ -18,17 +18,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop.methods
 
+import uk.co.nickthecoder.fizzy.collection.CollectionListener
+import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.model.RealShape
 import uk.co.nickthecoder.fizzy.model.Scratch
 import uk.co.nickthecoder.fizzy.prop.Prop
 
 class FindScratch(prop: Prop<RealShape>)
-    : TypedMethod1<RealShape, String>(prop, String::class) {
+    : TypedMethod1<RealShape, String>(prop, String::class), CollectionListener<Scratch> {
+
+    override fun added(collection: FCollection<Scratch>, item: Scratch) {
+        dirty = true
+    }
+
+    override fun removed(collection: FCollection<Scratch>, item: Scratch) {
+        dirty = true
+    }
+
+    private var oldValue : Any? = null
 
     override fun eval(a: String): Any {
         val scratch = prop.value.findScratch(a)
         setScratch(scratch)
+        oldValue = scratch?.expression?.value
         return scratch?.expression?.value ?: throw RuntimeException("Scratch $a not found")
+    }
+
+    override fun dirty(prop: Prop<*>) {
+        super.dirty(prop)
     }
 
     var prevScratch: Scratch? = null
@@ -48,5 +65,9 @@ class FindScratch(prop: Prop<RealShape>)
                 listenTo(scratch.expression)
             }
         }
+    }
+
+    override fun toString(): String {
+        return "FindScratch"
     }
 }

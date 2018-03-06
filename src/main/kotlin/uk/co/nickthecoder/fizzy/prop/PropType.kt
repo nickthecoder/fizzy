@@ -100,11 +100,6 @@ class ListIndexAccess(val list: FList<Any>, val index: Int)
         list.listeners.add(this)
     }
 
-    protected fun finalize() {
-        // TODO Remove println
-        println("------------LIA is being finalized")
-    }
-
     var oldProp: Prop<*>? = null
 
     override fun added(collection: FCollection<Any>, item: Any) {
@@ -112,8 +107,6 @@ class ListIndexAccess(val list: FList<Any>, val index: Int)
     }
 
     override fun removed(collection: FCollection<Any>, item: Any) {
-        // TODO Remove println
-        println("############### LIA Removed, therefore dirty")
         dirty = true
     }
 
@@ -133,6 +126,6 @@ class ListIndexAccess(val list: FList<Any>, val index: Int)
     }
 
     override fun toString(): String {
-        return "ListIndexAccess oldProp : ${oldProp} and a list."
+        return "ListIndexAccess"
     }
 }

@@ -85,9 +85,9 @@ class ListPropertyAccess(val listProp: Prop<FList<Any>>, val index: Int, val fie
         // The "IF" is to allow for list lists of Props or lists of actual values.
         // I think we only use lists of values now, not lists of Props.
         val field = if (item is Prop<*>) {
-            PropType.field(PropConstant(item.value), fieldName)
+            PropType.field(PropValue(item.value), fieldName)
         } else {
-            PropType.field(PropConstant(item), fieldName)
+            PropType.field(PropValue(item), fieldName)
         }
 
         field ?: throw RuntimeException("Field $fieldName not found")
@@ -101,6 +101,6 @@ class ListPropertyAccess(val listProp: Prop<FList<Any>>, val index: Int, val fie
     }
 
     override fun toString(): String {
-        return "ListPropertyAccess row $fieldName${index + 1} of parent listProp ${listProp}"
+        return "ListPropertyAccess row $fieldName${index + 1} of parent ${listProp}"
     }
 }

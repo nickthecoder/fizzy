@@ -217,12 +217,12 @@ within. Using the "this" keyword is optional. e.g. the following mean the same :
     "Geometry.Point1"
 
 
-## Naming Convention:
+### Naming Convention:
 
 Fields begin with an upper case letter, functions and methods begin with a lower case letter.
 
 
-## Operator Precedence
+### Operator Precedence
 
 I've use the same precedence that Kotlin uses. I think this differs from Java in relation to booleans.
 (I may be mistaken, in which case, I've been using far too many brackets when writing Java code!).
@@ -282,6 +282,30 @@ PropExpression will catch all exception (not only ones caused by recursion), and
 If the error handler doesn't throw, then the PropExpression will return a default value.
 This allows a diagram to work as best it can, with only the "broken" parts behaving badly.
 Within the unit tests, the error handler throws, and therefore the test fails fast (no default value is returned).
+
+
+### Weak References
+
+All Fizzy listeners are stored in collections of WeakReference.
+This is to prevent memory leaks, and I imagine it would happen a lot, and would be very hard to find.
+The drawback, is that listeners may be unintentionally garbage collected.
+For anonymous class in this pseudo code would fail :
+
+    myProp.addListener( new Listener() { ... listener code ... }
+
+Instead, all listeners must be assigned to a val :
+
+    val myListener = new Listener() { ... listener code ... }
+    myProp.addListener( myListener )
+
+and assuming "myListener" is a property of a class object, then the listener won't be gc'd until the owning class
+is gc'd.
+
+Special care must be taken when building up the tree like structure from Evaluator.parse().
+If a listener is created, but doesn't form part of the tree back to the result of parse(), then
+it will be gc'd, and the expression won't re-evaluate as expected.
+
+I speak from experience! 4 hours "lost" today hunting a bug from a gc'd listener!
 
 
 File Format

@@ -34,7 +34,7 @@ import uk.co.nickthecoder.fizzy.util.*
 abstract class Shape(var parent: ShapeParent)
     : ShapeParent, PropListener, HasChangeListeners<Shape> {
 
-    val id = PropConstant(parent.document().generateId())
+    val id = PropValue(parent.document().generateId())
 
     val name = PropVariable("")
 

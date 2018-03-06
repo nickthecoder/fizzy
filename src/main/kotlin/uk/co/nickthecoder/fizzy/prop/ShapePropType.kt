@@ -35,7 +35,7 @@ abstract class ShapePropType<T : Shape>(klass: KClass<T>)
             try {
                 val id = name.substring(5).toInt()
                 val shape = prop.value.findShape(id) ?: throw RuntimeException("Shape $id not found")
-                return PropConstant(shape)
+                return PropValue(shape)
             } catch (e: NumberFormatException) {
                 // Do nothing
             }
@@ -44,9 +44,9 @@ abstract class ShapePropType<T : Shape>(klass: KClass<T>)
         return when (name) {
             "ID" -> PropConstant(prop.value.id.value.toDouble())
             "Name" -> prop.value.name
-            "Document" -> PropConstant(prop.value.document())
-            "Page" -> PropConstant(prop.value.page())
-            "Parent" -> PropConstant(prop.value.parent)
+            "Document" -> PropValue(prop.value.document())
+            "Page" -> PropValue(prop.value.page())
+            "Parent" -> PropValue(prop.value.parent)
             "Pin" -> prop.value.transform.pin
             "LocPin" -> prop.value.transform.locPin
             "Scale" -> prop.value.transform.scale
@@ -69,10 +69,10 @@ abstract class RealShapePropType<T : RealShape>(klass: KClass<T>)
 
     override fun findField(prop: Prop<T>, name: String): Prop<*>? {
         return when (name) {
-            "Geometry" -> PropConstant(prop.value.geometries)
-            "ConnectionPoint" -> PropConstant(prop.value.connectionPoints)
-            "ControlPoint" -> PropConstant(prop.value.controlPoints)
-            "Scratch" -> PropConstant(prop.value.scratches)
+            "Geometry" -> PropValue(prop.value.geometries)
+            "ConnectionPoint" -> PropValue(prop.value.connectionPoints)
+            "ControlPoint" -> PropValue(prop.value.controlPoints)
+            "Scratch" -> PropValue(prop.value.scratches)
             "LineWidth" -> prop.value.lineWidth
             "LineColor" -> prop.value.lineColor
             "FillColor" -> prop.value.fillColor

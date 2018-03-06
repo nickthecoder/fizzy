@@ -17,8 +17,6 @@ Soon
 
 Rename MetaData and improve it to be more structured.
 
-Deleting a whole Geometry section won't invalidate expressions like : Geometry1.Point1
-
 TestShape has some tests commented out.
 
 Test Shape.copyInto

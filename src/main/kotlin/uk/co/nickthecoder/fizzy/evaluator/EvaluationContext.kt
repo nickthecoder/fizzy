@@ -22,6 +22,7 @@ import uk.co.nickthecoder.fizzy.model.Color
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.prop.PropType
+import uk.co.nickthecoder.fizzy.prop.PropValue
 
 interface EvaluationContext {
 
@@ -83,7 +84,7 @@ class SimpleEvaluationContext(properties: Map<String, Prop<*>> = emptyMap())
 class ThisContext<T : Any>(val me: T, val type: PropType<T>)
     : EvaluationContext {
 
-    override val thisProp = PropConstant(me)
+    override val thisProp = PropValue(me)
 
     override fun findProp(name: String): Prop<*>? {
         if (name == "this") return thisProp

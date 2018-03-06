@@ -37,7 +37,6 @@ class PropField<T : Any>(
     }
 
     override fun dirty(prop: Prop<*>) {
-        println("*** $this has been called dirty")
         super.dirty(prop)
     }
 
