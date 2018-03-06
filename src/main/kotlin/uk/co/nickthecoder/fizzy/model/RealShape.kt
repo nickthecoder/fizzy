@@ -40,7 +40,7 @@ abstract class RealShape(parent: ShapeParent)
 
     val controlPoints = MutableFList<ControlPointProp>()
 
-    val scratches = MutableFList<ScratchProp>()
+    val scratches = ScratchList()
 
     val lineWidth = DimensionExpression("2mm")
 

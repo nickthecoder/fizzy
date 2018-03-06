@@ -129,6 +129,15 @@ class Dimension : Comparable<Dimension> {
         return Dimension(Math.sqrt(inUnits(units)), units, power / 2)
     }
 
+    fun isNear(other: Dimension) = Math.abs(inDefaultUnits - other.inDefaultUnits) < 0.001
+
+    /**
+     * Return in a format suitable for a formula.
+     * Note. the space before the units is important for value of "NaN"
+     */
+    fun toFormula() = "${inUnits(units).toFormula()} ${units.name}"
+
+
     override fun hashCode(): Int = 13 * inDefaultUnits.hashCode()
 
     override fun equals(other: Any?): Boolean {
@@ -141,13 +150,6 @@ class Dimension : Comparable<Dimension> {
     override fun compareTo(other: Dimension): Int {
         return inDefaultUnits.compareTo(other.inDefaultUnits)
     }
-
-
-    /**
-     * Return in a format suitable for a formula.
-     * Note. the space before the units is important for value of "NaN"
-     */
-    fun toFormula() = "${inUnits(units).toFormula()} ${units.name}"
 
     override fun toString(): String {
         return if (power == 0.0) {

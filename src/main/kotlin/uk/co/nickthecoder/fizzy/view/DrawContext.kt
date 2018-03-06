@@ -35,8 +35,8 @@ interface DrawContext {
         return this
     }
 
-    fun lineColor(color: Paint)
-    fun fillColor(color: Paint)
+    fun lineColor(paint: Paint)
+    fun fillColor(paint: Paint)
 
     fun lineDashes(vararg dashes: Double)
 
@@ -53,7 +53,6 @@ interface DrawContext {
     fun lineWidth(width: Double)
 
     fun beginPath()
-
     fun endPath(stroke: Boolean, fill: Boolean)
 
     fun moveTo(point: Dimension2)

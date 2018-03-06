@@ -215,10 +215,10 @@ abstract class Shape(var parent: ShapeParent)
             box.transform.pin.formula = at
 
             val geometry = Geometry()
-            geometry.parts.add(MoveTo("Size * Vector2(0,0)"))
-            geometry.parts.add(LineTo("Size * Vector2(1,0)"))
-            geometry.parts.add(LineTo("Size * Vector2(1,1)"))
-            geometry.parts.add(LineTo("Size * Vector2(0,1)"))
+            geometry.parts.add(MoveTo("Size * Vector2(0,0) + Dimension2(LineWidth/2, LineWidth/2)"))
+            geometry.parts.add(LineTo("Size * Vector2(1,0) + Dimension2(-LineWidth/2, LineWidth/2)"))
+            geometry.parts.add(LineTo("Size * Vector2(1,1) + Dimension2(-LineWidth/2, -LineWidth/2)"))
+            geometry.parts.add(LineTo("Size * Vector2(0,1) + Dimension2(LineWidth/2, -LineWidth/2)"))
             geometry.parts.add(LineTo("Geometry1.Point1"))
             geometry.fill.formula = "true"
             geometry.connect.formula = "true" // Allow connections along

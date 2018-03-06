@@ -20,6 +20,8 @@ package uk.co.nickthecoder.fizzy.gui
 
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
+import javafx.scene.shape.StrokeLineCap
+import javafx.scene.shape.StrokeLineJoin
 import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.view.DrawContext
 
@@ -27,6 +29,11 @@ class CanvasContext(val canvas: Canvas)
     : DrawContext {
 
     val gc: GraphicsContext = canvas.graphicsContext2D
+
+    init {
+        gc.lineCap = StrokeLineCap.BUTT
+        gc.lineJoin = StrokeLineJoin.ROUND
+    }
 
     override fun clear() {
         gc.clearRect(0.0, 0.0, canvas.width, canvas.height)

@@ -121,6 +121,8 @@ class Dimension2(val x: Dimension, val y: Dimension) {
         return Dimension2(x * cos - y * sin, x * sin + y * cos)
     }
 
+    fun isNear(other: Dimension2) = x.isNear(other.x) && y.isNear(other.y)
+
     override fun hashCode(): Int {
         return x.hashCode() + 17 * y.hashCode()
     }

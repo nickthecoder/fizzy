@@ -45,6 +45,7 @@ class PageView(val page: Page, val dc: DrawContext) {
 
             if (shape is RealShape) {
 
+                dc.lineWidth(shape.lineWidth.value)
                 dc.lineColor(shape.lineColor.value)
                 dc.fillColor(shape.fillColor.value)
 
