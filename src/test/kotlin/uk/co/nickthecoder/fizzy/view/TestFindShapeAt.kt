@@ -25,13 +25,12 @@ import uk.co.nickthecoder.fizzy.model.Page
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
-import uk.co.nickthecoder.fizzy.util.MyShapeTest
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
 /**
  * Tests [Page.findShapeAt] and also [Shape.isAt].
  */
-class TestFindShapeAt : MyTestCase(), MyShapeTest {
+class TestFindShapeAt : MyTestCase() {
 
     @Test
     fun testSimpleBox() {

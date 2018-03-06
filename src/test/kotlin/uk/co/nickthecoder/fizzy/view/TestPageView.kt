@@ -21,10 +21,9 @@ package uk.co.nickthecoder.fizzy.view
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.Page
-import uk.co.nickthecoder.fizzy.util.MyShapeTest
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
-class TestPageView : MyTestCase(), MyShapeTest {
+class TestPageView : MyTestCase() {
 
     val document = Document()
     val page = Page(document)

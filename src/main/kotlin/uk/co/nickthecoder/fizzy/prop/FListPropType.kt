@@ -25,16 +25,16 @@ import java.util.regex.Pattern
 
 
 class FListPropType private constructor()
-    : PropType<FList<out Any>>(FList::class) {
+    : PropType<FList<Any>>(FList::class) {
 
-    override fun findField(prop: Prop<FList<out Any>>, name: String): Prop<*>? {
+    override fun findField(prop: Prop<FList<Any>>, name: String): Prop<*>? {
         return when (name) {
             "Size" -> PropCalculation1(prop) { v -> v.size.toDouble() }
             else -> return findField(prop.value, name) ?: super.findField(prop, name)
         }
     }
 
-    fun findField(list: FList<*>, name: String): Prop<*>? {
+    fun findField(list: FList<Any>, name: String): Prop<*>? {
 
         // To make accessing items in an array easier, we can reference a property "Foo" of an item in the list using :
         // "myListProp.FooN" where N is the index into the list with base 1 (i.e. the 0th item is N=1).
@@ -47,17 +47,7 @@ class FListPropType private constructor()
             val fieldName = matcher.group(1)
             val index = matcher.group(2).toInt()
             if (index > 0 && index <= list.size) {
-                list [index - 1]?.let { item ->
-                    // The "IF" is to allow for list lists of Props or lists of actual values.
-                    val field = if (item is Prop<*>) {
-                        PropType.field(PropConstant(item.value), fieldName)
-                    } else {
-                        PropType.field(PropConstant(item), fieldName)
-                    }
-                    if (field != null) {
-                        return field
-                    }
-                }
+                return ListPropertyAccess(list, index - 1, fieldName)
             }
         }
 
@@ -68,6 +58,42 @@ class FListPropType private constructor()
         val instance = FListPropType()
 
         private val nameNumber = Pattern.compile("(.*?)([0-9]+)")
+    }
+}
+
+class ListPropertyAccess(val list: FList<Any>, val index: Int, val fieldName: String)
+    : PropCalculation<Any>(), CollectionListener<Any> {
+
+    var oldField: Prop<*>? = null
+
+    init {
+        list.listeners.add(this)
+    }
+
+    override fun added(collection: FCollection<Any>, item: Any) {
+        dirty = true
+    }
+
+    override fun removed(collection: FCollection<Any>, item: Any) {
+        dirty = true
+    }
+
+    override fun eval(): Any {
+        val item = list[index]
+        // The "IF" is to allow for list lists of Props or lists of actual values.
+        val field = if (item is Prop<*>) {
+            PropType.field(PropConstant(item.value), fieldName)
+        } else {
+            PropType.field(PropConstant(item), fieldName)
+        }
+
+        field ?: throw RuntimeException("Field $fieldName not found")
+
+        if (oldField != field) {
+            oldField?.let { unlistenTo(it) }
+            listenTo(field)
+        }
+        return field.value
     }
 }
 

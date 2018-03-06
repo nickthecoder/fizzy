@@ -19,10 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import org.junit.Test
-import uk.co.nickthecoder.fizzy.util.MyShapeTest
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
-class TestConnections : MyTestCase(), MyShapeTest {
+class TestConnections : MyTestCase() {
 
     @Test
     fun testConnectAlong() {
@@ -122,7 +121,7 @@ class TestConnections : MyTestCase(), MyShapeTest {
         page.children.add(box)
         page.children.add(box2)
         page.children.add(line)
-        
+
         // Only allow connections to box, not to box2
         box.geometries[0].value.connect.formula = "true"
 

@@ -21,10 +21,9 @@ package uk.co.nickthecoder.fizzy.model
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.prop.AngleExpression
 import uk.co.nickthecoder.fizzy.prop.DoubleExpression
-import uk.co.nickthecoder.fizzy.util.MyShapeTest
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
-class TestScratch : MyTestCase(), MyShapeTest {
+class TestScratch : MyTestCase() {
 
     @Test
     fun testScratch() {

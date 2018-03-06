@@ -1,10 +1,9 @@
 package uk.co.nickthecoder.fizzy.model
 
 import org.junit.Test
-import uk.co.nickthecoder.fizzy.util.MyShapeTest
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
-class TestPolygon : MyTestCase(), MyShapeTest {
+class TestPolygon : MyTestCase() {
 
     @Test
     fun testPolygon() {
@@ -33,8 +32,8 @@ class TestPolygon : MyTestCase(), MyShapeTest {
         page.children.add(poly2)
         page.children.add(poly1)
 
-        assertEquals( testDouble(poly1, "Geometry1.Point1.X.mm"), testDouble(poly1, "ConnectionPoint.Point1.X.mm"))
-        assertEquals( testDouble(poly1, "Geometry1.Point10.X.mm"), testDouble(poly1, "ConnectionPoint.Point10.X.mm"))
+        assertEquals(testDouble(poly1, "Geometry1.Point1.X.mm"), testDouble(poly1, "ConnectionPoint.Point1.X.mm"))
+        assertEquals(testDouble(poly1, "Geometry1.Point10.X.mm"), testDouble(poly1, "ConnectionPoint.Point10.X.mm"))
 
         // Rotating poly2 should match the un-rotated poly1
         poly2.transform.rotation.formula = (Angle.TAU / 5.0).toFormula()

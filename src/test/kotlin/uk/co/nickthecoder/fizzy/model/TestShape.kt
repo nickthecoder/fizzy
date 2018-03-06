@@ -21,10 +21,9 @@ package uk.co.nickthecoder.fizzy.model
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.prop.DoubleExpression
 import uk.co.nickthecoder.fizzy.prop.StringExpression
-import uk.co.nickthecoder.fizzy.util.MyShapeTest
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
-class TestShape : MyTestCase(), MyShapeTest {
+class TestShape : MyTestCase() {
 
     /**
      * Test fields and methods of Shape and RealShape.
@@ -179,6 +178,21 @@ class TestShape : MyTestCase(), MyShapeTest {
 
         assertEquals(10.0, test("sizeX", "Size.X.mm"))
         assertEquals(20.0, test("sizeY", "Size.Y.mm"))
+
+    }
+
+    @Test
+    fun testDeleteGeometryPart() {
+        val doc = Document()
+        val page = Page(doc)
+
+        val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(100mm,200mm)")
+        page.children.add(box)
+
+        box.addScratch(Scratch("G2", DoubleExpression("Geometry1.Point1.X.mm")))
+        assertEquals(0.0, box.scratches[0].value.expression.value)
+        box.geometries[0].value.parts.removeAt(0)
+        assertEquals(10.0, box.scratches[0].value.expression.value)
 
     }
 }
