@@ -167,8 +167,8 @@ class Controller(val page: Page) {
                 handles.add(Shape1dHandle(shape, ends[1], this, true))
             }
 
-            shape.controlPoints.forEach { prop ->
-                handles.add(ControlPointHandle(shape, prop.value))
+            shape.controlPoints.forEach { cp ->
+                handles.add(ControlPointHandle(shape, cp))
             }
         }
     }

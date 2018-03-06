@@ -21,7 +21,6 @@ package uk.co.nickthecoder.fizzy.model
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.geometry.Geometry
-import uk.co.nickthecoder.fizzy.model.geometry.GeometryProp
 import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
 
@@ -32,11 +31,11 @@ import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
 abstract class RealShape(parent: ShapeParent)
     : Shape(parent) {
 
-    val geometries = MutableFList<GeometryProp>()
+    val geometries = MutableFList<Geometry>()
 
-    val connectionPoints = MutableFList<ConnectionPointProp>()
+    val connectionPoints = MutableFList<ConnectionPoint>()
 
-    val controlPoints = MutableFList<ControlPointProp>()
+    val controlPoints = MutableFList<ControlPoint>()
 
     val scratches = ScratchList()
 
@@ -52,7 +51,7 @@ abstract class RealShape(parent: ShapeParent)
         val localPoint = transform.fromParentToLocal.value * point
 
         geometries.forEach { geo ->
-            if (geo.value.isAt(localPoint, lineWidth.value, minDistance)) {
+            if (geo.isAt(localPoint, lineWidth.value, minDistance)) {
                 return true
             }
         }
@@ -68,16 +67,16 @@ abstract class RealShape(parent: ShapeParent)
         // Automatically tell the child of the parent when it is added to the list (and set to null when removed)
         // Also bubble change events up the hierarchy.
         collectionListeners.add(ChangeAndCollectionListener(this, geometries,
-                onAdded = { geometry -> geometry.value.shape = this },
-                onRemoved = { geometry -> geometry.value.shape = null }
+                onAdded = { geometry -> geometry.shape = this },
+                onRemoved = { geometry -> geometry.shape = null }
         ))
         collectionListeners.add(ChangeAndCollectionListener(this, connectionPoints,
-                onAdded = { item -> item.value.shape = this },
-                onRemoved = { item -> item.value.shape = null }
+                onAdded = { item -> item.shape = this },
+                onRemoved = { item -> item.shape = null }
         ))
         collectionListeners.add(ChangeAndCollectionListener(this, controlPoints,
-                onAdded = { item -> item.value.shape = this },
-                onRemoved = { item -> item.value.shape = null }
+                onAdded = { item -> item.shape = this },
+                onRemoved = { item -> item.shape = null }
         ))
         collectionListeners.add(ChangeAndCollectionListener(this, scratches,
                 onAdded = { item -> item.value.setContext(context) },
@@ -89,16 +88,13 @@ abstract class RealShape(parent: ShapeParent)
         super.populateShape(newShape, link)
 
         if (newShape is RealShape) {
-            geometries.forEach { geometryProp ->
-                val geometry = geometryProp.value
+            geometries.forEach { geometry ->
                 newShape.addGeometry(geometry.copy(link))
             }
-            connectionPoints.forEach { connectionPointProp ->
-                val connectionPoint = connectionPointProp.value
+            connectionPoints.forEach { connectionPoint ->
                 newShape.addConnectionPoint(connectionPoint.copy(link))
             }
-            controlPoints.forEach { controlPointProp ->
-                val controlPoint = controlPointProp.value
+            controlPoints.forEach { controlPoint ->
                 newShape.addControlPoint(controlPoint.copy(link))
             }
             scratches.forEach { scratchProp ->
@@ -114,9 +110,9 @@ abstract class RealShape(parent: ShapeParent)
 
     override fun addMetaData(list: MutableList<MetaData>) {
         super.addMetaData(list)
-        geometries.forEachIndexed { index, geometryProp -> geometryProp.value.addMetaData(list, index) }
-        connectionPoints.forEachIndexed { index, connectionPointProp -> connectionPointProp.value.addMetaData(list, index) }
-        controlPoints.forEachIndexed { index, controlPointProp -> controlPointProp.value.addMetaData(list, index) }
+        geometries.forEachIndexed { index, geometryProp -> geometryProp.addMetaData(list, index) }
+        connectionPoints.forEachIndexed { index, connectionPointProp -> connectionPointProp.addMetaData(list, index) }
+        controlPoints.forEachIndexed { index, controlPointProp -> controlPointProp.addMetaData(list, index) }
         scratches.forEachIndexed { index, scratchProp -> scratchProp.value.addMetaData(list, index) }
         list.add(MetaData("LineWidth", lineWidth))
         list.add(MetaData("Size", size))
@@ -125,15 +121,15 @@ abstract class RealShape(parent: ShapeParent)
     }
 
     fun addGeometry(geometry: Geometry) {
-        geometries.add(GeometryProp(geometry))
+        geometries.add(geometry)
     }
 
     fun addConnectionPoint(connectionPoint: ConnectionPoint) {
-        connectionPoints.add(ConnectionPointProp(connectionPoint))
+        connectionPoints.add(connectionPoint)
     }
 
     fun addControlPoint(controlPoint: ControlPoint) {
-        controlPoints.add(ControlPointProp(controlPoint))
+        controlPoints.add(controlPoint)
     }
 
     fun addScratch(scratch: Scratch) {

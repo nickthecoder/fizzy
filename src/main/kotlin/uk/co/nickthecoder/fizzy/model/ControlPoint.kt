@@ -22,15 +22,18 @@ import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
-import uk.co.nickthecoder.fizzy.prop.PropValue
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
-class ControlPoint(val point: Dimension2Expression) {
+class ControlPoint(val point: Dimension2Expression)
+    : HasChangeListeners<ControlPoint>, PropListener {
 
     constructor(pointFormula: String) : this(Dimension2Expression(pointFormula))
 
     constructor(pointValue: Dimension2) : this(Dimension2Expression(pointValue))
+
+
+    override val changeListeners = ChangeListeners<ControlPoint>()
 
 
     var shape: RealShape? = null
@@ -50,14 +53,21 @@ class ControlPoint(val point: Dimension2Expression) {
             }
         }
 
+    init {
+        point.propListeners.add(this)
+    }
+
+    override fun dirty(prop: Prop<*>) {
+        changeListeners.fireChanged(this)
+    }
+
     fun addMetaData(list: MutableList<MetaData>, index: Int) {
         list.add(MetaData("Point", point, "ControlPoint", index))
     }
 
     fun index(): Int {
         shape?.let { shape ->
-            shape.controlPoints.forEachIndexed { index, prop ->
-                val cp = prop.value
+            shape.controlPoints.forEachIndexed { index, cp ->
                 if (cp === this) {
                     return index
                 }
@@ -74,24 +84,4 @@ class ControlPoint(val point: Dimension2Expression) {
     fun constrain(localPoint: Dimension2): Dimension2 = localPoint
 
     fun copy(link: Boolean) = ControlPoint(point.copy(link))
-}
-
-class ControlPointProp(controlPoint: ControlPoint)
-    : PropValue<ControlPoint>(controlPoint),
-        PropListener,
-        HasChangeListeners<ControlPointProp> {
-
-    override val changeListeners = ChangeListeners<ControlPointProp>()
-
-    init {
-        controlPoint.point.propListeners.add(this)
-    }
-
-    /**
-     * Any changes to the ConnectionPoint's data causes this [Prop]'s propListeners to be notified.
-     * The [ConnectionPointProp]'s constructor adds itself to the listeners of each of [ConnectionPoint]'s [Prop]s.
-     */
-    override fun dirty(prop: Prop<*>) {
-        propListeners.fireDirty(this)
-    }
 }

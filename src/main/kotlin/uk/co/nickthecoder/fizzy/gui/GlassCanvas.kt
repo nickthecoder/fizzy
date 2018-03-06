@@ -243,7 +243,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
 
             if (drawingArea.controller.showConnectionPoints.value) {
                 page.children.filterIsInstance<RealShape>().forEach { shape ->
-                    shape.connectionPoints.forEach { drawConnectionPoint(it.value) }
+                    shape.connectionPoints.forEach { drawConnectionPoint(it) }
                 }
             }
 

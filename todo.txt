@@ -12,11 +12,9 @@ TestShape has some tests commented out.
 
 Test Shape.copyInto
 
-When copying an object give a "clone" boolean.
-    When set, the Expressions are linked to the master rather than being Strings.
-
 Create a ShapeGroup,
     then look for all "is RealShape" and implement the other half.
+    Some stuff in RealShape should be moved to Shape, such as Scratch, ConnectionPoints, ControlPoints...
 
 Add more drawing tests
     Box in Box
@@ -25,8 +23,6 @@ Add more drawing tests
 Create tests for rotated shapes.
 
 Create tests for each of the Tools
-
-Check that "Geometry1" becomes dirty when items are added/removed from the geometry list.
 
 DimensionExpression and Dimension2Expression to have an additional "expected power", which defaults to 1.
     Will error if other powers are returned

@@ -38,7 +38,7 @@ object PrimitiveStencil {
     val pentangle = Shape.createPolygon(page, 5, Dimension(60.0, Dimension.Units.mm), star = true)
 
     init {
-        pentangle.controlPoints[0].value.point.formula = pentangle.geometries[0].value.parts[4].point.value.toFormula()
+        pentangle.controlPoints[0].point.formula = pentangle.geometries[0].parts[4].point.value.toFormula()
 
         page.children.add(box)
         page.children.add(line)

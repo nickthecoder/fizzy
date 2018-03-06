@@ -39,10 +39,10 @@ interface ShapeParent {
 
         children.forEach { child ->
             if (child !== exclude && child is RealShape) {
-                child.connectionPoints.forEach { cpProp ->
-                    val d = (child.fromLocalToPage.value * cpProp.value.point.value - atPagePoint).length().inDefaultUnits
+                child.connectionPoints.forEach { cp ->
+                    val d = (child.fromLocalToPage.value * cp.point.value - atPagePoint).length().inDefaultUnits
                     if (d < distance) {
-                        nearest = cpProp.value
+                        nearest = cp
                         distance = d
                     }
                 }
@@ -69,8 +69,7 @@ interface ShapeParent {
             if (child !== exclude && child is RealShape) {
                 val localPoint = child.fromPageToLocal.value * atPagePoint
 
-                child.geometries.forEach { gProp ->
-                    val geometry = gProp.value
+                child.geometries.forEach { geometry ->
 
                     // Ignore geometries that cannot be connected to.
                     if (geometry.connect.value) {

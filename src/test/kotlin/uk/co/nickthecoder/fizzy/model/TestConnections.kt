@@ -123,7 +123,7 @@ class TestConnections : MyTestCase() {
         page.children.add(line)
 
         // Only allow connections to box, not to box2
-        box.geometries[0].value.connect.formula = "true"
+        box.geometries[0].connect.formula = "true"
 
         /*
         // Half way along the first line

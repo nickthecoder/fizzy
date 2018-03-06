@@ -72,19 +72,19 @@ class TestShape : MyTestCase() {
         box.fillColor.formula = "Color.green"
         assertEquals(Color.NamedColors["green"], testPaint(box, "FillColor"))
 
-        box.geometries[0].value.fill.formula = "true"
+        box.geometries[0].fill.formula = "true"
         assertEquals(true, testBoolean(box, "Geometry1.Fill"))
-        box.geometries[0].value.fill.formula = "false"
+        box.geometries[0].fill.formula = "false"
         assertEquals(false, testBoolean(box, "Geometry1.Fill"))
 
-        box.geometries[0].value.stroke.formula = "true"
+        box.geometries[0].stroke.formula = "true"
         assertEquals(true, testBoolean(box, "Geometry1.Stroke"))
-        box.geometries[0].value.stroke.formula = "false"
+        box.geometries[0].stroke.formula = "false"
         assertEquals(false, testBoolean(box, "Geometry1.Stroke"))
 
-        box.geometries[0].value.connect.formula = "true"
+        box.geometries[0].connect.formula = "true"
         assertEquals(true, testBoolean(box, "Geometry1.Connect"))
-        box.geometries[0].value.connect.formula = "false"
+        box.geometries[0].connect.formula = "false"
         assertEquals(false, testBoolean(box, "Geometry1.Connect"))
 
         // ControlPoints
@@ -191,7 +191,7 @@ class TestShape : MyTestCase() {
 
         box.addScratch(Scratch("G2", DoubleExpression("Geometry1.Point1.X.mm")))
         assertEquals(0.0, box.scratches[0].value.expression.value)
-        box.geometries[0].value.parts.removeAt(0)
+        box.geometries[0].parts.removeAt(0)
         assertEquals(10.0, box.scratches[0].value.expression.value)
 
     }

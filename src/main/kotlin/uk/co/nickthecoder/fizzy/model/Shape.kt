@@ -85,7 +85,7 @@ abstract class Shape(var parent: ShapeParent)
      * Keeps references to [ChangeAndCollectionListener], so that they are not gc'd.
      * They do not need to be referenced directly, they take care of everything themselves.
      */
-    protected val collectionListeners = mutableListOf<ChangeAndCollectionListener<Shape, *>>()
+    protected val collectionListeners = mutableListOf<Any>()
 
     /**
      * Shapes should not be created directly with a constructor, instead use a static 'create' method,

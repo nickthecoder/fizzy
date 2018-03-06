@@ -102,8 +102,7 @@ class Shape2dSizeHandle(val shape2d: Shape2d, position: Dimension2, val dx: Int,
         )))
 
         // Move the control points.
-        shape2d.controlPoints.forEach { prop ->
-            val cp = prop.value
+        shape2d.controlPoints.forEach { cp ->
             val newPoint = (cp.point.value) * (newSize / oldSize)
             shape2d.document().history.makeChange(ChangeExpressions(listOf(
                     cp.point to newPoint.toFormula()

@@ -51,7 +51,7 @@ class PageView(val page: Page, val dc: DrawContext) {
 
                 shape.geometries.forEach { geometry ->
                     dc.beginPath()
-                    geometry.value.parts.forEach { part ->
+                    geometry.parts.forEach { part ->
                         when (part) {
                             is MoveTo -> dc.moveTo(part.point.value)
 
@@ -59,7 +59,7 @@ class PageView(val page: Page, val dc: DrawContext) {
 
                         }
                     }
-                    dc.endPath(geometry.value.stroke.value, geometry.value.fill.value)
+                    dc.endPath(geometry.stroke.value, geometry.fill.value)
                 }
             }
 

@@ -25,3 +25,4 @@ interface CollectionListener<T> {
     fun removed(collection: FCollection<T>, item: T)
 
 }
+

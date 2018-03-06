@@ -37,7 +37,7 @@ class DeleteTool(controller: Controller)
             controller.highlightGeometry.value = Controller.NO_GEOMETRY
         } else {
             if (shape is RealShape) {
-                controller.highlightGeometry.value = shape.geometries[0].value
+                controller.highlightGeometry.value = shape.geometries[0]
             }
         }
     }
@@ -52,7 +52,7 @@ class DeleteTool(controller: Controller)
         val draggedShaped = controller.page.findShapeAt(event.point, controller.minDistance)
         if (draggedShaped === pressedShape) {
             if (draggedShaped is RealShape) {
-                controller.highlightGeometry.value = draggedShaped.geometries[0].value
+                controller.highlightGeometry.value = draggedShaped.geometries[0]
             }
         } else {
             controller.highlightGeometry.value = Controller.NO_GEOMETRY
