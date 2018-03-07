@@ -69,6 +69,7 @@ class ListPropertyAccess(val listProp: Prop<FList<Any>>, val index: Int, val fie
     override val propListenerOwner = "ListPropertyAccess"
 
     init {
+        listProp.propListeners.add(this)
         listProp.value.listeners.add(this)
     }
 
@@ -101,6 +102,6 @@ class ListPropertyAccess(val listProp: Prop<FList<Any>>, val index: Int, val fie
     }
 
     override fun toString(): String {
-        return "ListPropertyAccess row $fieldName${index + 1} of parent ${listProp}"
+        return "{ ListPropertyAccess cell $fieldName${index + 1} of ${listProp} }"
     }
 }

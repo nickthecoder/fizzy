@@ -68,13 +68,14 @@ abstract class PropExpression<T : Any>(formula: String, val klass: KClass<T>, va
 
     private var linkedTo: PropExpression<T>? = null
 
+
     var formula: String = formula
         get() = linkedTo?.formula ?: field
         set(v) {
             field = v
             linkedTo?.propListeners?.remove(this)
             linkedTo = null
-            dirty = true
+            forceRecalculation()
         }
 
     private val linkedListener = object : PropListener {
@@ -89,11 +90,27 @@ abstract class PropExpression<T : Any>(formula: String, val klass: KClass<T>, va
 
     private var calculatedProperty: Prop<T>? = null
 
+    var debug = false
+
     fun debug() {
+        val cp = calculatedProperty
         println("\nPropExpression.debug")
-        println("cp # ${calculatedProperty?.hashCode()} = ${calculatedProperty}")
-        println("Dirty? $dirty value = $value cp's value : $calculatedProperty?.value")
+        if (cp == null) {
+            println("cp == null")
+        } else {
+            println("Formula '$formula'")
+            println("cp # ${cp.hashCode()} type ${cp.javaClass.simpleName} = ${calculatedProperty}")
+            println("Dirty? $dirty value = $value cp's value : ${cp.value}")
+        }
         println()
+    }
+
+
+    override fun dirty(prop: Prop<*>) {
+        if (debug) {
+            println("PE # ${hashCode()} made dirty")
+        }
+        super.dirty(prop)
     }
 
     fun copyFrom(other: PropExpression<T>, link: Boolean) {
@@ -108,26 +125,30 @@ abstract class PropExpression<T : Any>(formula: String, val klass: KClass<T>, va
 
     abstract fun constant(value: T)
 
-    override fun dirty(prop: Prop<*>) {
-        super.dirty(prop)
-    }
-
     override val propListenerOwner = "PropExpression : $formula"
 
     override fun eval(): T {
-        calculatedProperty?.propListeners?.remove(this)
-        try {
-            val cp = evaluate(formula, klass, context)
-            calculatedProperty = cp
-            listenTo(cp)
+        var cp = calculatedProperty
+
+        if (cp == null) {
+            try {
+                cp = evaluate(formula, klass, context)
+                calculatedProperty = cp
+                listenTo(cp)
+                return cp.value
+            } catch (e: Exception) {
+                expressionExceptionHandler(this, e)
+                return defaultValue
+            }
+
+        } else {
             return cp.value
-        } catch (e: Exception) {
-            expressionExceptionHandler(this, e)
-            return defaultValue
         }
     }
 
     fun forceRecalculation() {
+        calculatedProperty?.propListeners?.remove(this)
+        calculatedProperty = null
         dirty = true
     }
 

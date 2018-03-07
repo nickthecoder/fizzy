@@ -30,14 +30,10 @@ class PropField<T : Any>(
 
     : PropCalculation<Any>() {
 
-    override val propListenerOwner = "PropField"
+    override val propListenerOwner = "PropField $name"
 
     init {
         prop.propListeners.add(this)
-    }
-
-    override fun dirty(prop: Prop<*>) {
-        super.dirty(prop)
     }
 
     override fun isConstant() = prop.isConstant()

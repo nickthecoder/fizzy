@@ -18,9 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.model.geometry.Geometry
-import uk.co.nickthecoder.fizzy.model.geometry.GeometryPart
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 
@@ -36,14 +34,13 @@ class GeometryPropType private constructor()
             "Connect" -> prop.value.connect
             else -> {
                 // Allow access to any of the Geometries parts, without the hassle of ".parts.xxx"
-                val partsListProp = PropValue(prop.value.parts)
-                val foundField = partsListProp.field(name)
+                val partsField = PropField("GeometryParts", prop) { prop.value.parts }
+                val foundField = partsField.field(name)
+
                 if (foundField == null) {
                     super.findField(prop, name)
                 } else {
-                    // Note. "prop" even will be of type ListPropertyAccess, as that is the only way to get here.
-                    @Suppress("UNCHECKED_CAST")
-                    GeometryPartsFieldProp(prop, foundField as Prop<FList<GeometryPart>>)
+                    foundField
                 }
             }
         }
@@ -52,25 +49,6 @@ class GeometryPropType private constructor()
     companion object {
         val instance = GeometryPropType()
     }
-}
-
-class GeometryPartsFieldProp(val propGeometry: Prop<Geometry>, val wrappedField: Prop<FList<GeometryPart>>)
-    : PropCalculation<Any>() {
-
-    init {
-        if (propGeometry is PropListener) {
-            propGeometry.propListeners.add(this)
-            wrappedField.propListeners.add(this)
-        }
-    }
-
-    override fun eval(): Any {
-        return wrappedField.value
-    }
-
-    override val propListenerOwner: String = "GeometryPartsFieldProp"
-
-    override fun toString() = "GeometryPartsFieldProp of $propGeometry wrapping ${wrappedField}"
 }
 
 class MoveToPropType private constructor()

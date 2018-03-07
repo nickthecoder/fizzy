@@ -57,4 +57,8 @@ open class Listeners<T : Any> : Iterable<T> {
      */
     fun list(): String = items.map { it.get() }.filterNotNull().joinToString()
 
+    override fun toString(): String {
+        return "Listeners : ${items.map { it.get() }.joinToString()}"
+    }
+
 }

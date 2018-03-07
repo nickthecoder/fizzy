@@ -133,7 +133,7 @@ class TestShape : MyTestCase() {
         assertEquals("inner", box.findScratch("myName")!!.expression.value)
 
         inner.name.value = "renamed"
-        assertFails { println(box.findScratch("myName")!!.expression.value) }
+        assertFails { box.findScratch("myName")!!.expression.value }
     }
 
     /**
@@ -200,6 +200,20 @@ class TestShape : MyTestCase() {
     }
 
     @Test
+    fun testDeleteGeometryPart2() {
+        val doc = Document()
+        val page = Page(doc)
+
+        val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(100mm,200mm)")
+        page.children.add(box)
+
+        box.addScratch(Scratch("G2", DoubleExpression("Geometry1.Point1.X.mm")))
+        assertEquals(0.0, box.scratches[0].value.expression.value)
+        box.geometries[0].parts.removeAt(0)
+        assertEquals(10.0, box.scratches[0].value.expression.value)
+    }
+
+    @Test
     fun testDeleteGeometry() {
         val doc = Document()
         val page = Page(doc)
@@ -214,7 +228,32 @@ class TestShape : MyTestCase() {
         box.addScratch(Scratch("G2", DimensionExpression("Geometry2.Point1.X")))
         assertEquals(Dimension(-20.0), box.scratches[0].value.expression.value)
         box.geometries.removeAt(0)
-        assertFails { println("G2 : ${box.scratches[0].value.expression.value}") }
+        assertFails { box.scratches[0].value.expression.value }
+
+    }
+
+    /**
+     * This is the same as testDeleteGeometry, but asks for the X in mm, rather than just X.
+     * This used to fail
+     */
+    @Test
+    fun testDeleteGeometry2() {
+        val doc = Document()
+        val page = Page(doc)
+
+        val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(100mm,200mm)")
+        page.children.add(box)
+        val geometry = Geometry()
+        geometry.parts.add(MoveTo("Dimension2(-20mm, -30mm)"))
+        geometry.parts.add(LineTo("Dimension2(-40mm, -30mm)"))
+        box.geometries.add(geometry)
+
+        box.addScratch(Scratch("G2", DoubleExpression("Geometry2.Point1.X.mm")))
+        println(box.scratches[0].value.expression.value)
+        assertEquals(-20.0, box.scratches[0].value.expression.value)
+
+        box.geometries.removeAt(0)
+        assertFails { box.scratches[0].value.expression.value }
 
     }
 }
