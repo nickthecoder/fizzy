@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy
 
 import javafx.application.Application
 import javafx.application.Platform
+import javafx.scene.Scene
 import javafx.stage.Stage
 import uk.co.nickthecoder.fizzy.gui.MainWindow
 import uk.co.nickthecoder.fizzy.model.*
@@ -62,9 +63,16 @@ class Fizzy : Application() {
     }
 
     companion object {
+
         fun start() {
             Application.launch(Fizzy::class.java)
         }
+
+        fun style(scene: Scene) {
+            val resource = Fizzy::class.java.getResource("fizzy.css")
+            scene.stylesheets.add(resource.toExternalForm())
+        }
+
     }
 }
 

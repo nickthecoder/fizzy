@@ -340,7 +340,7 @@ abstract class Shape(var parent: ShapeParent)
             }
 
             // Create connection points at each vertex
-            for (i in 0..geometry.parts.size - 1) {
+            for (i in 0..geometry.parts.size - 2) {
                 val cp = ConnectionPoint("Geometry1.Point${i + 1}")
                 poly.addConnectionPoint(cp)
             }

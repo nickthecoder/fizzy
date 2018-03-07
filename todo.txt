@@ -1,23 +1,35 @@
 To Do
 =====
 
-PropMethod should pass the prop to the lambda
+Remove NamedColors, but keep BLACK and WHITE.
+    Add BLACK and WHITE as constants.
+    Remove Color.<colorName> feature.
 
-When scaling by only x or only y, and contraining, then scale by ratios i.e 1/3 1/2 1 2 3 etc
-    Would be nice to scale by 11+1/4, 1+1/3, 1+1/2, 2, 3, 4 ...
-    And reduce to 3/4, 2/3, 1/2, 1/3, 1/4, 1/5 ...
+For Version 1
+-------------
 
-Star (and poly?) have 1 too many connection points.
+To get to Version 1 :
+    Be able to create circuit diagrams, with pred-drawn component stencil.
+
+Load, Save
+    Rename MetaData and improve it to be more structured.
+
+Stencils
+
+Simple Line Color and Fill Color dialogs
+Line Width
+
+Edit a shape within a stencil
+
+Edit children within
+
+Curves (bezier or arc or both).
+
 
 Soon
 ----
 
-Redo expressions???
-    When parsing an expression, all operators, fields, functions etc all return a Prop, but also add to a list of Props and Lists that they depend upon.
-    The PropExpression then listens to each of these, and when one changes, re-parse.
-
-
-Rename MetaData and improve it to be more structured.
+Allow Color to be specified as #rrggbb or #rrggbbaa
 
 TestShape has some tests commented out.
 
@@ -38,6 +50,12 @@ Create tests for each of the Tools
 DimensionExpression and Dimension2Expression to have an additional "expected power", which defaults to 1.
     Will error if other powers are returned
 
+Snapping
+    List of Snap : Point, + - | . AlongX, AlongY  tt, tf, ft, ff
+
+When scaling by only x or only y, and contraining, then scale by ratios i.e 1/3 1/2 1 2 3 etc
+    Would be nice to scale by 11+1/4, 1+1/3, 1+1/2, 2, 3, 4 ...
+    And reduce to 3/4, 2/3, 1/2, 1/3, 1/4, 1/5 ...
 
 Rounded corners
     Where two lines meet, back off a little, and draw a circular arc.
@@ -69,6 +87,10 @@ ControlPoints
 
 Maybe
 -----
+
+Redo expressions???
+    When parsing an expression, all operators, fields, functions etc all return a Prop, but also add to a list of Props and Lists that they depend upon.
+    The PropExpression then listens to each of these, and when one changes, re-parse.
 
 Lines joined from the MIDDLE. But when arc is created it should connect differently
 

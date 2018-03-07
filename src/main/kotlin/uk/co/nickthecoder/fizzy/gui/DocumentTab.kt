@@ -18,12 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.gui
 
+import javafx.scene.control.Tab
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.Page
-import uk.co.nickthecoder.paratask.gui.MyTab
 
 class DocumentTab(document: Document)
-    : MyTab(document.name) {
+    : Tab("New Document") {
 
     init {
         if (document.pages.size == 0) {

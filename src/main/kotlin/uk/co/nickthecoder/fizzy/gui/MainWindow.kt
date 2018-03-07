@@ -18,84 +18,99 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.gui
 
-import javafx.event.EventHandler
+import javafx.beans.property.Property
+import javafx.beans.property.SimpleObjectProperty
 import javafx.scene.Scene
-import javafx.scene.control.Button
-import javafx.scene.control.ToolBar
+import javafx.scene.control.Tab
+import javafx.scene.control.TabPane
 import javafx.scene.layout.BorderPane
 import javafx.stage.Stage
 import javafx.stage.Window
-import uk.co.nickthecoder.fizzy.controller.tools.*
+import uk.co.nickthecoder.fizzy.Fizzy
+import uk.co.nickthecoder.fizzy.collection.CollectionListener
+import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.model.Document
-import uk.co.nickthecoder.fizzy.model.PrimitiveStencil
-import uk.co.nickthecoder.paratask.ParaTask
-import uk.co.nickthecoder.paratask.gui.MyTabPane
+import uk.co.nickthecoder.fizzy.model.Shape
 
 class MainWindow(val stage: Stage) : Window() {
 
     val borderPane = BorderPane()
 
-    val toolBar = ToolBar()
+    val tabs = TabPane()
 
-    val tabs = MyTabPane<DocumentTab>()
+    val toolBar = FToolBar(this)
 
-    val undoButton = Button("Undo")
-    val redoButton = Button("Redo")
-    val selectToolButton = Button("Select")
-    val deleteToolButton = Button("Delete")
-    val stampToolButton = Button("Stamp")
-    val boxToolButton = Button("Box")
-    val lineToolButton = Button("Line")
-    val pentagonToolButton = Button("Pentagon")
-    val starToolButton = Button("Star")
-    val debugButton = Button("Debug")
+    val document: Document?
+        get() = documentTab?.document
+
+    val documentTab: DocumentTab?
+        get() {
+            val tab = tabs.selectionModel.selectedItem
+            if (tab is DocumentTab) {
+                return tab
+            }
+            return null
+        }
+
+    val shapeSelectionProperty: Property<FList<Shape>> = SimpleObjectProperty<FList<Shape>>()
+
+    private var selectionListener = object : CollectionListener<Shape> {
+        override fun added(collection: FCollection<Shape>, item: Shape) {
+            onSelectionChanged()
+        }
+
+        override fun removed(collection: FCollection<Shape>, item: Shape) {
+            onSelectionChanged()
+        }
+    }
 
     init {
         stage.title = "Fizzy"
 
-        borderPane.top = toolBar
+        borderPane.top = toolBar.build()
         borderPane.center = tabs
 
         stage.scene = Scene(borderPane, 800.0, 600.0)
-        ParaTask.style(stage.scene)
+        Fizzy.style(stage.scene)
 
-        undoButton.onAction = EventHandler { tabs.selectedTab?.document?.history?.undo() }
-        redoButton.onAction = EventHandler { tabs.selectedTab?.document?.history?.redo() }
-        selectToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = SelectTool(it) } }
-        deleteToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = DeleteTool(it) } }
-        stampToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = StampShape2dTool(it, PrimitiveStencil.pentangle) } }
-        boxToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape2dTool(it, PrimitiveStencil.box) } }
-        lineToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape1dTool(it, PrimitiveStencil.line) } }
-        pentagonToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape2dTool(it, PrimitiveStencil.pentagon) } }
-        starToolButton.onAction = EventHandler { tabs.selectedTab?.drawingArea?.controller?.let { it.tool = GrowShape2dTool(it, PrimitiveStencil.star) } }
-        debugButton.onAction = EventHandler { debug() }
-
-        toolBar.items.addAll(
-                undoButton, redoButton,
-                selectToolButton, deleteToolButton,
-                stampToolButton,
-                boxToolButton, lineToolButton, pentagonToolButton, starToolButton,
-                debugButton
-        )
-
+        tabs.selectionModel.selectedItemProperty().addListener { _, oldTab, newTab -> onTabChanged(oldTab, newTab) }
         stage.show()
     }
 
+    fun onTabChanged(oldTab: Tab?, newTab: Tab) {
+        document?.selection?.let {
+            shapeSelectionProperty.value = it
+            if (oldTab is DocumentTab) {
+                oldTab.document.selection.listeners.remove(selectionListener)
+            }
+            if (newTab is DocumentTab) {
+                newTab.document.selection.listeners.add(selectionListener)
+            }
+            onSelectionChanged()
+        }
+    }
+
+    fun onSelectionChanged() {
+        shapeSelectionProperty.value = null
+        shapeSelectionProperty.value = document?.selection
+    }
+
     fun addDocument(doc: Document) {
-        tabs.add(DocumentTab(doc))
+        tabs.tabs.add(DocumentTab(doc))
     }
 
     fun debug() {
-        tabs.selectedTab?.let { tab ->
+        document?.let { document ->
 
             var foundStale = false
-            tab.document.pages[0].children.forEach { shape ->
+            document.pages[0].children.forEach { shape ->
                 foundStale = foundStale || shape.debugCheckStale()
             }
 
             if (!foundStale) {
                 println("None stale\n")
-                tab.document.pages[0].children.forEach { shape ->
+                document.pages[0].children.forEach { shape ->
                     println("---------------");
                     println(shape.metaData().joinToString(separator = "\n"))
                 }

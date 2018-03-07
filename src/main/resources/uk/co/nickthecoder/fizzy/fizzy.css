@@ -1,0 +1,19 @@
+.color-picker.stroke,
+.color-picker.fill {
+    -fx-color-label-visible : false;
+    -fx-background-size: 16 16;
+    -fx-background-position: 4 center;
+    -fx-background-repeat: no-repeat;
+}
+
+.color-picker.stroke {
+    -fx-background-image: url(icons/stroke.png);
+}
+.color-picker.fill {
+    -fx-background-image: url(icons/fill.png);
+}
+
+.color-picker.stroke .color-picker-label,
+.color-picker.fill .color-picker-label {
+    -fx-padding: 5 5 5 24;
+}
