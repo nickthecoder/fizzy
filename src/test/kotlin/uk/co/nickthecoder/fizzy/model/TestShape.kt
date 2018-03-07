@@ -70,11 +70,11 @@ class TestShape : MyTestCase() {
         box.lineWidth.formula = "3mm"
         assertEquals(3.0, testDouble(box, "LineWidth.mm"))
 
-        box.strokeColor.formula = "Color.yellow"
-        assertEquals(Color.NamedColors["yellow"], testPaint(box, "LineColor"))
+        box.strokeColor.formula = "BLACK"
+        assertEquals(Color.BLACK, testPaint(box, "StrokeColor"))
 
-        box.fillColor.formula = "Color.green"
-        assertEquals(Color.NamedColors["green"], testPaint(box, "FillColor"))
+        box.fillColor.formula = "WHITE"
+        assertEquals(Color.WHITE, testPaint(box, "FillColor"))
 
         box.geometries[0].fill.formula = "true"
         assertEquals(true, testBoolean(box, "Geometry1.Fill"))

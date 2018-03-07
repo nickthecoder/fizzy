@@ -37,13 +37,7 @@ class ColorPropType private constructor()
             "Hue" -> SimplePropField("Color.Hue", prop) { prop.value.hue }
             "Saturation" -> SimplePropField("Color.Brightness", prop) { it.value.saturation }
             "Brightness" -> SimplePropField("Color.Brightness", prop) { it.value.brightness }
-            else -> {
-                val col = Color.NamedColors[name]
-                if (col != null) {
-                    return PropConstant(col)
-                }
-                return super.findField(prop, name)
-            }
+            else -> return super.findField(prop, name)
         }
     }
 

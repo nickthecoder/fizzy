@@ -43,9 +43,9 @@ abstract class RealShape(parent: ShapeParent)
 
     abstract val size: Dimension2Expression
 
-    val strokeColor = PaintExpression("Color.black")
+    val strokeColor = PaintExpression("BLACK")
 
-    val fillColor = PaintExpression("Color.white")
+    val fillColor = PaintExpression("WHITE")
 
     override fun isAt(point: Dimension2, minDistance: Dimension): Boolean {
         val localPoint = transform.fromParentToLocal.value * point
