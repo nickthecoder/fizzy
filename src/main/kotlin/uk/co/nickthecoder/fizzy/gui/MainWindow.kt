@@ -20,10 +20,12 @@ package uk.co.nickthecoder.fizzy.gui
 
 import javafx.beans.property.Property
 import javafx.beans.property.SimpleObjectProperty
+import javafx.collections.FXCollections
 import javafx.scene.Scene
 import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
 import javafx.scene.layout.BorderPane
+import javafx.scene.paint.Color
 import javafx.stage.Stage
 import javafx.stage.Window
 import uk.co.nickthecoder.fizzy.Fizzy
@@ -64,6 +66,11 @@ class MainWindow(val stage: Stage) : Window() {
             onSelectionChanged()
         }
     }
+
+    /**
+     * Custom colors are shared by all FColorPickers, so this is the place to store them all.
+     */
+    val customColors = FXCollections.observableArrayList<Color>()
 
     init {
         stage.title = "Fizzy"

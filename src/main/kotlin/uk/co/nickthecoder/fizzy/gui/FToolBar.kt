@@ -53,7 +53,7 @@ class FToolBar(val mainWindow: MainWindow)
     val starToolButton = Button("Star")
     val debugButton = Button("Debug")
 
-    val lineColorPicker = FColorPicker(mainWindow, "stroke") { shape -> if (shape is RealShape) shape.lineColor else null }
+    val lineColorPicker = FColorPicker(mainWindow, "stroke") { shape -> if (shape is RealShape) shape.strokeColor else null }
     val fillColorPicker = FColorPicker(mainWindow, "fill") { shape -> if (shape is RealShape) shape.fillColor else null }
 
     override fun build(): Node {

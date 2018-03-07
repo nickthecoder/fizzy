@@ -74,7 +74,7 @@ abstract class RealShapePropType<T : RealShape>(klass: KClass<T>)
             "ControlPoint" -> PropValue(prop.value.controlPoints)
             "Scratch" -> PropValue(prop.value.scratches)
             "LineWidth" -> PropField("Shape.LineWidth", prop) { prop.value.lineWidth }
-            "LineColor" -> PropField("Shape.LineColor", prop) { prop.value.lineColor }
+            "StrokeColor" -> PropField("Shape.StrokeColor", prop) { prop.value.strokeColor }
             "FillColor" -> PropField("Shape.FillColor", prop) { prop.value.fillColor }
             else -> return super.findField(prop, name)
         }

@@ -43,7 +43,7 @@ abstract class RealShape(parent: ShapeParent)
 
     abstract val size: Dimension2Expression
 
-    val lineColor = PaintExpression("Color.black")
+    val strokeColor = PaintExpression("Color.black")
 
     val fillColor = PaintExpression("Color.white")
 
@@ -61,7 +61,7 @@ abstract class RealShape(parent: ShapeParent)
 
     override fun postInit() {
         listenTo(lineWidth)
-        listenTo(lineColor)
+        listenTo(strokeColor)
         listenTo(fillColor)
         super.postInit()
         // Automatically tell the child of the parent when it is added to the list (and set to null when removed)
@@ -103,7 +103,7 @@ abstract class RealShape(parent: ShapeParent)
             }
             newShape.lineWidth.copyFrom(lineWidth, link)
             newShape.size.copyFrom(size, link)
-            newShape.lineColor.copyFrom(lineColor, link)
+            newShape.strokeColor.copyFrom(strokeColor, link)
             newShape.fillColor.copyFrom(fillColor, link)
         }
     }
@@ -116,7 +116,7 @@ abstract class RealShape(parent: ShapeParent)
         scratches.forEachIndexed { index, scratchProp -> scratchProp.value.addMetaData(list, index) }
         list.add(MetaData("LineWidth", lineWidth))
         list.add(MetaData("Size", size))
-        list.add(MetaData("LineColor", lineColor))
+        list.add(MetaData("LineColor", strokeColor))
         list.add(MetaData("FillColor", fillColor))
     }
 

@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.gui
 
+import javafx.collections.ListChangeListener
+import javafx.collections.ObservableList
 import javafx.event.ActionEvent
 import javafx.scene.Node
 import javafx.scene.control.ColorPicker
@@ -43,8 +45,7 @@ class FColorPicker(
 
     override fun build(): Node {
         colorPicker.styleClass.addAll("button", type)
-        colorPicker
-
+        syncObservableList(colorPicker.customColors, mainWindow.customColors)
         mainWindow.shapeSelectionProperty.addListener { _, _, _ -> onShapeSelectionChanged() }
 
         return colorPicker
@@ -72,6 +73,43 @@ class FColorPicker(
                 if (color is uk.co.nickthecoder.fizzy.model.Color) {
                     colorPicker.value = color.toJavaFX()
                 }
+            }
+        }
+    }
+}
+
+/**
+ * Keeps two lists in sync, so that items added/removed to/from one are also added/removed to/from the other.
+ * Note, the order of items is NOT preserved, in fact this treats the list as if it were a Set.
+ * This was designed for FColorPicker to sync the preferred colors, and this simplistic implementation is good enough.
+ * Also note, it is assumed that the two lists are identical before calling this function.
+ */
+fun <E> syncObservableList(listA: ObservableList<E>, listB: ObservableList<E>) {
+    listA.addListener(object : ListChangeListener<E> {
+        override fun onChanged(change: ListChangeListener.Change<out E>?) {
+            syncObservableList(listB, change)
+        }
+    })
+    listB.addListener(object : ListChangeListener<E> {
+        override fun onChanged(change: ListChangeListener.Change<out E>?) {
+            syncObservableList(listA, change)
+        }
+    })
+}
+
+private fun <E> syncObservableList(destList: ObservableList<E>, c: ListChangeListener.Change<out E>?) {
+    c ?: return
+    while (c.next() == true) {
+        println("${c.wasUpdated()}, ${c.wasPermutated()}, ${c.wasReplaced()}")
+        if (c.wasAdded()) {
+            val toAdd = c.addedSubList.filter { !destList.contains(it) }
+            if (toAdd.isNotEmpty()) {
+                destList.addAll(toAdd)
+            }
+        } else if (c.wasRemoved()) {
+            val toRemove = c.addedSubList.filter { destList.contains(it) }
+            if (toRemove.isNotEmpty()) {
+                destList.removeAll(toRemove)
             }
         }
     }
