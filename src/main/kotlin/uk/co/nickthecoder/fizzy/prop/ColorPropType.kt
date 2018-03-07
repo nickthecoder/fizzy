@@ -29,14 +29,14 @@ class ColorPropType private constructor()
 
     override fun findField(prop: Prop<Color>, name: String): Prop<*>? {
         return when (name) {
-            "Red" -> PropCalculation1(prop) { it.red }
-            "Green" -> PropCalculation1(prop) { it.green }
-            "Blue" -> PropCalculation1(prop) { it.blue }
-            "Opacity" -> PropCalculation1(prop) { it.opacity }
-            "Alpha" -> PropCalculation1(prop) { it.opacity }
-            "Hue" -> PropCalculation1(prop) { it.hue }
-            "Saturation" -> PropCalculation1(prop) { it.saturation }
-            "Brightness" -> PropCalculation1(prop) { it.brightness }
+            "Red" -> SimplePropField("Color.Red", prop) { it.value.red }
+            "Green" -> SimplePropField("Color.Green", prop) { it.value.green }
+            "Blue" -> SimplePropField("Color.Blue", prop) { it.value.blue }
+            "Opacity" -> SimplePropField("Color.Opacity", prop) { it.value.opacity }
+            "Alpha" -> SimplePropField("Color.Alpha", prop) { it.value.opacity }
+            "Hue" -> SimplePropField("Color.Hue", prop) { prop.value.hue }
+            "Saturation" -> SimplePropField("Color.Brightness", prop) { it.value.saturation }
+            "Brightness" -> SimplePropField("Color.Brightness", prop) { it.value.brightness }
             else -> {
                 val col = Color.NamedColors[name]
                 if (col != null) {

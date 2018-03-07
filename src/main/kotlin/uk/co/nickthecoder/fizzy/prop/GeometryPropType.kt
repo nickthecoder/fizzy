@@ -29,12 +29,12 @@ class GeometryPropType private constructor()
     override fun findField(prop: Prop<Geometry>, name: String): Prop<*>? {
 
         return when (name) {
-            "Fill" -> prop.value.fill
-            "Stroke" -> prop.value.stroke
-            "Connect" -> prop.value.connect
+            "Fill" -> PropField("Geometry.Fill", prop) { it.value.fill }
+            "Stroke" -> PropField("Geometry.Stroke", prop) { it.value.stroke }
+            "Connect" -> PropField("Geometry.Connect", prop) { it.value.connect }
             else -> {
                 // Allow access to any of the Geometries parts, without the hassle of ".parts.xxx"
-                val partsField = PropField("GeometryParts", prop) { prop.value.parts }
+                val partsField = SimplePropField("Geometry.parts", prop) { prop.value.parts }
                 val foundField = partsField.field(name)
 
                 if (foundField == null) {

@@ -27,10 +27,10 @@ class DimensionPropType private constructor()
 
     override fun findField(prop: Prop<Dimension>, name: String): Prop<*>? {
         return when (name) {
-            "mm" -> PropField("Dimension.mm", prop) { prop.value.mm }
-            "cm" -> PropField("Dimension.cm", prop) { prop.value.cm }
-            "m" -> PropField("Dimension.m", prop) { prop.value.m }
-            "km" -> PropField("Dimension.km", prop) { prop.value.km }
+            "mm" -> SimplePropField("Dimension.mm", prop) { it.value.mm }
+            "cm" -> SimplePropField("Dimension.cm", prop) { it.value.cm }
+            "m" -> SimplePropField("Dimension.m", prop) { it.value.m }
+            "km" -> SimplePropField("Dimension.km", prop) { it.value.km }
             else -> return super.findField(prop, name)
         }
     }

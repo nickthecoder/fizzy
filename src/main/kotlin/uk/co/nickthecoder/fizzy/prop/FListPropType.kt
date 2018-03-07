@@ -29,7 +29,7 @@ class FListPropType private constructor()
 
     override fun findField(prop: Prop<FList<Any>>, name: String): Prop<*>? {
         return when (name) {
-            "Size" -> PropCalculation1(prop) { v -> v.size.toDouble() }
+            "Size" -> SimplePropField("FList.Size", prop) { it.value.size.toDouble() }
             else -> return findField2(prop, name) ?: super.findField(prop, name)
         }
     }
@@ -96,12 +96,12 @@ class ListPropertyAccess(val listProp: Prop<FList<Any>>, val index: Int, val fie
         if (oldField != field) {
             oldField?.let { unlistenTo(it) }
             listenTo(field)
+            oldField = field
         }
-        field.propListeners.add(this)
         return field.value
     }
 
     override fun toString(): String {
-        return "{ ListPropertyAccess cell $fieldName${index + 1} of ${listProp} }"
+        return "{ ListPropertyAccess cell $fieldName${index + 1} of ${listProp} => $oldField}"
     }
 }

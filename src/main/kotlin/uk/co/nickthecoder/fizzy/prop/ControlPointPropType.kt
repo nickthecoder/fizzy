@@ -25,7 +25,7 @@ class ControlPointPropType private constructor()
 
     override fun findField(prop: Prop<ControlPoint>, name: String): Prop<*>? {
         return when (name) {
-            "Point" -> prop.value.point
+            "Point" -> PropField("ControlPoint.Point", prop) { it.value.point }
             else -> super.findField(prop, name)
         }
     }

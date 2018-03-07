@@ -115,6 +115,7 @@ abstract class Shape(var parent: ShapeParent)
     override fun dirty(prop: Prop<*>) {
         dirty = true
     }
+
     override val propListenerOwner = "Shape"
 
     override fun document(): Document = parent.document()
@@ -191,9 +192,22 @@ abstract class Shape(var parent: ShapeParent)
         return result
     }
 
+    fun debugCheckStale(): Boolean {
+        var foundStale = false
+        metaData().forEach { cell ->
+            val value = cell.cellExpression.value
+            cell.cellExpression.forceRecalculation()
+            if (cell.cellExpression.value != value) {
+                foundStale = true
+                println("Stale : $cell")
+            }
+        }
+        return foundStale
+    }
+
     open protected fun addMetaData(list: MutableList<MetaData>) {
-        list.add(MetaData("ID", DoubleExpression(id.toString())))
-        list.add(MetaData("Name", StringExpression(name.value)))
+        list.add(MetaData("ID", DoubleExpression(id.value.toDouble().toFormula())))
+        list.add(MetaData("Name", StringExpression(name.value.toFormula())))
         list.add(MetaData("Rotation", transform.rotation))
         list.add(MetaData("Pin", transform.pin))
         list.add(MetaData("LocPin", transform.locPin))

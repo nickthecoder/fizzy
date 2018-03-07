@@ -1,19 +1,21 @@
 To Do
 =====
 
-PropExpression is re-evaluating EVERY time one of it dependencies is dirty!
-    Just set to dirty, but don't delete calculatedProperty
-    When changing formula, or forceRecalculate(), reset calculatedProperty and set dirty.
-    eval should then ask calculatedProperty for the value if non-null, and only re-eval if its null.
-
-
+PropMethod should pass the prop to the lambda
 
 When scaling by only x or only y, and contraining, then scale by ratios i.e 1/3 1/2 1 2 3 etc
     Would be nice to scale by 11+1/4, 1+1/3, 1+1/2, 2, 3, 4 ...
     And reduce to 3/4, 2/3, 1/2, 1/3, 1/4, 1/5 ...
 
+Star (and poly?) have 1 too many connection points.
+
 Soon
 ----
+
+Redo expressions???
+    When parsing an expression, all operators, fields, functions etc all return a Prop, but also add to a list of Props and Lists that they depend upon.
+    The PropExpression then listens to each of these, and when one changes, re-parse.
+
 
 Rename MetaData and improve it to be more structured.
 

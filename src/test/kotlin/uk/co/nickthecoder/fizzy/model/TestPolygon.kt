@@ -1,6 +1,8 @@
 package uk.co.nickthecoder.fizzy.model
 
 import org.junit.Test
+import uk.co.nickthecoder.fizzy.model.geometry.Geometry
+import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
 class TestPolygon : MyTestCase() {
@@ -58,5 +60,25 @@ class TestPolygon : MyTestCase() {
         assertEquals(0.0, testDouble(poly1, "(Geometry1.Point2.X - Geometry1.Point5.X).mm"), tiny)
         assertEquals(0.0, testDouble(poly1, "(Geometry1.Point4.X - Geometry1.Point7.X).mm"), tiny)
 
+    }
+
+    @Test
+    fun testSimple() {
+        val doc = Document()
+        val page = Page(doc)
+
+        val poly = Shape2d.create(page)
+
+        val geometry = Geometry()
+        poly.addGeometry(geometry)
+        geometry.parts.add(MoveTo("ControlPoint.Point1"))
+
+        val cp1 = ControlPoint("Dimension2(10mm,20mm)")
+        val point = geometry.parts[0].point
+        poly.addControlPoint(cp1)
+
+        assertEquals(10.0, point.value.x.mm)
+        cp1.point.formula = "Dimension2(15mm,25mm)"
+        assertEquals(15.0, point.value.x.mm)
     }
 }

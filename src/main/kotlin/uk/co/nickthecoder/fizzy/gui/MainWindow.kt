@@ -87,10 +87,20 @@ class MainWindow(val stage: Stage) : Window() {
 
     fun debug() {
         tabs.selectedTab?.let { tab ->
+
+            var foundStale = false
             tab.document.pages[0].children.forEach { shape ->
-                println("---------------");
-                println(shape.metaData().joinToString(separator = "\n"))
+                foundStale = foundStale || shape.debugCheckStale()
+            }
+
+            if (!foundStale) {
+                println("None stale\n")
+                tab.document.pages[0].children.forEach { shape ->
+                    println("---------------");
+                    println(shape.metaData().joinToString(separator = "\n"))
+                }
             }
         }
+
     }
 }

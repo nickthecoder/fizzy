@@ -28,8 +28,7 @@ class PagePropType private constructor()
         if (name.startsWith("Shape")) {
             try {
                 val id = name.substring(5).toInt()
-                val shape = prop.value.findShape(id) ?: throw RuntimeException("Shape $id not found")
-                return PropValue(shape)
+                return SimplePropField("Page.Shape", prop) { it.value.findShape(id) ?: throw RuntimeException("Shape $id not found") }
             } catch (e: NumberFormatException) {
                 // Do nothing
             }

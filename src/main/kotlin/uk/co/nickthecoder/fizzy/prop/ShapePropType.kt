@@ -42,15 +42,15 @@ abstract class ShapePropType<T : Shape>(klass: KClass<T>)
         }
 
         return when (name) {
-            "ID" -> PropField("Shape.ID", prop) { prop.value.id.value }
-            "Name" -> PropField("Shape.Name", prop) { prop.value.name.value }
-            "Document" -> PropField("Shape.Document", prop) { prop.value.document() }
-            "Page" -> PropField("Shape.Page", prop) { prop.value.page() }
-            "Parent" -> PropField("Shape.Parent", prop) { prop.value.parent }
-            "Pin" -> PropField("Shape.Pin", prop) { prop.value.transform.pin.value }
-            "LocPin" -> PropField("Shape.LocPin", prop) { prop.value.transform.locPin.value }
-            "Scale" -> PropField("Shape.Scale", prop) { prop.value.transform.scale.value }
-            "Rotation" -> PropField("Shape.Rotation", prop) { prop.value.transform.rotation.value }
+            "ID" -> PropField("Shape.ID", prop) { prop.value.id }
+            "Name" -> PropField("Shape.Name", prop) { prop.value.name }
+            "Document" -> SimplePropField("Shape.Document", prop) { prop.value.document() }
+            "Page" -> SimplePropField("Shape.Page", prop) { prop.value.page() }
+            "Parent" -> SimplePropField("Shape.Parent", prop) { prop.value.parent }
+            "Pin" -> PropField("Shape.Pin", prop) { prop.value.transform.pin }
+            "LocPin" -> PropField("Shape.LocPin", prop) { prop.value.transform.locPin }
+            "Scale" -> PropField("Shape.Scale", prop) { prop.value.transform.scale }
+            "Rotation" -> PropField("Shape.Rotation", prop) { prop.value.transform.rotation }
             else -> super.findField(prop, name)
         }
     }
@@ -73,9 +73,9 @@ abstract class RealShapePropType<T : RealShape>(klass: KClass<T>)
             "ConnectionPoint" -> PropValue(prop.value.connectionPoints)
             "ControlPoint" -> PropValue(prop.value.controlPoints)
             "Scratch" -> PropValue(prop.value.scratches)
-            "LineWidth" -> PropField("Shape.LineWidth", prop) { prop.value.lineWidth.value }
-            "LineColor" -> PropField("Shape.LineColor", prop) { prop.value.lineColor.value }
-            "FillColor" -> PropField("Shape.FillColor", prop) { prop.value.fillColor.value }
+            "LineWidth" -> PropField("Shape.LineWidth", prop) { prop.value.lineWidth }
+            "LineColor" -> PropField("Shape.LineColor", prop) { prop.value.lineColor }
+            "FillColor" -> PropField("Shape.FillColor", prop) { prop.value.fillColor }
             else -> return super.findField(prop, name)
         }
     }
@@ -95,10 +95,10 @@ class Shape1dPropType private constructor()
 
     override fun findField(prop: Prop<Shape1d>, name: String): Prop<*>? {
         return when (name) {
-            "Start" -> PropField("Shape.Start", prop) { prop.value.start.value }
-            "End" -> PropField("Shape.End", prop) { prop.value.end.value }
-            "Size" -> PropField("Shape.Size", prop) { prop.value.size.value }
-            "Length" -> PropField("Shape.Length", prop) { prop.value.length.value }
+            "Start" -> PropField("Shape.Start", prop) { prop.value.start }
+            "End" -> PropField("Shape.End", prop) { prop.value.end }
+            "Size" -> PropField("Shape.Size", prop) { prop.value.size }
+            "Length" -> PropField("Shape.Length", prop) { prop.value.length }
             else -> super.findField(prop, name)
         }
     }

@@ -23,6 +23,7 @@ import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropExpression
 import uk.co.nickthecoder.fizzy.prop.PropVariable
 import uk.co.nickthecoder.fizzy.prop.StringExpression
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class Scratch(name: String, val expression: PropExpression<*>, comment: String = "") {
 
@@ -35,8 +36,8 @@ class Scratch(name: String, val expression: PropExpression<*>, comment: String =
     var comment = comment
 
     fun addMetaData(list: MutableList<MetaData>, index: Int) {
-        list.add(MetaData("Name", StringExpression(name.value), "Scratch", index))
-        list.add(MetaData("Comment", StringExpression(comment), "Scratch", index))
+        list.add(MetaData("Name", StringExpression(name.value.toFormula()), "Scratch", index))
+        list.add(MetaData("Comment", StringExpression(comment.toFormula()), "Scratch", index))
         list.add(MetaData("Expression", expression, "Scratch", index))
     }
 

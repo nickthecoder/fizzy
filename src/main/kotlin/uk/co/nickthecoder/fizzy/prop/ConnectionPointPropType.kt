@@ -25,7 +25,7 @@ class ConnectionPointPropType private constructor()
 
     override fun findField(prop: Prop<ConnectionPoint>, name: String): Prop<*>? {
         return when (name) {
-            "Point" -> prop.value.point
+            "Point" -> PropField("ConnectionPoint.Point", prop) { it.value.point }
             else -> super.findField(prop, name)
         }
     }
