@@ -107,7 +107,7 @@ class MainWindow(val stage: Stage) : Window() {
     }
 
     fun addDocument(doc: Document) {
-        tabs.tabs.add(DocumentTab(doc))
+        tabs.tabs.add(DocumentTab(doc, "Page 1"))
     }
 
     fun debug() {
@@ -126,6 +126,12 @@ class MainWindow(val stage: Stage) : Window() {
                 }
             }
         }
-
     }
+
+    fun editLocalMasters() {
+        document?.let {
+            tabs.tabs.add(DocumentTab(it, "Masters", it.localMasterShapes))
+        }
+    }
+
 }

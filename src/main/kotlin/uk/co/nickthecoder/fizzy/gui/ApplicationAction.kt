@@ -32,13 +32,13 @@ import uk.co.nickthecoder.fizzy.Fizzy
  */
 open class ApplicationAction(
         val name: String,
-        val label: String?,
-        val tooltip: String? = null,
+        val label: String,
         keyCode: KeyCode?,
         shift: Boolean? = false,
         control: Boolean? = false,
         alt: Boolean? = false,
-        meta: Boolean? = false
+        meta: Boolean? = false,
+        val tooltip: String? = label
 ) {
 
     private val defaultKeyCodeCombination: KeyCodeCombination? =
@@ -124,7 +124,7 @@ open class ApplicationAction(
             button.graphic = ImageView(image)
         }
         if (forceLabel || image == null) {
-            button.text = label ?: name
+            button.text = label
         }
         button.onAction = EventHandler {
             action()

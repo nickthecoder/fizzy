@@ -23,12 +23,23 @@ import uk.co.nickthecoder.fizzy.model.history.History
 import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
+import java.util.*
 
 class Document : HasChangeListeners<Document> {
 
     override val changeListeners = ChangeListeners<Document>()
 
-    var pages = MutableFList<Page>()
+
+    private val masterToLocalCopy = mutableMapOf<String, Shape>()
+
+    val id: String = generateDocumentId()
+
+    val pages = MutableFList<Page>()
+
+    /**
+     * The set of Master Shapes that are used by this document.
+     */
+    val localMasterShapes = Page(this, false)
 
 
     private var previousId = 0
@@ -55,8 +66,32 @@ class Document : HasChangeListeners<Document> {
         return null
     }
 
-    fun generateId(): Int {
+    fun generateShapeId(): Int {
         previousId++
         return previousId
+    }
+
+    /**
+     * Takes a master shapes, and returns the local copy of that master shape.
+     * If there isn't a copy of the master shape is in [localMasterShapes], then a copy is added.
+     */
+    fun useMasterShape(masterShape: Shape): Shape {
+        val id = masterShape.document().id + ":" + masterShape.id.value
+
+        var localMaster = masterToLocalCopy[id]
+        if (localMaster == null) {
+            localMaster = masterShape.copyInto(localMasterShapes, false)
+            localMasterShapes.children.add(localMaster)
+            masterToLocalCopy[id] = localMaster
+        }
+
+        return localMaster
+    }
+
+    companion object {
+
+        fun generateDocumentId(): String {
+            return UUID.randomUUID().toString()
+        }
     }
 }

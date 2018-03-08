@@ -60,7 +60,6 @@ class Fizzy : Application() {
 
         val mainWindow = MainWindow(primaryStage)
         mainWindow.addDocument(doc)
-        mainWindow.addDocument(PrimitiveStencil.document)
     }
 
     companion object {

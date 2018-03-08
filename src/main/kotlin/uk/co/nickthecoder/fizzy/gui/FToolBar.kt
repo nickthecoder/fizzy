@@ -68,6 +68,9 @@ class FToolBar(val mainWindow: MainWindow)
             ShapePickerItem("primitive-line", "Line", PrimitiveStencil.line)
     )
 
+
+    val editLocalMastersButton = ApplicationActions.FILE_EDIT_MASTERS.createButton(sh) { mainWindow.editLocalMasters() }
+
     val undoButton = ApplicationActions.EDIT_UNDO.createButton(sh) { document?.history?.undo() }
     val redoButton = ApplicationActions.EDIT_REDO.createButton(sh) { document?.history?.redo() }
 
@@ -92,6 +95,7 @@ class FToolBar(val mainWindow: MainWindow)
         stampToolButton.onAction = EventHandler { controller?.let { it.tool = StampShape2dTool(it, PrimitiveStencil.pentangle) } }
 
         toolBar.items.addAll(
+                editLocalMastersButton,
                 undoButton, redoButton,
                 selectToolButton, primitive1dButton, primitive2dButton, deleteToolButton,
                 debugButton,

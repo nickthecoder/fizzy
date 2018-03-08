@@ -22,13 +22,14 @@ import javafx.scene.input.KeyCode
 
 object ApplicationActions {
 
-    val EDIT_UNDO = ApplicationAction("edit-undo", "Undo", "Undo", KeyCode.Z, control = true)
-    val EDIT_REDO = ApplicationAction("edit-redo", "Redo", "Redo", KeyCode.Z, control = true, shift = true)
+    val EDIT_UNDO = ApplicationAction("edit-undo", "Undo", KeyCode.Z, control = true)
+    val EDIT_REDO = ApplicationAction("edit-redo", "Redo", KeyCode.Z, control = true, shift = true)
 
-    val TOOL_SELECT = ApplicationAction("tool-select", "Select", "Select Tool", KeyCode.F1)
-    val TOOL_PRIMITIVE1D = ApplicationAction("tool-line", "Create Lines", "Lines", KeyCode.F2)
-    val TOOL_PRIMITIVE2D = ApplicationAction("tool-line", "Create  Basic Shapes", "Basic Shapes", KeyCode.F3)
-    val TOOL_DELETE = ApplicationAction("tool-delete", "Delete", "Delete Tool", KeyCode.F4)
+    val TOOL_SELECT = ApplicationAction("tool-select", "Select", KeyCode.F1)
+    val TOOL_PRIMITIVE1D = ApplicationAction("tool-line", "Create Lines", KeyCode.F2)
+    val TOOL_PRIMITIVE2D = ApplicationAction("tool-line", "Create Basic Shapes", KeyCode.F3)
+    val TOOL_DELETE = ApplicationAction("tool-delete", "Delete", KeyCode.F4)
 
-    val DEV_DEBUG = ApplicationAction("dev-debug", "Debug", "Dumps data to the console", KeyCode.F1, control = true)
+    val FILE_EDIT_MASTERS = ApplicationAction("file-editMasterShapes", "Edit Master Shapes", KeyCode.F1, control = true)
+    val DEV_DEBUG = ApplicationAction("dev-debug", "Debug", KeyCode.F1, control = true)
 }

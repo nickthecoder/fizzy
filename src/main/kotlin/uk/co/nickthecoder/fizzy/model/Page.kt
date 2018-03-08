@@ -24,8 +24,10 @@ import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
-class Page(val document: Document)
+class Page internal constructor(val document: Document, add: Boolean)
     : ShapeParent, HasChangeListeners<Page> {
+
+    constructor(document: Document) : this(document, true)
 
     override val changeListeners = ChangeListeners<Page>()
 
@@ -36,7 +38,9 @@ class Page(val document: Document)
     )
 
     init {
-        document.pages.add(this)
+        if (add) {
+            document.pages.add(this)
+        }
     }
 
     override fun document() = document
@@ -74,5 +78,14 @@ class Page(val document: Document)
     }
 
     fun findShapesAt(point: Dimension2, minDistance: Dimension) = children.filter { it.isAt(point, minDistance) }
+
+    /**
+     * Makes a local copy of the master shape. Creates a new shape based on the copy of the master.
+     */
+    fun copyMasterShape(masterShape: Shape): Shape {
+        val localMaster = document.useMasterShape(masterShape)
+        val copy = localMaster.copyInto(this, true)
+        return copy
+    }
 
 }

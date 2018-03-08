@@ -60,7 +60,7 @@ class GrowShape1dTool(
 
     override fun onDragDetected(event: CMouseEvent) {
         start?.let { start ->
-            val newShape = masterShape.copyInto(controller.page, true) as Shape1d
+            val newShape = controller.page.copyMasterShape(masterShape) as Shape1d
 
             // Either a connection to another shape, or the point of the onMousePressed event.
             val connectFormula = Controller.connectFormula(start, newShape, event.scale)

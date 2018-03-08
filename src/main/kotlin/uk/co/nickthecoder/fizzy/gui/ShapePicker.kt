@@ -67,8 +67,8 @@ class ShapePicker(val mainWindow: MainWindow, val items: Array<ShapePickerItem>,
         items.forEach { item ->
             val menuItem = item.menuItem
             menuItem.onAction = EventHandler {
-                pickShape(item.masterShape)
                 currentItem = item
+                pickShape(item.masterShape)
             }
             button.items.add(menuItem)
         }

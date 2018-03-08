@@ -22,22 +22,16 @@ import javafx.scene.control.Tab
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.Page
 
-class DocumentTab(document: Document)
-    : Tab("New Document") {
+class DocumentTab(val document: Document, title: String, page: Page = document.pages[0])
+    : Tab(title) {
 
-    init {
-        if (document.pages.size == 0) {
-            document.pages.add(Page(document))
+    var page: Page = page
+        set(v) {
+            field = v
+            // TODO Rebuild the drawing area for the new page.
         }
-    }
 
-    val drawingArea = DrawingArea(document.pages[0])
-
-    val document: Document
-        get() = drawingArea.page.document
-
-    val page: Page
-        get() = drawingArea.page
+    val drawingArea = DrawingArea(page)
 
     init {
         content = drawingArea.build()
