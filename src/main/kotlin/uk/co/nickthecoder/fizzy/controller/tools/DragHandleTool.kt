@@ -24,7 +24,7 @@ import uk.co.nickthecoder.fizzy.controller.handle.Handle
 import uk.co.nickthecoder.fizzy.controller.handle.Shape1dHandle
 import uk.co.nickthecoder.fizzy.model.Dimension2
 
-class DragHandleTool(controller: Controller, val handle: Handle, startPosition: Dimension2)
+open class DragHandleTool(controller: Controller, val handle: Handle, startPosition: Dimension2)
     : Tool(controller) {
 
     val offset = startPosition - handle.position
@@ -40,7 +40,7 @@ class DragHandleTool(controller: Controller, val handle: Handle, startPosition: 
         }
     }
 
-    override fun endTool() {
+    override fun endTool(replacement: Tool) {
         if (handle is Shape1dHandle) {
             controller.showConnectionPoints.value = false
             controller.highlightGeometry.value = Controller.NO_GEOMETRY

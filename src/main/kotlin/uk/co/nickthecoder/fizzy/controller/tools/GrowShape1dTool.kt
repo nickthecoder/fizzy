@@ -48,7 +48,7 @@ class GrowShape1dTool(
         controller.showConnectionPoints.value = true
     }
 
-    override fun endTool() {
+    override fun endTool(replacement: Tool) {
         controller.showConnectionPoints.value = false
         controller.highlightGeometry.value = Controller.NO_GEOMETRY
     }

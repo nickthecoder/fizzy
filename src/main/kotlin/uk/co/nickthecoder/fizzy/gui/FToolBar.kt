@@ -24,6 +24,7 @@ import javafx.scene.control.Button
 import javafx.scene.control.ToolBar
 import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.controller.tools.DeleteTool
+import uk.co.nickthecoder.fizzy.controller.tools.EditGeometryTool
 import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
 import uk.co.nickthecoder.fizzy.controller.tools.StampShape2dTool
 import uk.co.nickthecoder.fizzy.model.Dimension
@@ -83,6 +84,7 @@ class FToolBar(val mainWindow: MainWindow)
     val redoButton = ApplicationActions.EDIT_REDO.createButton(sh) { document?.history?.redo() }
 
     val selectToolButton = ApplicationActions.TOOL_SELECT.createButton(sh) { controller?.let { it.tool = SelectTool(it) } }
+    val editGeometryToolButton = ApplicationActions.TOOL_EDIT_GEOMETRY.createButton(sh) { controller?.let { it.tool = EditGeometryTool(it) } }
 
     val primitive1dButton = ApplicationActions.TOOL_PRIMITIVE1D.create(sh, ShapePicker(mainWindow, primitives1d))
     val primitive2dButton = ApplicationActions.TOOL_PRIMITIVE2D.create(sh, ShapePicker(mainWindow, primitives2d))
@@ -108,11 +110,11 @@ class FToolBar(val mainWindow: MainWindow)
         toolBar.items.addAll(
                 editLocalMastersButton,
                 undoButton, redoButton,
-                selectToolButton, primitive1dButton, primitive2dButton, deleteToolButton,
-                debugButton,
+                selectToolButton, primitive1dButton, primitive2dButton, deleteToolButton, editGeometryToolButton,
                 fillColorPicker.build(), strokeColorPicker.build(),
                 lineWidthPicker.build(), strokeJoinPicker.build(), strokeCapPicker.build(),
-                stampToolButton
+                stampToolButton,
+                debugButton
         )
 
         return toolBar

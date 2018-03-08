@@ -41,7 +41,7 @@ class PageView(val page: Page, val dc: DrawContext) {
             dc.rotate(shape.transform.rotation.value)
 
             dc.translate(-shape.transform.locPin.value) // Inefficient
-            
+
             dc.lineWidth(shape.lineWidth.value)
             dc.lineColor(shape.strokeColor.value)
             dc.fillColor(shape.fillColor.value)

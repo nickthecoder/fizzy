@@ -41,7 +41,7 @@ class Controller(val page: Page) {
 
     var tool: Tool = SelectTool(this)
         set(v) {
-            field.endTool()
+            field.endTool(v)
             v.beginTool()
             field = v
             cursorProp.value = v.cursor

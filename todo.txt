@@ -1,10 +1,6 @@
 To Do
 =====
 
-Throw away ShapeGroup - it doesn't DO anything.
-In which case everything in RealShape can go into Shape (so delete RealShape too).
-
-
 For Version 1
 -------------
 

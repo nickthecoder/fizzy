@@ -23,7 +23,7 @@ import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.view.DrawContext
 
 enum class ToolCursor {
-        DEFAULT, GROW, STAMP, MOVE, DELETE
+    DEFAULT, GROW, STAMP, MOVE, DELETE
 }
 
 abstract class Tool(val controller: Controller) {
@@ -47,6 +47,6 @@ abstract class Tool(val controller: Controller) {
     /**
      * Called when a tool is no longer active.
      */
-    open fun endTool() {}
+    open fun endTool(replacement: Tool) {}
 
 }
