@@ -24,7 +24,7 @@ import javafx.scene.control.MenuButton
 import javafx.scene.control.MenuItem
 import uk.co.nickthecoder.fizzy.Fizzy
 import uk.co.nickthecoder.fizzy.model.Dimension
-import uk.co.nickthecoder.fizzy.model.RealShape
+import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpression
 
 
@@ -53,9 +53,7 @@ class LineWidthPicker(val mainWindow: MainWindow, val widths: Array<Dimension>)
 
         history.beginBatch()
         mainWindow.shapeSelectionProperty.value.forEach { shape ->
-            if (shape is RealShape) {
-                history.makeChange(ChangeExpression(shape.lineWidth, width.toFormula()))
-            }
+            history.makeChange(ChangeExpression(shape.lineWidth, width.toFormula()))
         }
         history.endBatch()
     }

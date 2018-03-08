@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-import uk.co.nickthecoder.fizzy.model.RealShape
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.Shape1d
 import uk.co.nickthecoder.fizzy.model.Shape2d
@@ -52,24 +51,7 @@ abstract class ShapePropType<T : Shape>(klass: Class<T>)
             "LocPin" -> PropField("Shape.LocPin", prop) { prop.value.transform.locPin }
             "Scale" -> PropField("Shape.Scale", prop) { prop.value.transform.scale }
             "Rotation" -> PropField("Shape.Rotation", prop) { prop.value.transform.rotation }
-            else -> super.findField(prop, name)
-        }
-    }
 
-    override fun findMethod(prop: Prop<T>, name: String): PropMethod<in T>? {
-        return when (name) {
-            "findShape" -> FindShape(prop)
-            else -> super.findMethod(prop, name)
-        }
-    }
-
-}
-
-abstract class RealShapePropType<T : RealShape>(klass: Class<T>)
-    : ShapePropType<T>(klass) {
-
-    override fun findField(prop: Prop<T>, name: String): Prop<*>? {
-        return when (name) {
             "Geometry" -> PropValue(prop.value.geometries)
             "ConnectionPoint" -> PropValue(prop.value.connectionPoints)
             "ControlPoint" -> PropValue(prop.value.controlPoints)
@@ -79,22 +61,25 @@ abstract class RealShapePropType<T : RealShape>(klass: Class<T>)
             "FillColor" -> PropField("Shape.FillColor", prop) { prop.value.fillColor }
             "StrokeCap" -> PropField("Shape.StrokeCap", prop) { prop.value.strokeCap }
             "StrokeJoin" -> PropField("Shape.StrokeJoin", prop) { prop.value.strokeJoin }
-            else -> return super.findField(prop, name)
+
+            else -> super.findField(prop, name)
         }
     }
 
     override fun findMethod(prop: Prop<T>, name: String): PropMethod<in T>? {
         return when (name) {
+            "findShape" -> FindShape(prop)
             "connectTo" -> ConnectTo(prop)
             "connectAlong" -> ConnectAlong(prop)
             "findScratch" -> FindScratch(prop)
             else -> super.findMethod(prop, name)
         }
     }
+
 }
 
 class Shape1dPropType private constructor()
-    : RealShapePropType<Shape1d>(Shape1d::class.java) {
+    : ShapePropType<Shape1d>(Shape1d::class.java) {
 
     override fun findField(prop: Prop<Shape1d>, name: String): Prop<*>? {
         return when (name) {
@@ -116,7 +101,7 @@ class Shape1dPropType private constructor()
 }
 
 class Shape2dPropType private constructor()
-    : RealShapePropType<Shape2d>(Shape2d::class.java) {
+    : ShapePropType<Shape2d>(Shape2d::class.java) {
 
     override fun findField(prop: Prop<Shape2d>, name: String): Prop<*>? {
         return when (name) {

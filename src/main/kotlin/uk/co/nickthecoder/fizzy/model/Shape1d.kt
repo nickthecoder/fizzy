@@ -24,7 +24,7 @@ import uk.co.nickthecoder.fizzy.prop.PropCalculation2
 import uk.co.nickthecoder.fizzy.prop.Shape1dPropType
 
 class Shape1d private constructor(parent: ShapeParent)
-    : RealShape(parent) {
+    : Shape(parent) {
 
     override val context = createContext(ThisContext(this, Shape1dPropType.instance))
 

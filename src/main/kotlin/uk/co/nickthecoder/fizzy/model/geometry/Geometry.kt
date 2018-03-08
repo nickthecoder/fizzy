@@ -23,7 +23,7 @@ import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.MetaData
-import uk.co.nickthecoder.fizzy.model.RealShape
+import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.BooleanExpression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
@@ -38,7 +38,7 @@ class Geometry
 
     override val changeListeners = ChangeListeners<Geometry>()
 
-    var shape: RealShape? = null
+    var shape: Shape? = null
         set(v) {
             if (field != v) {
                 field?.let {

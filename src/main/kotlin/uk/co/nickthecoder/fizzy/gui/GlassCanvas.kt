@@ -247,7 +247,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
 
 
             if (drawingArea.controller.showConnectionPoints.value) {
-                page.children.filterIsInstance<RealShape>().forEach { shape ->
+                page.children.forEach { shape ->
                     shape.connectionPoints.forEach { drawConnectionPoint(it) }
                 }
             }
@@ -301,18 +301,16 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
     fun drawBoundingBox(shape: Shape) {
         dc.use {
 
-            if (shape is RealShape) {
-                beginSelection()
-                val corners = drawingArea.controller.shapeCorners(shape)
-                dc.polygon(true, false, *corners)
-                if (shape is Shape2d) {
-                    val r1 = (corners[0] + corners[1]) / 2.0
-                    val r2 = r1 + (corners[1] - corners[2]).normalise() * Dimension(ROTATE_DISTANCE)
-                    dc.beginPath()
-                    dc.moveTo(r1)
-                    dc.lineTo(r2)
-                    dc.endPath(true, false)
-                }
+            beginSelection()
+            val corners = drawingArea.controller.shapeCorners(shape)
+            dc.polygon(true, false, *corners)
+            if (shape is Shape2d) {
+                val r1 = (corners[0] + corners[1]) / 2.0
+                val r2 = r1 + (corners[1] - corners[2]).normalise() * Dimension(ROTATE_DISTANCE)
+                dc.beginPath()
+                dc.moveTo(r1)
+                dc.lineTo(r2)
+                dc.endPath(true, false)
             }
         }
     }

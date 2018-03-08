@@ -24,7 +24,6 @@ import javafx.scene.control.MenuButton
 import javafx.scene.control.MenuItem
 import javafx.scene.image.ImageView
 import uk.co.nickthecoder.fizzy.Fizzy
-import uk.co.nickthecoder.fizzy.model.RealShape
 import uk.co.nickthecoder.fizzy.model.StrokeCap
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpression
 
@@ -57,9 +56,7 @@ class StrokeCapPicker(val mainWindow: MainWindow)
 
         history.beginBatch()
         mainWindow.shapeSelectionProperty.value.forEach { shape ->
-            if (shape is RealShape) {
-                history.makeChange(ChangeExpression(shape.strokeCap, strokeCap.toFormula()))
-            }
+            history.makeChange(ChangeExpression(shape.strokeCap, strokeCap.toFormula()))
         }
         history.endBatch()
         button.graphic = graphic(strokeCap)
@@ -67,9 +64,7 @@ class StrokeCapPicker(val mainWindow: MainWindow)
 
     fun onShapeSelectionChanged() {
         mainWindow.shapeSelectionProperty.value?.lastOrNull()?.let { shape ->
-            if (shape is RealShape) {
-                button.graphic = graphic(shape.strokeCap.value)
-            }
+            button.graphic = graphic(shape.strokeCap.value)
         }
     }
 

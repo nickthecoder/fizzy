@@ -23,7 +23,7 @@ import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.Shape2dPropType
 
 class Shape2d private constructor(parent: ShapeParent)
-    : RealShape(parent) {
+    : Shape(parent) {
 
     override val context = createContext(ThisContext(this, Shape2dPropType.instance))
 

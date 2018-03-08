@@ -38,6 +38,19 @@ abstract class Shape(var parent: ShapeParent)
 
     val name = PropVariable("")
 
+    abstract val size: Dimension2Expression
+
+    val lineWidth = DimensionExpression("2mm")
+
+    val strokeCap = StrokeCapExpression(StrokeCap.ROUND.toFormula())
+
+    val strokeJoin = StrokeJoinExpression(StrokeJoin.ROUND.toFormula())
+
+    val strokeColor = PaintExpression("BLACK")
+
+    val fillColor = PaintExpression("WHITE")
+
+
     // Note, this is abstract to avoid leaking 'this' in the constructor, so it is only instantiated in final sub-classes
     abstract val context: EvaluationContext
 
@@ -47,6 +60,15 @@ abstract class Shape(var parent: ShapeParent)
     override var changeListeners = ChangeListeners<Shape>()
 
     final override val children = MutableFList<Shape>()
+
+
+    val geometries = MutableFList<Geometry>()
+
+    val connectionPoints = MutableFList<ConnectionPoint>()
+
+    val controlPoints = MutableFList<ControlPoint>()
+
+    val scratches = ScratchList()
 
 
     override val fromLocalToParent
@@ -94,6 +116,30 @@ abstract class Shape(var parent: ShapeParent)
     open protected fun postInit() {
         listenTo(name)
         children.listeners.add(shapeListener)
+        listenTo(lineWidth)
+        listenTo(strokeCap)
+        listenTo(strokeJoin)
+        listenTo(strokeColor)
+        listenTo(fillColor)
+
+        // Automatically tell the child of the parent when it is added to the list (and set to null when removed)
+        // Also bubble change events up the hierarchy.
+        collectionListeners.add(ChangeAndCollectionListener(this, geometries,
+                onAdded = { geometry -> geometry.shape = this },
+                onRemoved = { geometry -> geometry.shape = null }
+        ))
+        collectionListeners.add(ChangeAndCollectionListener(this, connectionPoints,
+                onAdded = { item -> item.shape = this },
+                onRemoved = { item -> item.shape = null }
+        ))
+        collectionListeners.add(ChangeAndCollectionListener(this, controlPoints,
+                onAdded = { item -> item.shape = this },
+                onRemoved = { item -> item.shape = null }
+        ))
+        collectionListeners.add(ChangeAndCollectionListener(this, scratches,
+                onAdded = { item -> item.setContext(context) },
+                onRemoved = { item -> item.setContext(constantsContext) }
+        ))
     }
 
     protected fun createContext(thisContext: ThisContext<*>) = CompoundEvaluationContext(listOf(
@@ -151,16 +197,31 @@ abstract class Shape(var parent: ShapeParent)
      * Returns true iff this geometry is close to the given point, or if any of the descendants isAt the point.
      *
      */
-    open fun isAt(point: Dimension2, minDistance: Dimension): Boolean {
+    fun isAt(point: Dimension2, minDistance: Dimension): Boolean {
         val localPoint = transform.fromParentToLocal.value * point
 
-        children.forEach { child ->
-            if (child.isAt(localPoint, minDistance)) {
+        geometries.forEach { geo ->
+            if (geo.isAt(localPoint, lineWidth.value, minDistance)) {
                 return true
             }
         }
 
+        children.forEach { child ->
+            if (child.isAt(point, minDistance)) {
+                return true
+            }
+        }
         return false
+    }
+
+
+    fun findScratch(name: String): Scratch? {
+        scratches.forEach { scratchProp ->
+            if (scratchProp.name.value == name) {
+                return scratchProp
+            }
+        }
+        return null
     }
 
     /**
@@ -182,6 +243,25 @@ abstract class Shape(var parent: ShapeParent)
         newShape.transform.rotation.copyFrom(transform.rotation, link)
         newShape.transform.pin.copyFrom(transform.pin, link)
         newShape.transform.scale.copyFrom(transform.scale, link)
+
+        geometries.forEach { geometry ->
+            newShape.geometries.add(geometry.copy(link))
+        }
+        connectionPoints.forEach { connectionPoint ->
+            newShape.connectionPoints.add(connectionPoint.copy(link))
+        }
+        controlPoints.forEach { controlPoint ->
+            newShape.controlPoints.add(controlPoint.copy(link))
+        }
+        scratches.forEach { scratch ->
+            newShape.scratches.add(scratch.copy(link))
+        }
+        newShape.lineWidth.copyFrom(lineWidth, link)
+        newShape.size.copyFrom(size, link)
+        newShape.strokeColor.copyFrom(strokeColor, link)
+        newShape.fillColor.copyFrom(fillColor, link)
+        newShape.strokeCap.copyFrom(strokeCap, link)
+        newShape.strokeJoin.copyFrom(strokeJoin, link)
 
         children.forEach { it.copyInto(newShape, link) }
     }
@@ -212,6 +292,17 @@ abstract class Shape(var parent: ShapeParent)
         list.add(MetaData("Pin", transform.pin))
         list.add(MetaData("LocPin", transform.locPin))
         list.add(MetaData("Scale", transform.scale))
+
+        geometries.forEachIndexed { index, geometryProp -> geometryProp.addMetaData(list, index) }
+        connectionPoints.forEachIndexed { index, connectionPointProp -> connectionPointProp.addMetaData(list, index) }
+        controlPoints.forEachIndexed { index, controlPointProp -> controlPointProp.addMetaData(list, index) }
+        scratches.forEachIndexed { index, scratchProp -> scratchProp.addMetaData(list, index) }
+        list.add(MetaData("LineWidth", lineWidth))
+        list.add(MetaData("Size", size))
+        list.add(MetaData("LineColor", strokeColor))
+        list.add(MetaData("FillColor", fillColor))
+        list.add(MetaData("StrokeCap", strokeCap))
+        list.add(MetaData("StrokeJoin", strokeJoin))
     }
 
     override fun toString(): String = "Shape ${id.value}"

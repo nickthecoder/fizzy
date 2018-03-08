@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.view
 
 import uk.co.nickthecoder.fizzy.model.Page
-import uk.co.nickthecoder.fizzy.model.RealShape
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
@@ -42,29 +41,25 @@ class PageView(val page: Page, val dc: DrawContext) {
             dc.rotate(shape.transform.rotation.value)
 
             dc.translate(-shape.transform.locPin.value) // Inefficient
+            
+            dc.lineWidth(shape.lineWidth.value)
+            dc.lineColor(shape.strokeColor.value)
+            dc.fillColor(shape.fillColor.value)
+            dc.strokeJoin(shape.strokeJoin.value)
+            dc.strokeCap(shape.strokeCap.value)
 
-            if (shape is RealShape) {
+            shape.geometries.forEach { geometry ->
+                dc.beginPath()
+                geometry.parts.forEach { part ->
+                    when (part) {
+                        is MoveTo -> dc.moveTo(part.point.value)
 
-                dc.lineWidth(shape.lineWidth.value)
-                dc.lineColor(shape.strokeColor.value)
-                dc.fillColor(shape.fillColor.value)
-                dc.strokeJoin(shape.strokeJoin.value)
-                dc.strokeCap(shape.strokeCap.value)
+                        is LineTo -> dc.lineTo(part.point.value)
 
-                shape.geometries.forEach { geometry ->
-                    dc.beginPath()
-                    geometry.parts.forEach { part ->
-                        when (part) {
-                            is MoveTo -> dc.moveTo(part.point.value)
-
-                            is LineTo -> dc.lineTo(part.point.value)
-
-                        }
                     }
-                    dc.endPath(geometry.stroke.value, geometry.fill.value)
                 }
+                dc.endPath(geometry.stroke.value, geometry.fill.value)
             }
-
 
             shape.children.forEach { child ->
                 drawShape(child)

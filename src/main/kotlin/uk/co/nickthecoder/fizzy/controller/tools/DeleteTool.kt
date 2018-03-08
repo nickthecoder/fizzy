@@ -20,7 +20,6 @@ package uk.co.nickthecoder.fizzy.controller.tools
 
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
-import uk.co.nickthecoder.fizzy.model.RealShape
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.history.DeleteShape
 
@@ -36,9 +35,7 @@ class DeleteTool(controller: Controller)
         if (shape == null) {
             controller.highlightGeometry.value = Controller.NO_GEOMETRY
         } else {
-            if (shape is RealShape) {
-                controller.highlightGeometry.value = shape.geometries[0]
-            }
+            controller.highlightGeometry.value = shape.geometries[0]
         }
     }
 
@@ -50,10 +47,8 @@ class DeleteTool(controller: Controller)
 
     override fun onMouseDragged(event: CMouseEvent) {
         val draggedShaped = controller.page.findShapeAt(event.point, controller.minDistance)
-        if (draggedShaped === pressedShape) {
-            if (draggedShaped is RealShape) {
-                controller.highlightGeometry.value = draggedShaped.geometries[0]
-            }
+        if (draggedShaped === pressedShape && draggedShaped != null) {
+            controller.highlightGeometry.value = draggedShaped.geometries[0]
         } else {
             controller.highlightGeometry.value = Controller.NO_GEOMETRY
         }

@@ -24,7 +24,6 @@ import javafx.scene.control.MenuButton
 import javafx.scene.control.MenuItem
 import javafx.scene.image.ImageView
 import uk.co.nickthecoder.fizzy.Fizzy
-import uk.co.nickthecoder.fizzy.model.RealShape
 import uk.co.nickthecoder.fizzy.model.StrokeJoin
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpression
 
@@ -57,9 +56,7 @@ class StrokeJoinPicker(val mainWindow: MainWindow)
 
         history.beginBatch()
         mainWindow.shapeSelectionProperty.value.forEach { shape ->
-            if (shape is RealShape) {
-                history.makeChange(ChangeExpression(shape.strokeJoin, strokeJoin.toFormula()))
-            }
+            history.makeChange(ChangeExpression(shape.strokeJoin, strokeJoin.toFormula()))
         }
         history.endBatch()
         button.graphic = graphic(strokeJoin)
@@ -67,9 +64,7 @@ class StrokeJoinPicker(val mainWindow: MainWindow)
 
     fun onShapeSelectionChanged() {
         mainWindow.shapeSelectionProperty.value?.lastOrNull()?.let { shape ->
-            if (shape is RealShape) {
-                button.graphic = graphic(shape.strokeJoin.value)
-            }
+            button.graphic = graphic(shape.strokeJoin.value)
         }
     }
 

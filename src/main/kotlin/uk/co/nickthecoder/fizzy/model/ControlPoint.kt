@@ -36,7 +36,7 @@ class ControlPoint(val point: Dimension2Expression)
     override val changeListeners = ChangeListeners<ControlPoint>()
 
 
-    var shape: RealShape? = null
+    var shape: Shape? = null
         set(v) {
             if (field != v) {
                 field?.let {

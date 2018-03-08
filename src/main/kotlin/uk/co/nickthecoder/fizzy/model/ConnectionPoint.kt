@@ -47,7 +47,7 @@ class ConnectionPoint(val point: Dimension2Expression)
     override val propListenerOwner = "ConnectionPoint"
 
 
-    var shape: RealShape? = null
+    var shape: Shape? = null
         set(v) {
             if (field != v) {
                 field?.let {

@@ -142,42 +142,40 @@ class Controller(val page: Page) {
     fun createShapeHandles(shape: Shape) {
         removeShapeHandles(shape)
 
-        if (shape is RealShape) {
+        if (shape is Shape2d) {
+            val corners = shapeCorners(shape)
+            handles.add(Shape2dSizeHandle(shape, corners[0], -1, -1))
+            handles.add(Shape2dSizeHandle(shape, corners[1], 1, -1))
+            handles.add(Shape2dSizeHandle(shape, corners[2], 1, 1))
+            handles.add(Shape2dSizeHandle(shape, corners[3], -1, 1))
 
-            if (shape is Shape2d) {
-                val corners = shapeCorners(shape)
-                handles.add(Shape2dSizeHandle(shape, corners[0], -1, -1))
-                handles.add(Shape2dSizeHandle(shape, corners[1], 1, -1))
-                handles.add(Shape2dSizeHandle(shape, corners[2], 1, 1))
-                handles.add(Shape2dSizeHandle(shape, corners[3], -1, 1))
+            handles.add(Shape2dSizeHandle(shape, (corners[0] + corners[1]) / 2.0, 0, -1))
+            handles.add(Shape2dSizeHandle(shape, (corners[1] + corners[2]) / 2.0, 1, 0))
+            handles.add(Shape2dSizeHandle(shape, (corners[2] + corners[3]) / 2.0, 0, 1))
+            handles.add(Shape2dSizeHandle(shape, (corners[3] + corners[0]) / 2.0, -1, 0))
 
-                handles.add(Shape2dSizeHandle(shape, (corners[0] + corners[1]) / 2.0, 0, -1))
-                handles.add(Shape2dSizeHandle(shape, (corners[1] + corners[2]) / 2.0, 1, 0))
-                handles.add(Shape2dSizeHandle(shape, (corners[2] + corners[3]) / 2.0, 0, 1))
-                handles.add(Shape2dSizeHandle(shape, (corners[3] + corners[0]) / 2.0, -1, 0))
+            handles.add(RotationHandle(shape,
+                    (corners[0] + corners[1]) / 2.0 +
+                            (corners[1] - corners[2]).normalise()
+                                    * Dimension(GlassCanvas.ROTATE_DISTANCE)))
 
-                handles.add(RotationHandle(shape,
-                        (corners[0] + corners[1]) / 2.0 +
-                                (corners[1] - corners[2]).normalise()
-                                        * Dimension(GlassCanvas.ROTATE_DISTANCE)))
-
-            } else if (shape is Shape1d) {
-                val ends = shape1dEnds(shape)
-                handles.add(Shape1dHandle(shape, ends[0], this, false))
-                handles.add(Shape1dHandle(shape, ends[1], this, true))
-            }
-
-            shape.controlPoints.forEach { cp ->
-                handles.add(ControlPointHandle(shape, cp))
-            }
+        } else if (shape is Shape1d) {
+            val ends = shape1dEnds(shape)
+            handles.add(Shape1dHandle(shape, ends[0], this, false))
+            handles.add(Shape1dHandle(shape, ends[1], this, true))
         }
+
+        shape.controlPoints.forEach { cp ->
+            handles.add(ControlPointHandle(shape, cp))
+        }
+
     }
 
     fun removeShapeHandles(shape: Shape) {
         handles.removeIf { it.isFor(shape) }
     }
 
-    fun shapeCorners(shape: RealShape): Array<Dimension2> {
+    fun shapeCorners(shape: Shape): Array<Dimension2> {
         return arrayOf<Dimension2>(
                 shape.fromLocalToPage.value * Dimension2.ZERO_mm,
                 shape.fromLocalToPage.value * (shape.size.value * Vector2(1.0, 0.0)),
@@ -194,15 +192,12 @@ class Controller(val page: Page) {
     }
 
     fun isWithin(shape: Shape, a: Dimension2, b: Dimension2): Boolean {
-        if (shape is RealShape) {
-            shapeCorners(shape).forEach {
-                if (((it.x < a.x) xor (it.x > b.x)) || ((it.y < a.y) xor (it.y > b.y))) {
-                    return false
-                }
+        shapeCorners(shape).forEach {
+            if (((it.x < a.x) xor (it.x > b.x)) || ((it.y < a.y) xor (it.y > b.y))) {
+                return false
             }
-            return true
         }
-        return false
+        return true
     }
 
     companion object {

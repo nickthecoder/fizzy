@@ -29,7 +29,7 @@ import uk.co.nickthecoder.fizzy.controller.tools.StampShape2dTool
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.PrimitiveStencil
-import uk.co.nickthecoder.fizzy.model.RealShape
+import uk.co.nickthecoder.fizzy.model.Shape
 
 class FToolBar(val mainWindow: MainWindow)
     : BuildableNode {
@@ -92,8 +92,8 @@ class FToolBar(val mainWindow: MainWindow)
     val debugButton = ApplicationActions.DEV_DEBUG.createButton(sh) { mainWindow.debug() }
 
     val lineWidthPicker = LineWidthPicker(mainWindow, lineWidths)
-    val strokeColorPicker = FColorPicker(mainWindow, "stroke") { shape -> if (shape is RealShape) shape.strokeColor else null }
-    val fillColorPicker = FColorPicker(mainWindow, "fill") { shape -> if (shape is RealShape) shape.fillColor else null }
+    val strokeColorPicker = FColorPicker(mainWindow, "stroke") { shape -> shape.strokeColor }
+    val fillColorPicker = FColorPicker(mainWindow, "fill") { shape -> shape.fillColor }
     val strokeJoinPicker = StrokeJoinPicker(mainWindow)
     val strokeCapPicker = StrokeCapPicker(mainWindow)
 
