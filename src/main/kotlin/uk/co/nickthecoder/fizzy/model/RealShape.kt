@@ -95,13 +95,13 @@ abstract class RealShape(parent: ShapeParent)
 
         if (newShape is RealShape) {
             geometries.forEach { geometry ->
-                newShape.addGeometry(geometry.copy(link))
+                newShape.geometries.add(geometry.copy(link))
             }
             connectionPoints.forEach { connectionPoint ->
-                newShape.addConnectionPoint(connectionPoint.copy(link))
+                newShape.connectionPoints.add(connectionPoint.copy(link))
             }
             controlPoints.forEach { controlPoint ->
-                newShape.addControlPoint(controlPoint.copy(link))
+                newShape.controlPoints.add(controlPoint.copy(link))
             }
             scratches.forEach { scratchProp ->
                 val scratch = scratchProp.value
@@ -128,18 +128,6 @@ abstract class RealShape(parent: ShapeParent)
         list.add(MetaData("FillColor", fillColor))
         list.add(MetaData("StrokeCap", strokeCap))
         list.add(MetaData("StrokeJoin", strokeJoin))
-    }
-
-    fun addGeometry(geometry: Geometry) {
-        geometries.add(geometry)
-    }
-
-    fun addConnectionPoint(connectionPoint: ConnectionPoint) {
-        connectionPoints.add(connectionPoint)
-    }
-
-    fun addControlPoint(controlPoint: ControlPoint) {
-        controlPoints.add(controlPoint)
     }
 
     fun addScratch(scratch: Scratch) {

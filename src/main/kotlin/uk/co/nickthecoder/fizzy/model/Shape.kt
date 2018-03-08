@@ -237,7 +237,7 @@ abstract class Shape(var parent: ShapeParent)
             geometry.parts.add(LineTo("Geometry1.Point1"))
             geometry.fill.formula = "true"
             geometry.connect.formula = "true" // Allow connections along
-            box.addGeometry(geometry)
+            box.geometries.add(geometry)
 
             if (fillColor != null) {
                 box.fillColor.formula = fillColor
@@ -265,7 +265,7 @@ abstract class Shape(var parent: ShapeParent)
             val geometry = Geometry()
             geometry.parts.add(MoveTo("Dimension2(0mm,LineWidth/2)"))
             geometry.parts.add(LineTo("Dimension2(Length,LineWidth/2)"))
-            line.addGeometry(geometry)
+            line.geometries.add(geometry)
 
             return line
         }
@@ -285,7 +285,7 @@ abstract class Shape(var parent: ShapeParent)
 
             val unit = Dimension2(radius, Dimension.ZERO_mm)
             val geometry = Geometry()
-            poly.addGeometry(geometry)
+            poly.geometries.add(geometry)
 
             // Create points around (0,0)
             geometry.parts.add(LineTo("Dimension2(${radius.toFormula()},0mm)"))
@@ -330,7 +330,7 @@ abstract class Shape(var parent: ShapeParent)
                 }
 
                 // Create a control point between 1st two outer points
-                poly.addControlPoint(ControlPoint("(Geometry1.Point1 + Geometry1.Point3)/2"))
+                poly.controlPoints.add(ControlPoint("(Geometry1.Point1 + Geometry1.Point3)/2"))
 
             }
 
@@ -342,7 +342,7 @@ abstract class Shape(var parent: ShapeParent)
             // Create connection points at each vertex
             for (i in 0..geometry.parts.size - 2) {
                 val cp = ConnectionPoint("Geometry1.Point${i + 1}")
-                poly.addConnectionPoint(cp)
+                poly.connectionPoints.add(cp)
             }
 
             //println(poly.metaData().joinToString(separator = "\n"))

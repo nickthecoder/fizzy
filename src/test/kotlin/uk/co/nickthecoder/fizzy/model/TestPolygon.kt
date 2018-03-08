@@ -88,12 +88,12 @@ class TestPolygon : MyTestCase() {
         val poly = Shape2d.create(page)
 
         val geometry = Geometry()
-        poly.addGeometry(geometry)
+        poly.geometries.add(geometry)
         geometry.parts.add(MoveTo("ControlPoint.Point1"))
 
         val cp1 = ControlPoint("Dimension2(10mm,20mm)")
         val point = geometry.parts[0].point
-        poly.addControlPoint(cp1)
+        poly.controlPoints.add(cp1)
 
         assertEquals(10.0, point.value.x.mm)
         cp1.point.formula = "Dimension2(15mm,25mm)"

@@ -92,16 +92,16 @@ class TestShape : MyTestCase() {
         assertEquals(false, testBoolean(box, "Geometry1.Connect"))
 
         // ControlPoints
-        box.addControlPoint(ControlPoint("Dimension2(2mm,3mm)"))
-        box.addControlPoint(ControlPoint("Dimension2(5mm,6mm)"))
+        box.controlPoints.add(ControlPoint("Dimension2(2mm,3mm)"))
+        box.controlPoints.add(ControlPoint("Dimension2(5mm,6mm)"))
         assertEquals(2.0, testDouble(box, "ControlPoint.Point1.X.mm"))
         assertEquals(3.0, testDouble(box, "ControlPoint.Point1.Y.mm"))
         assertEquals(5.0, testDouble(box, "ControlPoint.Point2.X.mm"))
         assertEquals(6.0, testDouble(box, "ControlPoint.Point2.Y.mm"))
 
         // ConnectionPoints
-        box.addConnectionPoint(ConnectionPoint("Dimension2(7mm,8mm)"))
-        box.addConnectionPoint(ConnectionPoint("Dimension2(9mm,10mm)"))
+        box.connectionPoints.add(ConnectionPoint("Dimension2(7mm,8mm)"))
+        box.connectionPoints.add(ConnectionPoint("Dimension2(9mm,10mm)"))
         assertEquals(7.0, testDouble(box, "ConnectionPoint.Point1.X.mm"))
         assertEquals(8.0, testDouble(box, "ConnectionPoint.Point1.Y.mm"))
         assertEquals(9.0, testDouble(box, "ConnectionPoint.Point2.X.mm"))

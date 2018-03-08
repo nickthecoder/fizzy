@@ -75,7 +75,7 @@ abstract class MyTestCase : TestCase() {
         box.size.formula = size
         box.transform.pin.formula = at
         val geometry = Geometry()
-        box.addGeometry(geometry)
+        box.geometries.add(geometry)
         geometry.parts.add(MoveTo("Size * Vector2(0,0)"))
         geometry.parts.add(LineTo("Size * Vector2(1,0)"))
         geometry.parts.add(LineTo("Size * Vector2(1,1)"))
@@ -93,7 +93,7 @@ abstract class MyTestCase : TestCase() {
         line.lineWidth.formula = lineWidth
 
         val geometry = Geometry()
-        line.addGeometry(geometry)
+        line.geometries.add(geometry)
         geometry.parts.add(MoveTo("Dimension2(0mm,LineWidth/2)"))
         geometry.parts.add(LineTo("Dimension2(Length,LineWidth/2)"))
 
