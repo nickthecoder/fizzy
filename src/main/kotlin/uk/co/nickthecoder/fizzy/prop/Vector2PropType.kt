@@ -53,15 +53,12 @@ class Vector2Expression
 
     constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Vector2::class.java, context)
 
-    constructor(other: Vector2Expression) : super(other, Vector2::class.java)
+    constructor(other: Vector2Expression) : super(other)
 
     constructor(v: Vector2) : this(v.toFormula())
 
     override val defaultValue = Vector2.ZERO
 
-    override fun constant(value: Vector2) {
-        formula = value.toFormula()
-    }
 
     override fun copy(link: Boolean) = if (link) Vector2Expression(this) else Vector2Expression(formula, constantsContext)
 

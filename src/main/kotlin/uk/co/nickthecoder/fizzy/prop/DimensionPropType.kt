@@ -57,13 +57,10 @@ class DimensionExpression
 
     constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Dimension::class.java, context)
 
-    constructor(other: DimensionExpression) : super(other, Dimension::class.java)
+    constructor(other: DimensionExpression) : super(other)
 
     override val defaultValue = Dimension.ZERO_mm
 
-    override fun constant(value: Dimension) {
-        formula = value.toFormula()
-    }
 
     override fun copy(link: Boolean) = if (link) DimensionExpression(formula) else DimensionExpression(formula)
 

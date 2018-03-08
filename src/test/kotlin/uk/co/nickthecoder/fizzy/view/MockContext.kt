@@ -18,10 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.view
 
-import uk.co.nickthecoder.fizzy.model.Angle
-import uk.co.nickthecoder.fizzy.model.Dimension
-import uk.co.nickthecoder.fizzy.model.Paint
-import uk.co.nickthecoder.fizzy.model.Vector2
+import uk.co.nickthecoder.fizzy.model.*
 
 class MockContext : AbsoluteContext() {
 
@@ -39,13 +36,17 @@ class MockContext : AbsoluteContext() {
     }
 
 
-    override fun fillColor(color: Paint) {}
+    override fun fillColor(paint: Paint) {}
 
-    override fun lineColor(color: Paint) {}
+    override fun lineColor(paint: Paint) {}
 
     override fun lineDashes(vararg dashes: Double) {}
 
     override fun lineWidth(width: Double) {}
+
+    override fun strokeCap(strokeCap: StrokeCap) {}
+
+    override fun strokeJoin(strokeJoin: StrokeJoin) {}
 
     override fun beginPath() {
         if (debug) {

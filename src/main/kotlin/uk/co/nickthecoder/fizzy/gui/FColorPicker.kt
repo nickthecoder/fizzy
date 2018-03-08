@@ -45,7 +45,7 @@ class FColorPicker(
     }
 
     override fun build(): Node {
-        colorPicker.styleClass.addAll("button", type)
+        colorPicker.styleClass.addAll(type)
         syncObservableList(colorPicker.customColors, mainWindow.customColors)
         mainWindow.shapeSelectionProperty.addListener { _, _, _ -> onShapeSelectionChanged() }
 

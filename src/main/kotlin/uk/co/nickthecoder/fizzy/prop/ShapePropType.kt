@@ -18,7 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.model.RealShape
+import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.Shape1d
+import uk.co.nickthecoder.fizzy.model.Shape2d
 import uk.co.nickthecoder.fizzy.prop.methods.ConnectAlong
 import uk.co.nickthecoder.fizzy.prop.methods.ConnectTo
 import uk.co.nickthecoder.fizzy.prop.methods.FindScratch
@@ -74,6 +77,8 @@ abstract class RealShapePropType<T : RealShape>(klass: Class<T>)
             "LineWidth" -> PropField("Shape.LineWidth", prop) { prop.value.lineWidth }
             "StrokeColor" -> PropField("Shape.StrokeColor", prop) { prop.value.strokeColor }
             "FillColor" -> PropField("Shape.FillColor", prop) { prop.value.fillColor }
+            "StrokeCap" -> PropField("Shape.StrokeCap", prop) { prop.value.strokeCap }
+            "StrokeJoin" -> PropField("Shape.StrokeJoin", prop) { prop.value.strokeJoin }
             else -> return super.findField(prop, name)
         }
     }
@@ -122,13 +127,5 @@ class Shape2dPropType private constructor()
 
     companion object {
         val instance = Shape2dPropType()
-    }
-}
-
-class ShapeGroupPropType private constructor()
-    : ShapePropType<ShapeGroup>(ShapeGroup::class.java) {
-
-    companion object {
-        val instance = ShapeGroupPropType()
     }
 }

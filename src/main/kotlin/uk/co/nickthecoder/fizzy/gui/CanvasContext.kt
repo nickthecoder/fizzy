@@ -55,6 +55,22 @@ class CanvasContext(val canvas: Canvas)
         gc.stroke = convertPaint(paint)
     }
 
+    override fun strokeCap(strokeCap: StrokeCap) {
+        when (strokeCap) {
+            StrokeCap.BUTT -> gc.lineCap = StrokeLineCap.BUTT
+            StrokeCap.ROUND -> gc.lineCap = StrokeLineCap.ROUND
+            StrokeCap.SQUARE -> gc.lineCap = StrokeLineCap.SQUARE
+        }
+    }
+
+    override fun strokeJoin(strokeJoin: StrokeJoin) {
+        when (strokeJoin) {
+            StrokeJoin.ROUND -> gc.lineJoin = StrokeLineJoin.ROUND
+            StrokeJoin.MITER -> gc.lineJoin = StrokeLineJoin.MITER
+            StrokeJoin.BEVEL -> gc.lineJoin = StrokeLineJoin.BEVEL
+        }
+    }
+
     override fun lineDashes(vararg dashes: Double) {
         gc.setLineDashes(* dashes)
     }

@@ -35,13 +35,10 @@ class DoubleExpression
 
     constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Double::class.java, context)
 
-    constructor(other: DoubleExpression) : super(other, Double::class.java)
+    constructor(other: DoubleExpression) : super(other)
 
     override val defaultValue: Double = java.lang.Double.parseDouble(".0")
 
-    override fun constant(value: Double) {
-        formula = value.toDouble().toFormula()
-    }
 
     override fun copy(link: Boolean) = if (link) DoubleExpression(this) else DoubleExpression(formula, constantsContext)
 

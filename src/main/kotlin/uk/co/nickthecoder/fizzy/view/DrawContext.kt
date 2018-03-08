@@ -38,6 +38,9 @@ interface DrawContext {
     fun lineColor(paint: Paint)
     fun fillColor(paint: Paint)
 
+    fun strokeCap(strokeCap: StrokeCap)
+    fun strokeJoin(strokeJoin: StrokeJoin)
+
     fun lineDashes(vararg dashes: Double)
 
     fun translate(by: Dimension2)

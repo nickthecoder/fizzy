@@ -313,8 +313,6 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
                     dc.lineTo(r2)
                     dc.endPath(true, false)
                 }
-            } else if (shape is ShapeGroup) {
-
             }
         }
     }

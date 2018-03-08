@@ -73,13 +73,9 @@ class AngleExpression
 
     constructor(formula: String, context: EvaluationContext = constantsContext) : super(formula, Angle::class.java, context)
 
-    constructor(other: AngleExpression) : super(other.formula, Angle::class.java)
+    constructor(other: AngleExpression) : super(other)
 
     override val defaultValue = Angle.ZERO
-
-    override fun constant(value: Angle) {
-        formula = value.toFormula()
-    }
 
     override fun copy(link: Boolean) = if (link) AngleExpression(this) else AngleExpression(formula)
 

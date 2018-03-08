@@ -57,13 +57,10 @@ class Dimension2Expression
 
     constructor(pointValue: Dimension2, context: EvaluationContext = constantsContext) : this(pointValue.toFormula(), context)
 
-    constructor(other: Dimension2Expression) : super(other, Dimension2::class.java)
+    constructor(other: Dimension2Expression) : super(other)
 
     override val defaultValue = Dimension2.ZERO_mm
 
-    override fun constant(value: Dimension2) {
-        formula = value.toFormula()
-    }
 
     override fun copy(link: Boolean) = if (link) Dimension2Expression(this) else Dimension2Expression(formula)
 

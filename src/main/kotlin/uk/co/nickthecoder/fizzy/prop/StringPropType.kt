@@ -86,13 +86,10 @@ class StringExpression
 
     constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, String::class.java, context)
 
-    constructor(other: StringExpression) : super(other, String::class.java)
+    constructor(other: StringExpression) : super(other)
 
     override val defaultValue = ""
 
-    override fun constant(value: String) {
-        formula = value.toFormula()
-    }
 
     override fun copy(link: Boolean) = if (link) StringExpression(this) else StringExpression(formula)
 

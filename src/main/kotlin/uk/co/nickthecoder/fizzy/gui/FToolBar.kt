@@ -94,6 +94,8 @@ class FToolBar(val mainWindow: MainWindow)
     val lineWidthPicker = LineWidthPicker(mainWindow, lineWidths)
     val strokeColorPicker = FColorPicker(mainWindow, "stroke") { shape -> if (shape is RealShape) shape.strokeColor else null }
     val fillColorPicker = FColorPicker(mainWindow, "fill") { shape -> if (shape is RealShape) shape.fillColor else null }
+    val strokeJoinPicker = StrokeJoinPicker(mainWindow)
+    val strokeCapPicker = StrokeCapPicker(mainWindow)
 
     // These don't belong here - move to a "Stencil" picker sometime.
     val stampToolButton = Button("Stamp")
@@ -108,7 +110,8 @@ class FToolBar(val mainWindow: MainWindow)
                 undoButton, redoButton,
                 selectToolButton, primitive1dButton, primitive2dButton, deleteToolButton,
                 debugButton,
-                lineWidthPicker.build(), strokeColorPicker.build(), fillColorPicker.build(),
+                fillColorPicker.build(), strokeColorPicker.build(),
+                lineWidthPicker.build(), strokeJoinPicker.build(), strokeCapPicker.build(),
                 stampToolButton
         )
 

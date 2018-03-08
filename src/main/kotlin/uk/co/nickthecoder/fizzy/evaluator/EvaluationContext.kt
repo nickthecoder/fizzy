@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.evaluator
 
 import uk.co.nickthecoder.fizzy.model.Color
+import uk.co.nickthecoder.fizzy.model.StrokeCap
+import uk.co.nickthecoder.fizzy.model.StrokeJoin
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropConstant
 import uk.co.nickthecoder.fizzy.prop.PropType
@@ -103,6 +105,15 @@ val constantsContext = SimpleEvaluationContext(
                 "MIN_DOUBLE" to PropConstant(-Double.MAX_VALUE), // Note, this is NOT the same as the badly named Java Double.MIN_VALUE
                 "SMALLEST_DOUBLE" to PropConstant(Double.MIN_VALUE),
                 "NaN" to PropConstant(Double.NaN),
+
+                "STROKE_JOIN_BEVEL" to PropConstant(StrokeJoin.BEVEL),
+                "STROKE_JOIN_MITER" to PropConstant(StrokeJoin.MITER),
+                "STROKE_JOIN_ROUND" to PropConstant(StrokeJoin.ROUND),
+
+                "STROKE_CAP_BUTT" to PropConstant(StrokeCap.BUTT),
+                "STROKE_CAP_SQUARE" to PropConstant(StrokeCap.SQUARE),
+                "STROKE_CAP_ROUND" to PropConstant(StrokeCap.ROUND),
+
                 "BLACK" to PropConstant(Color.BLACK),
                 "WHITE" to PropConstant(Color.WHITE)
         )

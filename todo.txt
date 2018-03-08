@@ -1,6 +1,10 @@
 To Do
 =====
 
+Throw away ShapeGroup - it doesn't DO anything.
+In which case everything in RealShape can go into Shape (so delete RealShape too).
+
+
 For Version 1
 -------------
 
@@ -8,12 +12,12 @@ Aims
     Create circuit diagrams
     Create flow charts
 
+Edit geometry using the GUI.
+
 Load, Save
     Rename MetaData and improve it to be more structured.
 
 Stencils
-
-Line Width
 
 Edit children within a parent shape
 

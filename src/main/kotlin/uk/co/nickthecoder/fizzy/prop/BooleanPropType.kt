@@ -35,13 +35,9 @@ class BooleanExpression
 
     constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Boolean::class.java, context)
 
-    constructor(other: BooleanExpression) : super(other.formula, Boolean::class.java)
+    constructor(other: BooleanExpression) : super(other)
 
     override val defaultValue = false
-
-    override fun constant(value: Boolean) {
-        formula = value.toFormula()
-    }
 
     override fun copy(link: Boolean) = if (link) BooleanExpression(formula) else BooleanExpression(formula)
 

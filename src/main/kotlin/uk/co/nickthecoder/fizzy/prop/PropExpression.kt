@@ -58,8 +58,8 @@ abstract class PropExpression<T : Any>(formula: String, val klass: Class<T>, var
 
     : PropCalculation<T>() {
 
-    constructor(other: PropExpression<T>, klass: Class<T>, context: EvaluationContext = constantsContext)
-            : this(other.formula, klass, context) {
+    constructor(other: PropExpression<T>, context: EvaluationContext = constantsContext)
+            : this(other.formula, other.klass, context) {
         linkedTo = other
         other.propListeners.add(linkedListener)
     }
@@ -120,8 +120,6 @@ abstract class PropExpression<T : Any>(formula: String, val klass: Class<T>, var
             formula = other.formula
         }
     }
-
-    abstract fun constant(value: T)
 
     override val propListenerOwner = "PropExpression : $formula"
 

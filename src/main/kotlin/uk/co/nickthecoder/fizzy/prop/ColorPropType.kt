@@ -68,11 +68,8 @@ class PaintExpression
 
     constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Paint::class.java, context)
 
-    constructor(other: PaintExpression) : super(other, Paint::class.java)
+    constructor(other: PaintExpression) : super(other)
 
-    override fun constant(value: Paint) {
-        formula = value.toFormula()
-    }
 
     override fun copy(link: Boolean) = if (link) PaintExpression(this) else PaintExpression(formula)
 

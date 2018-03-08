@@ -39,9 +39,13 @@ abstract class RealShape(parent: ShapeParent)
 
     val scratches = ScratchList()
 
+    abstract val size: Dimension2Expression
+
     val lineWidth = DimensionExpression("2mm")
 
-    abstract val size: Dimension2Expression
+    val strokeCap = StrokeCapExpression(StrokeCap.ROUND.toFormula())
+
+    val strokeJoin = StrokeJoinExpression(StrokeJoin.ROUND.toFormula())
 
     val strokeColor = PaintExpression("BLACK")
 
@@ -61,6 +65,8 @@ abstract class RealShape(parent: ShapeParent)
 
     override fun postInit() {
         listenTo(lineWidth)
+        listenTo(strokeCap)
+        listenTo(strokeJoin)
         listenTo(strokeColor)
         listenTo(fillColor)
         super.postInit()
@@ -105,6 +111,8 @@ abstract class RealShape(parent: ShapeParent)
             newShape.size.copyFrom(size, link)
             newShape.strokeColor.copyFrom(strokeColor, link)
             newShape.fillColor.copyFrom(fillColor, link)
+            newShape.strokeCap.copyFrom(strokeCap, link)
+            newShape.strokeJoin.copyFrom(strokeJoin, link)
         }
     }
 
@@ -118,6 +126,8 @@ abstract class RealShape(parent: ShapeParent)
         list.add(MetaData("Size", size))
         list.add(MetaData("LineColor", strokeColor))
         list.add(MetaData("FillColor", fillColor))
+        list.add(MetaData("StrokeCap", strokeCap))
+        list.add(MetaData("StrokeJoin", strokeJoin))
     }
 
     fun addGeometry(geometry: Geometry) {

@@ -48,6 +48,8 @@ class PageView(val page: Page, val dc: DrawContext) {
                 dc.lineWidth(shape.lineWidth.value)
                 dc.lineColor(shape.strokeColor.value)
                 dc.fillColor(shape.fillColor.value)
+                dc.strokeJoin(shape.strokeJoin.value)
+                dc.strokeCap(shape.strokeCap.value)
 
                 shape.geometries.forEach { geometry ->
                     dc.beginPath()
