@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.controller.tools
 
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
+import uk.co.nickthecoder.fizzy.model.Color
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape1d
 import uk.co.nickthecoder.fizzy.model.history.CreateShape
@@ -27,7 +28,11 @@ import uk.co.nickthecoder.fizzy.model.history.CreateShape
 /**
  * Adds a Shape1d to the document by dragging.
  */
-class GrowShape1dTool(controller: Controller, val masterShape: Shape1d)
+class GrowShape1dTool(
+        controller: Controller,
+        val masterShape: Shape1d,
+        val strokeColor: Color?,
+        val fillColor: Color?)
     : Tool(controller) {
 
     override val cursor = ToolCursor.GROW
@@ -62,6 +67,9 @@ class GrowShape1dTool(controller: Controller, val masterShape: Shape1d)
 
             newShape.start.formula = connectFormula ?: start.toFormula()
             newShape.end.formula = event.point.toFormula()
+
+            strokeColor?.let { newShape.strokeColor.formula = it.toFormula() }
+            fillColor?.let { newShape.fillColor.formula = it.toFormula() }
 
             this.newShape = newShape
 

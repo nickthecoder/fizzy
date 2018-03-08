@@ -34,12 +34,14 @@ import uk.co.nickthecoder.fizzy.util.toFormula
 class FColorPicker(
         val mainWindow: MainWindow,
         val type: String = "fill",
+        defaultColor: Color = if (type == "fill") Color.WHITE else Color.BLACK,
         val findPaintExp: (Shape) -> PaintExpression?)
     : BuildableNode {
 
     val colorPicker = ColorPicker()
 
     init {
+        colorPicker.value = defaultColor
         colorPicker.addEventHandler(ActionEvent.ACTION) { onPickColor() }
     }
 

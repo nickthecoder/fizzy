@@ -23,7 +23,9 @@ import javafx.scene.Node
 import javafx.scene.control.Button
 import javafx.scene.control.ToolBar
 import uk.co.nickthecoder.fizzy.controller.Controller
-import uk.co.nickthecoder.fizzy.controller.tools.*
+import uk.co.nickthecoder.fizzy.controller.tools.DeleteTool
+import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
+import uk.co.nickthecoder.fizzy.controller.tools.StampShape2dTool
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.PrimitiveStencil
 import uk.co.nickthecoder.fizzy.model.RealShape
@@ -42,41 +44,59 @@ class FToolBar(val mainWindow: MainWindow)
     val controller: Controller?
         get() = drawingArea?.controller
 
-    val undoButton = Button("Undo")
-    val redoButton = Button("Redo")
-    val selectToolButton = Button("Select")
-    val deleteToolButton = Button("Delete")
-    val stampToolButton = Button("Stamp")
-    val boxToolButton = Button("Box")
-    val lineToolButton = Button("Line")
-    val pentagonToolButton = Button("Pentagon")
-    val starToolButton = Button("Star")
-    val debugButton = Button("Debug")
+    val sh = mainWindow.shortcutHelper
 
-    val lineColorPicker = FColorPicker(mainWindow, "stroke") { shape -> if (shape is RealShape) shape.strokeColor else null }
+
+    val primitives2d = arrayOf(
+
+            ShapePickerItem("primitive-box", "Box", PrimitiveStencil.box),
+
+            ShapePickerItem("primitive-poly3", "Triangle", PrimitiveStencil.poly3),
+            ShapePickerItem("primitive-poly4", "Diamond", PrimitiveStencil.poly4),
+            ShapePickerItem("primitive-poly5", "Pentagon", PrimitiveStencil.poly5),
+            ShapePickerItem("primitive-poly6", "Hexagon", PrimitiveStencil.poly6),
+            ShapePickerItem("primitive-poly7", "Heptagon", PrimitiveStencil.poly7),
+            ShapePickerItem("primitive-poly8", "Octagon", PrimitiveStencil.poly8),
+
+            ShapePickerItem("primitive-star3", "3 Pointed Star", PrimitiveStencil.star3),
+            ShapePickerItem("primitive-star4", "4 Pointed Star", PrimitiveStencil.star4),
+            ShapePickerItem("primitive-star5", "5 Pointed Star", PrimitiveStencil.star5),
+            ShapePickerItem("primitive-star6", "6 Pointed Star", PrimitiveStencil.star6)
+    )
+
+    val primitives1d = arrayOf(
+            ShapePickerItem("primitive-line", "Line", PrimitiveStencil.line)
+    )
+
+    val undoButton = ApplicationActions.EDIT_UNDO.createButton(sh) { document?.history?.undo() }
+    val redoButton = ApplicationActions.EDIT_REDO.createButton(sh) { document?.history?.redo() }
+
+    val selectToolButton = ApplicationActions.TOOL_SELECT.createButton(sh) { controller?.let { it.tool = SelectTool(it) } }
+
+    val primitive1dButton = ApplicationActions.TOOL_PRIMITIVE1D.create(sh, ShapePicker(mainWindow, primitives1d))
+    val primitive2dButton = ApplicationActions.TOOL_PRIMITIVE2D.create(sh, ShapePicker(mainWindow, primitives2d))
+
+    val deleteToolButton = ApplicationActions.TOOL_DELETE.createButton(sh) { controller?.let { it.tool = DeleteTool(it) } }
+
+    val debugButton = ApplicationActions.DEV_DEBUG.createButton(sh) { mainWindow.debug() }
+
+    val strokeColorPicker = FColorPicker(mainWindow, "stroke") { shape -> if (shape is RealShape) shape.strokeColor else null }
     val fillColorPicker = FColorPicker(mainWindow, "fill") { shape -> if (shape is RealShape) shape.fillColor else null }
+
+    // These don't belong here - move to a "Stencil" picker sometime.
+    val stampToolButton = Button("Stamp")
+
 
     override fun build(): Node {
 
-        undoButton.onAction = EventHandler { document?.history?.undo() }
-        redoButton.onAction = EventHandler { document?.history?.redo() }
-        selectToolButton.onAction = EventHandler { controller?.let { it.tool = SelectTool(it) } }
-        deleteToolButton.onAction = EventHandler { controller?.let { it.tool = DeleteTool(it) } }
         stampToolButton.onAction = EventHandler { controller?.let { it.tool = StampShape2dTool(it, PrimitiveStencil.pentangle) } }
-        boxToolButton.onAction = EventHandler { controller?.let { it.tool = GrowShape2dTool(it, PrimitiveStencil.box) } }
-        lineToolButton.onAction = EventHandler { controller?.let { it.tool = GrowShape1dTool(it, PrimitiveStencil.line) } }
-        pentagonToolButton.onAction = EventHandler { controller?.let { it.tool = GrowShape2dTool(it, PrimitiveStencil.pentagon) } }
-        starToolButton.onAction = EventHandler { controller?.let { it.tool = GrowShape2dTool(it, PrimitiveStencil.star) } }
-        debugButton.onAction = EventHandler { mainWindow.debug() }
 
         toolBar.items.addAll(
                 undoButton, redoButton,
-                selectToolButton, deleteToolButton,
-                stampToolButton,
-                boxToolButton, lineToolButton, pentagonToolButton, starToolButton,
+                selectToolButton, primitive1dButton, primitive2dButton, deleteToolButton,
                 debugButton,
-                lineColorPicker.build(), fillColorPicker.build()
-
+                strokeColorPicker.build(), fillColorPicker.build(),
+                stampToolButton
         )
 
         return toolBar

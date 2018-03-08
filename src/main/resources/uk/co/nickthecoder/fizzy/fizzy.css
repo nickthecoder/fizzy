@@ -7,10 +7,10 @@
 }
 
 .color-picker.stroke {
-    -fx-background-image: url(icons/stroke.png);
+    -fx-background-image: url(icons/format-stroke-color.png);
 }
 .color-picker.fill {
-    -fx-background-image: url(icons/fill.png);
+    -fx-background-image: url(icons/format-fill-color.png);
 }
 
 .color-picker.stroke .color-picker-label,

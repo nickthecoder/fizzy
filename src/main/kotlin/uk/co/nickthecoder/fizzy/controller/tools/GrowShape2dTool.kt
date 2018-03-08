@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.controller.tools
 
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
+import uk.co.nickthecoder.fizzy.model.Color
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape2d
 import uk.co.nickthecoder.fizzy.model.history.CreateShape
@@ -27,7 +28,11 @@ import uk.co.nickthecoder.fizzy.model.history.CreateShape
 /**
  * Adds a shape to the document using a click and drag to scale it to the desired size.
  */
-class GrowShape2dTool(controller: Controller, val masterShape: Shape2d)
+class GrowShape2dTool(
+        controller: Controller,
+        val masterShape: Shape2d,
+        val strokeColor: Color? = null,
+        val fillColor: Color? = null)
     : Tool(controller) {
 
     override val cursor: ToolCursor = ToolCursor.GROW
@@ -52,6 +57,9 @@ class GrowShape2dTool(controller: Controller, val masterShape: Shape2d)
             val newShape = masterShape.copyInto(controller.page, true)
             newShape.size.formula = Dimension2.ZERO_mm.toFormula()
             newShape.transform.pin.formula = it.toFormula()
+
+            strokeColor?.let { newShape.strokeColor.formula = it.toFormula() }
+            fillColor?.let { newShape.fillColor.formula = it.toFormula() }
 
             controller.page.document.history.makeChange(
                     CreateShape(newShape, controller.page)

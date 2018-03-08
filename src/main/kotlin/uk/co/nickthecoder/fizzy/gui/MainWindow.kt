@@ -39,9 +39,12 @@ class MainWindow(val stage: Stage) : Window() {
 
     val borderPane = BorderPane()
 
+    val shortcutHelper = ShortcutHelper("MainWindow", borderPane)
+
     val tabs = TabPane()
 
     val toolBar = FToolBar(this)
+
 
     val document: Document?
         get() = documentTab?.document

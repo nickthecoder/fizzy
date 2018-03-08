@@ -220,7 +220,7 @@ abstract class Shape(var parent: ShapeParent)
 
         fun createBox(
                 parent: ShapeParent,
-                size: String,
+                size: String = "Dimension2(100mm,100mm)",
                 at: String = "Dimension2(0mm,0mm)",
                 fillColor: String? = "WHITE")
                 : Shape2d {
@@ -251,8 +251,8 @@ abstract class Shape(var parent: ShapeParent)
         // Maybe when styles are in place, it will use a default style, rather than a hard coded value.
         fun createLine(
                 parent: ShapeParent,
-                start: String,
-                end: String,
+                start: String = "Dimension2(0mm,0mm)",
+                end: String = "Dimension2(10mm,10mm)",
                 lineWidth: String = "2mm")
                 : Shape1d {
 
@@ -273,7 +273,7 @@ abstract class Shape(var parent: ShapeParent)
         fun createPolygon(
                 parent: ShapeParent,
                 sides: Int,
-                radius: Dimension,
+                radius: Dimension = Dimension(60.0, Dimension.Units.mm),
                 star: Boolean = false,
                 fillColor: String? = "WHITE",
                 at: String = "Dimension2(0mm,0mm)")

@@ -27,24 +27,25 @@ object PrimitiveStencil {
 
     val page = Page(document)
 
-    val box = Shape.createBox(page, "Dimension2(200mm,100mm)")
+    val box = Shape.createBox(page)
 
-    val line = Shape.createLine(page, "Dimension2(0mm,0mm)", "Dimension2(10mm,0mm)")
+    val line = Shape.createLine(page)
 
-    val pentagon = Shape.createPolygon(page, 5, Dimension(60.0, Dimension.Units.mm))
+    val poly3 = Shape.createPolygon(page, 3)
+    val poly4 = Shape.createPolygon(page, 4)
+    val poly5 = Shape.createPolygon(page, 5)
+    val poly6 = Shape.createPolygon(page, 6)
+    val poly7 = Shape.createPolygon(page, 7)
+    val poly8 = Shape.createPolygon(page, 8)
 
-    val star = Shape.createPolygon(page, 5, Dimension(60.0, Dimension.Units.mm), star = true)
+    val star3 = Shape.createPolygon(page, 3, star = true)
+    val star4 = Shape.createPolygon(page, 4, star = true)
+    val star5 = Shape.createPolygon(page, 5, star = true)
+    val star6 = Shape.createPolygon(page, 6, star = true)
 
-    val pentangle = Shape.createPolygon(page, 5, Dimension(60.0, Dimension.Units.mm), star = true)
+    val pentangle = Shape.createPolygon(page, 5, star = true)
 
     init {
         pentangle.controlPoints[0].point.formula = pentangle.geometries[0].parts[4].point.value.toFormula()
-
-        page.children.add(box)
-        page.children.add(line)
-        page.children.add(pentagon)
-        page.children.add(star)
-        page.children.add(pentangle)
-
     }
 }

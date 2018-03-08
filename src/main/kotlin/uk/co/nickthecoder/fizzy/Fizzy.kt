@@ -21,6 +21,7 @@ package uk.co.nickthecoder.fizzy
 import javafx.application.Application
 import javafx.application.Platform
 import javafx.scene.Scene
+import javafx.scene.image.Image
 import javafx.stage.Stage
 import uk.co.nickthecoder.fizzy.gui.MainWindow
 import uk.co.nickthecoder.fizzy.model.*
@@ -64,6 +65,8 @@ class Fizzy : Application() {
 
     companion object {
 
+        private val imageMap = mutableMapOf<String, Image?>()
+
         fun start() {
             Application.launch(Fizzy::class.java)
         }
@@ -73,6 +76,16 @@ class Fizzy : Application() {
             scene.stylesheets.add(resource.toExternalForm())
         }
 
+        fun imageResource(name: String): Image? {
+            val image = imageMap[name]
+            if (image == null) {
+                val imageStream = Fizzy::class.java.getResourceAsStream(name)
+                val newImage = if (imageStream == null) null else Image(imageStream)
+                imageMap.put(name, newImage)
+                return newImage
+            }
+            return image
+        }
     }
 }
 
