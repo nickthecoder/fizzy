@@ -23,7 +23,7 @@ import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.util.toFormula
 
 class DoublePropType private constructor()
-    : PropType<Double>(Double::class) {
+    : PropType<Double>(Double::class.java) {
 
     companion object {
         val instance = DoublePropType()
@@ -33,17 +33,17 @@ class DoublePropType private constructor()
 class DoubleExpression
     : PropExpression<Double> {
 
-    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Double::class, context)
+    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Double::class.java, context)
 
-    constructor(other: DoubleExpression) : super(other, Double::class)
+    constructor(other: DoubleExpression) : super(other, Double::class.java)
 
-    override val defaultValue = 0.0
+    override val defaultValue: Double = java.lang.Double.parseDouble(".0")
 
     override fun constant(value: Double) {
-        formula = value.toFormula()
+        formula = value.toDouble().toFormula()
     }
 
     override fun copy(link: Boolean) = if (link) DoubleExpression(this) else DoubleExpression(formula, constantsContext)
 
-    override fun valueString() = value.toFormula()
+    override fun valueString() = value.toDouble().toFormula()
 }

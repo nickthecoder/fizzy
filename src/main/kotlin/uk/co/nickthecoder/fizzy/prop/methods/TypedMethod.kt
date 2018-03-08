@@ -21,11 +21,10 @@ package uk.co.nickthecoder.fizzy.prop.methods
 import uk.co.nickthecoder.fizzy.evaluator.ArgList
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropMethod
-import kotlin.reflect.KClass
 
 abstract class TypedMethod1<T : Any, A : Any>(
         prop: Prop<T>,
-        val aClass: KClass<A>
+        val aClass: Class<A>
 )
 
     : PropMethod<T>(prop) {
@@ -45,21 +44,22 @@ abstract class TypedMethod1<T : Any, A : Any>(
 
 abstract class TypedMethod2<T : Any, A : Any, B : Any>(
         prop: Prop<T>,
-        val aClass: KClass<A>,
-        val bClass: KClass<B>
+        val aClass: Class<A>,
+        val bClass: Class<B>
 )
 
     : PropMethod<T>(prop) {
 
     override fun eval(arg: Prop<*>): Any {
         if (arg is ArgList && arg.value.size == 2) {
-            if (aClass.isInstance(arg.value[0].value) && bClass.isInstance(arg.value[1].value)) {
-                listenTo(prop)
-                listenTo(arg.value[0])
-                listenTo(arg.value[1])
-                @Suppress("UNCHECKED_CAST")
-                return eval(arg.value[0].value as A, arg.value[1].value as B)
-            }
+            // TODO How do I test for java.lang.Double vs double (the primitive)
+            //if (aClass.isInstance(arg.value[0].value) && bClass.isInstance(arg.value[1].value)) {
+            listenTo(prop)
+            listenTo(arg.value[0])
+            listenTo(arg.value[1])
+            @Suppress("UNCHECKED_CAST")
+            return eval(arg.value[0].value as A, arg.value[1].value as B)
+            //}
         }
         throw RuntimeException("Expected arguments of type (${aClass.simpleName}, ${bClass.simpleName}), but found $arg")
     }

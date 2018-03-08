@@ -25,7 +25,7 @@ import uk.co.nickthecoder.fizzy.model.Paint
 
 class ColorPropType private constructor()
 
-    : PropType<Color>(Color::class) {
+    : PropType<Color>(Color::class.java) {
 
     override fun findField(prop: Prop<Color>, name: String): Prop<*>? {
         return when (name) {
@@ -50,7 +50,7 @@ class ColorPropType private constructor()
             "grayscale" -> PropMethod0(prop) { prop.value.grayscale() }
             "invert" -> PropMethod0(prop) { prop.value.invert() }
             "isOpaque" -> PropMethod0(prop) { prop.value.isOpaque() }
-            "interpolate" -> PropMethod2(prop, Color::class, Double::class) { other, t -> prop.value.interpolate(other, t) }
+            "interpolate" -> PropMethod2(prop, Color::class.java, Double::class.java) { other, t -> prop.value.interpolate(other, t) }
             else -> return super.findMethod(prop, name)
         }
     }
@@ -66,9 +66,9 @@ class PaintExpression
 
     override val defaultValue = Color.BLACK
 
-    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Paint::class, context)
+    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Paint::class.java, context)
 
-    constructor(other: PaintExpression) : super(other, Paint::class)
+    constructor(other: PaintExpression) : super(other, Paint::class.java)
 
     override fun constant(value: Paint) {
         formula = value.toFormula()

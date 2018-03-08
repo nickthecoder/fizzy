@@ -23,7 +23,7 @@ import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.util.toFormula
 
 class BooleanPropType private constructor()
-    : PropType<Boolean>(Boolean::class) {
+    : PropType<Boolean>(Boolean::class.java) {
 
     companion object {
         val instance = BooleanPropType()
@@ -33,9 +33,9 @@ class BooleanPropType private constructor()
 class BooleanExpression
     : PropExpression<Boolean> {
 
-    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Boolean::class, context)
+    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Boolean::class.java, context)
 
-    constructor(other: BooleanExpression) : super(other.formula, Boolean::class)
+    constructor(other: BooleanExpression) : super(other.formula, Boolean::class.java)
 
     override val defaultValue = false
 

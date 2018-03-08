@@ -23,7 +23,7 @@ import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.util.toFormula
 
 class StringPropType private constructor()
-    : PropType<String>(String::class) {
+    : PropType<String>(String::class.java) {
 
     override fun findField(prop: Prop<String>, name: String): Prop<*>? {
         return when (name) {
@@ -34,7 +34,7 @@ class StringPropType private constructor()
 
     override fun findMethod(prop: Prop<String>, name: String): PropMethod<String>? {
         return when (name) {
-            "head" -> PropMethod1(prop, Double::class) { a ->
+            "head" -> PropMethod1(prop, Double::class.java) { a ->
                 val intA = a.toInt()
                 if (prop.value.length <= intA) {
                     prop.value
@@ -42,7 +42,7 @@ class StringPropType private constructor()
                     prop.value.substring(0, a.toInt())
                 }
             }
-            "tail" -> PropMethod1(prop, Double::class) { a ->
+            "tail" -> PropMethod1(prop, Double::class.java) { a ->
                 val length = prop.value.length
                 val intA = a.toInt()
                 if (length <= intA) {
@@ -51,7 +51,7 @@ class StringPropType private constructor()
                     prop.value.substring(length - intA, length)
                 }
             }
-            "substring" -> PropMethod2(prop, Double::class, Double::class) { a, b ->
+            "substring" -> PropMethod2(prop, Double::class.java, Double::class.java) { a, b ->
                 var intA = a.toInt()
                 val intB = b.toInt()
                 val length = prop.value.length
@@ -84,9 +84,9 @@ class StringPropType private constructor()
 class StringExpression
     : PropExpression<String> {
 
-    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, String::class, context)
+    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, String::class.java, context)
 
-    constructor(other: StringExpression) : super(other, String::class)
+    constructor(other: StringExpression) : super(other, String::class.java)
 
     override val defaultValue = ""
 

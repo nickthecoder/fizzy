@@ -22,9 +22,8 @@ import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.collection.FList
 import java.util.regex.Pattern
-import kotlin.reflect.KClass
 
-abstract class PropType<T : Any>(val klass: KClass<*>) {
+abstract class PropType<T : Any>(val klass: Class<*>) {
 
     open fun findField(prop: Prop<T>, name: String): Prop<*>? {
 
@@ -68,23 +67,23 @@ abstract class PropType<T : Any>(val klass: KClass<*>) {
     }
 
     companion object {
-        val propertyTypes = mutableMapOf<KClass<*>, PropType<*>>()
+        val propertyTypes = mutableMapOf<Class<*>, PropType<*>>()
 
         private val nameNumber = Pattern.compile("(.*?)([0-9]+)")
 
         fun field(prop: Prop<*>, fieldName: String): Prop<*>? {
-            return propertyTypes[prop.value.javaClass.kotlin]?.findField2(prop, fieldName)
+            return propertyTypes[prop.value.javaClass]?.findField2(prop, fieldName)
         }
 
         fun method(prop: Prop<*>, methodName: String): PropMethod<*>? {
-            return propertyTypes[prop.value.javaClass.kotlin]?.findMethod2(prop, methodName)
+            return propertyTypes[prop.value.javaClass]?.findMethod2(prop, methodName)
         }
 
         fun put(propertyType: PropType<*>) {
             propertyTypes.put(propertyType.klass, propertyType)
         }
 
-        fun put(propertyType: PropType<*>, klass: KClass<*>) {
+        fun put(propertyType: PropType<*>, klass: Class<*>) {
             propertyTypes.put(klass, propertyType)
         }
     }

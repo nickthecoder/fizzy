@@ -25,7 +25,7 @@ import java.util.regex.Pattern
 
 
 class FListPropType private constructor()
-    : PropType<FList<Any>>(FList::class) {
+    : PropType<FList<Any>>(FList::class.java) {
 
     override fun findField(prop: Prop<FList<Any>>, name: String): Prop<*>? {
         return when (name) {

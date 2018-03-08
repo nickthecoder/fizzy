@@ -1,10 +1,6 @@
 To Do
 =====
 
-Remove NamedColors, but keep BLACK and WHITE.
-    Add BLACK and WHITE as constants.
-    Remove Color.<colorName> feature.
-
 For Version 1
 -------------
 
@@ -16,7 +12,6 @@ Load, Save
 
 Stencils
 
-Simple Line Color and Fill Color dialogs
 Line Width
 
 Edit a shape within a stencil

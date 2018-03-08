@@ -12,7 +12,7 @@ Technology
 Fizzy is written in Kotlin, a JVM language. Currently only tested on Linux, but should work on Windows, MacOS etc.
 I'm currently targeting 1.8 of the JVM, and 1.1.2-2 of Kotlin.
 
-The GUI uses JavaFX 1.2.
+The GUI uses JavaFX 8.
 
 The build system is Gradle.
 
@@ -21,10 +21,6 @@ That isn't as bad as it sounds though, because Fizzy has been designed so that e
 without a specialised GUI testing framework.
 
 Saving a document isn't implement yet! When it does, I'll probable use : com.eclipsesource.minimal-json:minimal-json
-
-The only other dependency is another of my projects called "paratask". This may be removed soon.
-I'm only using its "TabPane" component at the moment, and if I don't use any of its other classes, then I'll
-revert back to using the standard JavaFX TabPane.
 
 I use IntelliJ for development, but there are no dependencies.
 Eclipse, vi(m), emacs, notepad  (;-) etc will work just fine.

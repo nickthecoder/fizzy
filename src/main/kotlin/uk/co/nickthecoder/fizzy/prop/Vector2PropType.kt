@@ -23,7 +23,7 @@ import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Vector2
 
-class Vector2PropType private constructor() : PropType<Vector2>(Vector2::class) {
+class Vector2PropType private constructor() : PropType<Vector2>(Vector2::class.java) {
 
     override fun findField(prop: Prop<Vector2>, name: String): Prop<*>? {
         return when (name) {
@@ -38,7 +38,7 @@ class Vector2PropType private constructor() : PropType<Vector2>(Vector2::class) 
     override fun findMethod(prop: Prop<Vector2>, name: String): PropMethod<Vector2>? {
         return when (name) {
             "normalise" -> PropMethod0(prop) { prop.value.normalise() }
-            "rotate" -> PropMethod1(prop, Angle::class) { prop.value.rotate(it) }
+            "rotate" -> PropMethod1(prop, Angle::class.java) { prop.value.rotate(it) }
             else -> null
         }
     }
@@ -51,9 +51,9 @@ class Vector2PropType private constructor() : PropType<Vector2>(Vector2::class) 
 class Vector2Expression
     : PropExpression<Vector2> {
 
-    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Vector2::class, context)
+    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Vector2::class.java, context)
 
-    constructor(other: Vector2Expression) : super(other, Vector2::class)
+    constructor(other: Vector2Expression) : super(other, Vector2::class.java)
 
     constructor(v: Vector2) : this(v.toFormula())
 

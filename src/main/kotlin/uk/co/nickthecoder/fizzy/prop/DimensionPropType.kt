@@ -23,7 +23,7 @@ import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Dimension
 
 class DimensionPropType private constructor()
-    : PropType<Dimension>(Dimension::class) {
+    : PropType<Dimension>(Dimension::class.java) {
 
     override fun findField(prop: Prop<Dimension>, name: String): Prop<*>? {
         return when (name) {
@@ -55,9 +55,9 @@ class DimensionPropType private constructor()
 class DimensionExpression
     : PropExpression<Dimension> {
 
-    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Dimension::class, context)
+    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Dimension::class.java, context)
 
-    constructor(other: DimensionExpression) : super(other, Dimension::class)
+    constructor(other: DimensionExpression) : super(other, Dimension::class.java)
 
     override val defaultValue = Dimension.ZERO_mm
 

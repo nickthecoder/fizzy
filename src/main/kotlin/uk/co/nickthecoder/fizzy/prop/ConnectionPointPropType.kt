@@ -21,7 +21,7 @@ package uk.co.nickthecoder.fizzy.prop
 import uk.co.nickthecoder.fizzy.model.ConnectionPoint
 
 class ConnectionPointPropType private constructor()
-    : PropType<ConnectionPoint>(ConnectionPoint::class) {
+    : PropType<ConnectionPoint>(ConnectionPoint::class.java) {
 
     override fun findField(prop: Prop<ConnectionPoint>, name: String): Prop<*>? {
         return when (name) {

@@ -37,9 +37,9 @@ class TestPolygon : MyTestCase() {
 
         // Rotating poly2 should match the un-rotated poly1
         poly2.transform.rotation.formula = (Angle.TAU / 5.0).toFormula()
-        assertSamePoint(poly2.geometries[0].parts[0], poly1.geometries[0].parts[1])
+        assertSamePoint(poly2, poly2.geometries[0].parts[0], poly1, poly1.geometries[0].parts[1])
         poly2.transform.rotation.formula = (Angle.TAU / 2.5).toFormula()
-        assertSamePoint(poly2.geometries[0].parts[0], poly1.geometries[0].parts[2])
+        assertSamePoint(poly2, poly2.geometries[0].parts[0], poly1, poly1.geometries[0].parts[2])
     }
 
     @Test
@@ -57,12 +57,12 @@ class TestPolygon : MyTestCase() {
 
         // Rotating poly2 should match the un-rotated poly1
         poly2.transform.rotation.formula = (Angle.TAU / 5.0).toFormula()
-        assertSamePoint(poly2.geometries[0].parts[0], poly1.geometries[0].parts[2])
-        assertSamePoint(poly2.geometries[0].parts[1], poly1.geometries[0].parts[3])
+        assertSamePoint(poly2, poly2.geometries[0].parts[0], poly1, poly1.geometries[0].parts[2])
+        assertSamePoint(poly2, poly2.geometries[0].parts[1], poly1, poly1.geometries[0].parts[3])
 
         poly2.transform.rotation.formula = (Angle.TAU / 2.5).toFormula()
-        assertSamePoint(poly2.geometries[0].parts[0], poly1.geometries[0].parts[4])
-        assertSamePoint(poly2.geometries[0].parts[1], poly1.geometries[0].parts[5])
+        assertSamePoint(poly2, poly2.geometries[0].parts[0], poly1, poly1.geometries[0].parts[4])
+        assertSamePoint(poly2, poly2.geometries[0].parts[1], poly1, poly1.geometries[0].parts[5])
 
         // Move the control point to the 1st geometry, so we should end up with a regular polygon.
         poly1.controlPoints[0].point.formula = poly1.geometries[0].parts[0].point.value.toFormula()

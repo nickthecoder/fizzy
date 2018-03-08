@@ -24,7 +24,7 @@ import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 
 
 class GeometryPropType private constructor()
-    : PropType<Geometry>(Geometry::class) {
+    : PropType<Geometry>(Geometry::class.java) {
 
     override fun findField(prop: Prop<Geometry>, name: String): Prop<*>? {
 
@@ -52,7 +52,7 @@ class GeometryPropType private constructor()
 }
 
 class MoveToPropType private constructor()
-    : PropType<MoveTo>(MoveTo::class) {
+    : PropType<MoveTo>(MoveTo::class.java) {
 
     override fun findField(prop: Prop<MoveTo>, name: String): Prop<*>? {
         return when (name) {
@@ -67,7 +67,7 @@ class MoveToPropType private constructor()
 }
 
 class LineToPropType private constructor()
-    : PropType<LineTo>(LineTo::class) {
+    : PropType<LineTo>(LineTo::class.java) {
 
     override fun findField(prop: Prop<LineTo>, name: String): Prop<*>? {
         return when (name) {

@@ -21,7 +21,7 @@ package uk.co.nickthecoder.fizzy.prop
 import uk.co.nickthecoder.fizzy.model.ControlPoint
 
 class ControlPointPropType private constructor()
-    : PropType<ControlPoint>(ControlPoint::class) {
+    : PropType<ControlPoint>(ControlPoint::class.java) {
 
     override fun findField(prop: Prop<ControlPoint>, name: String): Prop<*>? {
         return when (name) {

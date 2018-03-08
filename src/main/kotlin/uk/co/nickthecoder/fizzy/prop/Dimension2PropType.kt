@@ -24,7 +24,7 @@ import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension2
 
 class Dimension2PropType private constructor()
-    : PropType<Dimension2>(Dimension2::class) {
+    : PropType<Dimension2>(Dimension2::class.java) {
 
     override fun findField(prop: Prop<Dimension2>, name: String): Prop<*>? {
 
@@ -40,7 +40,7 @@ class Dimension2PropType private constructor()
     override fun findMethod(prop: Prop<Dimension2>, name: String): PropMethod<Dimension2>? {
         return when (name) {
             "normalise" -> PropMethod0(prop) { prop.value.normalise() }
-            "rotate" -> PropMethod1(prop, Angle::class) { prop.value.rotate(it) }
+            "rotate" -> PropMethod1(prop, Angle::class.java) { prop.value.rotate(it) }
             else -> null
         }
     }
@@ -53,11 +53,11 @@ class Dimension2PropType private constructor()
 class Dimension2Expression
     : PropExpression<Dimension2> {
 
-    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Dimension2::class, context)
+    constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Dimension2::class.java, context)
 
     constructor(pointValue: Dimension2, context: EvaluationContext = constantsContext) : this(pointValue.toFormula(), context)
 
-    constructor(other: Dimension2Expression) : super(other, Dimension2::class)
+    constructor(other: Dimension2Expression) : super(other, Dimension2::class.java)
 
     override val defaultValue = Dimension2.ZERO_mm
 

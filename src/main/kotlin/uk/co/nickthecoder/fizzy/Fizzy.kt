@@ -49,7 +49,7 @@ class Fizzy : Application() {
 
         box2.addConnectionPoint(ConnectionPoint("(Geometry1.Point1 + Geometry1.Point2) / 2"))
         box2.addConnectionPoint(ConnectionPoint("(Geometry1.Point3 + Geometry1.Point4) / 2"))
-        box2.fillColor.formula = "Color.grey"
+        box2.fillColor.formula = "BLACK"
 
         val line = Shape.createLine(page, "Dimension2(10cm,11cm)", "Dimension2(10cm,13cm)")
         page.children.add(line)

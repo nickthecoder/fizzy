@@ -33,8 +33,6 @@ class TestDimension : MyTestCase() {
     @Test
     fun testMaths() {
 
-        assertEquals(1.0, Dimension.Units.mm.scale, tiny) // This may change!
-
         val a = two_mm + three_mm
         assertEquals(1.0, a.power, tiny)
         assertEquals(5.0, a.inDefaultUnits, tiny) // This may change!

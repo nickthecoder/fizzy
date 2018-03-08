@@ -222,7 +222,7 @@ abstract class Shape(var parent: ShapeParent)
                 parent: ShapeParent,
                 size: String,
                 at: String = "Dimension2(0mm,0mm)",
-                fillColor: String? = "Color.white")
+                fillColor: String? = "WHITE")
                 : Shape2d {
 
             val box = Shape2d.create(parent)
@@ -275,7 +275,7 @@ abstract class Shape(var parent: ShapeParent)
                 sides: Int,
                 radius: Dimension,
                 star: Boolean = false,
-                fillColor: String? = "Color.white",
+                fillColor: String? = "WHITE",
                 at: String = "Dimension2(0mm,0mm)")
                 : Shape2d {
 

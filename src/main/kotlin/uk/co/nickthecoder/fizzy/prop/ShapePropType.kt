@@ -23,10 +23,8 @@ import uk.co.nickthecoder.fizzy.prop.methods.ConnectAlong
 import uk.co.nickthecoder.fizzy.prop.methods.ConnectTo
 import uk.co.nickthecoder.fizzy.prop.methods.FindScratch
 import uk.co.nickthecoder.fizzy.prop.methods.FindShape
-import kotlin.reflect.KClass
 
-
-abstract class ShapePropType<T : Shape>(klass: KClass<T>)
+abstract class ShapePropType<T : Shape>(klass: Class<T>)
     : PropType<T>(klass) {
 
     override fun findField(prop: Prop<T>, name: String): Prop<*>? {
@@ -64,7 +62,7 @@ abstract class ShapePropType<T : Shape>(klass: KClass<T>)
 
 }
 
-abstract class RealShapePropType<T : RealShape>(klass: KClass<T>)
+abstract class RealShapePropType<T : RealShape>(klass: Class<T>)
     : ShapePropType<T>(klass) {
 
     override fun findField(prop: Prop<T>, name: String): Prop<*>? {
@@ -91,7 +89,7 @@ abstract class RealShapePropType<T : RealShape>(klass: KClass<T>)
 }
 
 class Shape1dPropType private constructor()
-    : RealShapePropType<Shape1d>(Shape1d::class) {
+    : RealShapePropType<Shape1d>(Shape1d::class.java) {
 
     override fun findField(prop: Prop<Shape1d>, name: String): Prop<*>? {
         return when (name) {
@@ -113,7 +111,7 @@ class Shape1dPropType private constructor()
 }
 
 class Shape2dPropType private constructor()
-    : RealShapePropType<Shape2d>(Shape2d::class) {
+    : RealShapePropType<Shape2d>(Shape2d::class.java) {
 
     override fun findField(prop: Prop<Shape2d>, name: String): Prop<*>? {
         return when (name) {
@@ -128,7 +126,7 @@ class Shape2dPropType private constructor()
 }
 
 class ShapeGroupPropType private constructor()
-    : ShapePropType<ShapeGroup>(ShapeGroup::class) {
+    : ShapePropType<ShapeGroup>(ShapeGroup::class.java) {
 
     companion object {
         val instance = ShapeGroupPropType()

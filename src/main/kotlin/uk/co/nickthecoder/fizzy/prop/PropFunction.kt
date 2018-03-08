@@ -23,7 +23,6 @@ import uk.co.nickthecoder.fizzy.model.Color
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Vector2
-import kotlin.reflect.KClass
 
 /**
  * See [DummyPropType]
@@ -35,7 +34,7 @@ class Dummy
  * Prop<[Dummy]> (and is is just ignored!
  */
 class DummyPropType private constructor()
-    : PropType<Dummy>(Dummy::class) {
+    : PropType<Dummy>(Dummy::class.java) {
 
     override fun findField(prop: Prop<Dummy>, name: String): PropField<Dummy>? {
         return null
@@ -43,25 +42,25 @@ class DummyPropType private constructor()
 
     override fun findMethod(prop: Prop<Dummy>, name: String): PropMethod<Dummy>? {
         return when (name) {
-            "abs" -> PropFunction1(Double::class) { Math.abs(it) }
-            "ceil" -> PropFunction1(Double::class) { Math.ceil(it) }
-            "floor" -> PropFunction1(Double::class) { Math.floor(it) }
-            "exp" -> PropFunction1(Double::class) { Math.exp(it) }
-            "ln" -> PropFunction1(Double::class) { Math.log(it) }
-            "log" -> PropFunction1(Double::class) { Math.log10(it) }
-            "sqrt" -> PropFunction1(Double::class) { Math.sqrt(it) }
+            "abs" -> PropFunction1(Double::class.java) { Math.abs(it) }
+            "ceil" -> PropFunction1(Double::class.java) { Math.ceil(it) }
+            "floor" -> PropFunction1(Double::class.java) { Math.floor(it) }
+            "exp" -> PropFunction1(Double::class.java) { Math.exp(it) }
+            "ln" -> PropFunction1(Double::class.java) { Math.log(it) }
+            "log" -> PropFunction1(Double::class.java) { Math.log10(it) }
+            "sqrt" -> PropFunction1(Double::class.java) { Math.sqrt(it) }
 
             "if" -> IfFunction()
 
-            "Vector2" -> PropFunction2(Double::class, Double::class) { x, y -> Vector2(x, y) }
-            "Dimension2" -> PropFunction2(Dimension::class, Dimension::class) { x, y -> Dimension2(x, y) }
+            "Vector2" -> PropFunction2(Double::class.java, Double::class.java) { x, y -> Vector2(x, y) }
+            "Dimension2" -> PropFunction2(Dimension::class.java, Dimension::class.java) { x, y -> Dimension2(x, y) }
 
-            "WebColor" -> PropFunction1(String::class) { Color.web(it) }
-            "WebColorA" -> PropFunction2(String::class, Double::class) { str, opacity -> Color.web(str, opacity) }
-            "RGB" -> PropFunction3(Double::class, Double::class, Double::class) { r, g, b -> Color(clamp0_1(r), clamp0_1(g), clamp0_1(b)) }
-            "RGBA" -> PropFunction4(Double::class, Double::class, Double::class, Double::class) { r, g, b, a -> Color(clamp0_1(r), clamp0_1(g), clamp0_1(b), clamp0_1(a)) }
-            "HSB" -> PropFunction3(Double::class, Double::class, Double::class) { h, s, b -> Color.hsb(h, clamp0_1(s), clamp0_1(b)) }
-            "HSBA" -> PropFunction4(Double::class, Double::class, Double::class, Double::class) { h, s, b, a -> Color.hsb(h, clamp0_1(s), clamp0_1(b), clamp0_1(a)) }
+            "WebColor" -> PropFunction1(String::class.java) { Color.web(it) }
+            "WebColorA" -> PropFunction2(String::class.java, Double::class.java) { str, opacity -> Color.web(str, opacity) }
+            "RGB" -> PropFunction3(Double::class.java, Double::class.java, Double::class.java) { r, g, b -> Color(clamp0_1(r), clamp0_1(g), clamp0_1(b)) }
+            "RGBA" -> PropFunction4(Double::class.java, Double::class.java, Double::class.java, Double::class.java) { r, g, b, a -> Color(clamp0_1(r), clamp0_1(g), clamp0_1(b), clamp0_1(a)) }
+            "HSB" -> PropFunction3(Double::class.java, Double::class.java, Double::class.java) { h, s, b -> Color.hsb(h, clamp0_1(s), clamp0_1(b)) }
+            "HSBA" -> PropFunction4(Double::class.java, Double::class.java, Double::class.java, Double::class.java) { h, s, b, a -> Color.hsb(h, clamp0_1(s), clamp0_1(b), clamp0_1(a)) }
             else -> null
         }
     }
@@ -79,16 +78,16 @@ fun clamp0_360(v: Double) = Math.min(1.0, Math.max(0.0, v))
  */
 val dummyInstance = PropConstant(Dummy())
 
-class PropFunction1<A : Any>(klassA: KClass<A>, lambda: (A) -> Any)
+class PropFunction1<A : Any>(klassA: Class<A>, lambda: (A) -> Any)
     : PropMethod1<Dummy, A>(dummyInstance, klassA, lambda)
 
-class PropFunction2<A : Any, B : Any>(klassA: KClass<A>, klassB: KClass<B>, lambda: (A, B) -> Any)
+class PropFunction2<A : Any, B : Any>(klassA: Class<A>, klassB: Class<B>, lambda: (A, B) -> Any)
     : PropMethod2<Dummy, A, B>(dummyInstance, klassA, klassB, lambda)
 
-class PropFunction3<A : Any, B : Any, C : Any>(klassA: KClass<A>, klassB: KClass<B>, klassC: KClass<C>, lambda: (A, B, C) -> Any)
+class PropFunction3<A : Any, B : Any, C : Any>(klassA: Class<A>, klassB: Class<B>, klassC: Class<C>, lambda: (A, B, C) -> Any)
     : PropMethod3<Dummy, A, B, C>(dummyInstance, klassA, klassB, klassC, lambda)
 
-class PropFunction4<A : Any, B : Any, C : Any, D : Any>(klassA: KClass<A>, klassB: KClass<B>, klassC: KClass<C>, klassD: KClass<D>, lambda: (A, B, C, D) -> Any)
+class PropFunction4<A : Any, B : Any, C : Any, D : Any>(klassA: Class<A>, klassB: Class<B>, klassC: Class<C>, klassD: Class<D>, lambda: (A, B, C, D) -> Any)
     : PropMethod4<Dummy, A, B, C, D>(dummyInstance, klassA, klassB, klassC, klassD, lambda)
 
 class IfFunction : PropMethod<Dummy>(dummyInstance) {

@@ -100,9 +100,9 @@ abstract class MyTestCase : TestCase() {
         return line
     }
 
-    fun assertSamePoint(a: GeometryPart, b: GeometryPart) {
-        val localA = a.geometry!!.shape!!.fromLocalToPage.value * a.point.value
-        val localB = b.geometry!!.shape!!.fromLocalToPage.value * b.point.value
+    fun assertSamePoint(shapeA : Shape, a: GeometryPart, shapeB : Shape, b: GeometryPart) {
+        val localA = shapeA.fromLocalToPage.value * a.point.value
+        val localB = shapeB.fromLocalToPage.value * b.point.value
         TestCase.assertEquals(localA.x.inDefaultUnits, localB.x.inDefaultUnits, tiny)
         TestCase.assertEquals(localA.y.inDefaultUnits, localB.y.inDefaultUnits, tiny)
     }

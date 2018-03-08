@@ -23,7 +23,7 @@ import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Angle
 
 class AnglePropType private constructor()
-    : PropType<Angle>(Angle::class) {
+    : PropType<Angle>(Angle::class.java) {
 
     override fun findField(prop: Prop<Angle>, name: String): Prop<*>? {
         return when (name) {
@@ -71,9 +71,9 @@ class AnglePropType private constructor()
 class AngleExpression
     : PropExpression<Angle> {
 
-    constructor(formula: String, context: EvaluationContext = constantsContext) : super(formula, Angle::class, context)
+    constructor(formula: String, context: EvaluationContext = constantsContext) : super(formula, Angle::class.java, context)
 
-    constructor(other: AngleExpression) : super(other.formula, Angle::class)
+    constructor(other: AngleExpression) : super(other.formula, Angle::class.java)
 
     override val defaultValue = Angle.ZERO
 

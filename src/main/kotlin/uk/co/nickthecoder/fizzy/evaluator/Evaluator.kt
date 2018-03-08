@@ -362,6 +362,8 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
         init {
             PropType.put(AnglePropType.instance)
             PropType.put(BooleanPropType.instance)
+            PropType.put(BooleanPropType.instance, Boolean::class.java)
+            PropType.put(BooleanPropType.instance)
             PropType.put(ConnectionPointPropType.instance)
             PropType.put(ColorPropType.instance)
             PropType.put(ControlPointPropType.instance)
@@ -370,7 +372,7 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
             PropType.put(DoublePropType.instance)
             PropType.put(DummyPropType.instance)
             PropType.put(FListPropType.instance)
-            PropType.put(FListPropType.instance, MutableFList::class)
+            PropType.put(FListPropType.instance, MutableFList::class.java)
             PropType.put(GeometryPropType.instance)
             PropType.put(LineToPropType.instance)
             PropType.put(MoveToPropType.instance)

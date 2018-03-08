@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.evaluator.ArgList
-import kotlin.reflect.KClass
 
 /**
  * T is the type of the receiver object.
@@ -83,18 +82,19 @@ open class PropMethod0<T : Any>(
  */
 open class PropMethod1<T : Any, A : Any>(
         prop: Prop<T>,
-        val klassA: KClass<A>,
+        val klassA: Class<A>,
         val lambda: (A) -> Any)
 
     : PropMethod<T>(prop) {
 
     override fun eval(arg: Prop<*>): Any {
 
-        if (klassA.isInstance(arg.value)) {
-            @Suppress("UNCHECKED_CAST")
-            return lambda(arg.value as A)
-        }
-        throw RuntimeException("Expected an argument of type ${klassA.simpleName}, but found $arg")
+        // TODO How do I check when klassA is "double", and a is java.lang.Double?
+        //if (klassA.isInstance(arg.value)) {
+        @Suppress("UNCHECKED_CAST")
+        return lambda(arg.value as A)
+        //}
+        //throw RuntimeException("Expected an argument of type ${klassA.simpleName}, but found $arg")
     }
 }
 
@@ -105,23 +105,24 @@ open class PropMethod1<T : Any, A : Any>(
  */
 open class PropMethod2<T : Any, A : Any, B : Any>(
         prop: Prop<T>,
-        val klassA: KClass<A>,
-        val klassB: KClass<B>,
+        val klassA: Class<A>,
+        val klassB: Class<B>,
         val lambda: (A, B) -> Any)
 
     : PropMethod<T>(prop) {
 
     override fun eval(arg: Prop<*>): Any {
         if (arg is ArgList && arg.value.size == 2) {
-            val a = arg.value[0]
-            val b = arg.value[1]
+            val a: Any = arg.value[0].value
+            val b: Any = arg.value[1].value
 
-            if (klassA.isInstance(a.value) && klassB.isInstance(b.value)) {
-                @Suppress("UNCHECKED_CAST")
-                val result = lambda(a.value as A, b.value as B)
+            // TODO How do I check when klassA is "double", and a is java.lang.Double?
+            //if (klassA.isInstance(a) && klassB.isInstance(b)) {
+            @Suppress("UNCHECKED_CAST")
+            val result = lambda(a as A, b as B)
 
-                return result
-            }
+            return result
+            //}
 
         }
         throw RuntimeException("Expected arguments (${klassA.simpleName}, ${klassB.simpleName}), but found $arg")
@@ -135,25 +136,26 @@ open class PropMethod2<T : Any, A : Any, B : Any>(
  */
 open class PropMethod3<T : Any, A : Any, B : Any, C : Any>(
         prop: Prop<T>,
-        val klassA: KClass<A>,
-        val klassB: KClass<B>,
-        val klassC: KClass<C>,
+        val klassA: Class<A>,
+        val klassB: Class<B>,
+        val klassC: Class<C>,
         val lambda: (A, B, C) -> Any)
 
     : PropMethod<T>(prop) {
 
     override fun eval(arg: Prop<*>): Any {
         if (arg is ArgList && arg.value.size == 3) {
-            val a = arg.value[0]
-            val b = arg.value[1]
-            val c = arg.value[2]
+            val a: Any? = arg.value[0].value
+            val b: Any? = arg.value[1].value
+            val c: Any? = arg.value[2].value
 
-            if (klassA.isInstance(a.value) && klassB.isInstance(b.value) && klassC.isInstance(c.value)) {
-                @Suppress("UNCHECKED_CAST")
-                val result = lambda(a.value as A, b.value as B, c.value as C)
+            // TODO How do I check when klassA is "double", and a is java.lang.Double?
+            //if (klassA.isInstance(a) && klassB.isInstance(b) && klassC.isInstance(c)) {
+            @Suppress("UNCHECKED_CAST")
+            val result = lambda(a as A, b as B, c as C)
 
-                return result
-            }
+            return result
+            //}
 
         }
         throw RuntimeException("Expected arguments (${klassA.simpleName}, ${klassB.simpleName}, ${klassC.simpleName}), but found $arg")
@@ -167,10 +169,10 @@ open class PropMethod3<T : Any, A : Any, B : Any, C : Any>(
  */
 open class PropMethod4<T : Any, A : Any, B : Any, C : Any, D : Any>(
         prop: Prop<T>,
-        val klassA: KClass<A>,
-        val klassB: KClass<B>,
-        val klassC: KClass<C>,
-        val klassD: KClass<D>,
+        val klassA: Class<A>,
+        val klassB: Class<B>,
+        val klassC: Class<C>,
+        val klassD: Class<D>,
         val lambda: (A, B, C, D) -> Any)
 
     : PropMethod<T>(prop) {
@@ -182,12 +184,13 @@ open class PropMethod4<T : Any, A : Any, B : Any, C : Any, D : Any>(
             val c = arg.value[2]
             val d = arg.value[3]
 
-            if (klassA.isInstance(a.value) && klassB.isInstance(b.value) && klassC.isInstance(c.value) && klassD.isInstance(d.value)) {
-                @Suppress("UNCHECKED_CAST")
-                val result = lambda(a.value as A, b.value as B, c.value as C, d.value as D)
+            // TODO How do I check when klassA is "double", and a is java.lang.Double?
+            //if (klassA.isInstance(a.value) && klassB.isInstance(b.value) && klassC.isInstance(c.value) && klassD.isInstance(d.value)) {
+            @Suppress("UNCHECKED_CAST")
+            val result = lambda(a.value as A, b.value as B, c.value as C, d.value as D)
 
-                return result
-            }
+            return result
+            //}
 
         }
         throw RuntimeException("Expected arguments (${klassA.simpleName}, ${klassB.simpleName}, ${klassC.simpleName}), but found $arg")

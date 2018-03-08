@@ -23,7 +23,7 @@ import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.Prop
 
 class ConnectTo(prop: Prop<Shape>)
-    : TypedMethod1<Shape, ConnectionPoint>(prop, ConnectionPoint::class) {
+    : TypedMethod1<Shape, ConnectionPoint>(prop, ConnectionPoint::class.java) {
 
     init {
         listenTo(prop.value.parent.fromPageToLocal)

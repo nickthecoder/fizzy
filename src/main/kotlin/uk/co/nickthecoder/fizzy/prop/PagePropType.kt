@@ -22,7 +22,7 @@ import uk.co.nickthecoder.fizzy.model.Page
 import uk.co.nickthecoder.fizzy.prop.methods.FindShape
 
 class PagePropType private constructor()
-    : PropType<Page>(Page::class) {
+    : PropType<Page>(Page::class.java) {
 
     override fun findField(prop: Prop<Page>, name: String): Prop<*>? {
         if (name.startsWith("Shape")) {

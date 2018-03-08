@@ -23,7 +23,7 @@ import uk.co.nickthecoder.fizzy.model.ShapeParent
 import uk.co.nickthecoder.fizzy.prop.Prop
 
 class FindShape(prop: Prop<ShapeParent>)
-    : TypedMethod1<ShapeParent, String>(prop, String::class) {
+    : TypedMethod1<ShapeParent, String>(prop, String::class.java) {
 
     override fun eval(a: String): Any {
         val shape = prop.value.findShape(a)

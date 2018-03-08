@@ -194,9 +194,9 @@ class TestShape : MyTestCase() {
         page.children.add(box)
 
         box.addScratch(Scratch("G2", DimensionExpression("Geometry1.Point1.X")))
-        assertEquals(Dimension(0.0), box.scratches[0].value.expression.value)
+        assertEquals(Dimension(0.0, Dimension.Units.mm), box.scratches[0].value.expression.value)
         box.geometries[0].parts.removeAt(0)
-        assertEquals(Dimension(10.0), box.scratches[0].value.expression.value)
+        assertEquals(Dimension(10.0, Dimension.Units.mm), box.scratches[0].value.expression.value)
     }
 
     @Test
@@ -226,7 +226,7 @@ class TestShape : MyTestCase() {
         box.geometries.add(geometry)
 
         box.addScratch(Scratch("G2", DimensionExpression("Geometry2.Point1.X")))
-        assertEquals(Dimension(-20.0), box.scratches[0].value.expression.value)
+        assertEquals(Dimension(-20.0, Dimension.Units.mm), box.scratches[0].value.expression.value)
         box.geometries.removeAt(0)
         assertFails { box.scratches[0].value.expression.value }
 

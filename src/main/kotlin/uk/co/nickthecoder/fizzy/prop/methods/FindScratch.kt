@@ -25,7 +25,7 @@ import uk.co.nickthecoder.fizzy.model.Scratch
 import uk.co.nickthecoder.fizzy.prop.Prop
 
 class FindScratch(prop: Prop<RealShape>)
-    : TypedMethod1<RealShape, String>(prop, String::class), CollectionListener<Scratch> {
+    : TypedMethod1<RealShape, String>(prop, String::class.java), CollectionListener<Scratch> {
 
     override fun added(collection: FCollection<Scratch>, item: Scratch) {
         dirty = true

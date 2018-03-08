@@ -52,7 +52,7 @@ class ScratchProp(scratch: Scratch)
 class ScratchList : MutableFList<ScratchProp>()
 
 class ScratchListPropType private constructor()
-    : PropType<ScratchList>(ScratchList::class) {
+    : PropType<ScratchList>(ScratchList::class.java) {
 
     override fun findField(prop: Prop<ScratchList>, name: String): Prop<*>? {
         // Lets us access a scratch value using : Scratch.TheScratchName

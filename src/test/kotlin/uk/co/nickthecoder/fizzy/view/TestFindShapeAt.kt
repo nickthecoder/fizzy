@@ -76,8 +76,8 @@ class TestFindShapeAt : MyTestCase() {
 
         assertEquals(line, page.findShapeAt(dimension2("Dimension2(30mm,40mm)"), Dimension.ZERO_mm))
         // We need to select the thin like by clicking CLOSE to it.
-        assertEquals(null, page.findShapeAt(dimension2("Dimension2(30mm,41mm)"), Dimension(0.0)))
-        assertEquals(line, page.findShapeAt(dimension2("Dimension2(30mm,41mm)"), Dimension(1.1)))
+        assertEquals(null, page.findShapeAt(dimension2("Dimension2(30mm,41mm)"), Dimension(0.0, Dimension.Units.mm)))
+        assertEquals(line, page.findShapeAt(dimension2("Dimension2(30mm,41mm)"), Dimension(1.1, Dimension.Units.mm)))
 
     }
 

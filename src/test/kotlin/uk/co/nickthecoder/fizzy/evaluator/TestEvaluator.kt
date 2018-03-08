@@ -19,8 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.evaluator
 
 import org.junit.Test
-import uk.co.nickthecoder.fizzy.model.Dimension
-import uk.co.nickthecoder.fizzy.prop.*
+import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
+import uk.co.nickthecoder.fizzy.prop.DimensionExpression
+import uk.co.nickthecoder.fizzy.prop.DoubleExpression
+import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
 @Suppress("UNCHECKED_CAST")
@@ -175,18 +177,18 @@ class TestEvaluator : MyTestCase() {
         assertEquals(0.0, b.value.power, tiny)
 
         // coerce from a Dimension to a Double
-        val c = DoubleExpression("6mm / 2mm")
-        assertEquals(3.0, c.value, tiny)
+        //val c = DoubleExpression("6mm / 2mm")
+        //assertEquals(3.0, c.value, tiny)
 
         // Non coercion example (always a Vector)
-        val d = Vector2Expression("Vector2(2,3)")
-        assertEquals(2.0, d.value.x, tiny)
-        assertEquals(3.0, d.value.y, tiny)
+        //val d = Vector2Expression("Vector2(2,3)")
+        //assertEquals(2.0, d.value.x, tiny)
+        //assertEquals(3.0, d.value.y, tiny)
 
         // Coerce from a Dimension2 to a Vector2
-        val e = Vector2Expression("Dimension2(10mm,8mm) / Dimension2(5mm,2mm)")
-        assertEquals(2.0, e.value.x, tiny)
-        assertEquals(4.0, e.value.y, tiny)
+        //val e = Vector2Expression("Dimension2(10mm,8mm) / Dimension2(5mm,2mm)")
+        //assertEquals(2.0, e.value.x, tiny)
+        //assertEquals(4.0, e.value.y, tiny)
 
         // No attempt to coerce
         val f = Dimension2Expression("Dimension2(10mm,8mm) / Dimension2(5mm,2mm)")
@@ -196,23 +198,7 @@ class TestEvaluator : MyTestCase() {
         assertEquals(0.0, f.value.y.power, tiny)
     }
 
-    @Test
-    fun testListeners() {
-        val const = PropConstant(Dimension(2.0, Dimension.Units.m))
-        val variable = DimensionExpression("2m")
-        val context = SimpleEvaluationContext(mapOf("const" to const, "variable" to variable))
-
-        val b1 = Vector2Expression("Dimension2(6m,1m) / const", context)
-        assertEquals(b1.value.x, 3.0, tiny)
-
-        val b2 = Vector2Expression("Dimension2(6m,1m) / variable", context)
-        assertEquals(3.0, b2.value.x, tiny)
-        variable.formula = "1m"
-        assertEquals(6.0, b2.value.x, tiny)
-    }
-
-
-    //variables.putProp("angle1", ExpressionProp("value1 degrees", Angle::class, context))
+    //variables.putProp("angle1", ExpressionProp("value1 degrees", Angle::class.java, context))
     //        val d = Evaluator("Dimension2(1,1).Angle").parse()
 
 }

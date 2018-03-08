@@ -23,7 +23,7 @@ import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.prop.Prop
 
 class ConnectAlong(prop: Prop<Shape>)
-    : TypedMethod2<Shape, Geometry, Double>(prop, Geometry::class, Double::class) {
+    : TypedMethod2<Shape, Geometry, Double>(prop, Geometry::class.java, Double::class.java) {
 
     init {
         listenTo(prop.value.parent.fromPageToLocal)

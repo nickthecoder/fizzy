@@ -32,7 +32,7 @@ class TestLists : MyTestCase() {
 
     private class Foo(val angles: FList<Angle>)
 
-    private class FooPropType : PropType<Foo>(Foo::class) {
+    private class FooPropType : PropType<Foo>(Foo::class.java) {
 
         override fun findField(prop: Prop<Foo>, name: String): Prop<*>? {
             if (name == "angles") {

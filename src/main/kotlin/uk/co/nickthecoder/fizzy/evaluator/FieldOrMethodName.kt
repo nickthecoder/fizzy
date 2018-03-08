@@ -27,7 +27,7 @@ import uk.co.nickthecoder.fizzy.prop.PropType
  * the identifier token is converted to a [FieldOrMethodName] and pushed onto the [Evaluator.values] stack.
  *
  * If there is no "(", then applying the [DotOperator] creates a [PropField].
- * The correct [PropField] is found by finding the KClass of the value to the left of the ".". The KClass, and the
+ * The correct [PropField] is found by finding the Class of the value to the left of the ".". The Class, and the
  * [FieldOrMethodName.value] is passed to [PropType.field].
  *
  * At the time of writing this methods haven't been implemented yet, so that process is not clear!
