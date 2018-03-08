@@ -26,6 +26,7 @@ import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.controller.tools.DeleteTool
 import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
 import uk.co.nickthecoder.fizzy.controller.tools.StampShape2dTool
+import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.PrimitiveStencil
 import uk.co.nickthecoder.fizzy.model.RealShape
@@ -68,6 +69,13 @@ class FToolBar(val mainWindow: MainWindow)
             ShapePickerItem("primitive-line", "Line", PrimitiveStencil.line)
     )
 
+    val lineWidths = arrayOf(
+            Dimension(0.5, Dimension.Units.mm),
+            Dimension(1.0, Dimension.Units.mm),
+            Dimension(2.0, Dimension.Units.mm),
+            Dimension(3.0, Dimension.Units.mm),
+            Dimension(4.0, Dimension.Units.mm)
+    )
 
     val editLocalMastersButton = ApplicationActions.FILE_EDIT_MASTERS.createButton(sh) { mainWindow.editLocalMasters() }
 
@@ -83,6 +91,7 @@ class FToolBar(val mainWindow: MainWindow)
 
     val debugButton = ApplicationActions.DEV_DEBUG.createButton(sh) { mainWindow.debug() }
 
+    val lineWidthPicker = LineWidthPicker(mainWindow, lineWidths)
     val strokeColorPicker = FColorPicker(mainWindow, "stroke") { shape -> if (shape is RealShape) shape.strokeColor else null }
     val fillColorPicker = FColorPicker(mainWindow, "fill") { shape -> if (shape is RealShape) shape.fillColor else null }
 
@@ -99,7 +108,7 @@ class FToolBar(val mainWindow: MainWindow)
                 undoButton, redoButton,
                 selectToolButton, primitive1dButton, primitive2dButton, deleteToolButton,
                 debugButton,
-                strokeColorPicker.build(), fillColorPicker.build(),
+                lineWidthPicker.build(), strokeColorPicker.build(), fillColorPicker.build(),
                 stampToolButton
         )
 

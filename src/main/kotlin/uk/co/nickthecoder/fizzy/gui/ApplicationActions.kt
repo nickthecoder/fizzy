@@ -26,8 +26,8 @@ object ApplicationActions {
     val EDIT_REDO = ApplicationAction("edit-redo", "Redo", KeyCode.Z, control = true, shift = true)
 
     val TOOL_SELECT = ApplicationAction("tool-select", "Select", KeyCode.F1)
-    val TOOL_PRIMITIVE1D = ApplicationAction("tool-line", "Create Lines", KeyCode.F2)
-    val TOOL_PRIMITIVE2D = ApplicationAction("tool-line", "Create Basic Shapes", KeyCode.F3)
+    val TOOL_PRIMITIVE1D = ApplicationAction("tool-primitive1d", "Create Lines", KeyCode.F2)
+    val TOOL_PRIMITIVE2D = ApplicationAction("tool-primitive2d", "Create Basic Shapes", KeyCode.F3)
     val TOOL_DELETE = ApplicationAction("tool-delete", "Delete", KeyCode.F4)
 
     val FILE_EDIT_MASTERS = ApplicationAction("file-editMasterShapes", "Edit Master Shapes", KeyCode.F1, control = true)

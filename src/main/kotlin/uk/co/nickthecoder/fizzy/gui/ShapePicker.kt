@@ -47,21 +47,6 @@ class ShapePicker(val mainWindow: MainWindow, val items: Array<ShapePickerItem>,
             button.graphic = v?.icon?.let { ImageView(it) }
         }
 
-    fun pickShape(shape: Shape) {
-        val strokeColor = mainWindow.toolBar.strokeColorPicker.colorPicker.value.toFizzy()
-        val fillColor = mainWindow.toolBar.fillColorPicker.colorPicker.value.toFizzy()
-
-        mainWindow.documentTab?.drawingArea?.controller?.let { controller ->
-            when (shape) {
-                is Shape1d -> controller.tool = GrowShape1dTool(controller, shape, strokeColor, fillColor)
-                is Shape2d -> controller.tool = GrowShape2dTool(controller, shape, strokeColor, fillColor)
-                else -> {
-                    //controller.tool = StampShape2dTool(controller, shape)
-                }
-            }
-        }
-    }
-
     override fun build(): SplitMenuButton {
 
         items.forEach { item ->
@@ -77,6 +62,21 @@ class ShapePicker(val mainWindow: MainWindow, val items: Array<ShapePickerItem>,
         button.onAction = EventHandler { onAction() }
 
         return button
+    }
+
+    fun pickShape(shape: Shape) {
+        val strokeColor = mainWindow.toolBar.strokeColorPicker.colorPicker.value.toFizzy()
+        val fillColor = mainWindow.toolBar.fillColorPicker.colorPicker.value.toFizzy()
+
+        mainWindow.documentTab?.drawingArea?.controller?.let { controller ->
+            when (shape) {
+                is Shape1d -> controller.tool = GrowShape1dTool(controller, shape, strokeColor, fillColor)
+                is Shape2d -> controller.tool = GrowShape2dTool(controller, shape, strokeColor, fillColor)
+                else -> {
+                    //controller.tool = StampShape2dTool(controller, shape)
+                }
+            }
+        }
     }
 
     fun onAction() {

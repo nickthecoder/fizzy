@@ -29,7 +29,6 @@ import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
 import uk.co.nickthecoder.fizzy.prop.PaintExpression
 import uk.co.nickthecoder.fizzy.prop.PropExpression
-import uk.co.nickthecoder.fizzy.util.toFormula
 
 class FColorPicker(
         val mainWindow: MainWindow,
@@ -61,7 +60,7 @@ class FColorPicker(
         document.history.beginBatch()
         document.selection.forEach { shape ->
             findPaintExp(shape)?.let {
-                changes.add(it to fxColor.toFormula())
+                changes.add(it to fxColor.toFizzy().toFormula())
             }
         }
         document.history.makeChange(ChangeExpressions(changes))
@@ -124,8 +123,3 @@ fun Color.toFizzy(): uk.co.nickthecoder.fizzy.model.Color {
 fun uk.co.nickthecoder.fizzy.model.Color.toJavaFX(): Color {
     return Color(this.red, this.green, this.blue, this.opacity)
 }
-
-fun Color.toFormula(): String = if (this.isOpaque())
-    "RGB(${this.red.toFormula()},${this.green.toFormula()},${this.blue.toFormula()})"
-else
-    "RGBA(${this.red.toFormula()},${this.green.toFormula()},${this.blue.toFormula()},${this.opacity.toFormula()})"

@@ -22,9 +22,13 @@ import javafx.application.Application
 import javafx.application.Platform
 import javafx.scene.Scene
 import javafx.scene.image.Image
+import javafx.scene.image.ImageView
 import javafx.stage.Stage
 import uk.co.nickthecoder.fizzy.gui.MainWindow
-import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.model.ConnectionPoint
+import uk.co.nickthecoder.fizzy.model.Document
+import uk.co.nickthecoder.fizzy.model.Page
+import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.expressionExceptionHandler
 import uk.co.nickthecoder.fizzy.util.runLaterHandler
 
@@ -79,12 +83,17 @@ class Fizzy : Application() {
             val image = imageMap[name]
             if (image == null) {
                 val imageStream = Fizzy::class.java.getResourceAsStream(name)
+                if (imageStream == null) {
+                    println("Didn't find image '$name'")
+                }
                 val newImage = if (imageStream == null) null else Image(imageStream)
                 imageMap.put(name, newImage)
                 return newImage
             }
             return image
         }
+
+        fun graphic(name: String): ImageView? = imageResource(name)?.let { ImageView(it) }
     }
 }
 
