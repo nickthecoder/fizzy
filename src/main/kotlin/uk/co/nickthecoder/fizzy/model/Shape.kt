@@ -309,7 +309,7 @@ abstract class Shape(var parent: ShapeParent)
                 poly.size.formula = shapeSize.toFormula()
 
                 val translate = Dimension2(-minX.point.value.x, -minY.point.value.y)
-                poly.addScratch(Scratch("MagicRatio", Vector2Expression(
+                poly.scratches.add(Scratch("MagicRatio", Vector2Expression(
                         Vector2(1.0, (maxY.point.value.y - minY.point.value.y).ratio(maxX.point.value.x - minX.point.value.x)))))
 
                 poly.transform.locPin.formula = "Size * ${translate.ratio(shapeSize).toFormula()}"

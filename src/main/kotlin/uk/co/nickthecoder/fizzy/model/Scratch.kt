@@ -19,13 +19,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
-import uk.co.nickthecoder.fizzy.prop.Prop
-import uk.co.nickthecoder.fizzy.prop.PropExpression
-import uk.co.nickthecoder.fizzy.prop.PropVariable
-import uk.co.nickthecoder.fizzy.prop.StringExpression
+import uk.co.nickthecoder.fizzy.model.geometry.Geometry
+import uk.co.nickthecoder.fizzy.prop.*
+import uk.co.nickthecoder.fizzy.util.ChangeListeners
+import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 import uk.co.nickthecoder.fizzy.util.toFormula
 
-class Scratch(name: String, val expression: PropExpression<*>, comment: String = "") {
+class Scratch(name: String, val expression: PropExpression<*>, comment: String = "")
+    : HasChangeListeners<Scratch>, PropListener {
+
+    override val changeListeners = ChangeListeners<Scratch>()
 
     val name = PropVariable<String>(name)
 
@@ -44,6 +47,12 @@ class Scratch(name: String, val expression: PropExpression<*>, comment: String =
     fun setContext(context: EvaluationContext) {
         expression.context = context
     }
+
+    override fun dirty(prop: Prop<*>) {
+        changeListeners.fireChanged(this)
+    }
+
+    override val propListenerOwner = "Scratch"
 
     fun copy(link: Boolean) = Scratch(name.value, expression.copy(link), comment)
 }

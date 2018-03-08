@@ -125,11 +125,11 @@ class TestShape : MyTestCase() {
         inner.name.value = "inner"
 
         fun test(name: String, exp: String): Any {
-            box.addScratch(Scratch(name, StringExpression(exp)))
+            box.scratches.add(Scratch(name, StringExpression(exp)))
             return box.findScratch(name)!!.expression.value
         }
 
-        box.addScratch(Scratch("myName", StringExpression("this.findShape(\"inner\").Name")))
+        box.scratches.add(Scratch("myName", StringExpression("this.findShape(\"inner\").Name")))
         assertEquals("inner", box.findScratch("myName")!!.expression.value)
 
         inner.name.value = "renamed"
@@ -148,7 +148,7 @@ class TestShape : MyTestCase() {
 
 
         fun test(name: String, exp: String): Any {
-            line.addScratch(Scratch(name, DoubleExpression(exp)))
+            line.scratches.add(Scratch(name, DoubleExpression(exp)))
             return line.findScratch(name)!!.expression.value
         }
 
@@ -176,7 +176,7 @@ class TestShape : MyTestCase() {
         val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(100mm,200mm)")
 
         fun test(name: String, exp: String): Any {
-            box.addScratch(Scratch(name, DoubleExpression(exp)))
+            box.scratches.add(Scratch(name, DoubleExpression(exp)))
             return box.findScratch(name)!!.expression.value
         }
 
@@ -193,10 +193,10 @@ class TestShape : MyTestCase() {
         val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(100mm,200mm)")
         page.children.add(box)
 
-        box.addScratch(Scratch("G2", DimensionExpression("Geometry1.Point1.X")))
-        assertEquals(Dimension(0.0, Dimension.Units.mm), box.scratches[0].value.expression.value)
+        box.scratches.add(Scratch("G2", DimensionExpression("Geometry1.Point1.X")))
+        assertEquals(Dimension(0.0, Dimension.Units.mm), box.scratches[0].expression.value)
         box.geometries[0].parts.removeAt(0)
-        assertEquals(Dimension(10.0, Dimension.Units.mm), box.scratches[0].value.expression.value)
+        assertEquals(Dimension(10.0, Dimension.Units.mm), box.scratches[0].expression.value)
     }
 
     @Test
@@ -207,10 +207,10 @@ class TestShape : MyTestCase() {
         val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(100mm,200mm)")
         page.children.add(box)
 
-        box.addScratch(Scratch("G2", DoubleExpression("Geometry1.Point1.X.mm")))
-        assertEquals(0.0, box.scratches[0].value.expression.value)
+        box.scratches.add(Scratch("G2", DoubleExpression("Geometry1.Point1.X.mm")))
+        assertEquals(0.0, box.scratches[0].expression.value)
         box.geometries[0].parts.removeAt(0)
-        assertEquals(10.0, box.scratches[0].value.expression.value)
+        assertEquals(10.0, box.scratches[0].expression.value)
     }
 
     @Test
@@ -225,10 +225,10 @@ class TestShape : MyTestCase() {
         geometry.parts.add(LineTo("Dimension2(-40mm, -30mm)"))
         box.geometries.add(geometry)
 
-        box.addScratch(Scratch("G2", DimensionExpression("Geometry2.Point1.X")))
-        assertEquals(Dimension(-20.0, Dimension.Units.mm), box.scratches[0].value.expression.value)
+        box.scratches.add(Scratch("G2", DimensionExpression("Geometry2.Point1.X")))
+        assertEquals(Dimension(-20.0, Dimension.Units.mm), box.scratches[0].expression.value)
         box.geometries.removeAt(0)
-        assertFails { box.scratches[0].value.expression.value }
+        assertFails { box.scratches[0].expression.value }
 
     }
 
@@ -248,12 +248,12 @@ class TestShape : MyTestCase() {
         geometry.parts.add(LineTo("Dimension2(-40mm, -30mm)"))
         box.geometries.add(geometry)
 
-        box.addScratch(Scratch("G2", DoubleExpression("Geometry2.Point1.X.mm")))
-        println(box.scratches[0].value.expression.value)
-        assertEquals(-20.0, box.scratches[0].value.expression.value)
+        box.scratches.add(Scratch("G2", DoubleExpression("Geometry2.Point1.X.mm")))
+        println(box.scratches[0].expression.value)
+        assertEquals(-20.0, box.scratches[0].expression.value)
 
         box.geometries.removeAt(0)
-        assertFails { box.scratches[0].value.expression.value }
+        assertFails { box.scratches[0].expression.value }
 
     }
 }

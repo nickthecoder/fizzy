@@ -25,39 +25,14 @@ import uk.co.nickthecoder.fizzy.model.Scratch
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
-
-class ScratchProp(scratch: Scratch)
-    : PropValue<Scratch>(scratch),
-        PropListener,
-        HasChangeListeners<ScratchProp> {
-
-    override val changeListeners = ChangeListeners<ScratchProp>()
-
-    override val propListenerOwner = "ScratchProp"
-
-    init {
-        scratch.name.propListeners.add(this)
-        scratch.expression.propListeners.add(this)
-    }
-
-    /**
-     * Any changes to Scratch's data causes this [Prop]'s propListeners to be notified.
-     * The [ScratchProp]'s constructor adds itself to the listeners of each of [Scratch]'s [Prop]s.
-     */
-    override fun dirty(prop: Prop<*>) {
-        propListeners.fireDirty(this)
-    }
-}
-
-class ScratchList : MutableFList<ScratchProp>()
+class ScratchList : MutableFList<Scratch>()
 
 class ScratchListPropType private constructor()
     : PropType<ScratchList>(ScratchList::class.java) {
 
     override fun findField(prop: Prop<ScratchList>, name: String): Prop<*>? {
         // Lets us access a scratch value using : Scratch.TheScratchName
-        prop.value.forEach {
-            val scratch = it.value
+        prop.value.forEach { scratch ->
             if (scratch.name.value == name) {
                 return FindScratchField(prop.value, name)
             }
@@ -71,15 +46,15 @@ class ScratchListPropType private constructor()
 }
 
 class FindScratchField(val scratchList: ScratchList, val name: String)
-    : PropCalculation<Any>(), CollectionListener<ScratchProp> {
+    : PropCalculation<Any>(), CollectionListener<Scratch> {
 
     override val propListenerOwner = "FindScratchField"
 
     /**
      * If the scratch is removed, we need to become dirty!
      */
-    override fun removed(collection: FCollection<ScratchProp>, item: ScratchProp) {
-        if (item.value.name.value == name) {
+    override fun removed(collection: FCollection<Scratch>, item: Scratch) {
+        if (item.name.value == name) {
             dirty = true
         }
     }
@@ -87,8 +62,8 @@ class FindScratchField(val scratchList: ScratchList, val name: String)
     /**
      * If the name has been added back again, become dirty (probably not needed, but it won't hurt).
      */
-    override fun added(collection: FCollection<ScratchProp>, item: ScratchProp) {
-        if (item.value.name.value == name) {
+    override fun added(collection: FCollection<Scratch>, item: Scratch) {
+        if (item.name.value == name) {
             dirty = true
         }
     }
@@ -106,8 +81,7 @@ class FindScratchField(val scratchList: ScratchList, val name: String)
         }
 
     override fun eval(): Any {
-        scratchList.forEach {
-            val scratch = it.value
+        scratchList.forEach { scratch ->
             if (scratch.name.value == name) {
                 scratchNameProp = scratch.name
                 return scratch.expression.value

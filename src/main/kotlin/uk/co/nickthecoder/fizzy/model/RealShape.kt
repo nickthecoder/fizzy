@@ -85,8 +85,8 @@ abstract class RealShape(parent: ShapeParent)
                 onRemoved = { item -> item.shape = null }
         ))
         collectionListeners.add(ChangeAndCollectionListener(this, scratches,
-                onAdded = { item -> item.value.setContext(context) },
-                onRemoved = { item -> item.value.setContext(constantsContext) }
+                onAdded = { item -> item.setContext(context) },
+                onRemoved = { item -> item.setContext(constantsContext) }
         ))
     }
 
@@ -103,9 +103,8 @@ abstract class RealShape(parent: ShapeParent)
             controlPoints.forEach { controlPoint ->
                 newShape.controlPoints.add(controlPoint.copy(link))
             }
-            scratches.forEach { scratchProp ->
-                val scratch = scratchProp.value
-                newShape.addScratch(scratch.copy(link))
+            scratches.forEach { scratch ->
+                newShape.scratches.add(scratch.copy(link))
             }
             newShape.lineWidth.copyFrom(lineWidth, link)
             newShape.size.copyFrom(size, link)
@@ -121,7 +120,7 @@ abstract class RealShape(parent: ShapeParent)
         geometries.forEachIndexed { index, geometryProp -> geometryProp.addMetaData(list, index) }
         connectionPoints.forEachIndexed { index, connectionPointProp -> connectionPointProp.addMetaData(list, index) }
         controlPoints.forEachIndexed { index, controlPointProp -> controlPointProp.addMetaData(list, index) }
-        scratches.forEachIndexed { index, scratchProp -> scratchProp.value.addMetaData(list, index) }
+        scratches.forEachIndexed { index, scratchProp -> scratchProp.addMetaData(list, index) }
         list.add(MetaData("LineWidth", lineWidth))
         list.add(MetaData("Size", size))
         list.add(MetaData("LineColor", strokeColor))
@@ -130,14 +129,10 @@ abstract class RealShape(parent: ShapeParent)
         list.add(MetaData("StrokeJoin", strokeJoin))
     }
 
-    fun addScratch(scratch: Scratch) {
-        scratches.add(ScratchProp(scratch))
-    }
-
     fun findScratch(name: String): Scratch? {
         scratches.forEach { scratchProp ->
-            if (scratchProp.value.name.value == name) {
-                return scratchProp.value
+            if (scratchProp.name.value == name) {
+                return scratchProp
             }
         }
         return null

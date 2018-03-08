@@ -30,34 +30,34 @@ class TestScratch : MyTestCase() {
         val page = Page(doc)
         val box = createBox(page)
 
-        box.addScratch(Scratch("foo", DoubleExpression("100")))
-        box.addScratch(Scratch("bar", DoubleExpression("10")))
-        box.addScratch(Scratch("ref1", DoubleExpression("this.findScratch(\"foo\")")))
-        box.addScratch(Scratch("ref2", DoubleExpression("this.findScratch(\"bar\")")))
+        box.scratches.add(Scratch("foo", DoubleExpression("100")))
+        box.scratches.add(Scratch("bar", DoubleExpression("10")))
+        box.scratches.add(Scratch("ref1", DoubleExpression("this.findScratch(\"foo\")")))
+        box.scratches.add(Scratch("ref2", DoubleExpression("this.findScratch(\"bar\")")))
 
         // Check the values directly
-        assertEquals(100.0, box.scratches[0].value.expression.value)
-        assertEquals(10.0, box.scratches[1].value.expression.value)
+        assertEquals(100.0, box.scratches[0].expression.value)
+        assertEquals(10.0, box.scratches[1].expression.value)
 
         // Check the values via a Scratch
-        assertEquals(100.0, box.scratches[2].value.expression.value)
-        assertEquals(10.0, box.scratches[3].value.expression.value)
+        assertEquals(100.0, box.scratches[2].expression.value)
+        assertEquals(10.0, box.scratches[3].expression.value)
 
         // Swap the names of foo and bar
-        box.scratches[0].value.name.value = "bar"
-        box.scratches[1].value.name.value = "foo"
+        box.scratches[0].name.value = "bar"
+        box.scratches[1].name.value = "foo"
 
         // Note, these are the same tests, with the 3 and 4 switched over.
 
-        assertEquals(100.0, box.scratches[3].value.expression.value)
-        assertEquals(10.0, box.scratches[2].value.expression.value)
+        assertEquals(100.0, box.scratches[3].expression.value)
+        assertEquals(10.0, box.scratches[2].expression.value)
 
         // Change the values
-        box.scratches[0].value.expression.formula = "80"
-        box.scratches[1].value.expression.formula = "60"
+        box.scratches[0].expression.formula = "80"
+        box.scratches[1].expression.formula = "60"
 
         // Note the indices are still switched!
-        assertEquals(80.0, box.scratches[3].value.expression.value)
-        assertEquals(60.0, box.scratches[2].value.expression.value)
+        assertEquals(80.0, box.scratches[3].expression.value)
+        assertEquals(60.0, box.scratches[2].expression.value)
     }
 }
