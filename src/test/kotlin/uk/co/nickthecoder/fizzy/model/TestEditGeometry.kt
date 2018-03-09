@@ -90,7 +90,7 @@ class TestEditGeometry : MyTestCase() {
         // Drag to the edge,
         // However, now the last is NOT linked, so dragging again will move them away from each other.
         drag(controller, "Dimension2(0mm,0mm)", "Dimension2(-5mm,0mm)")
-        
+
         assertEquals(0.0, first.value.x.mm)
         assertEquals(5.0, first.value.y.mm)
         assertEquals(5.0, last.value.x.mm)

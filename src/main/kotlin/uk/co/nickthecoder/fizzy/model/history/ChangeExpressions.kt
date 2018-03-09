@@ -49,6 +49,7 @@ class ChangeExpressions(expressions: List<Pair<PropExpression<*>, String>>)
         }
     }
 
+
     override fun mergeWith(other: Change): Boolean {
         if (other is ChangeExpressions) {
 
