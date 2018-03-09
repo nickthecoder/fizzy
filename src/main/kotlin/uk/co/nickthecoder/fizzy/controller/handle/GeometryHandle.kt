@@ -23,7 +23,6 @@ import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.geometry.GeometryPart
-import uk.co.nickthecoder.fizzy.model.history.ChangeExpression
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
 
 class GeometryHandle(val shape: Shape, val geometryPart: GeometryPart, val controller: Controller)
@@ -41,10 +40,12 @@ class GeometryHandle(val shape: Shape, val geometryPart: GeometryPart, val contr
 
         val localPoint = shape.fromPageToLocal.value * dragPoint
 
-        println("Geo handle change ${localPoint.toFormula()}")
         shape.document().history.makeChange(
                 ChangeExpressions(listOf(geometryPart.point to localPoint.toFormula()))
         )
         controller.dirty.value++
     }
+
+    override fun toString() = "GeoHandle @ $position"
+
 }

@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.util
 
 import junit.framework.TestCase
+import uk.co.nickthecoder.fizzy.controller.CMouseEvent
+import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationException
 import uk.co.nickthecoder.fizzy.evaluator.Evaluator
 import uk.co.nickthecoder.fizzy.model.*
@@ -100,7 +102,7 @@ abstract class MyTestCase : TestCase() {
         return line
     }
 
-    fun assertSamePoint(shapeA : Shape, a: GeometryPart, shapeB : Shape, b: GeometryPart) {
+    fun assertSamePoint(shapeA: Shape, a: GeometryPart, shapeB: Shape, b: GeometryPart) {
         val localA = shapeA.fromLocalToPage.value * a.point.value
         val localB = shapeB.fromLocalToPage.value * b.point.value
         TestCase.assertEquals(localA.x.inDefaultUnits, localB.x.inDefaultUnits, tiny)
@@ -119,4 +121,33 @@ abstract class MyTestCase : TestCase() {
             kotlin.test.assertEquals(existingValue, newValue)
         }
     }
+
+
+    fun mouseEvent(pointFormula: String, button: Int = 0, isAdjust: Boolean = false, isConstrain: Boolean = false): CMouseEvent {
+        val point = Evaluator(pointFormula).parse().value as Dimension2
+
+        return CMouseEvent(point, button = button, isAdjust = isAdjust, isConstrain = isConstrain)
+    }
+
+    fun mouseEvent(point: Dimension2, button: Int = 0, isAdjust: Boolean = false, isConstrain: Boolean = false): CMouseEvent {
+        return CMouseEvent(point, button = button, isAdjust = isAdjust, isConstrain = isConstrain)
+    }
+
+    fun drag(controller: Controller, fromFormula: String, toFormula: String, pauseHalfway: Boolean = true) {
+        drag(controller, Evaluator(fromFormula).parse().value as Dimension2, Evaluator(toFormula).parse().value as Dimension2)
+    }
+
+    fun drag(controller: Controller, fromPoint: Dimension2, toPoint: Dimension2, pauseHalfway: Boolean = true) {
+        val fromEvent = mouseEvent(fromPoint)
+        controller.onMousePressed(fromEvent)
+        controller.onDragDetected(fromEvent)
+        if (pauseHalfway) {
+            val midEvent = mouseEvent((fromPoint + toPoint) / 2.0)
+            controller.onMouseDragged(midEvent)
+        }
+        val toEvent = mouseEvent(toPoint)
+        controller.onMouseDragged(toEvent)
+        controller.onMouseReleased(toEvent)
+    }
+
 }

@@ -48,7 +48,7 @@ abstract class GeometryPart
         }
 
     /**
-     * The end point for this geometry point.
+     * The end point for this geometry part (the start of a line will be the previous GeometryPart's point).
      */
     abstract val point: Dimension2Expression
 

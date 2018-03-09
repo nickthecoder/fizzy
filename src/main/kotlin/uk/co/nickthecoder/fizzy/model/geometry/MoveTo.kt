@@ -28,12 +28,12 @@ import uk.co.nickthecoder.fizzy.prop.StringExpression
 
 
 class MoveTo(override val point: Dimension2Expression)
+
     : GeometryPart() {
 
     constructor(pointFormula: String) : this(Dimension2Expression(pointFormula))
 
     constructor(point: Dimension2) : this(point.toFormula())
-
 
     init {
         point.propListeners.add(this)

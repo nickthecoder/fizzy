@@ -23,13 +23,17 @@ import uk.co.nickthecoder.fizzy.prop.PropExpression
 class ChangeExpressions(expressions: List<Pair<PropExpression<*>, String>>)
     : Change {
 
-    class State(val oldFormula: String, var newFormula: String)
+    class State(val oldFormula: String, var newFormula: String) {
+        override fun toString() = "from '$oldFormula' to '$newFormula"
+    }
 
     val states = mutableMapOf<PropExpression<*>, State>()
 
     init {
-        expressions.forEach { (expression, newValue) ->
-            states[expression] = State(expression.formula, newValue)
+        expressions.forEach { (expression, newFormula) ->
+            if (expression.formula != newFormula) {
+                states[expression] = State(expression.formula, newFormula)
+            }
         }
     }
 
@@ -51,9 +55,14 @@ class ChangeExpressions(expressions: List<Pair<PropExpression<*>, String>>)
             states.forEach { expression, myState ->
                 val otherState = other.states[expression]
                 if (otherState == null) {
-                    other.states[expression] = State(expression.formula, myState.newFormula)
+                    other.states[expression] = State(myState.oldFormula, myState.newFormula)
                 } else {
-                    otherState.newFormula = myState.newFormula
+                    if (otherState.newFormula == myState.newFormula) {
+                        // Same formula, it can be removed.
+                        other.states.remove(expression)
+                    } else {
+                        otherState.newFormula = myState.newFormula
+                    }
                 }
             }
 
@@ -61,4 +70,7 @@ class ChangeExpressions(expressions: List<Pair<PropExpression<*>, String>>)
         }
         return false
     }
+
+    override fun toString() = "ChangeExpressions {\n ${states.values.joinToString(separator = "\n    ", prefix = "   ")}\n}"
+
 }

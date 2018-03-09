@@ -128,4 +128,23 @@ class History {
     fun saved() {
         savedIndex = currentIndex
     }
+
+    /**
+     * Prints out all the changes while performing and "undo".
+     */
+    fun debugUndo() {
+        if (canUndo()) {
+            if (currentBatch == null) {
+                currentIndex--
+                val batch = history[currentIndex]
+                println("Undoing a batch")
+                println(batch)
+                batch.undo()
+            } else {
+                println("Abandoning the current batch...")
+                println(currentBatch)
+                abandonBatch()
+            }
+        }
+    }
 }

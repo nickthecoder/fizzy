@@ -31,16 +31,16 @@ import uk.co.nickthecoder.fizzy.prop.PropExpression
 class EditGeometryTool(controller: Controller)
     : Tool(controller) {
 
-    var shape: Shape? = null
+    var editingShape: Shape? = null
 
     var mousePressedPoint = Dimension2.ZERO_mm
 
-    override fun beginTool() {
+    init {
         // By clearing the selection, the normal control handles will vanish, and we can add our own.
-        shape = controller.page.document.selection.lastOrNull()
+        editingShape = controller.page.document.selection.lastOrNull()
         controller.page.document.selection.clear()
 
-        shape?.let {
+        editingShape?.let {
             it.geometries.forEach { geo ->
                 geo.parts.forEach { part ->
                     controller.handles.add(GeometryHandle(it, part, controller))
@@ -59,11 +59,10 @@ class EditGeometryTool(controller: Controller)
         }
         controller.handles.clear()
         // So, we haven't pressed any existing handles, lets see if we've clicked a different shape.
-        shape = null
-        shape = controller.page.findShapesAt(event.point, controller.minDistance).lastOrNull()
+        editingShape = null
+        editingShape = controller.page.findShapesAt(event.point, controller.minDistance).lastOrNull()
 
-
-        shape?.let {
+        editingShape?.let {
             it.geometries.forEach { geo ->
                 geo.parts.forEach { part ->
                     controller.handles.add(GeometryHandle(it, part, controller))
@@ -88,8 +87,8 @@ class EditGeometryTool(controller: Controller)
     override fun endTool(replacement: Tool) {
         if (replacement !is EditGeometryDragHandleTool) {
             controller.handles.clear()
-            shape?.let { controller.page.document.selection.add(it) }
-            shape = null
+            editingShape?.let { controller.page.document.selection.add(it) }
+            editingShape = null
         }
     }
 
@@ -99,7 +98,6 @@ class EditGeometryTool(controller: Controller)
         val offset = startPosition - handle.position
 
         init {
-            println("Begin batch")
             controller.page.document.history.beginBatch()
             handle.beginDrag(startPosition)
         }
@@ -112,7 +110,9 @@ class EditGeometryTool(controller: Controller)
             // By now, we've changed many of the geometries, and their points are now constants. These should be
             // expressed in terms of the shape's size (so that when the shape grows, the geometry also grows.
             // But size will also be wrong.
-            editGeometryTool.shape?.let { shape ->
+
+            editGeometryTool.editingShape?.let { shape ->
+
                 var minX = Dimension(Double.MAX_VALUE)
                 var minY = Dimension(Double.MAX_VALUE)
                 var maxX = Dimension(-Double.MAX_VALUE)
@@ -140,7 +140,6 @@ class EditGeometryTool(controller: Controller)
                 val locPin = shape.transform.locPin.value - newOrigin
                 val locRatio = locPin.ratio(newSize)
 
-
                 val changes = mutableListOf<Pair<PropExpression<*>, String>>(
                         shape.transform.locPin to "Size * ${locRatio.toFormula()}",
                         shape.size to newSize.toFormula()
@@ -152,14 +151,12 @@ class EditGeometryTool(controller: Controller)
                         changes.add(part.point to "Size * ${ratio.toFormula()}")
                     }
                 }
-                println("Changes : ${changes.map { it.second }}")
 
                 shape.document().history.makeChange(ChangeExpressions(changes))
             }
 
             controller.tool = editGeometryTool
             controller.page.document.history.endBatch()
-            println("End batch")
         }
 
         override fun endTool(replacement: Tool) {

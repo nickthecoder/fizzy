@@ -39,6 +39,9 @@ class Batch {
             changes.add(change)
         }
     }
+
+    override fun toString(): String {
+        return "Batch {\n${changes.joinToString(separator = "\n")}\n}"
+    }
+
 }
-
-

@@ -40,4 +40,6 @@ class ChangeExpression(val expression: PropExpression<*>, var newFormula: String
         }
         return false
     }
+
+    override fun toString() = "Change from '$old' to '$newFormula'"
 }
