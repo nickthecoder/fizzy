@@ -24,7 +24,9 @@ import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.view.DrawContext
 
-abstract class Handle(var position: Dimension2) {
+abstract class Handle() {
+
+    abstract val position: Dimension2
 
     abstract fun isFor(shape: Shape): Boolean
 

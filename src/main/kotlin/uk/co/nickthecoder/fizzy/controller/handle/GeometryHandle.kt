@@ -24,18 +24,27 @@ import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.geometry.GeometryPart
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpression
+import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
 
-class GeometryHandle(shape: Shape, val geometryPart: GeometryPart, val controller: Controller)
-    : ShapeHandle(shape, shape.fromLocalToPage.value * geometryPart.point.value) {
+class GeometryHandle(val shape: Shape, val geometryPart: GeometryPart, val controller: Controller)
+    : Handle() {
+
+    override var position: Dimension2
+        get() = shape.fromLocalToPage.value * geometryPart.point.value
+        set(v) {
+            geometryPart.point.formula = (shape.fromPageToLocal.value * v).toFormula()
+        }
+
+    override fun isFor(shape: Shape) = shape === this.shape
 
     override fun dragTo(event: CMouseEvent, dragPoint: Dimension2) {
 
-        position = dragPoint
         val localPoint = shape.fromPageToLocal.value * dragPoint
-        controller.dirty.value++
 
+        println("Geo handle change ${localPoint.toFormula()}")
         shape.document().history.makeChange(
-                ChangeExpression(geometryPart.point, localPoint.toFormula())
+                ChangeExpressions(listOf(geometryPart.point to localPoint.toFormula()))
         )
+        controller.dirty.value++
     }
 }

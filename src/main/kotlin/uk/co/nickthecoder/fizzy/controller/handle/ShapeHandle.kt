@@ -21,8 +21,8 @@ package uk.co.nickthecoder.fizzy.controller.handle
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
 
-abstract class ShapeHandle(val shape: Shape, position: Dimension2)
-    : Handle(position) {
+abstract class ShapeHandle(val shape: Shape, override var position: Dimension2)
+    : Handle() {
 
     override fun isFor(shape: Shape) = shape === this.shape
 
