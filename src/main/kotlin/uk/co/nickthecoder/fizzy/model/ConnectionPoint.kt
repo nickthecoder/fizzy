@@ -76,7 +76,7 @@ class ConnectionPoint(val point: Dimension2Expression)
         return -1
     }
 
-    fun connectToFormula() = shape?.let { "connectTo( Page.Shape${it.id.value}.ConnectionPoint${index() + 1} )" }
+    fun connectToFormula() = shape?.let { "connectTo( Page.Shape${it.id}.ConnectionPoint${index() + 1} )" }
 
     fun copy(link: Boolean) = ConnectionPoint(point.copy(link))
 

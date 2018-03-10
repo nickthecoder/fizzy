@@ -43,7 +43,7 @@ abstract class ShapePropType<T : Shape>(klass: Class<T>)
         }
 
         return when (name) {
-            "ID" -> PropField("Shape.ID", prop) { prop.value.id }
+            "ID" -> SimplePropField("Shape.ID", prop) { prop.value.id }
             "Name" -> PropField("Shape.Name", prop) { prop.value.name }
             "Document" -> SimplePropField("Shape.Document", prop) { prop.value.document() }
             "Page" -> SimplePropField("Shape.Page", prop) { prop.value.page() }

@@ -169,7 +169,7 @@ class Geometry
 
     fun connectAlongFormula(along: Double): String? {
         shape?.let {
-            return "connectAlong( Page.Shape${it.id.value}.Geometry${index() + 1}, ${along.toFormula()})"
+            return "connectAlong( Page.Shape${it.id}.Geometry${index() + 1}, ${along.toFormula()})"
         }
         return null
     }

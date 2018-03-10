@@ -34,7 +34,7 @@ import uk.co.nickthecoder.fizzy.util.*
 abstract class Shape(var parent: ShapeParent)
     : ShapeParent, PropListener, HasChangeListeners<Shape> {
 
-    val id = PropValue(parent.document().generateShapeId())
+    val id = parent.document().generateShapeId()
 
     val name = PropVariable("")
 
@@ -167,7 +167,7 @@ abstract class Shape(var parent: ShapeParent)
     override fun page(): Page = parent.page()
 
     fun findShape(id: Int): Shape? {
-        if (id == this.id.value) return this
+        if (id == this.id) return this
 
         children.forEach { child ->
             val found = child.findShape(id)
@@ -301,7 +301,6 @@ abstract class Shape(var parent: ShapeParent)
     }
 
     open protected fun addMetaData(list: MutableList<MetaData>) {
-        list.add(MetaData("ID", DoubleExpression(id.value.toDouble().toFormula())))
         list.add(MetaData("Name", StringExpression(name.value.toFormula())))
         list.add(MetaData("Rotation", transform.rotation))
         list.add(MetaData("Pin", transform.pin))
@@ -320,7 +319,7 @@ abstract class Shape(var parent: ShapeParent)
         list.add(MetaData("StrokeJoin", strokeJoin))
     }
 
-    override fun toString(): String = "Shape ${id.value}"
+    override fun toString(): String = "Shape ${id}"
 
     companion object {
 
