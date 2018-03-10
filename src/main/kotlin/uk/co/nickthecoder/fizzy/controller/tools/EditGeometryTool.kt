@@ -153,7 +153,7 @@ class EditGeometryTool(controller: Controller)
                 }
 
                 shape.document().history.makeChange(ChangeExpressions(changes))
-                
+
                 // Strange bodge to ensure connected line are also updated
                 shape.size.forceRecalculation()
             }

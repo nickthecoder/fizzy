@@ -19,6 +19,9 @@ Edit children within a parent shape
 
 Curves (bezier or arc or both).
 
+Text
+
+Copy and Paste
 
 Soon
 ----

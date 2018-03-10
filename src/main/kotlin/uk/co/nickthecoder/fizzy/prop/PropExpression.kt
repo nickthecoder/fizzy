@@ -78,7 +78,7 @@ abstract class PropExpression<T : Any>(formula: String, val klass: Class<T>, var
 
     private val linkedListener = object : PropListener {
         override fun dirty(prop: Prop<*>) {
-            dirty = true
+            forceRecalculation()
         }
 
         override val propListenerOwner = "PropExpression.linkedListener"

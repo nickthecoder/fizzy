@@ -80,7 +80,7 @@ class Document : HasChangeListeners<Document> {
 
         var localMaster = masterToLocalCopy[id]
         if (localMaster == null) {
-            localMaster = masterShape.copyInto(localMasterShapes, false)
+            localMaster = masterShape.copyInto(localMasterShapes, true)
             localMasterShapes.children.add(localMaster)
             masterToLocalCopy[id] = localMaster
         }
