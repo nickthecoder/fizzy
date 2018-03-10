@@ -98,10 +98,18 @@ abstract class AbsoluteContext(scale: Double = 1.0) : DrawContext {
         absoluteLineTo(transform(x, y))
     }
 
+    override fun multiLineText(multiLineText: MultiLineText, stroke: Boolean, fill: Boolean) {
+        multiLineText.lines.forEach { line ->
+            absoluteText(transform(line.dx.inDefaultUnits, line.dy.inDefaultUnits), line.text, stroke, fill)
+        }
+    }
+
 
     abstract fun absoluteMoveTo(point: Vector2)
 
     abstract fun absoluteLineTo(point: Vector2)
+
+    abstract fun absoluteText(point: Vector2, str: String, stroke: Boolean, fill: Boolean)
 
 
     class State(var transformation: Matrix33, var lineWidth: Double = 1.0)

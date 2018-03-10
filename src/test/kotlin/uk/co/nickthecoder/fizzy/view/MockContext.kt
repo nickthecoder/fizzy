@@ -35,6 +35,10 @@ class MockContext : AbsoluteContext() {
         buffer.append("L${point.terse()}\n")
     }
 
+    override fun absoluteText(point: Vector2, str: String, stroke: Boolean, fill: Boolean) {
+        buffer.append("T${point.terse()}:${str.replace("\n", "\\n")}\n")
+    }
+
 
     override fun fillColor(paint: Paint) {}
 
@@ -47,6 +51,8 @@ class MockContext : AbsoluteContext() {
     override fun strokeCap(strokeCap: StrokeCap) {}
 
     override fun strokeJoin(strokeJoin: StrokeJoin) {}
+
+    override fun font(font: FFont) {}
 
     override fun beginPath() {
         if (debug) {

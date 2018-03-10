@@ -32,7 +32,11 @@ object Conversions {
             "mm" to ::mmConversion, // Double -> Dimension (millimeters)
             "cm" to ::cmConversion, // Double -> Dimension (centimeters)
             "m" to ::mConversion, // Double -> Dimension (meters)
-            "km" to ::kmConversion // Double -> Dimension (kilometers)
+            "km" to ::kmConversion, // Double -> Dimension (kilometers)
+            "in" to ::inConversion, // Double -> Dimension (inches)
+            "ft" to ::ftConversion, // Double -> Dimension (feet)
+            "yard" to ::yardConversion, // Double -> Dimension (yards)
+            "pt" to ::ptConversion // Double -> Dimension (points)
     )
 
     fun find(str: String): ((Prop<*>) -> Prop<*>)? = conversions[str]

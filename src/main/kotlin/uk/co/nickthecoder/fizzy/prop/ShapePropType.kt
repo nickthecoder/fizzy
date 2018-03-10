@@ -21,6 +21,7 @@ package uk.co.nickthecoder.fizzy.prop
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.Shape1d
 import uk.co.nickthecoder.fizzy.model.Shape2d
+import uk.co.nickthecoder.fizzy.model.ShapeText
 import uk.co.nickthecoder.fizzy.prop.methods.ConnectAlong
 import uk.co.nickthecoder.fizzy.prop.methods.ConnectTo
 import uk.co.nickthecoder.fizzy.prop.methods.FindScratch
@@ -61,6 +62,7 @@ abstract class ShapePropType<T : Shape>(klass: Class<T>)
             "FillColor" -> PropField("Shape.FillColor", prop) { prop.value.fillColor }
             "StrokeCap" -> PropField("Shape.StrokeCap", prop) { prop.value.strokeCap }
             "StrokeJoin" -> PropField("Shape.StrokeJoin", prop) { prop.value.strokeJoin }
+            "Size" -> PropField("Shape.Size", prop) { prop.value.size }
 
             else -> super.findField(prop, name)
         }
@@ -85,7 +87,6 @@ class Shape1dPropType private constructor()
         return when (name) {
             "Start" -> PropField("Shape.Start", prop) { prop.value.start }
             "End" -> PropField("Shape.End", prop) { prop.value.end }
-            "Size" -> PropField("Shape.Size", prop) { prop.value.size }
             "Length" -> PropField("Shape.Length", prop) { prop.value.length }
             else -> super.findField(prop, name)
         }
@@ -103,14 +104,34 @@ class Shape1dPropType private constructor()
 class Shape2dPropType private constructor()
     : ShapePropType<Shape2d>(Shape2d::class.java) {
 
-    override fun findField(prop: Prop<Shape2d>, name: String): Prop<*>? {
+    companion object {
+        val instance = Shape2dPropType()
+    }
+}
+
+
+class ShapeTextPropType private constructor()
+    : ShapePropType<ShapeText>(ShapeText::class.java) {
+
+    override fun findField(prop: Prop<ShapeText>, name: String): Prop<*>? {
         return when (name) {
-            "Size" -> prop.value.size
+            "Text" -> PropField("Shape.Text", prop) { prop.value.text }
+            "FontSize" -> PropField("Shape.Text", prop) { prop.value.text }
+            "AlignX" -> PropField("Shape.AlignX", prop) { prop.value.alignX }
+            "AlignY" -> PropField("Shape.AlignY", prop) { prop.value.alignY }
             else -> super.findField(prop, name)
         }
     }
 
+    override fun findMethod(prop: Prop<ShapeText>, name: String): PropMethod<in ShapeText>? {
+        return when (name) {
+            "baseline" -> PropMethod0(prop) { prop.value.baseline() }
+            "textSize" -> PropMethod0(prop) { prop.value.textSize() }
+            else -> super.findMethod(prop, name)
+        }
+    }
+
     companion object {
-        val instance = Shape2dPropType()
+        val instance = ShapeTextPropType()
     }
 }

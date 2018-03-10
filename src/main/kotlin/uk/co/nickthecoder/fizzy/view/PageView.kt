@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.view
 
 import uk.co.nickthecoder.fizzy.model.Page
 import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.ShapeText
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 
@@ -59,6 +60,12 @@ class PageView(val page: Page, val dc: DrawContext) {
                     }
                 }
                 dc.endPath(geometry.stroke.value, geometry.fill.value)
+            }
+
+            if (shape is ShapeText) {
+                dc.translate(shape.transform.locPin.value)
+                dc.font(shape.font.value)
+                dc.multiLineText(shape.multiLineText.value, stroke = false, fill = true)
             }
 
             shape.children.forEach { child ->

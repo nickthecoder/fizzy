@@ -114,13 +114,13 @@ class MainWindow(val stage: Stage) : Window() {
         document?.let { document ->
 
             var foundStale = false
-            document.pages[0].children.forEach { shape ->
+            document.selection.forEach { shape ->
                 foundStale = foundStale || shape.debugCheckStale()
             }
 
             if (!foundStale) {
                 println("None stale\n")
-                document.pages[0].children.forEach { shape ->
+                document.selection.forEach { shape ->
                     println("---------------");
                     println(shape.metaData().joinToString(separator = "\n"))
                 }

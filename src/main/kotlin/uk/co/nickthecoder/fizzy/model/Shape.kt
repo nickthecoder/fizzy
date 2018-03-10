@@ -186,6 +186,17 @@ abstract class Shape(var parent: ShapeParent)
         return null
     }
 
+    fun findShapeText(): ShapeText? {
+        if (this is ShapeText) return this
+
+        children.forEach { child ->
+            if (child is ShapeText) {
+                return child
+            }
+        }
+        return null
+    }
+
     /**
      * point should be in units of the parent (i.e. in the same units as this.transform.pin).
      * It is NOT in the coordinates used by the [Geometry] sections.
@@ -195,7 +206,7 @@ abstract class Shape(var parent: ShapeParent)
      * Returns true iff this geometry is close to the given point, or if any of the descendants isAt the point.
      *
      */
-    fun isAt(point: Dimension2, minDistance: Dimension): Boolean {
+    open fun isAt(point: Dimension2, minDistance: Dimension): Boolean {
         val localPoint = transform.fromParentToLocal.value * point
 
         geometries.forEach { geo ->
@@ -306,6 +317,28 @@ abstract class Shape(var parent: ShapeParent)
     override fun toString(): String = "Shape ${id.value}"
 
     companion object {
+
+        fun createText(
+                parent: ShapeParent,
+                str: String = "",
+                fontName: String = "Sans Regular",
+                fontSize: String = "46pt",
+                at: String = "Dimension2(0mm,0mm)",
+                alignX: Double = 0.5,
+                alignY: Double = 0.5
+        ): ShapeText {
+
+            val text = ShapeText.create(parent)
+            text.text.formula = str.toFormula()
+            text.fontSize.formula = fontSize
+            text.fontName.formula = fontName.toFormula()
+            text.transform.pin.formula = at
+            text.fillColor.formula = "BLACK"
+            text.alignX.formula = alignX.toFormula()
+            text.alignY.formula = alignY.toFormula()
+
+            return text
+        }
 
         fun createBox(
                 parent: ShapeParent,

@@ -79,3 +79,7 @@ fun mmConversion(a: Prop<*>): Prop<*> = dimensionConversion(a, Dimension.Units.m
 fun cmConversion(a: Prop<*>): Prop<*> = dimensionConversion(a, Dimension.Units.cm)
 fun mConversion(a: Prop<*>): Prop<*> = dimensionConversion(a, Dimension.Units.m)
 fun kmConversion(a: Prop<*>): Prop<*> = dimensionConversion(a, Dimension.Units.km)
+fun inConversion(a: Prop<*>): Prop<*> = dimensionConversion(a, Dimension.Units.inch)
+fun ftConversion(a: Prop<*>): Prop<*> = dimensionConversion(a, Dimension.Units.ft)
+fun yardConversion(a: Prop<*>): Prop<*> = dimensionConversion(a, Dimension.Units.yard)
+fun ptConversion(a: Prop<*>): Prop<*> = dimensionConversion(a, Dimension.Units.pt)

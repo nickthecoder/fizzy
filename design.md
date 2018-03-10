@@ -48,14 +48,25 @@ The Model
 The high level classes, such as Document, Page and Shape are quite easy to comprehend.
 Shape is the base class for Shape1d, Shape2d and ShapeGroup.
 
+### Shape2d
+
 Shaped2d objects are the most common type of Shape, and are used for pretty much everything that isn't a line.
+
+### Shape1d
 
 Shape1d objects behave like lines (though they may not always LOOK like lines).
 They have an start point and an end point. They also have a 2D size, and transformations, just like Shape2d.
 The difference here, is that the size and rotation of a Shape1d is governed by its end points
 (i.e. size and rotation are calculated values).
 
-Shapes can be nested within other shapes. e.g. it is perfectly normal for a Shape1d to be made up in part from other child
+### ShapeText
+
+Shape1d and Shape2d do NOT have text. Instead, there is a third type of Shape.
+This is markedly different from Visio (where every shape has the option of having a single piece of text).
+
+### Groups
+
+All Shapes can be nested within other Shapes. e.g. it is perfectly normal for a Shape1d to be made up in part from other child
 shapes (which can be Shape1d, Shape2d or ShapeGroup).
 
 Shapes have their own local coordinate system. So when drawing a Shape, the coordinates specified will be local

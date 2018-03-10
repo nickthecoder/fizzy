@@ -81,13 +81,21 @@ class Dimension : Comparable<Dimension> {
         mm(1.0),
         cm(10.0),
         m(1000.0),
-        km(1000000.0)
+        km(1000000.0),
+        inch(25.4), // Note, cannot use "in" because that is a Kotlin keyword
+        ft(25.4 * 12),
+        yard(25.4 * 36),
+        pt(25.4 / 72) // A point ( 1/72 of an inch )
     }
 
     val mm get() = inDefaultUnits
     val cm get() = inUnits(Units.cm)
     val m get() = inUnits(Units.m)
     val km get() = inUnits(Units.km)
+    val inch get() = inUnits(Units.inch)
+    val ft get() = inUnits(Units.ft)
+    val yard get() = inUnits(Units.yard)
+    val pt get() = inUnits(Units.pt)
 
     fun inUnits(units: Units): Double = inDefaultUnits / Math.pow(units.scale, power)
 

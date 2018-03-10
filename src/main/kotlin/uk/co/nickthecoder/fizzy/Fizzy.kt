@@ -24,11 +24,9 @@ import javafx.scene.Scene
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.stage.Stage
+import uk.co.nickthecoder.fizzy.gui.JavaFXFFont
 import uk.co.nickthecoder.fizzy.gui.MainWindow
-import uk.co.nickthecoder.fizzy.model.ConnectionPoint
-import uk.co.nickthecoder.fizzy.model.Document
-import uk.co.nickthecoder.fizzy.model.Page
-import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.prop.expressionExceptionHandler
 import uk.co.nickthecoder.fizzy.util.runLaterHandler
 
@@ -39,13 +37,24 @@ class Fizzy : Application() {
 
     override fun start(primaryStage: Stage) {
         runLaterHandler = { Platform.runLater(it) }
+        fontFactory = { name, size -> JavaFXFFont(name, size) }
         expressionExceptionHandler = { pe, message -> println("Failed to evaluate ${pe.formula} : $message") }
 
         // For now, we create a test document to display.
         val doc = Document()
         val page = Page(doc)
+
         val box1 = Shape.createBox(page, "Dimension2(20cm,10cm)", "Dimension2(40cm,10cm)")
         val box2 = Shape.createBox(page, "Dimension2(20cm,10cm)", "Dimension2(40cm,30cm)")
+
+        val text1 = Shape.createText(page, "Hello\nWorld\nNick\nThe\nCoder", at = "Dimension2(40cm, 20cm)")
+        val text2 = Shape.createText(page, "Left\nAlign", at = "Dimension2(30cm, 20cm)", alignX = 0.0)
+        val text3 = Shape.createText(page, "Right\nAlign", at = "Dimension2(50cm, 20cm)", alignX = 1.0)
+
+        page.children.add(text1)
+        page.children.add(text2)
+        page.children.add(text3)
+
         page.children.add(box1)
         page.children.add(box2)
 

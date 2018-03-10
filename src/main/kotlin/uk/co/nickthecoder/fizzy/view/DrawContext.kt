@@ -64,6 +64,10 @@ interface DrawContext {
     fun lineTo(point: Dimension2)
     fun lineTo(x: Double, y: Double)
 
+    fun font(font: FFont)
+
+    fun multiLineText(multiLineText: MultiLineText, stroke: Boolean = false, fill: Boolean = true)
+
     fun polygon(stroke: Boolean, fill: Boolean, vararg points: Dimension2) {
         beginPath()
         moveTo(points.last())

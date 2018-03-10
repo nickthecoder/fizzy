@@ -54,6 +54,12 @@ class Shape1d private constructor(parent: ShapeParent)
         return newShape
     }
 
+    override fun addMetaData(list: MutableList<MetaData>) {
+        list.add(MetaData("Start", start))
+        list.add(MetaData("End", end))
+        super.addMetaData(list)
+    }
+
     companion object {
         fun create(parent: ShapeParent): Shape1d {
             val result = Shape1d(parent)

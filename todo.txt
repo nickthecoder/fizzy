@@ -1,6 +1,8 @@
 To Do
 =====
 
+Shape.isAt is weird. Why use the parent's coordinates? Use the Page coordinates!
+
 For Version 1
 -------------
 

@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.gui
 
+import javafx.geometry.VPos
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.shape.StrokeLineCap
@@ -132,6 +133,26 @@ class CanvasContext(val canvas: Canvas)
 
     override fun lineTo(x: Double, y: Double) {
         gc.lineTo(x, y)
+    }
+
+    override fun font(font: FFont) {
+        if (font is JavaFXFFont) {
+            gc.font = font.fxFont
+        }
+    }
+
+    override fun multiLineText(multiLineText: MultiLineText, stroke: Boolean, fill: Boolean) {
+        gc.textBaseline = VPos.TOP
+        multiLineText.lines.forEach { line ->
+            if (fill) {
+                gc.fillText(line.text, line.dx.inDefaultUnits, line.dy.inDefaultUnits)
+                // For visual debugging
+                // gc.strokeRect(line.dx.inDefaultUnits, line.dy.inDefaultUnits, line.width.inDefaultUnits, line.height.inDefaultUnits)
+            }
+            if (stroke) {
+                gc.strokeText(line.text, line.dx.inDefaultUnits, line.dy.inDefaultUnits)
+            }
+        }
     }
 
     fun convertPaint(paint: Paint): javafx.scene.paint.Paint {

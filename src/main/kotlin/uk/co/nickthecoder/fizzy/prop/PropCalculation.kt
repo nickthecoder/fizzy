@@ -94,3 +94,28 @@ class PropCalculation2<T : Any, A : Any, B : Any>(val a: Prop<A>, val b: Prop<B>
 
     override fun eval(): T = lambda(a.value, b.value)
 }
+
+class PropCalculation3<T : Any, A : Any, B : Any, C : Any>(val a: Prop<A>, val b: Prop<B>, val c: Prop<C>, val lambda: (A, B, C) -> T)
+    : PropCalculation<T>() {
+
+    init {
+        if (!a.isConstant()) a.propListeners.add(this)
+        if (!b.isConstant()) b.propListeners.add(this)
+        if (!c.isConstant()) c.propListeners.add(this)
+    }
+
+    override fun eval(): T = lambda(a.value, b.value, c.value)
+}
+
+class PropCalculation4<T : Any, A : Any, B : Any, C : Any, D : Any>(val a: Prop<A>, val b: Prop<B>, val c: Prop<C>, val d: Prop<D>, val lambda: (A, B, C, D) -> T)
+    : PropCalculation<T>() {
+
+    init {
+        if (!a.isConstant()) a.propListeners.add(this)
+        if (!b.isConstant()) b.propListeners.add(this)
+        if (!c.isConstant()) c.propListeners.add(this)
+        if (!d.isConstant()) c.propListeners.add(this)
+    }
+
+    override fun eval(): T = lambda(a.value, b.value, c.value, d.value)
+}
