@@ -36,9 +36,9 @@ class LineTo(override val point: Dimension2Expression)
         point.propListeners.add(this)
     }
 
-    override fun addMetaData(list: MutableList<MetaData>, sectionIndex: Int, rowIndex: Int) {
-        super.addMetaData(list, sectionIndex, rowIndex)
-        list.add(MetaData("Type", StringExpression("\"LineTo\""), "Geometry", sectionIndex, rowIndex))
+    override fun addMetaData(metaData: MetaData, sectionIndex: Int, rowIndex: Int) {
+        metaData.cells.add(MetaDataCell("Type", StringExpression("\"LineTo\""), "Geometry", sectionIndex, rowIndex))
+        super.addMetaData(metaData, sectionIndex, rowIndex)
     }
 
     override fun setContext(context: EvaluationContext) {

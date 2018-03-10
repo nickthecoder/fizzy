@@ -61,8 +61,8 @@ class ControlPoint(val point: Dimension2Expression)
         changeListeners.fireChanged(this)
     }
 
-    fun addMetaData(list: MutableList<MetaData>, index: Int) {
-        list.add(MetaData("Point", point, "ControlPoint", index))
+    fun addMetaData(metaData: MetaData, index: Int) {
+        metaData.cells.add(MetaDataCell("Point", point, "ControlPoint", index))
     }
 
     fun index(): Int {

@@ -18,35 +18,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
-import uk.co.nickthecoder.fizzy.prop.PropExpression
+class MetaData {
 
-data class MetaData(
+    val cells = mutableListOf<MetaDataCell>()
 
-        val cellName: String,
-        val cellExpression: PropExpression<*>,
-        val sectionName: String? = null,
-        val sectionIndex: Int? = null,
-        val rowIndex: Int? = null
-) {
+    fun findCell(other: MetaDataCell): MetaDataCell? {
+        cells.forEach { cell ->
+            if (cell.cellName == other.cellName && cell.rowIndex == other.rowIndex && cell.sectionIndex == other.sectionIndex && cell.sectionName == other.sectionName) {
+                return cell
+            }
+        }
+        return null
+    }
 
-    fun accessString(): String {
-        val result = StringBuffer()
-        sectionName?.let { result.append(sectionName) }
-        sectionIndex?.let { result.append(it + 1) }
-        sectionName?.let { result.append(".") }
-        result.append(cellName)
-        rowIndex?.let { result.append(it + 1) }
-        return result.toString()
+    fun copyInto(into: MetaData, link: Boolean) {
+        cells.forEach { cell ->
+            val intoCell = into.findCell(cell)
+            if (intoCell == null) {
+                throw IllegalStateException("Cell $cell not found")
+            } else {
+                intoCell.cellExpression.copyFrom(cell.cellExpression, link)
+            }
+        }
     }
 
     override fun toString(): String {
-        var valueString: String
-        try {
-            valueString = cellExpression.valueString()
-        } catch (e: Exception) {
-            valueString = "ERROR"
-        }
-        return "${accessString()} : ${cellExpression.formula} = ${valueString}"
+        return cells.joinToString(separator = "\n")
     }
-
 }

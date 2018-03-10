@@ -53,17 +53,10 @@ class Shape1d private constructor(parent: ShapeParent)
         return newShape
     }
 
-    override fun populateShape(newShape: Shape, link: Boolean) {
-        super.populateShape(newShape, link)
-        if (newShape !is Shape1d) throw IllegalStateException("Expected a Shape1d, but found $newShape")
-        newShape.start.copyFrom(start, link)
-        newShape.end.copyFrom(end, link)
-    }
-
-    override fun addMetaData(list: MutableList<MetaData>) {
-        list.add(MetaData("Start", start))
-        list.add(MetaData("End", end))
-        super.addMetaData(list)
+    override fun addMetaData(metaData: MetaData) {
+        super.addMetaData(metaData)
+        metaData.cells.add(MetaDataCell("Start", start))
+        metaData.cells.add(MetaDataCell("End", end))
     }
 
     companion object {

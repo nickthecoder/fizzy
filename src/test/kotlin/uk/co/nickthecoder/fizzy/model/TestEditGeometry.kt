@@ -73,14 +73,14 @@ class TestEditGeometry : MyTestCase() {
         assertEquals(0.0, last.value.x.mm)
         assertEquals(0.0, last.value.y.mm)
 
-        val initialMetaData = shapeMetadata(box)
+        val initialMetaData = box.metaData().toString()
         controller.tool = EditGeometryTool(controller)
 
         // Drag to the center of the shape (we should have a triangle).
         // We will be dragging the "MoveTo", which will cause the last to change too (as it is linked).
         drag(controller, "Dimension2(-5mm,-5mm)", "Dimension2(0mm,0mm)")
 
-        val postDrag1MetaData = shapeMetadata(box)
+        val postDrag1MetaData = box.metaData().toString()
 
         assertEquals(5.0, first.value.x.mm)
         assertEquals(5.0, first.value.y.mm)
@@ -99,7 +99,7 @@ class TestEditGeometry : MyTestCase() {
         // Undo twice, and we should be back to the start
         doc.history.undo()
 
-        assertEquals(postDrag1MetaData, shapeMetadata(box))
+        assertEquals(postDrag1MetaData, box.metaData().toString())
 
         assertEquals(5.0, first.value.x.mm)
         assertEquals(5.0, first.value.y.mm)
@@ -108,7 +108,7 @@ class TestEditGeometry : MyTestCase() {
 
         doc.history.undo()
 
-        assertEquals(initialMetaData, shapeMetadata(box))
+        assertEquals(initialMetaData, box.metaData().toString())
 
         assertEquals(0.0, first.value.x.mm)
         assertEquals(0.0, first.value.y.mm)
@@ -116,8 +116,6 @@ class TestEditGeometry : MyTestCase() {
         assertEquals(0.0, last.value.y.mm)
 
     }
-
-    fun shapeMetadata(shape: Shape) = shape.metaData().joinToString(separator = "\n")
 
 
 }

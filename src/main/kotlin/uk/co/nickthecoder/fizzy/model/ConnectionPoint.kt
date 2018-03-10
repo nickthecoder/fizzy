@@ -61,8 +61,8 @@ class ConnectionPoint(val point: Dimension2Expression)
             }
         }
 
-    fun addMetaData(list: MutableList<MetaData>, index: Int) {
-        list.add(MetaData("Point", point, "ConnectionPoint", index))
+    fun addMetaData(metaData: MetaData, index: Int) {
+        metaData.cells.add(MetaDataCell("Point", point, "ConnectionPoint", index))
     }
 
     fun index(): Int {

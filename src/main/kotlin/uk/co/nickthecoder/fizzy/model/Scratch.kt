@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
-import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
@@ -38,10 +37,10 @@ class Scratch(name: String, val expression: PropExpression<*>, comment: String =
      */
     var comment = comment
 
-    fun addMetaData(list: MutableList<MetaData>, index: Int) {
-        list.add(MetaData("Name", StringExpression(name.value.toFormula()), "Scratch", index))
-        list.add(MetaData("Comment", StringExpression(comment.toFormula()), "Scratch", index))
-        list.add(MetaData("Expression", expression, "Scratch", index))
+    fun addMetaData(metaData: MetaData, index: Int) {
+        metaData.cells.add(MetaDataCell("Name", StringExpression(name.value.toFormula()), "Scratch", index))
+        metaData.cells.add(MetaDataCell("Comment", StringExpression(comment.toFormula()), "Scratch", index))
+        metaData.cells.add(MetaDataCell("Expression", expression, "Scratch", index))
     }
 
     fun setContext(context: EvaluationContext) {

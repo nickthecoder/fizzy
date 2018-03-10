@@ -110,13 +110,12 @@ abstract class MyTestCase : TestCase() {
     }
 
     fun checkAllExpressions(shape: Shape) {
-        val list = shape.metaData()
-        list.forEach { metaData ->
-            val existingValue = metaData.cellExpression.valueString()
-            metaData.cellExpression.forceRecalculation()
-            val newValue = metaData.cellExpression.valueString()
+        shape.metaData().cells.forEach { metaDataCell ->
+            val existingValue = metaDataCell.cellExpression.valueString()
+            metaDataCell.cellExpression.forceRecalculation()
+            val newValue = metaDataCell.cellExpression.valueString()
             if (existingValue != newValue) {
-                println("Inconsistant metadata : $metaData")
+                println("Inconsistant metadata : $metaDataCell")
             }
             kotlin.test.assertEquals(existingValue, newValue)
         }
@@ -134,7 +133,7 @@ abstract class MyTestCase : TestCase() {
     }
 
     fun drag(controller: Controller, fromFormula: String, toFormula: String, pauseHalfway: Boolean = true) {
-        drag(controller, Evaluator(fromFormula).parse().value as Dimension2, Evaluator(toFormula).parse().value as Dimension2)
+        drag(controller, Evaluator(fromFormula).parse().value as Dimension2, Evaluator(toFormula).parse().value as Dimension2, pauseHalfway = pauseHalfway)
     }
 
     fun drag(controller: Controller, fromPoint: Dimension2, toPoint: Dimension2, pauseHalfway: Boolean = true) {

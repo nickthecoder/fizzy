@@ -20,10 +20,7 @@ package uk.co.nickthecoder.fizzy.model.geometry
 
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
-import uk.co.nickthecoder.fizzy.model.Dimension
-import uk.co.nickthecoder.fizzy.model.Dimension2
-import uk.co.nickthecoder.fizzy.model.MetaData
-import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
@@ -52,8 +49,8 @@ abstract class GeometryPart
      */
     abstract val point: Dimension2Expression
 
-    open fun addMetaData(list: MutableList<MetaData>, sectionIndex: Int, rowIndex: Int) {
-        list.add(MetaData("Point", point, "Geometry", sectionIndex, rowIndex))
+    open fun addMetaData(metaData : MetaData, sectionIndex: Int, rowIndex: Int) {
+        metaData.cells.add(MetaDataCell("Point", point, "Geometry", sectionIndex, rowIndex))
     }
 
     internal abstract fun setContext(context: EvaluationContext)

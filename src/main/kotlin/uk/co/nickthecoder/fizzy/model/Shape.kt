@@ -252,12 +252,7 @@ abstract class Shape(var parent: ShapeParent)
 
     abstract fun copyInto(parent: ShapeParent, link: Boolean): Shape
 
-    open protected fun populateShape(newShape: Shape, link: Boolean) {
-        newShape.name.copyFrom(name, link)
-        newShape.transform.locPin.copyFrom(transform.locPin, link)
-        newShape.transform.rotation.copyFrom(transform.rotation, link)
-        newShape.transform.pin.copyFrom(transform.pin, link)
-        newShape.transform.scale.copyFrom(transform.scale, link)
+    protected fun populateShape(newShape: Shape, link: Boolean) {
 
         geometries.forEach { geometry ->
             newShape.geometries.add(geometry.copy(link))
@@ -271,6 +266,17 @@ abstract class Shape(var parent: ShapeParent)
         scratches.forEach { scratch ->
             newShape.scratches.add(scratch.copy(link))
         }
+
+        metaData().copyInto(newShape.metaData(), link)
+
+        /*
+        newShape.name.copyFrom(name, link)
+        newShape.transform.locPin.copyFrom(transform.locPin, link)
+        newShape.transform.rotation.copyFrom(transform.rotation, link)
+        newShape.transform.pin.copyFrom(transform.pin, link)
+        newShape.transform.scale.copyFrom(transform.scale, link)
+
+
         newShape.lineWidth.copyFrom(lineWidth, link)
         newShape.size.copyFrom(size, link)
         newShape.strokeColor.copyFrom(strokeColor, link)
@@ -279,17 +285,18 @@ abstract class Shape(var parent: ShapeParent)
         newShape.strokeJoin.copyFrom(strokeJoin, link)
 
         children.forEach { it.copyInto(newShape, link) }
+        */
     }
 
-    fun metaData(): List<MetaData> {
-        val result = mutableListOf<MetaData>()
+    fun metaData(): MetaData {
+        val result = MetaData()
         addMetaData(result)
         return result
     }
 
     fun debugCheckStale(): Boolean {
         var foundStale = false
-        metaData().forEach { cell ->
+        metaData().cells.forEach { cell ->
             val value = cell.cellExpression.value
             cell.cellExpression.forceRecalculation()
             if (cell.cellExpression.value != value) {
@@ -300,23 +307,22 @@ abstract class Shape(var parent: ShapeParent)
         return foundStale
     }
 
-    open protected fun addMetaData(list: MutableList<MetaData>) {
-        list.add(MetaData("Name", StringExpression(name.value.toFormula())))
-        list.add(MetaData("Rotation", transform.rotation))
-        list.add(MetaData("Pin", transform.pin))
-        list.add(MetaData("LocPin", transform.locPin))
-        list.add(MetaData("Scale", transform.scale))
+    open protected fun addMetaData(metaData: MetaData) {
+        metaData.cells.add(MetaDataCell("Name", StringExpression(name.value.toFormula())))
+        metaData.cells.add(MetaDataCell("Pin", transform.pin))
+        metaData.cells.add(MetaDataCell("LocPin", transform.locPin))
+        metaData.cells.add(MetaDataCell("Scale", transform.scale))
 
-        geometries.forEachIndexed { index, geometryProp -> geometryProp.addMetaData(list, index) }
-        connectionPoints.forEachIndexed { index, connectionPointProp -> connectionPointProp.addMetaData(list, index) }
-        controlPoints.forEachIndexed { index, controlPointProp -> controlPointProp.addMetaData(list, index) }
-        scratches.forEachIndexed { index, scratchProp -> scratchProp.addMetaData(list, index) }
-        list.add(MetaData("LineWidth", lineWidth))
-        list.add(MetaData("Size", size))
-        list.add(MetaData("LineColor", strokeColor))
-        list.add(MetaData("FillColor", fillColor))
-        list.add(MetaData("StrokeCap", strokeCap))
-        list.add(MetaData("StrokeJoin", strokeJoin))
+        geometries.forEachIndexed { index, geometryProp -> geometryProp.addMetaData(metaData, index) }
+        connectionPoints.forEachIndexed { index, connectionPointProp -> connectionPointProp.addMetaData(metaData, index) }
+        controlPoints.forEachIndexed { index, controlPointProp -> controlPointProp.addMetaData(metaData, index) }
+        scratches.forEachIndexed { index, scratchProp -> scratchProp.addMetaData(metaData, index) }
+        metaData.cells.add(MetaDataCell("LineWidth", lineWidth))
+        metaData.cells.add(MetaDataCell("Size", size))
+        metaData.cells.add(MetaDataCell("LineColor", strokeColor))
+        metaData.cells.add(MetaDataCell("FillColor", fillColor))
+        metaData.cells.add(MetaDataCell("StrokeCap", strokeCap))
+        metaData.cells.add(MetaDataCell("StrokeJoin", strokeJoin))
     }
 
     override fun toString(): String = "Shape ${id}"

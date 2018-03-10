@@ -77,33 +77,20 @@ class ShapeText private constructor(parent: ShapeParent)
         return newShape
     }
 
-    override fun populateShape(newShape: Shape, link: Boolean) {
-        super.populateShape(newShape, link)
-        if (newShape !is ShapeText) throw IllegalStateException("Expected a ShapeText, but found $newShape")
-        newShape.text.copyFrom(text, link)
-        newShape.fontName.copyFrom(fontName, link)
-        newShape.fontSize.copyFrom(fontSize, link)
-        newShape.alignX.copyFrom(alignX, link)
-        newShape.alignY.copyFrom(alignY, link)
-        newShape.stroke.copyFrom(stroke, link)
-        newShape.fill.copyFrom(fill, link)
-        // TODO Do the rest!!! This may be replaced by a more generic and error resistant version
-    }
+    override fun addMetaData(metaData: MetaData) {
+        super.addMetaData(metaData)
+        metaData.cells.add(MetaDataCell("Text", text))
+        metaData.cells.add(MetaDataCell("FontName", fontName))
+        metaData.cells.add(MetaDataCell("FontSize", fontSize))
+        metaData.cells.add(MetaDataCell("AlignX", alignX))
+        metaData.cells.add(MetaDataCell("AlignY", alignY))
+        metaData.cells.add(MetaDataCell("Stroke", stroke))
+        metaData.cells.add(MetaDataCell("Fill", fill))
 
-    override fun addMetaData(list: MutableList<MetaData>) {
-        super.addMetaData(list)
-        list.add(MetaData("Text", text))
-        list.add(MetaData("FontName", fontName))
-        list.add(MetaData("FontSize", fontSize))
-        list.add(MetaData("AlignX", alignX))
-        list.add(MetaData("AlignY", alignY))
-        list.add(MetaData("Stroke", stroke))
-        list.add(MetaData("Fill", fill))
-
-        list.add(MetaData("MarginTop", marginTop))
-        list.add(MetaData("MarginRight", marginRight))
-        list.add(MetaData("MarginBottom", marginBottom))
-        list.add(MetaData("MarginLeft", marginLeft))
+        metaData.cells.add(MetaDataCell("MarginTop", marginTop))
+        metaData.cells.add(MetaDataCell("MarginRight", marginRight))
+        metaData.cells.add(MetaDataCell("MarginBottom", marginBottom))
+        metaData.cells.add(MetaDataCell("MarginLeft", marginLeft))
     }
 
     override fun isAt(pagePoint: Dimension2, minDistance: Dimension): Boolean {

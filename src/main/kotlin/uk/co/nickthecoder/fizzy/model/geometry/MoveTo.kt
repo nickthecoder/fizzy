@@ -19,10 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model.geometry
 
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
-import uk.co.nickthecoder.fizzy.model.Dimension
-import uk.co.nickthecoder.fizzy.model.Dimension2
-import uk.co.nickthecoder.fizzy.model.MetaData
-import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.StringExpression
 
@@ -39,9 +36,9 @@ class MoveTo(override val point: Dimension2Expression)
         point.propListeners.add(this)
     }
 
-    override fun addMetaData(list: MutableList<MetaData>, sectionIndex: Int, rowIndex: Int) {
-        super.addMetaData(list, sectionIndex, rowIndex)
-        list.add(MetaData("Type", StringExpression("\"MoveTo\""), "Geometry", sectionIndex, rowIndex))
+    override fun addMetaData(metaData : MetaData, sectionIndex: Int, rowIndex: Int) {
+        metaData.cells.add(MetaDataCell("Type", StringExpression("\"MoveTo\""), "Geometry", sectionIndex, rowIndex))
+        super.addMetaData(metaData, sectionIndex, rowIndex)
     }
 
     override fun setContext(context: EvaluationContext) {

@@ -122,7 +122,7 @@ class MainWindow(val stage: Stage) : Window() {
                 println("None stale\n")
                 document.selection.forEach { shape ->
                     println("---------------");
-                    println(shape.metaData().joinToString(separator = "\n"))
+                    println(shape.metaData())
                 }
             }
         }

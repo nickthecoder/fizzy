@@ -109,9 +109,12 @@ abstract class PropExpression<T : Any>(formula: String, val klass: Class<T>, var
         super.dirty(prop)
     }
 
-    fun copyFrom(other: PropExpression<T>, link: Boolean) {
+    fun copyFrom(other: PropExpression<*>, link: Boolean) {
         if (link) {
-            linkedTo = other
+            if (klass !== other.klass) throw IllegalStateException("PropExpressions are not of the same type : $this vs $other")
+            @Suppress("UNCHECKED_CAST")
+            linkedTo = other as PropExpression<T>
+
             other.propListeners.add(linkedListener)
             dirty = true
         } else {

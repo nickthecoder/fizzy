@@ -20,10 +20,7 @@ package uk.co.nickthecoder.fizzy.model.geometry
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
-import uk.co.nickthecoder.fizzy.model.Dimension
-import uk.co.nickthecoder.fizzy.model.Dimension2
-import uk.co.nickthecoder.fizzy.model.MetaData
-import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.prop.BooleanExpression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
@@ -116,11 +113,11 @@ class Geometry
         return -1
     }
 
-    fun addMetaData(list: MutableList<MetaData>, sectionIndex: Int) {
-        list.add(MetaData("Fill", fill, "Geometry", sectionIndex))
-        list.add(MetaData("Stroke", stroke, "Geometry", sectionIndex))
-        list.add(MetaData("Connect", connect, "Geometry", sectionIndex))
-        parts.forEachIndexed { index, part -> part.addMetaData(list, sectionIndex, index) }
+    fun addMetaData(metaData: MetaData, sectionIndex: Int) {
+        metaData.cells.add(MetaDataCell("Fill", fill, "Geometry", sectionIndex))
+        metaData.cells.add(MetaDataCell("Stroke", stroke, "Geometry", sectionIndex))
+        metaData.cells.add(MetaDataCell("Connect", connect, "Geometry", sectionIndex))
+        parts.forEachIndexed { index, part -> part.addMetaData(metaData, sectionIndex, index) }
     }
 
     fun isAt(localPoint: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean {
