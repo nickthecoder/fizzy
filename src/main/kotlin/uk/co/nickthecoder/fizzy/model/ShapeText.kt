@@ -34,7 +34,7 @@ class ShapeText private constructor(parent: ShapeParent)
 
     val fontName = StringExpression("Sans Regular")
 
-    val fontSize = DimensionExpression("10mm")
+    val fontSize = DimensionExpression("20pt")
 
     val font = PropCalculation2(fontName, fontSize) {
         fontName, fontSize ->
@@ -52,18 +52,18 @@ class ShapeText private constructor(parent: ShapeParent)
      */
     val alignY = DoubleExpression("0.5")
 
+    val marginTop = DimensionExpression("FontSize/2")
+    val marginRight = DimensionExpression("FontSize/2")
+    val marginBottom = DimensionExpression("FontSize/2")
+    val marginLeft = DimensionExpression("FontSize/2")
+
     val multiLineText = PropCalculation4(text, font, alignX, alignY) {
         text, font, alignX, alignY ->
         MultiLineText(text, font, alignX, alignY)
     }
 
     init {
-        listenTo(size)
-        listenTo(text)
-        listenTo(fontName)
-        listenTo(fontSize)
-        listenTo(alignX)
-        listenTo(alignY)
+        listenTo(size, text, fontName, fontSize, alignX, alignY, marginTop, marginRight, marginBottom, marginLeft)
         transform.locPin.formula = "Size * Vector2(AlignX,AlignY)"
     }
 
@@ -76,6 +76,13 @@ class ShapeText private constructor(parent: ShapeParent)
 
     override fun populateShape(newShape: Shape, link: Boolean) {
         super.populateShape(newShape, link)
+        if (newShape !is ShapeText) throw IllegalStateException("Expected a ShapeText, but found $newShape")
+        newShape.text.copyFrom(text, link)
+        newShape.fontName.copyFrom(fontName, link)
+        newShape.fontSize.copyFrom(fontSize, link)
+        newShape.alignX.copyFrom(alignX, link)
+        newShape.alignY.copyFrom(alignY, link)
+        // TODO Do the rest!!! This may be replaced by a more generic and error resistant version
     }
 
     override fun addMetaData(list: MutableList<MetaData>) {
@@ -85,6 +92,11 @@ class ShapeText private constructor(parent: ShapeParent)
         list.add(MetaData("FontSize", fontSize))
         list.add(MetaData("AlignX", alignX))
         list.add(MetaData("AlignY", alignY))
+
+        list.add(MetaData("MarginTop", marginTop))
+        list.add(MetaData("MarginRight", marginRight))
+        list.add(MetaData("MarginBottom", marginBottom))
+        list.add(MetaData("MarginLeft", marginLeft))
     }
 
     override fun isAt(pagePoint: Dimension2, minDistance: Dimension): Boolean {

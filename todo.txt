@@ -1,7 +1,15 @@
 To Do
 =====
 
-Shape.isAt is weird. Why use the parent's coordinates? Use the Page coordinates!
+Edit text
+    Double click a shape
+        If it is ShapeText or has a child of ShapeText, then edit that
+        Otherwise, create a new ShapeText
+            For Shape2d parents, make the size of the ShapeText the same size as the parent.
+
+Clip text to its size (maybe do this for ALL shapes)
+
+Shape1d not populating start and end points???
 
 For Version 1
 -------------

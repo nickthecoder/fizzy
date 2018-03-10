@@ -39,9 +39,8 @@ class Shape1d private constructor(parent: ShapeParent)
     val length = PropCalculation2(start, end) { sv, ev -> (ev - sv).length() }
 
     init {
-        listenTo(start)
-        listenTo(end)
-        listenTo(size)
+        listenTo(start, end, size)
+
         transform.locPin.formula = "Dimension2(Length*0.5, LineWidth * 0.5)"
         transform.pin.formula = "(Start+End) * 0.5"
         transform.rotation.formula = "(End-Start).Angle"
@@ -52,6 +51,13 @@ class Shape1d private constructor(parent: ShapeParent)
         newShape.postInit()
         populateShape(newShape, link)
         return newShape
+    }
+
+    override fun populateShape(newShape: Shape, link: Boolean) {
+        super.populateShape(newShape, link)
+        if (newShape !is Shape1d) throw IllegalStateException("Expected a Shape1d, but found $newShape")
+        newShape.start.copyFrom(start, link)
+        newShape.end.copyFrom(end, link)
     }
 
     override fun addMetaData(list: MutableList<MetaData>) {

@@ -223,6 +223,10 @@ abstract class Shape(var parent: ShapeParent)
         return false
     }
 
+    fun createText(text: String = "", alignX: Double = 0.5, alignY: Double = 0.5): ShapeText {
+        val shapeText = Shape.createText(this, text, alignX = alignX, alignY = alignY)
+        return shapeText
+    }
 
     fun findScratch(name: String): Scratch? {
         scratches.forEach { scratchProp ->
@@ -237,10 +241,12 @@ abstract class Shape(var parent: ShapeParent)
      * Listens to the expression, so that when it changes, Shape's listeners are informed.
      * The expression's [EvaluationContext] is also set.
      */
-    protected fun listenTo(expression: Prop<*>) {
-        expression.propListeners.add(this)
-        if (expression is PropExpression<*>) {
-            expression.context = context
+    protected fun listenTo(vararg expressions: Prop<*>) {
+        expressions.forEach { expression ->
+            expression.propListeners.add(this)
+            if (expression is PropExpression<*>) {
+                expression.context = context
+            }
         }
     }
 
@@ -332,10 +338,17 @@ abstract class Shape(var parent: ShapeParent)
             text.text.formula = str.toFormula()
             text.fontSize.formula = fontSize
             text.fontName.formula = fontName.toFormula()
-            text.transform.pin.formula = at
             text.fillColor.formula = "BLACK"
             text.alignX.formula = alignX.toFormula()
             text.alignY.formula = alignY.toFormula()
+
+            if (parent is Shape2d) {
+                text.size.formula = "Parent.Size - Dimension2( MarginLeft + MarginRight, MarginTop + MarginBottom )"
+                text.transform.pin.formula = "Size * Vector2(AlignX, AlignY) + Dimension2( MarginTop, MarginLeft )"
+                //text.transform.locPin.formula = "Size / 2"
+            } else {
+                text.transform.pin.formula = at
+            }
 
             return text
         }

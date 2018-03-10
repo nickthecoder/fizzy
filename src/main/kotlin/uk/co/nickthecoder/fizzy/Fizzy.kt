@@ -47,6 +47,9 @@ class Fizzy : Application() {
         val box1 = Shape.createBox(page, "Dimension2(20cm,10cm)", "Dimension2(40cm,10cm)")
         val box2 = Shape.createBox(page, "Dimension2(20cm,10cm)", "Dimension2(40cm,30cm)")
 
+        box1.children.add(box1.createText("Text\nin\nBox1", alignY = 0.0))
+        box2.children.add(box2.createText("Text\nin\nBox2", alignX = 0.0))
+
         val text1 = Shape.createText(page, "Hello\nWorld\nNick\nThe\nCoder", at = "Dimension2(40cm, 20cm)")
         val text2 = Shape.createText(page, "Left\nAlign", at = "Dimension2(30cm, 20cm)", alignX = 0.0)
         val text3 = Shape.createText(page, "Right\nAlign", at = "Dimension2(50cm, 20cm)", alignX = 1.0)
@@ -63,7 +66,6 @@ class Fizzy : Application() {
 
         box2.connectionPoints.add(ConnectionPoint("(Geometry1.Point1 + Geometry1.Point2) / 2"))
         box2.connectionPoints.add(ConnectionPoint("(Geometry1.Point3 + Geometry1.Point4) / 2"))
-        box2.fillColor.formula = "BLACK"
 
         val line = Shape.createLine(page, "Dimension2(10cm,11cm)", "Dimension2(10cm,13cm)")
         page.children.add(line)

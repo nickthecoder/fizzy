@@ -116,9 +116,13 @@ class ShapeTextPropType private constructor()
     override fun findField(prop: Prop<ShapeText>, name: String): Prop<*>? {
         return when (name) {
             "Text" -> PropField("Shape.Text", prop) { prop.value.text }
-            "FontSize" -> PropField("Shape.Text", prop) { prop.value.text }
+            "FontSize" -> PropField("Shape.Text", prop) { prop.value.fontSize }
             "AlignX" -> PropField("Shape.AlignX", prop) { prop.value.alignX }
             "AlignY" -> PropField("Shape.AlignY", prop) { prop.value.alignY }
+            "MarginTop" -> PropField("Shape.MarginTop", prop) { prop.value.marginTop }
+            "MarginRight" -> PropField("Shape.MarginTop", prop) { prop.value.marginRight }
+            "MarginBottom" -> PropField("Shape.MarginTop", prop) { prop.value.marginBottom }
+            "MarginLeft" -> PropField("Shape.MarginTop", prop) { prop.value.marginLeft }
             else -> super.findField(prop, name)
         }
     }
