@@ -36,7 +36,7 @@ abstract class Shape(var parent: ShapeParent)
 
     val id = parent.document().generateShapeId()
 
-    val name = PropVariable("")
+    val name = StringExpression("".toFormula())
 
     abstract val size: Dimension2Expression
 
@@ -253,7 +253,7 @@ abstract class Shape(var parent: ShapeParent)
     abstract fun copyInto(parent: ShapeParent, link: Boolean): Shape
 
     open protected fun populateShape(newShape: Shape, link: Boolean) {
-        newShape.name.value = name.value
+        newShape.name.copyFrom(name, link)
         newShape.transform.locPin.copyFrom(transform.locPin, link)
         newShape.transform.rotation.copyFrom(transform.rotation, link)
         newShape.transform.pin.copyFrom(transform.pin, link)

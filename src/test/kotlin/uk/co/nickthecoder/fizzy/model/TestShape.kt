@@ -26,6 +26,7 @@ import uk.co.nickthecoder.fizzy.prop.DimensionExpression
 import uk.co.nickthecoder.fizzy.prop.DoubleExpression
 import uk.co.nickthecoder.fizzy.prop.StringExpression
 import uk.co.nickthecoder.fizzy.util.MyTestCase
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class TestShape : MyTestCase() {
 
@@ -122,7 +123,7 @@ class TestShape : MyTestCase() {
         page.children.add(box)
         box.children.add(inner)
 
-        inner.name.value = "inner"
+        inner.name.formula = "inner".toFormula()
 
         fun test(name: String, exp: String): Any {
             box.scratches.add(Scratch(name, StringExpression(exp)))
@@ -132,7 +133,7 @@ class TestShape : MyTestCase() {
         box.scratches.add(Scratch("myName", StringExpression("this.findShape(\"inner\").Name")))
         assertEquals("inner", box.findScratch("myName")!!.expression.value)
 
-        inner.name.value = "renamed"
+        inner.name.formula = "renamed".toFormula()
         assertFails { box.findScratch("myName")!!.expression.value }
     }
 

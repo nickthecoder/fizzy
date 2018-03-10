@@ -25,6 +25,7 @@ import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.util.ChangeListener
 import uk.co.nickthecoder.fizzy.util.ChangeType
 import uk.co.nickthecoder.fizzy.util.MyTestCase
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class TestListeners : MyTestCase() {
 
@@ -171,13 +172,13 @@ class TestListeners : MyTestCase() {
         shape1a.name.value // Ensure not dirty
         shape1b.name.value // Ensure not dirty
 
-        shape1a.name.value = "Shape1A"
+        shape1a.name.formula = "Shape1A".toFormula()
         assertEquals(1, shape1aChanged)
         assertEquals(0, shape1bChanged)
         assertEquals(1, page1Changed)
         assertEquals(1, documentChanged)
 
-        shape1b.name.value = "Shape1B"
+        shape1b.name.formula = "Shape1B".toFormula()
         assertEquals(1, shape1aChanged)
         assertEquals(1, shape1bChanged)
         assertEquals(2, page1Changed)
