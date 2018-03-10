@@ -162,8 +162,6 @@ abstract class Shape(var parent: ShapeParent)
         dirty = true
     }
 
-    override val propListenerOwner = "Shape"
-
     override fun document(): Document = parent.document()
 
     override fun page(): Page = parent.page()

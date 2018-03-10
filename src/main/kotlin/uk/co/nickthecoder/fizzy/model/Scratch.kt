@@ -52,7 +52,5 @@ class Scratch(name: String, val expression: PropExpression<*>, comment: String =
         changeListeners.fireChanged(this)
     }
 
-    override val propListenerOwner = "Scratch"
-
     fun copy(link: Boolean) = Scratch(name.value, expression.copy(link), comment)
 }

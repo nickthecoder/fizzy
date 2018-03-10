@@ -105,9 +105,6 @@ class Geometry
         changeListeners.fireChanged(this)
     }
 
-    override val propListenerOwner = "Geometry"
-
-
     fun index(): Int {
         shape?.let {
             it.geometries.forEachIndexed { index, prop ->

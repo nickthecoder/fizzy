@@ -66,8 +66,6 @@ class ListPropertyAccess(val listProp: Prop<FList<Any>>, val index: Int, val fie
 
     var oldField: Prop<*>? = null
 
-    override val propListenerOwner = "ListPropertyAccess"
-
     init {
         listProp.propListeners.add(this)
         listProp.value.listeners.add(this)

@@ -26,8 +26,6 @@ import uk.co.nickthecoder.fizzy.evaluator.ArgList
 abstract class PropMethod<T : Any>(val prop: Prop<T>)
     : PropCalculation<Any>() {
 
-    override val propListenerOwner = "PropMethod"
-
     protected var arg: Prop<*>? = null
 
     override fun isConstant() = prop.isConstant() && arg?.isConstant() == true

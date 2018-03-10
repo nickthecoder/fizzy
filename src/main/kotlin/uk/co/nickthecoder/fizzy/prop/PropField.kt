@@ -30,8 +30,6 @@ class SimplePropField<T : Any>(
 
     : PropCalculation<Any>() {
 
-    override val propListenerOwner = "SimplePropField $name"
-
     init {
         prop.propListeners.add(this)
     }
@@ -51,8 +49,6 @@ class PropField<T : Any>(
         val lambda: (Prop<T>) -> Prop<Any>)
 
     : PropCalculation<Any>() {
-
-    override val propListenerOwner = "PropField $name"
 
     var oldProp: Prop<Any>? = null
 

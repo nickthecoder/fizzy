@@ -77,8 +77,6 @@ abstract class PropCalculation<T : Any>
 class PropCalculation1<T : Any, A : Any>(val a: Prop<A>, val lambda: (A) -> T)
     : PropCalculation<T>() {
 
-    override val propListenerOwner = "PropCalculation1 $lambda"
-
     init {
         if (!a.isConstant()) a.propListeners.add(this)
     }
@@ -88,8 +86,6 @@ class PropCalculation1<T : Any, A : Any>(val a: Prop<A>, val lambda: (A) -> T)
 
 class PropCalculation2<T : Any, A : Any, B : Any>(val a: Prop<A>, val b: Prop<B>, val lambda: (A, B) -> T)
     : PropCalculation<T>() {
-
-    override val propListenerOwner = "PropCalculation2 $lambda"
 
     init {
         if (!a.isConstant()) a.propListeners.add(this)

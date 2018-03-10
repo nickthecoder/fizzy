@@ -48,8 +48,6 @@ class ScratchListPropType private constructor()
 class FindScratchField(val scratchList: ScratchList, val name: String)
     : PropCalculation<Any>(), CollectionListener<Scratch> {
 
-    override val propListenerOwner = "FindScratchField"
-
     /**
      * If the scratch is removed, we need to become dirty!
      */

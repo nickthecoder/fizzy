@@ -61,8 +61,6 @@ class ControlPoint(val point: Dimension2Expression)
         changeListeners.fireChanged(this)
     }
 
-    override val propListenerOwner = "ControlPoint"
-
     fun addMetaData(list: MutableList<MetaData>, index: Int) {
         list.add(MetaData("Point", point, "ControlPoint", index))
     }

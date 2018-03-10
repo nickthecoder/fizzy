@@ -93,8 +93,6 @@ abstract class PropType<T : Any>(val klass: Class<*>) {
 class ListIndexAccess(val list: FList<Any>, val index: Int)
     : PropCalculation<Any>(), CollectionListener<Any> {
 
-    override val propListenerOwner = "ListIndexAccess"
-
     init {
         list.listeners.add(this)
     }

@@ -80,8 +80,6 @@ abstract class PropExpression<T : Any>(formula: String, val klass: Class<T>, var
         override fun dirty(prop: Prop<*>) {
             forceRecalculation()
         }
-
-        override val propListenerOwner = "PropExpression.linkedListener"
     }
 
     abstract val defaultValue: T
@@ -120,8 +118,6 @@ abstract class PropExpression<T : Any>(formula: String, val klass: Class<T>, var
             formula = other.formula
         }
     }
-
-    override val propListenerOwner = "PropExpression : $formula"
 
     override fun eval(): T {
         var cp = calculatedProperty
