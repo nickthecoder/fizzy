@@ -146,11 +146,11 @@ class CanvasContext(val canvas: Canvas)
         multiLineText.lines.forEach { line ->
             // For visual debugging
             // gc.strokeRect(line.dx.inDefaultUnits, line.dy.inDefaultUnits, line.width.inDefaultUnits, line.height.inDefaultUnits)
-            if (fill) {
-                gc.fillText(line.text, line.dx.inDefaultUnits, line.dy.inDefaultUnits)
-            }
             if (stroke) {
                 gc.strokeText(line.text, line.dx.inDefaultUnits, line.dy.inDefaultUnits)
+            }
+            if (fill) {
+                gc.fillText(line.text, line.dx.inDefaultUnits, line.dy.inDefaultUnits)
             }
         }
     }

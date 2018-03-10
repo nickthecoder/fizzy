@@ -35,6 +35,8 @@ class BooleanExpression
 
     constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Boolean::class.java, context)
 
+    constructor(value: Boolean) : this(value.toFormula())
+
     constructor(other: BooleanExpression) : super(other)
 
     override val defaultValue = false

@@ -24,8 +24,9 @@ import javafx.scene.control.MenuButton
 import javafx.scene.control.MenuItem
 import uk.co.nickthecoder.fizzy.Fizzy
 import uk.co.nickthecoder.fizzy.model.Dimension
-import uk.co.nickthecoder.fizzy.model.Shape
-import uk.co.nickthecoder.fizzy.model.history.ChangeExpression
+import uk.co.nickthecoder.fizzy.model.ShapeText
+import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 
 class LineWidthPicker(val mainWindow: MainWindow, val widths: Array<Dimension>)
@@ -36,6 +37,12 @@ class LineWidthPicker(val mainWindow: MainWindow, val widths: Array<Dimension>)
     override fun build(): Node {
 
         button.graphic = Fizzy.graphic("icons/format-stroke-width.png")
+        val noStrokeMenuItem = MenuItem("None")
+        noStrokeMenuItem.onAction = EventHandler {
+            noStroke()
+        }
+        button.items.add(noStrokeMenuItem)
+
         widths.forEach { width ->
             val menuItem = MenuItem(width.toFormula())
             menuItem.onAction = EventHandler {
@@ -47,13 +54,45 @@ class LineWidthPicker(val mainWindow: MainWindow, val widths: Array<Dimension>)
         return button
     }
 
+    fun noStroke() {
+        val history = mainWindow.document?.history ?: return
+
+        history.beginBatch()
+        mainWindow.shapeSelectionProperty.value.forEach { shape ->
+            shape.geometries.forEach { geo ->
+                history.makeChange(ChangeExpressions(listOf(
+                        geo.stroke to false.toFormula()
+                )))
+            }
+            if (shape is ShapeText) {
+                history.makeChange(ChangeExpressions(listOf(
+                        shape.stroke to false.toFormula()
+                )))
+            }
+        }
+        history.endBatch()
+
+    }
+
     fun pickWidth(width: Dimension) {
 
         val history = mainWindow.document?.history ?: return
 
         history.beginBatch()
         mainWindow.shapeSelectionProperty.value.forEach { shape ->
-            history.makeChange(ChangeExpression(shape.lineWidth, width.toFormula()))
+            history.makeChange(ChangeExpressions(listOf(
+                    shape.lineWidth to width.toFormula()
+            )))
+            shape.geometries.forEach { geo ->
+                history.makeChange(ChangeExpressions(listOf(
+                        geo.stroke to true.toFormula()
+                )))
+            }
+            if (shape is ShapeText) {
+                history.makeChange(ChangeExpressions(listOf(
+                        shape.stroke to true.toFormula()
+                )))
+            }
         }
         history.endBatch()
     }

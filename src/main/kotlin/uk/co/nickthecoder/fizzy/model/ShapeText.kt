@@ -57,6 +57,9 @@ class ShapeText private constructor(parent: ShapeParent)
     val marginBottom = DimensionExpression("FontSize/2")
     val marginLeft = DimensionExpression("FontSize/2")
 
+    val stroke = BooleanExpression(false)
+    val fill = BooleanExpression(true)
+
     val multiLineText = PropCalculation4(text, font, alignX, alignY) {
         text, font, alignX, alignY ->
         MultiLineText(text, font, alignX, alignY)
@@ -82,6 +85,8 @@ class ShapeText private constructor(parent: ShapeParent)
         newShape.fontSize.copyFrom(fontSize, link)
         newShape.alignX.copyFrom(alignX, link)
         newShape.alignY.copyFrom(alignY, link)
+        newShape.stroke.copyFrom(stroke, link)
+        newShape.fill.copyFrom(fill, link)
         // TODO Do the rest!!! This may be replaced by a more generic and error resistant version
     }
 
@@ -92,6 +97,8 @@ class ShapeText private constructor(parent: ShapeParent)
         list.add(MetaData("FontSize", fontSize))
         list.add(MetaData("AlignX", alignX))
         list.add(MetaData("AlignY", alignY))
+        list.add(MetaData("Stroke", stroke))
+        list.add(MetaData("Fill", fill))
 
         list.add(MetaData("MarginTop", marginTop))
         list.add(MetaData("MarginRight", marginRight))

@@ -24,17 +24,17 @@ import javafx.event.ActionEvent
 import javafx.scene.Node
 import javafx.scene.control.ColorPicker
 import javafx.scene.paint.Color
-import uk.co.nickthecoder.fizzy.model.Paint
-import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.ShapeText
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
-import uk.co.nickthecoder.fizzy.prop.PaintExpression
 import uk.co.nickthecoder.fizzy.prop.PropExpression
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class FColorPicker(
         val mainWindow: MainWindow,
         val type: String = "fill",
         defaultColor: Color = if (type == "fill") Color.WHITE else Color.BLACK,
-        val findPaintExp: (Shape) -> PaintExpression?)
+        val isStroke: Boolean)
+
     : BuildableNode {
 
     val colorPicker = ColorPicker()
@@ -55,13 +55,18 @@ class FColorPicker(
     fun onPickColor() {
         val fxColor = colorPicker.value
         val document = mainWindow.document ?: return
-        val changes = mutableListOf<Pair<PropExpression<Paint>, String>>()
+        val changes = mutableListOf<Pair<PropExpression<*>, String>>()
 
         document.history.beginBatch()
         document.selection.forEach { shape ->
-            findPaintExp(shape)?.let {
-                changes.add(it to fxColor.toFizzy().toFormula())
+            val notTransparent = fxColor.opacity != 0.0
+            if (shape is ShapeText) {
+                changes.add((if (isStroke) shape.stroke else shape.fill) to notTransparent.toFormula())
             }
+            shape.geometries.forEach { geo ->
+                changes.add((if (isStroke) geo.stroke else geo.fill) to notTransparent.toFormula())
+            }
+            changes.add((if (isStroke) shape.strokeColor else shape.fillColor) to fxColor.toFizzy().toFormula())
         }
         document.history.makeChange(ChangeExpressions(changes))
         document.history.endBatch()
@@ -69,11 +74,9 @@ class FColorPicker(
 
     fun onShapeSelectionChanged() {
         mainWindow.shapeSelectionProperty.value?.lastOrNull()?.let { shape ->
-            findPaintExp(shape)?.let { paint ->
-                val color = paint.value
-                if (color is uk.co.nickthecoder.fizzy.model.Color) {
-                    colorPicker.value = color.toJavaFX()
-                }
+            val color = (if (isStroke) shape.strokeColor else shape.fillColor).value
+            if (color is uk.co.nickthecoder.fizzy.model.Color) {
+                colorPicker.value = color.toJavaFX()
             }
         }
     }

@@ -9,7 +9,11 @@ Edit text
 
 Clip text to its size (maybe do this for ALL shapes)
 
-Shape1d not populating start and end points???
+Either complete ShapeText.populate or re-implment it using MetaData.
+
+ShapeText needs stroke and fill booleans, but Shape has those on Geometry
+    Should they be on Shape only (and not on ShapeText nor Geometry?)
+    What is the point of multiple geometries if they share a single strokeColor and fillColor???
 
 For Version 1
 -------------

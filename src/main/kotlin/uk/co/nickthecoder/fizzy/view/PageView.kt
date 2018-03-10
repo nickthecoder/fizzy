@@ -65,7 +65,7 @@ class PageView(val page: Page, val dc: DrawContext) {
             if (shape is ShapeText) {
                 dc.translate(shape.transform.locPin.value)
                 dc.font(shape.font.value)
-                dc.multiLineText(shape.multiLineText.value, stroke = false, fill = true)
+                dc.multiLineText(shape.multiLineText.value, stroke = shape.stroke.value, fill = shape.fill.value)
             }
 
             shape.children.forEach { child ->
