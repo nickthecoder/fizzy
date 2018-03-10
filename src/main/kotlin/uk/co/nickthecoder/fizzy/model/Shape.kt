@@ -206,8 +206,8 @@ abstract class Shape(var parent: ShapeParent)
      * Returns true iff this geometry is close to the given point, or if any of the descendants isAt the point.
      *
      */
-    open fun isAt(point: Dimension2, minDistance: Dimension): Boolean {
-        val localPoint = transform.fromParentToLocal.value * point
+    open fun isAt(pagePoint: Dimension2, minDistance: Dimension): Boolean {
+        val localPoint = transform.fromPageToLocal.value * pagePoint
 
         geometries.forEach { geo ->
             if (geo.isAt(localPoint, lineWidth.value, minDistance)) {
@@ -216,7 +216,7 @@ abstract class Shape(var parent: ShapeParent)
         }
 
         children.forEach { child ->
-            if (child.isAt(point, minDistance)) {
+            if (child.isAt(pagePoint, minDistance)) {
                 return true
             }
         }

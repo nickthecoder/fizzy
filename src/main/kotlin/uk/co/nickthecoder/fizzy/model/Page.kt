@@ -68,16 +68,16 @@ class Page internal constructor(val document: Document, add: Boolean)
         return null
     }
 
-    fun findShapeAt(point: Dimension2, minDistance: Dimension): Shape? {
+    fun findShapeAt(pagePoint: Dimension2, minDistance: Dimension): Shape? {
         children.forEach { shape ->
-            if (shape.isAt(point, minDistance)) {
+            if (shape.isAt(pagePoint, minDistance)) {
                 return shape
             }
         }
         return null
     }
 
-    fun findShapesAt(point: Dimension2, minDistance: Dimension) = children.filter { it.isAt(point, minDistance) }
+    fun findShapesAt(pagePoint: Dimension2, minDistance: Dimension) = children.filter { it.isAt(pagePoint, minDistance) }
 
     /**
      * Makes a local copy of the master shape. Creates a new shape based on the copy of the master.

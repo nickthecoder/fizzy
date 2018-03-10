@@ -87,12 +87,12 @@ class ShapeText private constructor(parent: ShapeParent)
         list.add(MetaData("AlignY", alignY))
     }
 
-    override fun isAt(point: Dimension2, minDistance: Dimension): Boolean {
-        val localPoint = transform.fromParentToLocal.value * point - transform.locPin.value
-        if (multiLineText.value.isAt(localPoint)) {
+    override fun isAt(pagePoint: Dimension2, minDistance: Dimension): Boolean {
+        val relativePoint = transform.fromPageToLocal.value * pagePoint - transform.locPin.value
+        if (multiLineText.value.isAt(relativePoint)) {
             return true
         }
-        return super.isAt(point, minDistance)
+        return super.isAt(pagePoint, minDistance)
     }
 
     /**

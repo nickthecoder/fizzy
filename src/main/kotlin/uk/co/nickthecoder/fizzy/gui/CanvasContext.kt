@@ -144,10 +144,10 @@ class CanvasContext(val canvas: Canvas)
     override fun multiLineText(multiLineText: MultiLineText, stroke: Boolean, fill: Boolean) {
         gc.textBaseline = VPos.TOP
         multiLineText.lines.forEach { line ->
+            // For visual debugging
+            // gc.strokeRect(line.dx.inDefaultUnits, line.dy.inDefaultUnits, line.width.inDefaultUnits, line.height.inDefaultUnits)
             if (fill) {
                 gc.fillText(line.text, line.dx.inDefaultUnits, line.dy.inDefaultUnits)
-                // For visual debugging
-                // gc.strokeRect(line.dx.inDefaultUnits, line.dy.inDefaultUnits, line.width.inDefaultUnits, line.height.inDefaultUnits)
             }
             if (stroke) {
                 gc.strokeText(line.text, line.dx.inDefaultUnits, line.dy.inDefaultUnits)
