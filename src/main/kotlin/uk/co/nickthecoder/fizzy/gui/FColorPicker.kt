@@ -59,7 +59,6 @@ class FColorPicker(
         document.history.beginBatch()
         document.selection.forEach { shape ->
             val notTransparent = fxColor.opacity != 0.0
-            changes.add((if (isStroke) shape.geometry.stroke else shape.geometry.fill) to notTransparent.toFormula())
             changes.add((if (isStroke) shape.strokeColor else shape.fillColor) to fxColor.toFizzy().toFormula())
         }
         document.history.makeChange(ChangeExpressions(changes))

@@ -58,16 +58,16 @@ class PageView(val page: Page, val dc: DrawContext) {
 
                 }
             }
-            dc.endPath(shape.geometry.stroke.value, shape.geometry.fill.value)
+            dc.endPath(shape.strokeColor.value.isVisible(), shape.fillColor.value.isVisible())
 
             if (shape is ShapeText) {
                 dc.translate(shape.transform.locPin.value)
                 dc.font(shape.font.value)
                 if (shape.clip.value) {
-                    dc.multiLineText(shape.multiLineText.value, stroke = shape.geometry.stroke.value, fill = shape.geometry.fill.value,
+                    dc.multiLineText(shape.multiLineText.value, stroke = shape.strokeColor.value.isVisible(), fill = shape.fillColor.value.isVisible(),
                             clipStart = -shape.transform.locPin.value, clipSize = shape.size.value)
                 } else {
-                    dc.multiLineText(shape.multiLineText.value, stroke = shape.geometry.stroke.value, fill = shape.geometry.fill.value)
+                    dc.multiLineText(shape.multiLineText.value, stroke = shape.strokeColor.value.isVisible(), fill = shape.fillColor.value.isVisible())
                 }
             }
 

@@ -19,10 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.view
 
 import org.junit.Test
-import uk.co.nickthecoder.fizzy.model.Dimension
-import uk.co.nickthecoder.fizzy.model.Document
-import uk.co.nickthecoder.fizzy.model.Page
-import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.util.MyTestCase
@@ -40,7 +37,8 @@ class TestFindShapeAt : MyTestCase() {
         // Box from 30mm, 100m to 50mm, 140mm
         page.children.add(box)
 
-        box.geometry.fill.formula = "false"
+        box.fillColor.formula = Color.TRANSPARENT.toFormula()
+        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,120mm)"), Dimension.ZERO_mm)) // Middle of shape (which isn't filled).
 
         assertTrue(box.isAt(dimension2("Dimension2(40mm,100mm)"), Dimension.ZERO_mm))
         assertEquals(box, page.findShapeAt(dimension2("Dimension2(40mm,100mm)"), Dimension.ZERO_mm))
@@ -48,9 +46,8 @@ class TestFindShapeAt : MyTestCase() {
         assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"), Dimension.ZERO_mm)) // Too right
         assertNull(page.findShapeAt(dimension2("Dimension2(40mm,150mm)"), Dimension.ZERO_mm)) // Too low
         assertNull(page.findShapeAt(dimension2("Dimension2(40mm,80mm)"), Dimension.ZERO_mm)) // Too high
-        assertNull(page.findShapeAt(dimension2("Dimension2(40mm,120mm)"), Dimension.ZERO_mm)) // Middle of shape (which isn't filled).
 
-        box.geometry.fill.formula = "true"
+        box.fillColor.formula = Color.BLACK.toFormula()
         // Not that it is filled, the middle point should be be found.
         assertNull(page.findShapeAt(dimension2("Dimension2(0mm,100mm)"), Dimension.ZERO_mm)) // Too left
         assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"), Dimension.ZERO_mm)) // Too right
@@ -94,7 +91,7 @@ class TestFindShapeAt : MyTestCase() {
 
         // Box from 30mm, 100m to 50mm, 140mm
 
-        box.geometry.fill.formula = "true"
+        box.fillColor.formula = Color.BLACK.toFormula()
 
         val geometry = box.geometry
         geometry.parts.clear()

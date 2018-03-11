@@ -22,4 +22,6 @@ interface Paint {
 
     fun toFormula() : String
 
+    fun isVisible() : Boolean
+
 }

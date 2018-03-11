@@ -351,12 +351,10 @@ abstract class Shape(var parent: ShapeParent)
             box.geometry.parts.add(LineTo("Size * Vector2(1,1) + Dimension2(-LineWidth/2, -LineWidth/2)"))
             box.geometry.parts.add(LineTo("Size * Vector2(0,1) + Dimension2(LineWidth/2, -LineWidth/2)"))
             box.geometry.parts.add(LineTo("Geometry1.Point1"))
-            box.geometry.fill.formula = "true"
             box.geometry.connect.formula = "true" // Allow connections along
 
             if (fillColor != null) {
                 box.fillColor.formula = fillColor
-                box.geometry.fill.formula = "true"
             }
 
             return box
@@ -445,10 +443,7 @@ abstract class Shape(var parent: ShapeParent)
 
             }
 
-            if (fillColor != null) {
-                poly.fillColor.formula = fillColor
-                poly.geometry.fill.formula = "true"
-            }
+            poly.fillColor.formula = fillColor ?: Color.TRANSPARENT.toFormula()
 
             // Create connection points at each vertex
             for (i in 0..poly.geometry.parts.size - 2) {

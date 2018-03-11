@@ -35,8 +35,6 @@ class Shape2d private constructor(parent: ShapeParent)
 
     init {
         size.propListeners.add(this)
-        geometry.stroke.formula = true.toFormula()
-        geometry.fill.formula = true.toFormula()
     }
 
     override fun copyInto(parent: ShapeParent, link: Boolean): Shape2d {

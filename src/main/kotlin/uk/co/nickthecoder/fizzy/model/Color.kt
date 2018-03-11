@@ -239,9 +239,9 @@ class Color : Paint {
         return Color.color(1.0 - red, 1.0 - green, 1.0 - blue, opacity)
     }
 
-    fun isOpaque(): Boolean {
-        return opacity >= 1f
-    }
+    fun isOpaque() = opacity >= 0.9999
+
+    override fun isVisible(): Boolean = opacity >= 0.0001
 
     fun interpolate(endValue: Color, t: Double): Color {
         if (t <= 0.0) return this
@@ -762,6 +762,8 @@ class Color : Paint {
          * <div style="border:1px solid black;width:40px;height:20px;background-color:#FFFFFF;float:right;margin: 0 10px 0 0"></div><br></br><br></br>
          */
         val WHITE = Color(1.0, 1.0, 1.0)
+
+        val TRANSPARENT = Color(0.0, 0.0, 0.0, 0.0)
 
         fun HSBtoRGB(hue: Double, saturation: Double, brightness: Double): DoubleArray {
             var hue = hue

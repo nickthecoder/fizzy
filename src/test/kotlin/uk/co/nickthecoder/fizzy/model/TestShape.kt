@@ -74,16 +74,6 @@ class TestShape : MyTestCase() {
         box.fillColor.formula = "WHITE"
         assertEquals(Color.WHITE, testPaint(box, "FillColor"))
 
-        box.geometry.fill.formula = "true"
-        assertEquals(true, testBoolean(box, "Geometry1.Fill"))
-        box.geometry.fill.formula = "false"
-        assertEquals(false, testBoolean(box, "Geometry1.Fill"))
-
-        box.geometry.stroke.formula = "true"
-        assertEquals(true, testBoolean(box, "Geometry1.Stroke"))
-        box.geometry.stroke.formula = "false"
-        assertEquals(false, testBoolean(box, "Geometry1.Stroke"))
-
         box.geometry.connect.formula = "true"
         assertEquals(true, testBoolean(box, "Geometry1.Connect"))
         box.geometry.connect.formula = "false"

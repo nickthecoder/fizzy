@@ -29,8 +29,6 @@ class GeometryPropType private constructor()
     override fun findField(prop: Prop<Geometry>, name: String): Prop<*>? {
 
         return when (name) {
-            "Fill" -> PropField("Geometry.Fill", prop) { it.value.fill }
-            "Stroke" -> PropField("Geometry.Stroke", prop) { it.value.stroke }
             "Connect" -> PropField("Geometry.Connect", prop) { it.value.connect }
             else -> {
                 // Allow access to any of the Geometries parts, without the hassle of ".parts.xxx"

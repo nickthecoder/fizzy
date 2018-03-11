@@ -32,8 +32,6 @@ class Geometry(val shape: Shape)
 
     var parts = MutableFList<GeometryPart>()
 
-    val fill = BooleanExpression("false")
-    val stroke = BooleanExpression("false")
     val connect = BooleanExpression("false")
 
     override val changeListeners = ChangeListeners<Geometry>()
@@ -50,8 +48,6 @@ class Geometry(val shape: Shape)
     )
 
     init {
-        fill.propListeners.add(this)
-        stroke.propListeners.add(this)
         connect.propListeners.add(this)
     }
 
@@ -60,8 +56,6 @@ class Geometry(val shape: Shape)
     }
 
     fun addMetaData(metaData: MetaData) {
-        metaData.cells.add(MetaDataCell("Fill", fill, "Geometry"))
-        metaData.cells.add(MetaDataCell("Stroke", stroke, "Geometry"))
         metaData.cells.add(MetaDataCell("Connect", connect, "Geometry"))
         parts.forEachIndexed { index, part -> part.addMetaData(metaData, index) }
     }
@@ -72,7 +66,7 @@ class Geometry(val shape: Shape)
 
         // Adapted from : https://wrf.ecse.rpi.edu//Research/Short_Notes/pnpoly.html
         var oddEven = false
-        if (fill.value && parts.size > 2) {
+        if (shape.fillColor.value.isVisible() && parts.size > 2) {
             parts.forEach { part ->
                 prev?.let {
                     if (part.isCrossing(localPoint, it)) {
@@ -95,7 +89,7 @@ class Geometry(val shape: Shape)
             }
         }
 
-        if (stroke.value) {
+        if (shape.strokeColor.value.isVisible()) {
             prev = null
             parts.forEach { part ->
                 prev?.let {
@@ -151,8 +145,6 @@ class Geometry(val shape: Shape)
 
     fun copyInto(newShape: Shape, link: Boolean) {
         val newGeometry = newShape.geometry
-        newGeometry.fill.copyFrom(fill, link)
-        newGeometry.stroke.copyFrom(stroke, link)
         newGeometry.connect.copyFrom(connect, link)
         parts.forEach { part ->
             newGeometry.parts.add(part.copy(link))
