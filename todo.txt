@@ -7,10 +7,6 @@ Edit text
         Otherwise, create a new ShapeText
             For Shape2d parents, make the size of the ShapeText the same size as the parent.
 
-ShapeText needs stroke and fill booleans, but Shape has those on Geometry
-    Should they be on Shape only (and not on ShapeText nor Geometry?)
-    What is the point of multiple geometries if they share a single strokeColor and fillColor???
-
 For Version 1
 -------------
 
@@ -19,9 +15,15 @@ Aims
     Create flow charts
 
 Edit geometry using the GUI.
+    Move multiple geometry handles in one operation
+    Delete handles
+    Add additional line segements to the ends
+    Combine a child shape with the parent (to add a "hole")
 
 Load, Save
-    Rename MetaData and improve it to be more structured.
+    Note, MetaData no longer has the "type" for GeometryParts.
+    Make MetaData more structured, so that e.g. each GeometryPart has its own MetaData parent???
+        This MetaData parent has the "type" attribute, which allows Load to create a LineTo or MoveTo.
 
 Stencils
 

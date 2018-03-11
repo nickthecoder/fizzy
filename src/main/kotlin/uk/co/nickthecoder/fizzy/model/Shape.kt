@@ -93,13 +93,19 @@ abstract class Shape(var parent: ShapeParent)
         }
 
         override fun added(collection: FCollection<Shape>, item: Shape) {
-            changeListeners.fireChanged(this@Shape)
+            changeListeners.fireChanged(this@Shape, ChangeType.ADD, item)
             item.changeListeners.add(this)
         }
 
         override fun removed(collection: FCollection<Shape>, item: Shape) {
-            changeListeners.fireChanged(this@Shape)
+            changeListeners.fireChanged(this@Shape, ChangeType.REMOVE, item)
             item.changeListeners.add(this)
+        }
+    }
+
+    val geometryListener = object : ChangeListener<Geometry> {
+        override fun changed(item: Geometry, changeType: ChangeType, obj: Any?) {
+            changeListeners.fireChanged(this@Shape, ChangeType.CHANGE, item)
         }
     }
 
@@ -115,8 +121,7 @@ abstract class Shape(var parent: ShapeParent)
      */
     open protected fun postInit() {
         children.listeners.add(shapeListener)
-        // TODO Don't listen to the parts, listen to the Geometry instead.
-        collectionListeners.add(ChangeAndCollectionListener(this, geometry.parts))
+        geometry.changeListeners.add(geometryListener)
 
         listenTo(name, lineWidth, strokeCap, strokeJoin, strokeColor, fillColor)
 

@@ -24,10 +24,7 @@ import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.prop.BooleanExpression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
-import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
-import uk.co.nickthecoder.fizzy.util.ChangeListeners
-import uk.co.nickthecoder.fizzy.util.HasChangeListeners
-import uk.co.nickthecoder.fizzy.util.toFormula
+import uk.co.nickthecoder.fizzy.util.*
 
 class Geometry(val shape: Shape)
 
@@ -59,7 +56,7 @@ class Geometry(val shape: Shape)
     }
 
     override fun dirty(prop: Prop<*>) {
-        changeListeners.fireChanged(this)
+        changeListeners.fireChanged(this, ChangeType.CHANGE, prop)
     }
 
     fun addMetaData(metaData: MetaData) {
