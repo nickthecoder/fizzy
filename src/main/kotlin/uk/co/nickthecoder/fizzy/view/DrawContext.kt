@@ -68,6 +68,8 @@ interface DrawContext {
 
     fun multiLineText(multiLineText: MultiLineText, stroke: Boolean = false, fill: Boolean = true)
 
+    fun multiLineText(multiLineText: MultiLineText, stroke: Boolean = false, fill: Boolean = true, clipStart: Dimension2, clipSize: Dimension2)
+
     fun polygon(stroke: Boolean, fill: Boolean, vararg points: Dimension2) {
         beginPath()
         moveTo(points.last())

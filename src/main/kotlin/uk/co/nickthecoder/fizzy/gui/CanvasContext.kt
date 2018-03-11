@@ -141,6 +141,15 @@ class CanvasContext(val canvas: Canvas)
         }
     }
 
+    override fun multiLineText(multiLineText: MultiLineText, stroke: Boolean, fill: Boolean, clipStart: Dimension2, clipSize: Dimension2) {
+        gc.save()
+        gc.beginPath()
+        gc.rect(clipStart.x.inDefaultUnits, clipStart.y.inDefaultUnits, clipSize.x.inDefaultUnits, clipSize.y.inDefaultUnits)
+        gc.clip()
+        multiLineText(multiLineText, stroke, fill)
+        gc.restore()
+    }
+
     override fun multiLineText(multiLineText: MultiLineText, stroke: Boolean, fill: Boolean) {
         gc.textBaseline = VPos.TOP
         multiLineText.lines.forEach { line ->

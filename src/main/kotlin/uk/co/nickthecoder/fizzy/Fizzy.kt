@@ -47,8 +47,8 @@ class Fizzy : Application() {
         val box1 = Shape.createBox(page, "Dimension2(20cm,10cm)", "Dimension2(40cm,10cm)")
         val box2 = Shape.createBox(page, "Dimension2(20cm,10cm)", "Dimension2(40cm,30cm)")
 
-        box1.children.add(box1.createText("Text\nin\nBox1", alignY = 0.0))
-        box2.children.add(box2.createText("Text\nin\nBox2", alignX = 0.0))
+        box1.children.add(box1.createText("A very very very long piece of text\nin\na Box1", alignY = 0.0))
+        box2.children.add(box2.createText("Lots\nof\nlines\nof\ntext\nin\nBox2", alignX = 0.0))
 
         val text1 = Shape.createText(page, "Hello\nWorld\nNick\nThe\nCoder", at = "Dimension2(40cm, 20cm)")
         val text2 = Shape.createText(page, "Left\nAlign", at = "Dimension2(30cm, 20cm)", alignX = 0.0)

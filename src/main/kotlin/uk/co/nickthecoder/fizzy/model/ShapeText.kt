@@ -52,13 +52,16 @@ class ShapeText private constructor(parent: ShapeParent)
      */
     val alignY = DoubleExpression("0.5")
 
+
+    val stroke = BooleanExpression(false)
+    val fill = BooleanExpression(true)
+
+    val clip = BooleanExpression(false)
+
     val marginTop = DimensionExpression("FontSize/2")
     val marginRight = DimensionExpression("FontSize/2")
     val marginBottom = DimensionExpression("FontSize/2")
     val marginLeft = DimensionExpression("FontSize/2")
-
-    val stroke = BooleanExpression(false)
-    val fill = BooleanExpression(true)
 
     val multiLineText = PropCalculation4(text, font, alignX, alignY) {
         text, font, alignX, alignY ->
@@ -66,7 +69,7 @@ class ShapeText private constructor(parent: ShapeParent)
     }
 
     init {
-        listenTo(size, text, fontName, fontSize, alignX, alignY, marginTop, marginRight, marginBottom, marginLeft)
+        listenTo(size, text, fontName, fontSize, alignX, alignY, stroke, fill, clip, marginTop, marginRight, marginBottom, marginLeft)
         transform.locPin.formula = "Size * Vector2(AlignX,AlignY)"
     }
 
@@ -86,6 +89,7 @@ class ShapeText private constructor(parent: ShapeParent)
         metaData.cells.add(MetaDataCell("AlignY", alignY))
         metaData.cells.add(MetaDataCell("Stroke", stroke))
         metaData.cells.add(MetaDataCell("Fill", fill))
+        metaData.cells.add(MetaDataCell("Clip", clip))
 
         metaData.cells.add(MetaDataCell("MarginTop", marginTop))
         metaData.cells.add(MetaDataCell("MarginRight", marginRight))

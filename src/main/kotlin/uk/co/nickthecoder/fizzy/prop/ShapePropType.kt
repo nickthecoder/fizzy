@@ -119,6 +119,8 @@ class ShapeTextPropType private constructor()
             "FontSize" -> PropField("Shape.Text", prop) { prop.value.fontSize }
             "AlignX" -> PropField("Shape.AlignX", prop) { prop.value.alignX }
             "AlignY" -> PropField("Shape.AlignY", prop) { prop.value.alignY }
+            "Clip" -> PropField("Shape.Clip", prop) { prop.value.clip }
+
             "MarginTop" -> PropField("Shape.MarginTop", prop) { prop.value.marginTop }
             "MarginRight" -> PropField("Shape.MarginTop", prop) { prop.value.marginRight }
             "MarginBottom" -> PropField("Shape.MarginTop", prop) { prop.value.marginBottom }

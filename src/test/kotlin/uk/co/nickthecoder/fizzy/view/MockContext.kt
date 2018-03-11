@@ -54,6 +54,10 @@ class MockContext : AbsoluteContext() {
 
     override fun font(font: FFont) {}
 
+    override fun multiLineText(multiLineText: MultiLineText, stroke: Boolean, fill: Boolean, clipStart: Dimension2, clipSize: Dimension2) {
+        multiLineText(multiLineText, stroke, fill)
+    }
+
     override fun beginPath() {
         if (debug) {
             println("Begin Path. Transform : ${state.transformation}")

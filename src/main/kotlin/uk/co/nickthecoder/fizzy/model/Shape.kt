@@ -350,6 +350,7 @@ abstract class Shape(var parent: ShapeParent)
             if (parent is Shape2d) {
                 text.size.formula = "Parent.Size - Dimension2( MarginLeft + MarginRight, MarginTop + MarginBottom )"
                 text.transform.pin.formula = "Size * Vector2(AlignX, AlignY) + Dimension2( MarginTop, MarginLeft )"
+                text.clip.formula = true.toFormula()
                 //text.transform.locPin.formula = "Size / 2"
             } else {
                 text.transform.pin.formula = at
