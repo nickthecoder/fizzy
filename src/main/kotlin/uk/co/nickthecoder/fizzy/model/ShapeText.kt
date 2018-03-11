@@ -68,6 +68,7 @@ class ShapeText private constructor(parent: ShapeParent)
     init {
         listenTo(size, text, fontName, fontSize, alignX, alignY, clip, marginTop, marginRight, marginBottom, marginLeft)
 
+        strokeColor.formula = Color.TRANSPARENT.toFormula()
         transform.locPin.formula = "Size * Vector2(AlignX,AlignY)"
     }
 
