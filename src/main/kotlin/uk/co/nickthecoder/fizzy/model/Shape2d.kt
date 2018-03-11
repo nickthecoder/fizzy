@@ -21,6 +21,7 @@ package uk.co.nickthecoder.fizzy.model
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.Shape2dPropType
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class Shape2d private constructor(parent: ShapeParent)
     : Shape(parent) {
@@ -34,6 +35,8 @@ class Shape2d private constructor(parent: ShapeParent)
 
     init {
         size.propListeners.add(this)
+        geometry.stroke.formula = true.toFormula()
+        geometry.fill.formula = true.toFormula()
     }
 
     override fun copyInto(parent: ShapeParent, link: Boolean): Shape2d {

@@ -32,7 +32,7 @@ class ConnectAlong(prop: Prop<Shape>)
     override fun eval(a: Geometry, b: Double): Any {
         val geometry = a
         val along = b
-        
+
         setShape(geometry.shape)
         val point = geometry.pointAlong(along)
         return prop.value.parent.fromPageToLocal.value * geometry.shape.fromLocalToPage.value * point

@@ -22,6 +22,7 @@ import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.PropCalculation2
 import uk.co.nickthecoder.fizzy.prop.Shape1dPropType
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class Shape1d private constructor(parent: ShapeParent)
     : Shape(parent) {
@@ -40,6 +41,8 @@ class Shape1d private constructor(parent: ShapeParent)
 
     init {
         listenTo(start, end, size)
+
+        geometry.stroke.formula = true.toFormula()
 
         transform.locPin.formula = "Dimension2(Length*0.5, LineWidth * 0.5)"
         transform.pin.formula = "(Start+End) * 0.5"

@@ -36,7 +36,7 @@ class Geometry(val shape: Shape)
     var parts = MutableFList<GeometryPart>()
 
     val fill = BooleanExpression("false")
-    val stroke = BooleanExpression("true")
+    val stroke = BooleanExpression("false")
     val connect = BooleanExpression("false")
 
     override val changeListeners = ChangeListeners<Geometry>()

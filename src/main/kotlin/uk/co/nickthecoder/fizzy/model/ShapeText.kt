@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.prop.*
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class ShapeText private constructor(parent: ShapeParent)
     : Shape(parent) {
@@ -52,10 +53,6 @@ class ShapeText private constructor(parent: ShapeParent)
      */
     val alignY = DoubleExpression("0.5")
 
-
-    val stroke = BooleanExpression(false)
-    val fill = BooleanExpression(true)
-
     val clip = BooleanExpression(false)
 
     val marginTop = DimensionExpression("FontSize/2")
@@ -69,7 +66,9 @@ class ShapeText private constructor(parent: ShapeParent)
     }
 
     init {
-        listenTo(size, text, fontName, fontSize, alignX, alignY, stroke, fill, clip, marginTop, marginRight, marginBottom, marginLeft)
+        listenTo(size, text, fontName, fontSize, alignX, alignY, clip, marginTop, marginRight, marginBottom, marginLeft)
+
+        geometry.fill.formula = true.toFormula()
         transform.locPin.formula = "Size * Vector2(AlignX,AlignY)"
     }
 
@@ -87,8 +86,6 @@ class ShapeText private constructor(parent: ShapeParent)
         metaData.cells.add(MetaDataCell("FontSize", fontSize))
         metaData.cells.add(MetaDataCell("AlignX", alignX))
         metaData.cells.add(MetaDataCell("AlignY", alignY))
-        metaData.cells.add(MetaDataCell("Stroke", stroke))
-        metaData.cells.add(MetaDataCell("Fill", fill))
         metaData.cells.add(MetaDataCell("Clip", clip))
 
         metaData.cells.add(MetaDataCell("MarginTop", marginTop))

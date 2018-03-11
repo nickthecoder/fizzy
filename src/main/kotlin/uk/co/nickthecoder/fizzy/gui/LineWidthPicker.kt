@@ -24,7 +24,6 @@ import javafx.scene.control.MenuButton
 import javafx.scene.control.MenuItem
 import uk.co.nickthecoder.fizzy.Fizzy
 import uk.co.nickthecoder.fizzy.model.Dimension
-import uk.co.nickthecoder.fizzy.model.ShapeText
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
 import uk.co.nickthecoder.fizzy.util.toFormula
 
@@ -62,11 +61,6 @@ class LineWidthPicker(val mainWindow: MainWindow, val widths: Array<Dimension>)
             history.makeChange(ChangeExpressions(listOf(
                     shape.geometry.stroke to false.toFormula()
             )))
-            if (shape is ShapeText) {
-                history.makeChange(ChangeExpressions(listOf(
-                        shape.stroke to false.toFormula()
-                )))
-            }
         }
         history.endBatch()
 
@@ -84,12 +78,6 @@ class LineWidthPicker(val mainWindow: MainWindow, val widths: Array<Dimension>)
             history.makeChange(ChangeExpressions(listOf(
                     shape.geometry.stroke to true.toFormula()
             )))
-
-            if (shape is ShapeText) {
-                history.makeChange(ChangeExpressions(listOf(
-                        shape.stroke to true.toFormula()
-                )))
-            }
         }
         history.endBatch()
     }
