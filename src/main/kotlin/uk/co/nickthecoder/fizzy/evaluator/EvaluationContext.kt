@@ -115,6 +115,7 @@ val constantsContext = SimpleEvaluationContext(
                 "STROKE_CAP_ROUND" to PropConstant(StrokeCap.ROUND),
 
                 "BLACK" to PropConstant(Color.BLACK),
-                "WHITE" to PropConstant(Color.WHITE)
+                "WHITE" to PropConstant(Color.WHITE),
+                "TRANSPARENT" to PropConstant(Color.TRANSPARENT)
         )
 )
