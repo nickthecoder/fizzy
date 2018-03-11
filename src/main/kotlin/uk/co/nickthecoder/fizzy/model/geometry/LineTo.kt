@@ -19,9 +19,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model.geometry
 
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
-import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.model.Dimension
+import uk.co.nickthecoder.fizzy.model.Dimension2
+import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.Vector2
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
-import uk.co.nickthecoder.fizzy.prop.StringExpression
 
 
 class LineTo(override val point: Dimension2Expression)
@@ -34,11 +36,6 @@ class LineTo(override val point: Dimension2Expression)
 
     init {
         point.propListeners.add(this)
-    }
-
-    override fun addMetaData(metaData: MetaData, sectionIndex: Int, rowIndex: Int) {
-        metaData.cells.add(MetaDataCell("Type", StringExpression("\"LineTo\""), "Geometry", sectionIndex, rowIndex))
-        super.addMetaData(metaData, sectionIndex, rowIndex)
     }
 
     override fun setContext(context: EvaluationContext) {

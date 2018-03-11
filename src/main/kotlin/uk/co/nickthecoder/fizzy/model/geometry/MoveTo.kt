@@ -36,11 +36,6 @@ class MoveTo(override val point: Dimension2Expression)
         point.propListeners.add(this)
     }
 
-    override fun addMetaData(metaData : MetaData, sectionIndex: Int, rowIndex: Int) {
-        metaData.cells.add(MetaDataCell("Type", StringExpression("\"MoveTo\""), "Geometry", sectionIndex, rowIndex))
-        super.addMetaData(metaData, sectionIndex, rowIndex)
-    }
-
     override fun setContext(context: EvaluationContext) {
         point.context = context
     }

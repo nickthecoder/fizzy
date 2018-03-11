@@ -40,7 +40,7 @@ class TestFindShapeAt : MyTestCase() {
         // Box from 30mm, 100m to 50mm, 140mm
         page.children.add(box)
 
-        box.geometries[0].fill.formula = "false"
+        box.geometry.fill.formula = "false"
 
         assertTrue(box.isAt(dimension2("Dimension2(40mm,100mm)"), Dimension.ZERO_mm))
         assertEquals(box, page.findShapeAt(dimension2("Dimension2(40mm,100mm)"), Dimension.ZERO_mm))
@@ -50,7 +50,7 @@ class TestFindShapeAt : MyTestCase() {
         assertNull(page.findShapeAt(dimension2("Dimension2(40mm,80mm)"), Dimension.ZERO_mm)) // Too high
         assertNull(page.findShapeAt(dimension2("Dimension2(40mm,120mm)"), Dimension.ZERO_mm)) // Middle of shape (which isn't filled).
 
-        box.geometries[0].fill.formula = "true"
+        box.geometry.fill.formula = "true"
         // Not that it is filled, the middle point should be be found.
         assertNull(page.findShapeAt(dimension2("Dimension2(0mm,100mm)"), Dimension.ZERO_mm)) // Too left
         assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"), Dimension.ZERO_mm)) // Too right
@@ -59,7 +59,7 @@ class TestFindShapeAt : MyTestCase() {
         assertEquals(box, page.findShapeAt(dimension2("Dimension2(40mm,120mm)"), Dimension.ZERO_mm)) // Middle of shape (which is now filled).
 
         // An edge case. If we remove the last geometry part, making the left edge open, then the "Too Left" case is special
-        box.geometries[0].parts.removeLast()
+        box.geometry.parts.removeLast()
         assertNull(page.findShapeAt(dimension2("Dimension2(0mm,100mm)"), Dimension.ZERO_mm)) // Too left - This is special!
         assertNull(page.findShapeAt(dimension2("Dimension2(200mm,100mm)"), Dimension.ZERO_mm)) // Too right
         assertNull(page.findShapeAt(dimension2("Dimension2(40mm,150mm)"), Dimension.ZERO_mm)) // Too low
@@ -94,9 +94,9 @@ class TestFindShapeAt : MyTestCase() {
 
         // Box from 30mm, 100m to 50mm, 140mm
 
-        box.geometries[0].fill.formula = "true"
+        box.geometry.fill.formula = "true"
 
-        val geometry = box.geometries[0]
+        val geometry = box.geometry
         geometry.parts.clear()
         geometry.parts.add(MoveTo("Size * Vector2(1,1)"))
         geometry.parts.add(LineTo("Size * Vector2(0,1)"))

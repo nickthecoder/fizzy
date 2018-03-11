@@ -34,22 +34,22 @@ class TestEditGeometry : MyTestCase() {
         val box = createBox(page, "Dimension2(10mm,10mm)", "Dimension2(0mm,0mm)")
         doc.selection.add(box)
 
-        assertEquals(10.0, box.geometries[0].parts[1].point.value.x.mm)
-        assertEquals(10.0, box.geometries[0].parts[2].point.value.x.mm)
+        assertEquals(10.0, box.geometry.parts[1].point.value.x.mm)
+        assertEquals(10.0, box.geometry.parts[2].point.value.x.mm)
 
         controller.tool = EditGeometryTool(controller)
 
         // Drag the 3rd part to the center of the shape (we should have a triangle).
         drag(controller, "Dimension2(5mm,5mm)", "Dimension2(0mm,0mm)")
 
-        assertEquals(5.0, box.geometries[0].parts[2].point.value.x.mm)
+        assertEquals(5.0, box.geometry.parts[2].point.value.x.mm)
         assertEquals(10.0, box.size.value.x.mm) // Still the same size
         assertEquals(5.0, box.transform.locPin.value.x.mm) // Still at 5,5
 
         // Drag the 2nd part half way along. The size.x should be halved now.
         drag(controller, "Dimension2(5mm,-5mm)", "Dimension2(0mm,-5mm)")
 
-        assertEquals(5.0, box.geometries[0].parts[1].point.value.x.mm)
+        assertEquals(5.0, box.geometry.parts[1].point.value.x.mm)
         assertEquals(5.0, box.size.value.x.mm)
         assertEquals(5.0, box.transform.locPin.value.x.mm) // Still at 5,5
 
@@ -66,8 +66,8 @@ class TestEditGeometry : MyTestCase() {
         val box = createBox(page, "Dimension2(10mm,10mm)", "Dimension2(0mm,0mm)")
         doc.selection.add(box)
 
-        val first = box.geometries[0].parts[0].point
-        val last = box.geometries[0].parts[4].point
+        val first = box.geometry.parts[0].point
+        val last = box.geometry.parts[4].point
         assertEquals(0.0, first.value.x.mm)
         assertEquals(0.0, first.value.y.mm)
         assertEquals(0.0, last.value.x.mm)

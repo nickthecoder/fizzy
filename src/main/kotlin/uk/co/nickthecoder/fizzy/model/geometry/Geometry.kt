@@ -29,37 +29,9 @@ import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 import uk.co.nickthecoder.fizzy.util.toFormula
 
-class Geometry
+class Geometry(val shape: Shape)
 
     : HasChangeListeners<Geometry>, PropListener {
-
-    override val changeListeners = ChangeListeners<Geometry>()
-
-    var shape: Shape? = null
-        set(v) {
-            if (field != v) {
-                field?.let {
-                    fill.propListeners.remove(it)
-                    stroke.propListeners.add(it)
-                    connect.propListeners.add(it)
-                }
-
-                field = v
-
-                parts.forEach { part ->
-                    val context = v?.context ?: constantsContext
-                    part.setContext(context)
-                    fill.context = context
-                    stroke.context = context
-                    connect.context = context
-                    if (v != null) {
-                        fill.propListeners.add(v)
-                        stroke.propListeners.add(v)
-                        connect.propListeners.add(v)
-                    }
-                }
-            }
-        }
 
     var parts = MutableFList<GeometryPart>()
 
@@ -67,29 +39,17 @@ class Geometry
     val stroke = BooleanExpression("true")
     val connect = BooleanExpression("false")
 
+    override val changeListeners = ChangeListeners<Geometry>()
+
     private val geometryPartsListener = ChangeAndCollectionListener(this, parts,
-            onAdded = {
-                part ->
+            onAdded = { part ->
                 part.geometry = this
-                part.setContext(shape?.context ?: constantsContext)
+                part.setContext(shape.context)
             },
-            onRemoved = {
-                part ->
+            onRemoved = { part ->
                 part.geometry = null
                 part.setContext(constantsContext)
             }
-    )
-
-
-    /**
-     * When a [GeometryPart] is added/removed, make this [Prop] dirty.
-     * By doing so, if a calculation depends on this (i.e. it listens to me), then adding/removing parts will cause it
-     * to be re-evaluated. This can then make the final calculation take its data from a different [GeometryPart], as
-     * their indices have changed.
-     */
-    private val collectionListener = ChangeAndCollectionListener(this, parts,
-            onAdded = { changeListeners.fireChanged(this) },
-            onRemoved = { changeListeners.fireChanged(this) }
     )
 
     init {
@@ -102,22 +62,11 @@ class Geometry
         changeListeners.fireChanged(this)
     }
 
-    fun index(): Int {
-        shape?.let {
-            it.geometries.forEachIndexed { index, prop ->
-                if (prop === this) {
-                    return index
-                }
-            }
-        }
-        return -1
-    }
-
-    fun addMetaData(metaData: MetaData, sectionIndex: Int) {
-        metaData.cells.add(MetaDataCell("Fill", fill, "Geometry", sectionIndex))
-        metaData.cells.add(MetaDataCell("Stroke", stroke, "Geometry", sectionIndex))
-        metaData.cells.add(MetaDataCell("Connect", connect, "Geometry", sectionIndex))
-        parts.forEachIndexed { index, part -> part.addMetaData(metaData, sectionIndex, index) }
+    fun addMetaData(metaData: MetaData) {
+        metaData.cells.add(MetaDataCell("Fill", fill, "Geometry"))
+        metaData.cells.add(MetaDataCell("Stroke", stroke, "Geometry"))
+        metaData.cells.add(MetaDataCell("Connect", connect, "Geometry"))
+        parts.forEachIndexed { index, part -> part.addMetaData(metaData, index) }
     }
 
     fun isAt(localPoint: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean {
@@ -165,10 +114,7 @@ class Geometry
     }
 
     fun connectAlongFormula(along: Double): String? {
-        shape?.let {
-            return "connectAlong( Page.Shape${it.id}.Geometry${index() + 1}, ${along.toFormula()})"
-        }
-        return null
+        return "connectAlong( Page.Shape${shape.id}.Geometry, ${along.toFormula()})"
     }
 
     /**
@@ -206,15 +152,21 @@ class Geometry
         return Dimension2.ZERO_mm
     }
 
-    fun copy(link: Boolean): Geometry {
-        val newGeometry = Geometry()
+    fun copyInto(newShape: Shape, link: Boolean) {
+        val newGeometry = newShape.geometry
         newGeometry.fill.copyFrom(fill, link)
         newGeometry.stroke.copyFrom(stroke, link)
         newGeometry.connect.copyFrom(connect, link)
         parts.forEach { part ->
             newGeometry.parts.add(part.copy(link))
         }
-        return newGeometry
+    }
+
+    companion object {
+        private val noDocument = Document()
+        private val noPage = Page(noDocument)
+        private val noShape = Shape2d.create(noPage)
+        val NO_GEOMETRY = noShape.geometry
     }
 
 }

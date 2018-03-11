@@ -49,18 +49,16 @@ class PageView(val page: Page, val dc: DrawContext) {
             dc.strokeJoin(shape.strokeJoin.value)
             dc.strokeCap(shape.strokeCap.value)
 
-            shape.geometries.forEach { geometry ->
-                dc.beginPath()
-                geometry.parts.forEach { part ->
-                    when (part) {
-                        is MoveTo -> dc.moveTo(part.point.value)
+            dc.beginPath()
+            shape.geometry.parts.forEach { part ->
+                when (part) {
+                    is MoveTo -> dc.moveTo(part.point.value)
 
-                        is LineTo -> dc.lineTo(part.point.value)
+                    is LineTo -> dc.lineTo(part.point.value)
 
-                    }
                 }
-                dc.endPath(geometry.stroke.value, geometry.fill.value)
             }
+            dc.endPath(shape.geometry.stroke.value, shape.geometry.fill.value)
 
             if (shape is ShapeText) {
                 dc.translate(shape.transform.locPin.value)

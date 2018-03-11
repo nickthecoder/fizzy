@@ -41,10 +41,8 @@ class EditGeometryTool(controller: Controller)
         controller.page.document.selection.clear()
 
         editingShape?.let {
-            it.geometries.forEach { geo ->
-                geo.parts.forEach { part ->
-                    controller.handles.add(GeometryHandle(it, part, controller))
-                }
+            it.geometry.parts.forEach { part ->
+                controller.handles.add(GeometryHandle(it, part, controller))
             }
         }
     }
@@ -63,10 +61,8 @@ class EditGeometryTool(controller: Controller)
         editingShape = controller.page.findShapesAt(event.point, controller.minDistance).lastOrNull()
 
         editingShape?.let {
-            it.geometries.forEach { geo ->
-                geo.parts.forEach { part ->
-                    controller.handles.add(GeometryHandle(it, part, controller))
-                }
+            it.geometry.parts.forEach { part ->
+                controller.handles.add(GeometryHandle(it, part, controller))
             }
         }
 
@@ -118,20 +114,18 @@ class EditGeometryTool(controller: Controller)
                 var maxX = Dimension(-Double.MAX_VALUE)
                 var maxY = Dimension(-Double.MAX_VALUE)
 
-                shape.geometries.forEach { geo ->
-                    geo.parts.forEach { part ->
-                        if (part.point.value.x < minX) {
-                            minX = part.point.value.x
-                        }
-                        if (part.point.value.y < minY) {
-                            minY = part.point.value.y
-                        }
-                        if (part.point.value.x > maxX) {
-                            maxX = part.point.value.x
-                        }
-                        if (part.point.value.y > maxY) {
-                            maxY = part.point.value.y
-                        }
+                shape.geometry.parts.forEach { part ->
+                    if (part.point.value.x < minX) {
+                        minX = part.point.value.x
+                    }
+                    if (part.point.value.y < minY) {
+                        minY = part.point.value.y
+                    }
+                    if (part.point.value.x > maxX) {
+                        maxX = part.point.value.x
+                    }
+                    if (part.point.value.y > maxY) {
+                        maxY = part.point.value.y
                     }
                 }
 
@@ -145,11 +139,9 @@ class EditGeometryTool(controller: Controller)
                         shape.size to newSize.toFormula()
                 )
 
-                shape.geometries.forEach { geo ->
-                    geo.parts.forEach { part ->
-                        val ratio = (part.point.value - newOrigin).ratio(newSize)
-                        changes.add(part.point to "Size * ${ratio.toFormula()}")
-                    }
+                shape.geometry.parts.forEach { part ->
+                    val ratio = (part.point.value - newOrigin).ratio(newSize)
+                    changes.add(part.point to "Size * ${ratio.toFormula()}")
                 }
 
                 shape.document().history.makeChange(ChangeExpressions(changes))

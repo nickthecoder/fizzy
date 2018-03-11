@@ -40,7 +40,7 @@ abstract class GeometryPart
             if (v == null) {
                 setContext(constantsContext)
             } else {
-                v.shape?.let { setContext(it.context) }
+                setContext(v.shape.context)
             }
         }
 
@@ -49,8 +49,8 @@ abstract class GeometryPart
      */
     abstract val point: Dimension2Expression
 
-    open fun addMetaData(metaData : MetaData, sectionIndex: Int, rowIndex: Int) {
-        metaData.cells.add(MetaDataCell("Point", point, "Geometry", sectionIndex, rowIndex))
+    open fun addMetaData(metaData: MetaData, rowIndex: Int) {
+        metaData.cells.add(MetaDataCell("Point", point, "Geometry", rowIndex))
     }
 
     internal abstract fun setContext(context: EvaluationContext)

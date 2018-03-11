@@ -202,7 +202,7 @@ class Controller(val page: Page) {
 
     companion object {
 
-        val NO_GEOMETRY = Geometry()
+        val NO_GEOMETRY = Geometry.NO_GEOMETRY
 
         val HANDLE_SIZE = 3.0 // Half width (or height) of handles excluding the stroke.
         val HANDLE_NEAR = HANDLE_SIZE + 2.0 // The size when testing if the mouse is at the handle

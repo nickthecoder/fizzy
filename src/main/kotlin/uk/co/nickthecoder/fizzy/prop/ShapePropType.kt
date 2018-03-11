@@ -53,7 +53,8 @@ abstract class ShapePropType<T : Shape>(klass: Class<T>)
             "Scale" -> PropField("Shape.Scale", prop) { prop.value.transform.scale }
             "Rotation" -> PropField("Shape.Rotation", prop) { prop.value.transform.rotation }
 
-            "Geometry" -> PropValue(prop.value.geometries)
+            "Geometry" -> PropValue(prop.value.geometry)
+            "Geometry1" -> PropValue(prop.value.geometry) // For backwards compatibility
             "ConnectionPoint" -> PropValue(prop.value.connectionPoints)
             "ControlPoint" -> PropValue(prop.value.controlPoints)
             "Scratch" -> PropValue(prop.value.scratches)

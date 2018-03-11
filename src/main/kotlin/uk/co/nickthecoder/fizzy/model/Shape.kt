@@ -62,7 +62,7 @@ abstract class Shape(var parent: ShapeParent)
     final override val children = MutableFList<Shape>()
 
 
-    val geometries = MutableFList<Geometry>()
+    val geometry = Geometry(this)
 
     val connectionPoints = MutableFList<ConnectionPoint>()
 
@@ -114,20 +114,12 @@ abstract class Shape(var parent: ShapeParent)
      * which calls [postInit]. This is to ensure that 'this' is not leaked from the constructor.
      */
     open protected fun postInit() {
-        listenTo(name)
         children.listeners.add(shapeListener)
-        listenTo(lineWidth)
-        listenTo(strokeCap)
-        listenTo(strokeJoin)
-        listenTo(strokeColor)
-        listenTo(fillColor)
+        // TODO Don't listen to the parts, listen to the Geometry instead.
+        collectionListeners.add(ChangeAndCollectionListener(this, geometry.parts))
 
-        // Automatically tell the child of the parent when it is added to the list (and set to null when removed)
-        // Also bubble change events up the hierarchy.
-        collectionListeners.add(ChangeAndCollectionListener(this, geometries,
-                onAdded = { geometry -> geometry.shape = this },
-                onRemoved = { geometry -> geometry.shape = null }
-        ))
+        listenTo(name, lineWidth, strokeCap, strokeJoin, strokeColor, fillColor)
+
         collectionListeners.add(ChangeAndCollectionListener(this, connectionPoints,
                 onAdded = { item -> item.shape = this },
                 onRemoved = { item -> item.shape = null }
@@ -209,10 +201,8 @@ abstract class Shape(var parent: ShapeParent)
     open fun isAt(pagePoint: Dimension2, minDistance: Dimension): Boolean {
         val localPoint = transform.fromPageToLocal.value * pagePoint
 
-        geometries.forEach { geo ->
-            if (geo.isAt(localPoint, lineWidth.value, minDistance)) {
-                return true
-            }
+        if (geometry.isAt(localPoint, lineWidth.value, minDistance)) {
+            return true
         }
 
         children.forEach { child ->
@@ -241,7 +231,7 @@ abstract class Shape(var parent: ShapeParent)
      * Listens to the expression, so that when it changes, Shape's listeners are informed.
      * The expression's [EvaluationContext] is also set.
      */
-    protected fun listenTo(vararg expressions: Prop<*>) {
+    fun listenTo(vararg expressions: Prop<*>) {
         expressions.forEach { expression ->
             expression.propListeners.add(this)
             if (expression is PropExpression<*>) {
@@ -254,9 +244,8 @@ abstract class Shape(var parent: ShapeParent)
 
     protected fun populateShape(newShape: Shape, link: Boolean) {
 
-        geometries.forEach { geometry ->
-            newShape.geometries.add(geometry.copy(link))
-        }
+        geometry.copyInto(newShape, link)
+
         connectionPoints.forEach { connectionPoint ->
             newShape.connectionPoints.add(connectionPoint.copy(link))
         }
@@ -268,24 +257,6 @@ abstract class Shape(var parent: ShapeParent)
         }
 
         metaData().copyInto(newShape.metaData(), link)
-
-        /*
-        newShape.name.copyFrom(name, link)
-        newShape.transform.locPin.copyFrom(transform.locPin, link)
-        newShape.transform.rotation.copyFrom(transform.rotation, link)
-        newShape.transform.pin.copyFrom(transform.pin, link)
-        newShape.transform.scale.copyFrom(transform.scale, link)
-
-
-        newShape.lineWidth.copyFrom(lineWidth, link)
-        newShape.size.copyFrom(size, link)
-        newShape.strokeColor.copyFrom(strokeColor, link)
-        newShape.fillColor.copyFrom(fillColor, link)
-        newShape.strokeCap.copyFrom(strokeCap, link)
-        newShape.strokeJoin.copyFrom(strokeJoin, link)
-
-        children.forEach { it.copyInto(newShape, link) }
-        */
     }
 
     fun metaData(): MetaData {
@@ -313,7 +284,7 @@ abstract class Shape(var parent: ShapeParent)
         metaData.cells.add(MetaDataCell("LocPin", transform.locPin))
         metaData.cells.add(MetaDataCell("Scale", transform.scale))
 
-        geometries.forEachIndexed { index, geometryProp -> geometryProp.addMetaData(metaData, index) }
+        geometry.addMetaData(metaData)
         connectionPoints.forEachIndexed { index, connectionPointProp -> connectionPointProp.addMetaData(metaData, index) }
         controlPoints.forEachIndexed { index, controlPointProp -> controlPointProp.addMetaData(metaData, index) }
         scratches.forEachIndexed { index, scratchProp -> scratchProp.addMetaData(metaData, index) }
@@ -370,19 +341,17 @@ abstract class Shape(var parent: ShapeParent)
             box.size.formula = size
             box.transform.pin.formula = at
 
-            val geometry = Geometry()
-            geometry.parts.add(MoveTo("Size * Vector2(0,0) + Dimension2(LineWidth/2, LineWidth/2)"))
-            geometry.parts.add(LineTo("Size * Vector2(1,0) + Dimension2(-LineWidth/2, LineWidth/2)"))
-            geometry.parts.add(LineTo("Size * Vector2(1,1) + Dimension2(-LineWidth/2, -LineWidth/2)"))
-            geometry.parts.add(LineTo("Size * Vector2(0,1) + Dimension2(LineWidth/2, -LineWidth/2)"))
-            geometry.parts.add(LineTo("Geometry1.Point1"))
-            geometry.fill.formula = "true"
-            geometry.connect.formula = "true" // Allow connections along
-            box.geometries.add(geometry)
+            box.geometry.parts.add(MoveTo("Size * Vector2(0,0) + Dimension2(LineWidth/2, LineWidth/2)"))
+            box.geometry.parts.add(LineTo("Size * Vector2(1,0) + Dimension2(-LineWidth/2, LineWidth/2)"))
+            box.geometry.parts.add(LineTo("Size * Vector2(1,1) + Dimension2(-LineWidth/2, -LineWidth/2)"))
+            box.geometry.parts.add(LineTo("Size * Vector2(0,1) + Dimension2(LineWidth/2, -LineWidth/2)"))
+            box.geometry.parts.add(LineTo("Geometry1.Point1"))
+            box.geometry.fill.formula = "true"
+            box.geometry.connect.formula = "true" // Allow connections along
 
             if (fillColor != null) {
                 box.fillColor.formula = fillColor
-                geometry.fill.formula = "true"
+                box.geometry.fill.formula = "true"
             }
 
             return box
@@ -403,10 +372,8 @@ abstract class Shape(var parent: ShapeParent)
             line.end.formula = end
             line.lineWidth.formula = lineWidth
 
-            val geometry = Geometry()
-            geometry.parts.add(MoveTo("Dimension2(0mm,LineWidth/2)"))
-            geometry.parts.add(LineTo("Dimension2(Length,LineWidth/2)"))
-            line.geometries.add(geometry)
+            line.geometry.parts.add(MoveTo("Dimension2(0mm,LineWidth/2)"))
+            line.geometry.parts.add(LineTo("Dimension2(Length,LineWidth/2)"))
 
             return line
         }
@@ -425,21 +392,19 @@ abstract class Shape(var parent: ShapeParent)
             poly.transform.locPin.formula = Dimension2.ZERO_mm.toFormula()
 
             val unit = Dimension2(radius, Dimension.ZERO_mm)
-            val geometry = Geometry()
-            poly.geometries.add(geometry)
 
             // Create points around (0,0)
-            geometry.parts.add(LineTo("Dimension2(${radius.toFormula()},0mm)"))
+            poly.geometry.parts.add(LineTo("Dimension2(${radius.toFormula()},0mm)"))
             for (i in 1..sides) {
                 val point = unit.rotate(Angle.TAU * (i.toDouble() / sides))
-                geometry.parts.add(LineTo(point))
+                poly.geometry.parts.add(LineTo(point))
             }
 
-            val minX = geometry.parts.minBy { it.point.value.x }
-            val minY = geometry.parts.minBy { it.point.value.y }
+            val minX = poly.geometry.parts.minBy { it.point.value.x }
+            val minY = poly.geometry.parts.minBy { it.point.value.y }
 
-            val maxX = geometry.parts.maxBy { it.point.value.x }
-            val maxY = geometry.parts.maxBy { it.point.value.y }
+            val maxX = poly.geometry.parts.maxBy { it.point.value.x }
+            val maxY = poly.geometry.parts.maxBy { it.point.value.y }
 
             if (minX != null && minY != null && maxX != null && maxY != null) {
 
@@ -457,7 +422,7 @@ abstract class Shape(var parent: ShapeParent)
 
                 // Translate them, so they are all +ve
                 // Also, make them reference Size, so that resizing works as expected.
-                geometry.parts.forEach { part ->
+                poly.geometry.parts.forEach { part ->
                     val ratio = (part.point.value + translate).ratio(shapeSize)
                     part.point.formula = "Size * ${ratio.toFormula()}"
                 }
@@ -467,7 +432,7 @@ abstract class Shape(var parent: ShapeParent)
 
                 // Add extra geometries for the inner vertices of the star
                 for (i in 0..sides - 1) {
-                    geometry.parts.add(i * 2 + 1, LineTo("LocPin + ( (ControlPoint.Point1 - LocPin) / Size * Scratch.MagicRatio ).rotate( ($i / $sides * TAU) rad ) * Size / Scratch.MagicRatio"))
+                    poly.geometry.parts.add(i * 2 + 1, LineTo("LocPin + ( (ControlPoint.Point1 - LocPin) / Size * Scratch.MagicRatio ).rotate( ($i / $sides * TAU) rad ) * Size / Scratch.MagicRatio"))
                 }
 
                 // Create a control point between 1st two outer points
@@ -477,11 +442,11 @@ abstract class Shape(var parent: ShapeParent)
 
             if (fillColor != null) {
                 poly.fillColor.formula = fillColor
-                geometry.fill.formula = "true"
+                poly.geometry.fill.formula = "true"
             }
 
             // Create connection points at each vertex
-            for (i in 0..geometry.parts.size - 2) {
+            for (i in 0..poly.geometry.parts.size - 2) {
                 val cp = ConnectionPoint("Geometry1.Point${i + 1}")
                 poly.connectionPoints.add(cp)
             }

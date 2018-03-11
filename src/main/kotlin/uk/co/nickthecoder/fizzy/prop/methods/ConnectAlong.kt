@@ -32,10 +32,10 @@ class ConnectAlong(prop: Prop<Shape>)
     override fun eval(a: Geometry, b: Double): Any {
         val geometry = a
         val along = b
-        val otherShape = geometry.shape ?: throw RuntimeException("Geometry does not have a Shape")
-        setShape(otherShape)
+        
+        setShape(geometry.shape)
         val point = geometry.pointAlong(along)
-        return prop.value.parent.fromPageToLocal.value * otherShape.fromLocalToPage.value * point
+        return prop.value.parent.fromPageToLocal.value * geometry.shape.fromLocalToPage.value * point
     }
 
     var prevShape: Shape? = null

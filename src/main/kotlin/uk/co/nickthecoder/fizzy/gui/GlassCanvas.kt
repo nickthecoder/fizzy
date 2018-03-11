@@ -256,22 +256,20 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
     }
 
     fun highlightGeometry(geometry: Geometry) {
-        geometry.shape?.let { shape ->
-            dc.use() {
-                dc.lineWidth(4.0 / drawingArea.scale)
-                dc.lineColor(GREEN_BASE)
+        dc.use() {
+            dc.lineWidth(4.0 / drawingArea.scale)
+            dc.lineColor(GREEN_BASE)
 
-                dc.beginPath()
-                geometry.parts.forEach { part ->
-                    val pagePoint = shape.fromLocalToPage.value * part.point.value
-                    when (part) {
-                        is MoveTo -> dc.moveTo(pagePoint)
-                        is LineTo -> dc.lineTo(pagePoint)
-                        else -> dc.lineTo(pagePoint)
-                    }
+            dc.beginPath()
+            geometry.parts.forEach { part ->
+                val pagePoint = geometry.shape.fromLocalToPage.value * part.point.value
+                when (part) {
+                    is MoveTo -> dc.moveTo(pagePoint)
+                    is LineTo -> dc.lineTo(pagePoint)
+                    else -> dc.lineTo(pagePoint)
                 }
-                dc.endPath(true, false)
             }
+            dc.endPath(true, false)
         }
     }
 

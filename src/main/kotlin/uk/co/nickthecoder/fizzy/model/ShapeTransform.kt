@@ -31,7 +31,7 @@ import uk.co.nickthecoder.fizzy.prop.Vector2Expression
 class ShapeTransform(val shape: Shape) {
 
     /**
-     * The position of this object relative to the parent (which is either a [ShapeGroup] or a [Page]).
+     * The position of this object relative to the parent (which is either a [Shape] or a [Page]).
      */
     val pin = Dimension2Expression("Dimension2(0mm, 0mm)", shape.context)
 
@@ -119,9 +119,6 @@ class ShapeTransform(val shape: Shape) {
     }
 
     init {
-        pin.propListeners.add(shape)
-        locPin.propListeners.add(shape)
-        scale.propListeners.add(shape)
-        rotation.propListeners.add(shape)
+        shape.listenTo(pin, locPin, scale, rotation)
     }
 }

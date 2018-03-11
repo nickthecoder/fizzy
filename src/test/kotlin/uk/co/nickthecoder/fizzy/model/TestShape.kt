@@ -19,9 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import org.junit.Test
-import uk.co.nickthecoder.fizzy.model.geometry.Geometry
-import uk.co.nickthecoder.fizzy.model.geometry.LineTo
-import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.prop.DimensionExpression
 import uk.co.nickthecoder.fizzy.prop.DoubleExpression
 import uk.co.nickthecoder.fizzy.prop.StringExpression
@@ -77,19 +74,19 @@ class TestShape : MyTestCase() {
         box.fillColor.formula = "WHITE"
         assertEquals(Color.WHITE, testPaint(box, "FillColor"))
 
-        box.geometries[0].fill.formula = "true"
+        box.geometry.fill.formula = "true"
         assertEquals(true, testBoolean(box, "Geometry1.Fill"))
-        box.geometries[0].fill.formula = "false"
+        box.geometry.fill.formula = "false"
         assertEquals(false, testBoolean(box, "Geometry1.Fill"))
 
-        box.geometries[0].stroke.formula = "true"
+        box.geometry.stroke.formula = "true"
         assertEquals(true, testBoolean(box, "Geometry1.Stroke"))
-        box.geometries[0].stroke.formula = "false"
+        box.geometry.stroke.formula = "false"
         assertEquals(false, testBoolean(box, "Geometry1.Stroke"))
 
-        box.geometries[0].connect.formula = "true"
+        box.geometry.connect.formula = "true"
         assertEquals(true, testBoolean(box, "Geometry1.Connect"))
-        box.geometries[0].connect.formula = "false"
+        box.geometry.connect.formula = "false"
         assertEquals(false, testBoolean(box, "Geometry1.Connect"))
 
         // ControlPoints
@@ -196,7 +193,7 @@ class TestShape : MyTestCase() {
 
         box.scratches.add(Scratch("G2", DimensionExpression("Geometry1.Point1.X")))
         assertEquals(Dimension(0.0, Dimension.Units.mm), box.scratches[0].expression.value)
-        box.geometries[0].parts.removeAt(0)
+        box.geometry.parts.removeAt(0)
         assertEquals(Dimension(10.0, Dimension.Units.mm), box.scratches[0].expression.value)
     }
 
@@ -210,51 +207,7 @@ class TestShape : MyTestCase() {
 
         box.scratches.add(Scratch("G2", DoubleExpression("Geometry1.Point1.X.mm")))
         assertEquals(0.0, box.scratches[0].expression.value)
-        box.geometries[0].parts.removeAt(0)
+        box.geometry.parts.removeAt(0)
         assertEquals(10.0, box.scratches[0].expression.value)
-    }
-
-    @Test
-    fun testDeleteGeometry() {
-        val doc = Document()
-        val page = Page(doc)
-
-        val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(100mm,200mm)")
-        page.children.add(box)
-        val geometry = Geometry()
-        geometry.parts.add(MoveTo("Dimension2(-20mm, -30mm)"))
-        geometry.parts.add(LineTo("Dimension2(-40mm, -30mm)"))
-        box.geometries.add(geometry)
-
-        box.scratches.add(Scratch("G2", DimensionExpression("Geometry2.Point1.X")))
-        assertEquals(Dimension(-20.0, Dimension.Units.mm), box.scratches[0].expression.value)
-        box.geometries.removeAt(0)
-        assertFails { box.scratches[0].expression.value }
-
-    }
-
-    /**
-     * This is the same as testDeleteGeometry, but asks for the X in mm, rather than just X.
-     * This used to fail
-     */
-    @Test
-    fun testDeleteGeometry2() {
-        val doc = Document()
-        val page = Page(doc)
-
-        val box = createBox(page, "Dimension2(10mm,20mm)", "Dimension2(100mm,200mm)")
-        page.children.add(box)
-        val geometry = Geometry()
-        geometry.parts.add(MoveTo("Dimension2(-20mm, -30mm)"))
-        geometry.parts.add(LineTo("Dimension2(-40mm, -30mm)"))
-        box.geometries.add(geometry)
-
-        box.scratches.add(Scratch("G2", DoubleExpression("Geometry2.Point1.X.mm")))
-        println(box.scratches[0].expression.value)
-        assertEquals(-20.0, box.scratches[0].expression.value)
-
-        box.geometries.removeAt(0)
-        assertFails { box.scratches[0].expression.value }
-
     }
 }

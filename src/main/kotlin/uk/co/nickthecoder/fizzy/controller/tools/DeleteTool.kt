@@ -35,7 +35,7 @@ class DeleteTool(controller: Controller)
         if (shape == null) {
             controller.highlightGeometry.value = Controller.NO_GEOMETRY
         } else {
-            controller.highlightGeometry.value = shape.geometries[0]
+            controller.highlightGeometry.value = shape.geometry
         }
     }
 
@@ -48,7 +48,7 @@ class DeleteTool(controller: Controller)
     override fun onMouseDragged(event: CMouseEvent) {
         val draggedShaped = controller.page.findShapeAt(event.point, controller.minDistance)
         if (draggedShaped === pressedShape && draggedShaped != null) {
-            controller.highlightGeometry.value = draggedShaped.geometries[0]
+            controller.highlightGeometry.value = draggedShaped.geometry
         } else {
             controller.highlightGeometry.value = Controller.NO_GEOMETRY
         }

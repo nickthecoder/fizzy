@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import org.junit.Test
-import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.util.ChangeListener
@@ -187,19 +186,14 @@ class TestListeners : MyTestCase() {
 
     @Test
     fun testGeometry() {
-        val geometry = Geometry()
-        shape1a.geometries.add(geometry)
+        val geometry = shape1a.geometry
+
+        val mt = MoveTo("Dimension(0mm,0mm)")
+        geometry.parts.add(mt)
         assertEquals(1, shape1aChanged)
         assertEquals(0, shape1bChanged)
         assertEquals(1, page1Changed)
         assertEquals(1, documentChanged)
-
-        val mt = MoveTo("Dimension(0mm,0mm)")
-        geometry.parts.add(mt)
-        assertEquals(true, shape1aChanged > 1)
-        assertEquals(0, shape1bChanged)
-        assertEquals(true, page1Changed > 1)
-        assertEquals(true, documentChanged > 1)
 
         val lt = LineTo("Dimension(0mm,0mm)")
         geometry.parts.add(lt)

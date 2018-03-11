@@ -63,9 +63,7 @@ class FColorPicker(
             if (shape is ShapeText) {
                 changes.add((if (isStroke) shape.stroke else shape.fill) to notTransparent.toFormula())
             }
-            shape.geometries.forEach { geo ->
-                changes.add((if (isStroke) geo.stroke else geo.fill) to notTransparent.toFormula())
-            }
+            changes.add((if (isStroke) shape.geometry.stroke else shape.geometry.fill) to notTransparent.toFormula())
             changes.add((if (isStroke) shape.strokeColor else shape.fillColor) to fxColor.toFizzy().toFormula())
         }
         document.history.makeChange(ChangeExpressions(changes))

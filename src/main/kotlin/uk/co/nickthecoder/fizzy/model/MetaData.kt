@@ -24,7 +24,7 @@ class MetaData {
 
     fun findCell(other: MetaDataCell): MetaDataCell? {
         cells.forEach { cell ->
-            if (cell.cellName == other.cellName && cell.rowIndex == other.rowIndex && cell.sectionIndex == other.sectionIndex && cell.sectionName == other.sectionName) {
+            if (cell.cellName == other.cellName && cell.rowIndex == other.rowIndex && cell.sectionName == other.sectionName) {
                 return cell
             }
         }

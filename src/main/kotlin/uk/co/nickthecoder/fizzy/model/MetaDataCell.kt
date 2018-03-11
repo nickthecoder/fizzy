@@ -25,14 +25,12 @@ data class MetaDataCell(
         val cellName: String,
         val cellExpression: PropExpression<*>,
         val sectionName: String? = null,
-        val sectionIndex: Int? = null,
         val rowIndex: Int? = null
 ) {
 
     fun accessString(): String {
         val result = StringBuffer()
         sectionName?.let { result.append(sectionName) }
-        sectionIndex?.let { result.append(it + 1) }
         sectionName?.let { result.append(".") }
         result.append(cellName)
         rowIndex?.let { result.append(it + 1) }

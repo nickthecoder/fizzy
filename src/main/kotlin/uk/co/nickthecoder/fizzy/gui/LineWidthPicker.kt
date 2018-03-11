@@ -59,11 +59,9 @@ class LineWidthPicker(val mainWindow: MainWindow, val widths: Array<Dimension>)
 
         history.beginBatch()
         mainWindow.shapeSelectionProperty.value.forEach { shape ->
-            shape.geometries.forEach { geo ->
-                history.makeChange(ChangeExpressions(listOf(
-                        geo.stroke to false.toFormula()
-                )))
-            }
+            history.makeChange(ChangeExpressions(listOf(
+                    shape.geometry.stroke to false.toFormula()
+            )))
             if (shape is ShapeText) {
                 history.makeChange(ChangeExpressions(listOf(
                         shape.stroke to false.toFormula()
@@ -83,11 +81,10 @@ class LineWidthPicker(val mainWindow: MainWindow, val widths: Array<Dimension>)
             history.makeChange(ChangeExpressions(listOf(
                     shape.lineWidth to width.toFormula()
             )))
-            shape.geometries.forEach { geo ->
-                history.makeChange(ChangeExpressions(listOf(
-                        geo.stroke to true.toFormula()
-                )))
-            }
+            history.makeChange(ChangeExpressions(listOf(
+                    shape.geometry.stroke to true.toFormula()
+            )))
+
             if (shape is ShapeText) {
                 history.makeChange(ChangeExpressions(listOf(
                         shape.stroke to true.toFormula()

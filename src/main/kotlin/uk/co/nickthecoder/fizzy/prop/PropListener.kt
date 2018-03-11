@@ -26,4 +26,5 @@ interface PropListener {
      * In the case of [PropConstant], the new value will already be known.
      */
     fun dirty(prop: Prop<*>)
+
 }

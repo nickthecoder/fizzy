@@ -7,8 +7,6 @@ Edit text
         Otherwise, create a new ShapeText
             For Shape2d parents, make the size of the ShapeText the same size as the parent.
 
-Clip text to its size (maybe do this for ALL shapes)
-
 ShapeText needs stroke and fill booleans, but Shape has those on Geometry
     Should they be on Shape only (and not on ShapeText nor Geometry?)
     What is the point of multiple geometries if they share a single strokeColor and fillColor???
