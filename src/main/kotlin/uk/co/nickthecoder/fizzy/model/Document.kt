@@ -25,14 +25,12 @@ import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 import java.util.*
 
-class Document : HasChangeListeners<Document> {
+class Document(val id: String = Document.generateDocumentId())
+    : HasChangeListeners<Document> {
 
     override val changeListeners = ChangeListeners<Document>()
 
-
-    private val masterToLocalCopy = mutableMapOf<String, Shape>()
-
-    val id: String = generateDocumentId()
+    internal val masterToLocalCopy = mutableMapOf<String, Shape>()
 
     val pages = MutableFList<Page>()
 

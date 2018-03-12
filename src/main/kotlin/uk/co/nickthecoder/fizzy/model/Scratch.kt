@@ -24,23 +24,57 @@ import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 import uk.co.nickthecoder.fizzy.util.toFormula
 
-class Scratch(name: String, val expression: PropExpression<*>, comment: String = "")
-    : HasChangeListeners<Scratch>, PropListener {
+private fun createPropExpression(type: String): PropExpression<*> {
+    return when (type) {
+        "boolean" -> DoubleExpression(false.toFormula())
+        "double" -> DoubleExpression(0.0.toFormula())
+        "Dimension2" -> Dimension2Expression(Dimension2.ZERO_mm)
+        else -> throw IllegalArgumentException("Scratch. Unknown type $type")
+    }
+}
+
+class Scratch(name: String, var expression: PropExpression<*>, comment: String = "")
+    : HasChangeListeners<Scratch>, PropListener, MetaDataAware {
+
+    constructor(type: String) : this("", createPropExpression(type), "")
 
     override val changeListeners = ChangeListeners<Scratch>()
 
-    val name = PropVariable<String>(name)
+    val name = PropVariable(name)
 
     /**
      * Used only as documentation of the Master Shape, and is NOT available for use in formulas.
      * Therefore it is not a [Prop].
      */
-    var comment = comment
+    var comment = PropVariable(comment)
 
-    fun addMetaData(metaData: MetaData, index: Int) {
-        metaData.cells.add(MetaDataCell("Name", StringExpression(name.value.toFormula()), "Scratch", index))
-        metaData.cells.add(MetaDataCell("Comment", StringExpression(comment.toFormula()), "Scratch", index))
-        metaData.cells.add(MetaDataCell("Expression", expression, "Scratch", index))
+    var type = PropVariable(expression.klass.simpleName)
+
+    private val typeListener = object : PropListener {
+        override fun dirty(prop: Prop<*>) {
+            val oldExpression = expression
+            expression = createPropExpression(type.value)
+            expression.formula = oldExpression.formula
+            expression.propListeners.items.addAll(oldExpression.propListeners.items)
+            oldExpression.propListeners.items.clear()
+        }
+    }
+
+    init {
+        type.propListeners.add(typeListener)
+    }
+
+    override fun metaData(): MetaData {
+        val md = MetaData(null)
+        addMetaData(md)
+        return md
+    }
+
+    fun addMetaData(metaData: MetaData) {
+        metaData.newCell("Type", type)
+        metaData.newCell("Name", name)
+        metaData.newCell("Comment", comment)
+        metaData.newCell("Expression", expression)
     }
 
     fun setContext(context: EvaluationContext) {
@@ -51,5 +85,5 @@ class Scratch(name: String, val expression: PropExpression<*>, comment: String =
         changeListeners.fireChanged(this)
     }
 
-    fun copy(link: Boolean) = Scratch(name.value, expression.copy(link), comment)
+    fun copy(link: Boolean) = Scratch(name.value, expression.copy(link), comment.value)
 }

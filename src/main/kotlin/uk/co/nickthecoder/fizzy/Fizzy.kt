@@ -28,7 +28,9 @@ import uk.co.nickthecoder.fizzy.gui.JavaFXFFont
 import uk.co.nickthecoder.fizzy.gui.MainWindow
 import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.prop.expressionExceptionHandler
+import uk.co.nickthecoder.fizzy.util.FizzyJsonWriter
 import uk.co.nickthecoder.fizzy.util.runLaterHandler
+import java.io.File
 
 /**
  * The JavaFX [Application] (i.e. the entry point for the program when using a gui.
@@ -72,6 +74,8 @@ class Fizzy : Application() {
 
         line.start.formula = "this.connectTo(Page.Shape1.ConnectionPoint2)"
         line.end.formula = "this.connectAlong(Page.Shape2.Geometry1, 0.125)"
+
+        FizzyJsonWriter(doc, File("example.fizzy")).save()
 
         val mainWindow = MainWindow(primaryStage)
         mainWindow.addDocument(doc)

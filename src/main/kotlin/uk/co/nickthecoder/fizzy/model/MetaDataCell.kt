@@ -18,33 +18,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
+import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropExpression
 
 data class MetaDataCell(
 
         val cellName: String,
-        val cellExpression: PropExpression<*>,
-        val sectionName: String? = null,
-        val rowIndex: Int? = null
+        val cellProp: Prop<*>
 ) {
 
-    fun accessString(): String {
-        val result = StringBuffer()
-        sectionName?.let { result.append(sectionName) }
-        sectionName?.let { result.append(".") }
-        result.append(cellName)
-        rowIndex?.let { result.append(it + 1) }
-        return result.toString()
-    }
-
     override fun toString(): String {
-        var valueString: String
-        try {
-            valueString = cellExpression.valueString()
-        } catch (e: Exception) {
-            valueString = "ERROR"
+        val cp = cellProp
+        if (cp is PropExpression<*>) {
+            var valueString: String
+            try {
+                valueString = cp.valueString()
+            } catch (e: Exception) {
+                valueString = "ERROR"
+            }
+            return "$cellName : ${cp.formula} = ${valueString}"
+        } else {
+            return "$cellName : ${cp.value}" // TODO MORE
         }
-        return "${accessString()} : ${cellExpression.formula} = ${valueString}"
     }
 
 }

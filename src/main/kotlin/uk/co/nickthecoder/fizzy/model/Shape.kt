@@ -31,12 +31,10 @@ import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.*
 
-abstract class Shape(var parent: ShapeParent)
-    : ShapeParent, PropListener, HasChangeListeners<Shape> {
+abstract class Shape internal constructor(var parent: ShapeParent, val id: Int)
+    : ShapeParent, PropListener, HasChangeListeners<Shape>, MetaDataAware {
 
-    val id = parent.document().generateShapeId()
-
-    val name = StringExpression("".toFormula())
+    val name = PropVariable("")
 
     abstract val size: Dimension2Expression
 
@@ -224,11 +222,12 @@ abstract class Shape(var parent: ShapeParent)
     }
 
     fun findScratch(name: String): Scratch? {
-        scratches.forEach { scratchProp ->
-            if (scratchProp.name.value == name) {
-                return scratchProp
+        scratches.forEach { scratch ->
+            if (scratch.name.value == name) {
+                return scratch
             }
         }
+
         return null
     }
 
@@ -264,41 +263,93 @@ abstract class Shape(var parent: ShapeParent)
         metaData().copyInto(newShape.metaData(), link)
     }
 
-    fun metaData(): MetaData {
-        val result = MetaData()
+    override fun createRow(type: String?): Pair<MetaDataAware, MetaData> {
+        return when (type) {
+            "ConnectionPoint" -> {
+                val cp = ConnectionPoint()
+                connectionPoints.add(cp)
+                Pair(cp, cp.metaData())
+            }
+            "ControlPoint" -> {
+                val cp = ControlPoint()
+                controlPoints.add(cp)
+                Pair(cp, cp.metaData())
+
+            }
+            "Scratch" -> {
+                val scratch = Scratch("Dimension2")
+                scratches.add(scratch)
+                Pair(scratch, scratch.metaData())
+            }
+            else -> throw IllegalStateException("Shape does not have any rows of type $type")
+        }
+
+    }
+
+    override fun getSection(sectionName: String): Pair<Any, MetaData> {
+        return when (sectionName) {
+            "Geometry" -> Pair(geometry, metaData().sections[sectionName]!!)
+            "Transform" -> Pair(transform, metaData().sections[sectionName]!!)
+            "ConnectionPoint" -> Pair(connectionPoints, metaData().sections[sectionName]!!)
+            "ControlPoint" -> Pair(controlPoints, metaData().sections[sectionName]!!)
+            "Scratch" -> Pair(scratches, metaData().sections[sectionName]!!)
+            else -> throw IllegalStateException("Shape does not have a section named $sectionName")
+        }
+    }
+
+    override fun metaData(): MetaData {
+        val result = MetaData(null)
         addMetaData(result)
         return result
+    }
+
+    open protected fun addMetaData(metaData: MetaData) {
+        metaData.newCell("Name", StringExpression(name.value.toFormula()))
+        metaData.newCell("LineWidth", lineWidth)
+        metaData.newCell("Size", size)
+        metaData.newCell("LineColor", strokeColor)
+        metaData.newCell("FillColor", fillColor)
+        metaData.newCell("StrokeCap", strokeCap)
+        metaData.newCell("StrokeJoin", strokeJoin)
+
+        transform.addMetaData(metaData)
+
+        val geometrySection = metaData.newSection("Geometry")
+        geometry.addMetaData(geometrySection)
+
+        val connectionPointsSection = metaData.newSection("ConnectionPoint")
+        connectionPoints.forEach { connectionPoint ->
+            val connectionPointRow = connectionPointsSection.newRow(null)
+            connectionPoint.addMetaData(connectionPointRow)
+        }
+
+        val controlPointsSection = metaData.newSection("ControlPoint")
+        controlPoints.forEach { controlPoint ->
+            val controlPointRow = controlPointsSection.newRow(null)
+            controlPoint.addMetaData(controlPointRow)
+        }
+
+        val scratchSection = metaData.newSection("Scratch")
+        scratches.forEach { scratch ->
+            val scratchRow = scratchSection.newRow(null)
+            scratch.addMetaData(scratchRow)
+        }
     }
 
     fun debugCheckStale(): Boolean {
         var foundStale = false
         metaData().cells.forEach { cell ->
-            val value = cell.cellExpression.value
-            cell.cellExpression.forceRecalculation()
-            if (cell.cellExpression.value != value) {
-                foundStale = true
-                println("Stale : $cell")
+            val cp = cell.cellProp
+            if (cp is PropExpression<*>) {
+                val value = cell.cellProp.value
+                cp.forceRecalculation()
+                if (cp.value != value) {
+                    foundStale = true
+                    println("Stale : $cell")
+                }
             }
         }
         return foundStale
-    }
-
-    open protected fun addMetaData(metaData: MetaData) {
-        metaData.cells.add(MetaDataCell("Name", StringExpression(name.value.toFormula())))
-        metaData.cells.add(MetaDataCell("Pin", transform.pin))
-        metaData.cells.add(MetaDataCell("LocPin", transform.locPin))
-        metaData.cells.add(MetaDataCell("Scale", transform.scale))
-
-        geometry.addMetaData(metaData)
-        connectionPoints.forEachIndexed { index, connectionPointProp -> connectionPointProp.addMetaData(metaData, index) }
-        controlPoints.forEachIndexed { index, controlPointProp -> controlPointProp.addMetaData(metaData, index) }
-        scratches.forEachIndexed { index, scratchProp -> scratchProp.addMetaData(metaData, index) }
-        metaData.cells.add(MetaDataCell("LineWidth", lineWidth))
-        metaData.cells.add(MetaDataCell("Size", size))
-        metaData.cells.add(MetaDataCell("LineColor", strokeColor))
-        metaData.cells.add(MetaDataCell("FillColor", fillColor))
-        metaData.cells.add(MetaDataCell("StrokeCap", strokeCap))
-        metaData.cells.add(MetaDataCell("StrokeJoin", strokeJoin))
     }
 
     override fun toString(): String = "Shape ${id}"

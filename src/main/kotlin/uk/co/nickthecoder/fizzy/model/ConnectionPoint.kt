@@ -26,9 +26,11 @@ import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
 class ConnectionPoint(val point: Dimension2Expression)
-    : HasChangeListeners<ConnectionPoint>, PropListener {
+    : HasChangeListeners<ConnectionPoint>, PropListener, MetaDataAware {
 
     constructor(pointFormula: String) : this(Dimension2Expression(pointFormula))
+
+    constructor() : this(Dimension2Expression(Dimension2.ZERO_mm))
 
     override val changeListeners = ChangeListeners<ConnectionPoint>()
 
@@ -61,8 +63,14 @@ class ConnectionPoint(val point: Dimension2Expression)
             }
         }
 
-    fun addMetaData(metaData: MetaData, index: Int) {
-        metaData.cells.add(MetaDataCell("Point", point, "ConnectionPoint", index))
+    override fun metaData(): MetaData {
+        val md = MetaData(null)
+        addMetaData(md)
+        return md
+    }
+
+    fun addMetaData(metaData: MetaData) {
+        metaData.newCell("Point", point)
     }
 
     fun index(): Int {

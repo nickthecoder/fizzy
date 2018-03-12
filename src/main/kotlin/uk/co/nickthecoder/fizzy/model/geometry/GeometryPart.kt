@@ -32,7 +32,7 @@ import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
 abstract class GeometryPart
 
-    : HasChangeListeners<GeometryPart>, PropListener {
+    : HasChangeListeners<GeometryPart>, PropListener, MetaDataAware {
 
     internal var geometry: Geometry? = null
         set(v) {
@@ -49,8 +49,14 @@ abstract class GeometryPart
      */
     abstract val point: Dimension2Expression
 
-    open fun addMetaData(metaData: MetaData, rowIndex: Int) {
-        metaData.cells.add(MetaDataCell("Point", point, "Geometry", rowIndex))
+    override fun metaData(): MetaData {
+        val metaData = MetaData(null)
+        addMetaData(metaData)
+        return metaData
+    }
+
+    open fun addMetaData(metaData: MetaData) {
+        metaData.cells.add(MetaDataCell("Point", point))
     }
 
     internal abstract fun setContext(context: EvaluationContext)

@@ -171,13 +171,13 @@ class TestListeners : MyTestCase() {
         shape1a.name.value // Ensure not dirty
         shape1b.name.value // Ensure not dirty
 
-        shape1a.name.formula = "Shape1A".toFormula()
+        shape1a.name.value = "Shape1A"
         assertEquals(1, shape1aChanged)
         assertEquals(0, shape1bChanged)
         assertEquals(1, page1Changed)
         assertEquals(1, documentChanged)
 
-        shape1b.name.formula = "Shape1B".toFormula()
+        shape1b.name.value = "Shape1B"
         assertEquals(1, shape1aChanged)
         assertEquals(1, shape1bChanged)
         assertEquals(2, page1Changed)

@@ -23,8 +23,8 @@ import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.PropCalculation2
 import uk.co.nickthecoder.fizzy.prop.Shape1dPropType
 
-class Shape1d private constructor(parent: ShapeParent)
-    : Shape(parent) {
+class Shape1d private constructor(parent: ShapeParent, id: Int = parent.document().generateShapeId())
+    : Shape(parent, id) {
 
     override val context = createContext(ThisContext(this, Shape1dPropType.instance))
 
@@ -55,15 +55,23 @@ class Shape1d private constructor(parent: ShapeParent)
 
     override fun addMetaData(metaData: MetaData) {
         super.addMetaData(metaData)
-        metaData.cells.add(MetaDataCell("Start", start))
-        metaData.cells.add(MetaDataCell("End", end))
+        metaData.newCell("Start", start)
+        metaData.newCell("End", end)
     }
 
     companion object {
+
         fun create(parent: ShapeParent): Shape1d {
             val result = Shape1d(parent)
             result.postInit()
             return result
         }
+
+        internal fun create(parent: ShapeParent, id: Int): Shape1d {
+            val result = Shape1d(parent, id)
+            result.postInit()
+            return result
+        }
+
     }
 }

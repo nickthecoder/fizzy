@@ -20,10 +20,9 @@ package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.prop.*
-import uk.co.nickthecoder.fizzy.util.toFormula
 
-class ShapeText private constructor(parent: ShapeParent)
-    : Shape(parent) {
+class ShapeText private constructor(parent: ShapeParent, id: Int = parent.document().generateShapeId())
+    : Shape(parent, id) {
 
     override val context = createContext(ThisContext(this, ShapeTextPropType.instance))
 
@@ -81,17 +80,17 @@ class ShapeText private constructor(parent: ShapeParent)
 
     override fun addMetaData(metaData: MetaData) {
         super.addMetaData(metaData)
-        metaData.cells.add(MetaDataCell("Text", text))
-        metaData.cells.add(MetaDataCell("FontName", fontName))
-        metaData.cells.add(MetaDataCell("FontSize", fontSize))
-        metaData.cells.add(MetaDataCell("AlignX", alignX))
-        metaData.cells.add(MetaDataCell("AlignY", alignY))
-        metaData.cells.add(MetaDataCell("Clip", clip))
+        metaData.newCell("Text", text)
+        metaData.newCell("FontName", fontName)
+        metaData.newCell("FontSize", fontSize)
+        metaData.newCell("AlignX", alignX)
+        metaData.newCell("AlignY", alignY)
+        metaData.newCell("Clip", clip)
 
-        metaData.cells.add(MetaDataCell("MarginTop", marginTop))
-        metaData.cells.add(MetaDataCell("MarginRight", marginRight))
-        metaData.cells.add(MetaDataCell("MarginBottom", marginBottom))
-        metaData.cells.add(MetaDataCell("MarginLeft", marginLeft))
+        metaData.newCell("MarginTop", marginTop)
+        metaData.newCell("MarginRight", marginRight)
+        metaData.newCell("MarginBottom", marginBottom)
+        metaData.newCell("MarginLeft", marginLeft)
     }
 
     override fun isAt(pagePoint: Dimension2, minDistance: Dimension): Boolean {
@@ -117,8 +116,15 @@ class ShapeText private constructor(parent: ShapeParent)
     }
 
     companion object {
+
         fun create(parent: ShapeParent): ShapeText {
             val result = ShapeText(parent)
+            result.postInit()
+            return result
+        }
+
+        internal fun create(parent: ShapeParent, id: Int): ShapeText {
+            val result = ShapeText(parent, id)
             result.postInit()
             return result
         }

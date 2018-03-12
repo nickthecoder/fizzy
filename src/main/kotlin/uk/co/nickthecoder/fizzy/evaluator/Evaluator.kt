@@ -160,7 +160,6 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
      * and therefore causes all of the operators on the stack to be evaluated.
      */
     private fun push(token: Token) {
-
         try {
             when (token.type) {
                 TokenType.UNKNOWN -> return

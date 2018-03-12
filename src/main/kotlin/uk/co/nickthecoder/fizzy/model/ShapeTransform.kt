@@ -28,7 +28,8 @@ import uk.co.nickthecoder.fizzy.prop.Vector2Expression
  *
  * Used by [Shape2d] and [ShapeGroup].
  */
-class ShapeTransform(val shape: Shape) {
+class ShapeTransform(val shape: Shape)
+    : MetaDataAware {
 
     /**
      * The position of this object relative to the parent (which is either a [Shape] or a [Page]).
@@ -116,6 +117,20 @@ class ShapeTransform(val shape: Shape) {
 
         override fun eval() =
                 shape.parent.fromPageToLocal.value * fromParentToLocal.value
+    }
+
+    override fun metaData(): MetaData {
+        val metaData = MetaData(null)
+        addMetaData(metaData)
+        return metaData
+    }
+
+    fun addMetaData(metaData: MetaData) {
+        val section = metaData.newSection("Transform")
+        section.newCell("Pin", pin)
+        section.newCell("LocPin", locPin)
+        section.newCell("Scale", scale)
+        section.newCell("Rotation", rotation)
     }
 
     init {

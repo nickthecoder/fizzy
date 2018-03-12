@@ -26,7 +26,6 @@ import javafx.scene.control.ColorPicker
 import javafx.scene.paint.Color
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
 import uk.co.nickthecoder.fizzy.prop.PropExpression
-import uk.co.nickthecoder.fizzy.util.toFormula
 
 class FColorPicker(
         val mainWindow: MainWindow,
@@ -58,7 +57,6 @@ class FColorPicker(
 
         document.history.beginBatch()
         document.selection.forEach { shape ->
-            val notTransparent = fxColor.opacity != 0.0
             changes.add((if (isStroke) shape.strokeColor else shape.fillColor) to fxColor.toFizzy().toFormula())
         }
         document.history.makeChange(ChangeExpressions(changes))

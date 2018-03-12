@@ -34,6 +34,8 @@ class LineTo(override val point: Dimension2Expression)
 
     constructor(point: Dimension2) : this(point.toFormula())
 
+    constructor() : this(Dimension2.ZERO_mm.toFormula())
+
     init {
         point.propListeners.add(this)
     }

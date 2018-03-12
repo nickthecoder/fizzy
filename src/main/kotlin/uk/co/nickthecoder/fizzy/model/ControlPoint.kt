@@ -26,11 +26,13 @@ import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
 class ControlPoint(val point: Dimension2Expression)
-    : HasChangeListeners<ControlPoint>, PropListener {
+    : HasChangeListeners<ControlPoint>, PropListener, MetaDataAware {
 
     constructor(pointFormula: String) : this(Dimension2Expression(pointFormula))
 
     constructor(pointValue: Dimension2) : this(Dimension2Expression(pointValue))
+
+    constructor() : this(Dimension2Expression(Dimension2.ZERO_mm))
 
 
     override val changeListeners = ChangeListeners<ControlPoint>()
@@ -61,8 +63,15 @@ class ControlPoint(val point: Dimension2Expression)
         changeListeners.fireChanged(this)
     }
 
-    fun addMetaData(metaData: MetaData, index: Int) {
-        metaData.cells.add(MetaDataCell("Point", point, "ControlPoint", index))
+
+    override fun metaData(): MetaData {
+        val md = MetaData(null)
+        addMetaData(md)
+        return md
+    }
+
+    fun addMetaData(metaData: MetaData) {
+        metaData.newCell("Point", point)
     }
 
     fun index(): Int {

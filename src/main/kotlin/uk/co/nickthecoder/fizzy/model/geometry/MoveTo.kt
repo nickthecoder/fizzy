@@ -19,9 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model.geometry
 
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
-import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.model.Dimension
+import uk.co.nickthecoder.fizzy.model.Dimension2
+import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
-import uk.co.nickthecoder.fizzy.prop.StringExpression
 
 
 class MoveTo(override val point: Dimension2Expression)
@@ -31,6 +32,8 @@ class MoveTo(override val point: Dimension2Expression)
     constructor(pointFormula: String) : this(Dimension2Expression(pointFormula))
 
     constructor(point: Dimension2) : this(point.toFormula())
+
+    constructor() : this(Dimension2.ZERO_mm)
 
     init {
         point.propListeners.add(this)

@@ -24,10 +24,10 @@ import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationException
 import uk.co.nickthecoder.fizzy.evaluator.Evaluator
 import uk.co.nickthecoder.fizzy.model.*
-import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.model.geometry.GeometryPart
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
+import uk.co.nickthecoder.fizzy.prop.PropExpression
 import java.lang.RuntimeException
 
 abstract class MyTestCase : TestCase() {
@@ -109,13 +109,16 @@ abstract class MyTestCase : TestCase() {
 
     fun checkAllExpressions(shape: Shape) {
         shape.metaData().cells.forEach { metaDataCell ->
-            val existingValue = metaDataCell.cellExpression.valueString()
-            metaDataCell.cellExpression.forceRecalculation()
-            val newValue = metaDataCell.cellExpression.valueString()
-            if (existingValue != newValue) {
-                println("Inconsistant metadata : $metaDataCell")
+            val cp = metaDataCell.cellProp
+            if (cp is PropExpression<*>) {
+                val existingValue = cp.valueString()
+                cp.forceRecalculation()
+                val newValue = cp.valueString()
+                if (existingValue != newValue) {
+                    println("Inconsistant metadata : $metaDataCell")
+                }
+                kotlin.test.assertEquals(existingValue, newValue)
             }
-            kotlin.test.assertEquals(existingValue, newValue)
         }
     }
 

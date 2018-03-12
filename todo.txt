@@ -6,6 +6,9 @@ Edit text
         If it is ShapeText or has a child of ShapeText, then edit that
         Otherwise, create a new ShapeText
             For Shape2d parents, make the size of the ShapeText the same size as the parent.
+    At the beginning, just remember the "caret" position, and line Index without showing it
+    Add a "key" event handler (which will need a "consume" method).
+
 
 For Version 1
 -------------
@@ -37,6 +40,13 @@ Copy and Paste
 
 Soon
 ----
+
+Add "effects", such as bluring.
+    https://docs.oracle.com/javafx/2/visual_effects/blur.htm
+    Add an "visual effect" cell, of Type VisualEffect, and introduce new constructor functions
+        BoxBlue MotionBlur etc.
+    Elegant solution to ADDING a background effect, and also APPLYING it to the existing stroke/fill?
+    Maybe three of them (fillEffect, strokeEffect, backgroundEffect), and add a backgroundColor.
 
 Allow Color to be specified as #rrggbb or #rrggbbaa
 

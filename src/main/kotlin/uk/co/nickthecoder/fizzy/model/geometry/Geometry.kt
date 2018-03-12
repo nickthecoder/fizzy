@@ -28,7 +28,7 @@ import uk.co.nickthecoder.fizzy.util.*
 
 class Geometry(val shape: Shape)
 
-    : HasChangeListeners<Geometry>, PropListener {
+    : HasChangeListeners<Geometry>, PropListener, MetaDataAware {
 
     var parts = MutableFList<GeometryPart>()
 
@@ -55,9 +55,35 @@ class Geometry(val shape: Shape)
         changeListeners.fireChanged(this, ChangeType.CHANGE, prop)
     }
 
+    override fun createRow(type: String?): Pair<MetaDataAware, MetaData> {
+        return when (type) {
+            "MoveTo" -> {
+                val rowObject = MoveTo()
+                parts.add(rowObject)
+                Pair(rowObject, rowObject.metaData())
+            }
+            "LineTo" -> {
+                val rowObject = LineTo()
+                parts.add(rowObject)
+                Pair(rowObject, rowObject.metaData())
+            }
+            else -> throw IllegalStateException("Geometry has no rows of type $type")
+        }
+    }
+
+
+    override fun metaData(): MetaData {
+        val md = MetaData(null)
+        addMetaData(md)
+        return md
+    }
+
     fun addMetaData(metaData: MetaData) {
-        metaData.cells.add(MetaDataCell("Connect", connect, "Geometry"))
-        parts.forEachIndexed { index, part -> part.addMetaData(metaData, index) }
+        metaData.newCell("Connect", connect)
+        parts.forEach { part ->
+            val row = metaData.newRow(part.javaClass.simpleName)
+            part.addMetaData(row)
+        }
     }
 
     fun isAt(localPoint: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean {
