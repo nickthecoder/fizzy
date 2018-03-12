@@ -23,6 +23,7 @@ import uk.co.nickthecoder.fizzy.model.history.History
 import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
+import java.io.File
 import java.util.*
 
 class Document(val id: String = Document.generateDocumentId())
@@ -31,6 +32,8 @@ class Document(val id: String = Document.generateDocumentId())
     override val changeListeners = ChangeListeners<Document>()
 
     internal val masterToLocalCopy = mutableMapOf<String, Shape>()
+
+    val file: File? = null
 
     val pages = MutableFList<Page>()
 

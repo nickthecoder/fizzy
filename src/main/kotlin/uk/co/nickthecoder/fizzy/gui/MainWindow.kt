@@ -26,6 +26,7 @@ import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
 import javafx.scene.layout.BorderPane
 import javafx.scene.paint.Color
+import javafx.stage.FileChooser
 import javafx.stage.Stage
 import javafx.stage.Window
 import uk.co.nickthecoder.fizzy.Fizzy
@@ -33,7 +34,10 @@ import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.model.Document
+import uk.co.nickthecoder.fizzy.model.Page
 import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.util.FizzyJsonReader
+import uk.co.nickthecoder.fizzy.util.FizzyJsonWriter
 
 class MainWindow(val stage: Stage) : Window() {
 
@@ -88,7 +92,7 @@ class MainWindow(val stage: Stage) : Window() {
         stage.show()
     }
 
-    fun onTabChanged(oldTab: Tab?, newTab: Tab) {
+    fun onTabChanged(oldTab: Tab?, newTab: Tab?) {
         document?.selection?.let {
             shapeSelectionProperty.value = it
             if (oldTab is DocumentTab) {
@@ -107,7 +111,10 @@ class MainWindow(val stage: Stage) : Window() {
     }
 
     fun addDocument(doc: Document) {
-        tabs.tabs.add(DocumentTab(doc, "Page 1"))
+        val file = doc.file
+        val tab = DocumentTab(doc, if (file == null) "New Document" else file.nameWithoutExtension)
+        tabs.tabs.add(tab)
+        tabs.selectionModel.select(tab)
     }
 
     fun debug() {
@@ -134,4 +141,50 @@ class MainWindow(val stage: Stage) : Window() {
         }
     }
 
+
+    fun documentNew() {
+        val doc = Document()
+        doc.pages.add(Page(doc))
+        addDocument(doc)
+    }
+
+
+    fun documentOpen() {
+        val chooser = FileChooser()
+        chooser.extensionFilters.add(fizzyExtensionFilter)
+        val file = chooser.showOpenDialog(this)
+        if (file != null) {
+            addDocument(FizzyJsonReader(file).load())
+        }
+    }
+
+    fun documentSave() {
+        val doc = document ?: return
+        val file = doc.file
+        if (file == null) {
+            documentSaveAs()
+        } else {
+            FizzyJsonWriter(doc, file).save()
+        }
+    }
+
+    fun documentSaveAs() {
+
+        val doc = document ?: return
+        val chooser = FileChooser()
+        chooser.extensionFilters.add(fizzyExtensionFilter)
+        val file = chooser.showSaveDialog(this)
+        if (file != null) {
+            FizzyJsonWriter(doc, file).save()
+        }
+    }
+
+    fun closeTab() {
+        tabs.selectionModel.selectedItem?.let { tabs.tabs.remove(it) }
+    }
+
+    companion object {
+        val fizzyExtensionFilter = FileChooser.ExtensionFilter("Fizzy Document", "*.fizzy")
+
+    }
 }

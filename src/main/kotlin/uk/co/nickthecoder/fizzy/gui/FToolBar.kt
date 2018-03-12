@@ -21,6 +21,7 @@ package uk.co.nickthecoder.fizzy.gui
 import javafx.event.EventHandler
 import javafx.scene.Node
 import javafx.scene.control.Button
+import javafx.scene.control.Separator
 import javafx.scene.control.ToolBar
 import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.controller.tools.DeleteTool
@@ -79,6 +80,11 @@ class FToolBar(val mainWindow: MainWindow)
 
     val editLocalMastersButton = ApplicationActions.FILE_EDIT_MASTERS.createButton(sh) { mainWindow.editLocalMasters() }
 
+    val openButton = ApplicationActions.DOCUMENT_OPEN.createButton(sh) { mainWindow.documentOpen() }
+    val newButton = ApplicationActions.DOCUMENT_NEW.createButton(sh) { mainWindow.documentNew() }
+    val saveButton = ApplicationActions.DOCUMENT_SAVE.createButton(sh) { mainWindow.documentSave() }
+    val saveAsButton = ApplicationActions.DOCUMENT_SAVE_AS.createButton(sh) { mainWindow.documentSaveAs() }
+
     val undoButton = ApplicationActions.EDIT_UNDO.createButton(sh) { document?.history?.undo() }
     val redoButton = ApplicationActions.EDIT_REDO.createButton(sh) { document?.history?.redo() }
 
@@ -107,14 +113,21 @@ class FToolBar(val mainWindow: MainWindow)
         stampToolButton.onAction = EventHandler { controller?.let { it.tool = StampShape2dTool(it, PrimitiveStencil.pentangle) } }
 
         toolBar.items.addAll(
+                newButton, openButton, saveButton, saveAsButton,
                 editLocalMastersButton,
+                Separator(),
                 undoButton, redoButton,
+                Separator(),
                 selectToolButton, primitive1dButton, primitive2dButton, deleteToolButton, editGeometryToolButton,
+                Separator(),
                 fillColorPicker.build(), strokeColorPicker.build(),
                 lineWidthPicker.build(), strokeJoinPicker.build(), strokeCapPicker.build(),
+                Separator(),
                 stampToolButton,
                 debugButton
         )
+
+        sh.actions.add(ApplicationActions.CLOSE_TAB to { mainWindow.closeTab() })
 
         return toolBar
     }

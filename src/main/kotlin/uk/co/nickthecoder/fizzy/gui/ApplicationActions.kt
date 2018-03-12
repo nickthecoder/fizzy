@@ -22,6 +22,11 @@ import javafx.scene.input.KeyCode
 
 object ApplicationActions {
 
+    val DOCUMENT_NEW = ApplicationAction("document-new", "Create a New Document", KeyCode.N, control = true)
+    val DOCUMENT_OPEN = ApplicationAction("document-open", "Open a Document", KeyCode.O, control = true)
+    val DOCUMENT_SAVE = ApplicationAction("document-save", "Save the Document", KeyCode.S, control = true)
+    val DOCUMENT_SAVE_AS = ApplicationAction("document-save-as", "Save the Document with a Different Name", KeyCode.S, control = true, shift = true)
+
     val EDIT_UNDO = ApplicationAction("edit-undo", "Undo", KeyCode.Z, control = true)
     val EDIT_REDO = ApplicationAction("edit-redo", "Redo", KeyCode.Z, control = true, shift = true)
 
@@ -33,4 +38,6 @@ object ApplicationActions {
 
     val FILE_EDIT_MASTERS = ApplicationAction("file-editMasterShapes", "Edit Master Shapes", KeyCode.F1, control = true)
     val DEV_DEBUG = ApplicationAction("dev-debug", "Debug", KeyCode.F1, control = true)
+
+    val CLOSE_TAB = ApplicationAction("close-tab", "Close Tab", KeyCode.W, control = true)
 }
