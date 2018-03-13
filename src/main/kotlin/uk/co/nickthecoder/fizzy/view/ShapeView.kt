@@ -18,17 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.view
 
-import uk.co.nickthecoder.fizzy.model.Page
+import uk.co.nickthecoder.fizzy.model.Shape
 
-class PageView(val page: Page, dc: DrawContext)
+class ShapeView(val shape: Shape, dc: DrawContext)
     : View(dc) {
 
     override fun draw() {
-        dc.use {
-            page.children.forEach { shape ->
-                drawShape(shape)
-            }
-        }
+        drawShape(shape)
     }
-
 }

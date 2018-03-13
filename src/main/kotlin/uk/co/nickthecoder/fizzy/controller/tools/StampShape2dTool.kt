@@ -27,7 +27,7 @@ import uk.co.nickthecoder.fizzy.model.history.CreateShape
  * Adds a shape to the document by clicking. The size of the shape is determined by the masterShape.
  * See [GrowShape2dTool] for an alternative, where the size of the new shape is determined by dragging.
  */
-class StampShape2dTool(controller: Controller, val masterShape: Shape2d)
+class StampShape2dTool(controller: Controller, val masterShape: Shape2d, val onEnd: () -> Unit = {})
     : Tool(controller) {
 
     override val cursor = ToolCursor.STAMP
@@ -43,5 +43,12 @@ class StampShape2dTool(controller: Controller, val masterShape: Shape2d)
         controller.page.document.history.makeChange(
                 CreateShape(newShape, controller.page)
         )
+        if (!event.isAdjust) {
+            controller.tool = SelectTool(controller)
+        }
+    }
+
+    override fun endTool(replacement: Tool) {
+        onEnd()
     }
 }

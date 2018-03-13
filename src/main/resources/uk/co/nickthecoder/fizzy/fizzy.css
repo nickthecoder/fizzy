@@ -1,3 +1,12 @@
+/******** COLORS *******/
+
+.root {
+    stencil-base : #ffff80;
+    stencil-selected : #80ff80
+}
+
+/******** COLOR PICKER *******/
+
 .color-picker.stroke,
 .color-picker.fill {
     -fx-color-label-visible : false;
@@ -18,6 +27,7 @@
     -fx-padding: 5 5 5 24;
 }
 
+/******** DOCK *******/
 .dock-title {
     -fx-padding : 2px;
     -fx-background-color: #C5CEDE;
@@ -25,3 +35,24 @@
 .dock-title > .label {
     -fx-text-fill : black;
 }
+
+/******** STENCIL *******/
+
+.stencil {
+    -fx-fill-width : true;
+    -fx-alignment : top-center;
+    -fx-spacing : 2px;
+}
+
+.stencil > .toggle-button {
+    -fx-base : stencil-base;
+    -fx-padding : 0;
+ }
+
+.stencil > .toggle-button:selected,
+.stencil > .toggle-button:hover {
+    -fx-base : stencil-selected;
+    -fx-hover-base : stencil-selected;
+ }
+
+/******** END *******/

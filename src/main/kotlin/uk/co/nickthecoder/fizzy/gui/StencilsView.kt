@@ -37,6 +37,7 @@ class StencilsView(mainWindow: MainWindow)
             stencilViews.add(view)
             accordion.panes.add(view.build())
         }
+        accordion.expandedPane = accordion.panes[0]
 
         return accordion
     }

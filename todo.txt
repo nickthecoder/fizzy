@@ -1,16 +1,10 @@
 To Do
 =====
 
-Create a side panel to display the stencils
-    Create a stencil directory, and a prototype file called Basic Shapes.fstencil
-    An acordian? listing each of the stencils in that directory.
-    Button for each shape within the stencil
-        Image of the shape
-        Click to Stamp the shape (or drag if it is a Shape1d). Edit the text if it is a ShapeText.
+    Image of the shape
         Right click -> Edit Master to edit that master shape in a special version of a Document Tab???
     Another pane for the current document's local masters.
     
-
 BUGS
     Saving/Loading doesn't respect linked expressions.
 

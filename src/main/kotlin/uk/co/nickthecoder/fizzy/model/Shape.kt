@@ -304,7 +304,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val id: Int)
     }
 
     open protected fun addMetaData(metaData: MetaData) {
-        metaData.newCell("Name", StringExpression(name.value.toFormula()))
+        metaData.newCell("Name", name)
         metaData.newCell("LineWidth", lineWidth)
         metaData.newCell("Size", size)
         metaData.newCell("LineColor", strokeColor)
