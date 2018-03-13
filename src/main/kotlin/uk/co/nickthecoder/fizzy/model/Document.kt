@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.model.history.History
+import uk.co.nickthecoder.fizzy.prop.PropVariable
 import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
@@ -33,7 +34,15 @@ class Document(val id: String = Document.generateDocumentId())
 
     internal val masterToLocalCopy = mutableMapOf<String, Shape>()
 
-    val file: File? = null
+    var file: File? = null
+        set(v) {
+            field = v
+            if (v != null) {
+                name.value = v.nameWithoutExtension
+            }
+        }
+
+    val name = PropVariable<String>("New Document")
 
     val pages = MutableFList<Page>()
 
@@ -48,10 +57,6 @@ class Document(val id: String = Document.generateDocumentId())
     private val pagesListener = ChangeAndCollectionListener(this, pages,
             onAdded = { if (it.document != this@Document) throw IllegalStateException("Added a page to the incorrect document") }
     )
-
-    // TODO When load/save is implemented, this should be the file name without the file extension.
-    val name: String
-        get() = "New Document"
 
     val selection = MutableFList<Shape>()
 

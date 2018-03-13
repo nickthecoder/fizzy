@@ -41,6 +41,7 @@ class FizzyJsonWriter(val document: Document, val file: File)
     : FizzyWriter {
 
     override fun save() {
+        document.file = file
         val json: JsonObject = DocumentToJson(document).toJson()
 
         BufferedWriter(OutputStreamWriter(FileOutputStream(file))).use {

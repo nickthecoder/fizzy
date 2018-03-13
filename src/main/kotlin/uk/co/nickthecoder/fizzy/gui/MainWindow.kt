@@ -61,6 +61,8 @@ class MainWindow(val stage: Stage) : Window() {
     val document: Document?
         get() = documentTab?.document
 
+    val documentProperty = SimpleObjectProperty<Document?>(null)
+
     val documentTab: DocumentTab?
         get() {
             val tab = tabs.selectionModel.selectedItem
@@ -122,6 +124,7 @@ class MainWindow(val stage: Stage) : Window() {
             }
             onSelectionChanged()
         }
+        documentProperty.value = document
     }
 
     fun onSelectionChanged() {

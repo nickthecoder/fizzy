@@ -19,55 +19,79 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.gui
 
 import javafx.event.EventHandler
-import javafx.scene.Node
 import javafx.scene.canvas.Canvas
 import javafx.scene.control.Label
 import javafx.scene.control.TitledPane
 import javafx.scene.control.ToggleButton
 import javafx.scene.layout.FlowPane
 import javafx.scene.layout.VBox
+import uk.co.nickthecoder.fizzy.collection.CollectionListener
+import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.controller.tools.GrowShape1dTool
 import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
 import uk.co.nickthecoder.fizzy.controller.tools.StampShape2dTool
 import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.view.ShapeView
 
-class StencilView(val mainWindow: MainWindow, val stencil: Document)
+class StencilView(val mainWindow: MainWindow, val stencil: Document, val localMasters: Boolean = false)
     : BuildableNode {
 
     val titledPane = TitledPane()
 
     val buttons = FlowPane()
 
+    val pageChangeListener = object : CollectionListener<Shape> {
+        override fun added(collection: FCollection<Shape>, item: Shape) {
+            addShape(item)
+        }
+
+        override fun removed(collection: FCollection<Shape>, item: Shape) {
+            removeShape(item)
+        }
+    }
+
     override fun build(): TitledPane {
         titledPane.isExpanded = true
-        titledPane.text = stencil.name
         titledPane.content = buttons
 
-        stencil.pages.forEach { page ->
-            page.children.forEach { shape ->
-                val button = StencilButton(mainWindow, shape)
-                buttons.children.add(button.build())
+        if (localMasters) {
+            titledPane.text = "Local"
+            addPage(stencil.localMasterShapes)
+        } else {
+            titledPane.text = stencil.name.value
+            stencil.pages.forEach { page ->
+                addPage(page)
             }
         }
 
         return titledPane
     }
+
+    fun addPage(page: Page) {
+        page.children.listeners.add(pageChangeListener)
+        page.children.forEach { shape ->
+            addShape(shape)
+        }
+    }
+
+    fun addShape(shape: Shape) {
+        val button = StencilButton(mainWindow, shape)
+        buttons.children.add(button)
+    }
+
+    fun removeShape(shape: Shape) {
+        buttons.children.removeIf { it is StencilButton && it.shape === shape }
+    }
 }
 
 class StencilButton(val mainWindow: MainWindow, val shape: Shape)
-    : BuildableNode {
+    : VBox() {
 
     val button = ToggleButton()
     val nameLabel = Label(shape.name.value)
 
-    val vBox = VBox()
-
-    override fun build(): Node {
-
-        println("Shape name = ${shape.name.value}")
-
-        vBox.styleClass.add("stencil")
+    init {
+        styleClass.add("stencil")
         button.graphic = ShapeGraphic(shape, SIZE)
 
         button.onAction = EventHandler {
@@ -86,8 +110,7 @@ class StencilButton(val mainWindow: MainWindow, val shape: Shape)
             button.parent.requestFocus()
         }
 
-        vBox.children.addAll(button, nameLabel)
-        return vBox
+        children.addAll(button, nameLabel)
     }
 
     companion object {

@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.gui
 
 import javafx.scene.Node
 import javafx.scene.control.Accordion
+import javafx.scene.control.TitledPane
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.model.Stencils
 
@@ -30,6 +31,8 @@ class StencilsView(mainWindow: MainWindow)
 
     private val stencilViews = MutableFList<StencilView>()
 
+    private var localStencilViewNode: TitledPane? = null
+
     override fun buildContent(): Node {
 
         Stencils.stencils.forEach { stencil ->
@@ -38,6 +41,14 @@ class StencilsView(mainWindow: MainWindow)
             accordion.panes.add(view.build())
         }
         accordion.expandedPane = accordion.panes[0]
+
+        mainWindow.documentProperty.addListener { _, _, document ->
+            localStencilViewNode?.let { accordion.panes.remove(it) }
+            if (document != null) {
+                localStencilViewNode = StencilView(mainWindow, document, true).build()
+                accordion.panes.add(localStencilViewNode)
+            }
+        }
 
         return accordion
     }

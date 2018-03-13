@@ -21,6 +21,7 @@ package uk.co.nickthecoder.fizzy.prop
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.Angle
+import uk.co.nickthecoder.fizzy.model.Dimension2
 
 class AnglePropType private constructor()
     : PropType<Angle>(Angle::class.java) {
@@ -72,6 +73,8 @@ class AngleExpression
     : PropExpression<Angle> {
 
     constructor(formula: String, context: EvaluationContext = constantsContext) : super(formula, Angle::class.java, context)
+
+    constructor(value: Angle, context: EvaluationContext = constantsContext) : this(value.toFormula(), context)
 
     constructor(other: AngleExpression) : super(other)
 

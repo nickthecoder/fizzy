@@ -57,6 +57,8 @@ class DimensionExpression
 
     constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Dimension::class.java, context)
 
+    constructor(value: Dimension, context: EvaluationContext = constantsContext) : this(value.toFormula(), context)
+
     constructor(other: DimensionExpression) : super(other)
 
     override val defaultValue = Dimension.ZERO_mm

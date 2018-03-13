@@ -21,6 +21,8 @@ package uk.co.nickthecoder.fizzy.gui
 import javafx.scene.control.Tab
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.Page
+import uk.co.nickthecoder.fizzy.prop.Prop
+import uk.co.nickthecoder.fizzy.prop.PropListener
 
 class DocumentTab(val document: Document, title: String, page: Page = document.pages[0])
     : Tab(title) {
@@ -33,8 +35,15 @@ class DocumentTab(val document: Document, title: String, page: Page = document.p
 
     val drawingArea = DrawingArea(page)
 
+    val nameListener = object : PropListener {
+        override fun dirty(prop: Prop<*>) {
+            this@DocumentTab.text = document.name.value
+        }
+    }
+
     init {
         content = drawingArea.build()
+        document.name.propListeners.add(nameListener)
     }
 
 }

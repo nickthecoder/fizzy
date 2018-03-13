@@ -33,6 +33,8 @@ class FizzyJsonReader(val file: File) :
 
     override fun load(): Document {
         val jRoot = Json.parse(InputStreamReader(FileInputStream(file))).asObject()
-        return JsonToDocument(jRoot).toDocument()
+        val doc = JsonToDocument(jRoot).toDocument()
+        doc.file = file
+        return doc
     }
 }

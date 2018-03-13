@@ -28,7 +28,11 @@ private fun createPropExpression(type: String): PropExpression<*> {
     return when (type) {
         "boolean" -> DoubleExpression(false.toFormula())
         "double" -> DoubleExpression(0.0.toFormula())
+        "String" -> StringExpression("".toFormula())
+        "Dimension" -> DimensionExpression(Dimension.ZERO_mm)
         "Dimension2" -> Dimension2Expression(Dimension2.ZERO_mm)
+        "Vector2" -> Vector2Expression(Vector2.ZERO)
+        "Angle" -> AngleExpression(Angle.radians(0.0))
         else -> throw IllegalArgumentException("Scratch. Unknown type $type")
     }
 }
