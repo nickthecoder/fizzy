@@ -82,6 +82,11 @@ class Document(val id: String = Document.generateDocumentId())
      * If there isn't a copy of the master shape is in [localMasterShapes], then a copy is added.
      */
     fun useMasterShape(masterShape: Shape): Shape {
+
+        if (masterShape in localMasterShapes.children) {
+            return masterShape
+        }
+
         val id = masterShape.document().id + ":" + masterShape.id
 
         var localMaster = masterToLocalCopy[id]
