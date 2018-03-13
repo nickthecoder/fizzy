@@ -92,6 +92,10 @@ class GrowShape2dTool(
         }
         newShape = null
         startPoint = null
-        controller.tool = SelectTool(controller)
+
+        // Keep using this tool if the "adjust" button is held down.
+        if (!event.isAdjust) {
+            controller.tool = SelectTool(controller)
+        }
     }
 }
