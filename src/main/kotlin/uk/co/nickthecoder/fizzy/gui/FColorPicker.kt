@@ -37,6 +37,9 @@ class FColorPicker(
 
     val colorPicker = ColorPicker()
 
+    val fizzyColor: uk.co.nickthecoder.fizzy.model.Color
+        get() = colorPicker.value.toFizzy()
+
     init {
         colorPicker.value = defaultColor
         colorPicker.addEventHandler(ActionEvent.ACTION) { onPickColor() }

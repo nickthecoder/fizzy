@@ -22,6 +22,7 @@ import javafx.beans.property.Property
 import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.scene.Scene
+import javafx.scene.control.SplitPane
 import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
 import javafx.scene.layout.BorderPane
@@ -33,6 +34,7 @@ import uk.co.nickthecoder.fizzy.Fizzy
 import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.collection.FList
+import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.Page
 import uk.co.nickthecoder.fizzy.model.Shape
@@ -42,6 +44,12 @@ import uk.co.nickthecoder.fizzy.util.FizzyJsonWriter
 class MainWindow(val stage: Stage) : Window() {
 
     val borderPane = BorderPane()
+
+    val splitPane = SplitPane()
+
+    val leftPane = VDock()
+
+    val stencils = StencilsView(this)
 
     val shortcutHelper = ShortcutHelper("MainWindow", borderPane)
 
@@ -60,6 +68,11 @@ class MainWindow(val stage: Stage) : Window() {
                 return tab
             }
             return null
+        }
+
+    val controller: Controller?
+        get() {
+            return documentTab?.drawingArea?.controller
         }
 
     val shapeSelectionProperty: Property<FList<Shape>> = SimpleObjectProperty<FList<Shape>>()
@@ -83,7 +96,13 @@ class MainWindow(val stage: Stage) : Window() {
         stage.title = "Fizzy"
 
         borderPane.top = toolBar.build()
-        borderPane.center = tabs
+        borderPane.center = splitPane
+
+        splitPane.items.addAll(leftPane.build(), tabs)
+        SplitPane.setResizableWithParent(splitPane.items[0], false)
+        splitPane.setDividerPositions(0.25)
+
+        leftPane.add(stencils.build())
 
         stage.scene = Scene(borderPane, 800.0, 600.0)
         Fizzy.style(stage.scene)
@@ -152,6 +171,7 @@ class MainWindow(val stage: Stage) : Window() {
     fun documentOpen() {
         val chooser = FileChooser()
         chooser.extensionFilters.add(fizzyExtensionFilter)
+        chooser.extensionFilters.add(stencilExtensionFilter)
         val file = chooser.showOpenDialog(this)
         if (file != null) {
             addDocument(FizzyJsonReader(file).load())
@@ -173,6 +193,7 @@ class MainWindow(val stage: Stage) : Window() {
         val doc = document ?: return
         val chooser = FileChooser()
         chooser.extensionFilters.add(fizzyExtensionFilter)
+        chooser.extensionFilters.add(stencilExtensionFilter)
         val file = chooser.showSaveDialog(this)
         if (file != null) {
             FizzyJsonWriter(doc, file).save()
@@ -184,7 +205,8 @@ class MainWindow(val stage: Stage) : Window() {
     }
 
     companion object {
-        val fizzyExtensionFilter = FileChooser.ExtensionFilter("Fizzy Document", "*.fizzy")
+        val fizzyExtensionFilter = FileChooser.ExtensionFilter("Fizzy Document (*.fizzy)", "*.fizzy")
+        val stencilExtensionFilter = FileChooser.ExtensionFilter("Fizzy Stencil (*.fstencil)", "*.fstencil")
 
     }
 }

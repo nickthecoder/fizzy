@@ -31,8 +31,8 @@ import uk.co.nickthecoder.fizzy.model.history.CreateShape
 class GrowShape1dTool(
         controller: Controller,
         val masterShape: Shape1d,
-        val strokeColor: Color?,
-        val fillColor: Color?)
+        val strokeColor: Color? = null,
+        val fillColor: Color? = null)
     : Tool(controller) {
 
     override val cursor = ToolCursor.GROW

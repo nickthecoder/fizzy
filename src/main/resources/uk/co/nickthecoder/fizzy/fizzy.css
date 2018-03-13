@@ -17,3 +17,11 @@
 .color-picker.fill .color-picker-label {
     -fx-padding: 5 5 5 24;
 }
+
+.dock-title {
+    -fx-padding : 2px;
+    -fx-background-color: #C5CEDE;
+}
+.dock-title > .label {
+    -fx-text-fill : black;
+}
