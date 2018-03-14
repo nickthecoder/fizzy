@@ -42,6 +42,8 @@ class DocumentToJson(val document: Document) {
 
     private val expToPath = mutableMapOf<PropExpression<*>, String>()
 
+    private val mastersUsed = mutableSetOf<Shape>()
+
     fun toJson(): JsonObject {
         val jRoot = JsonObject()
         jRoot.add("version", VERSION)
@@ -66,15 +68,15 @@ class DocumentToJson(val document: Document) {
         jDocument.add("id", document.id)
         // Document data goes here (Document currently has no data (other than its ID)
 
-        // Any master shapes used by the document are saved first
-        saveLocalMasters(jDocument)
-
         // Now all of the pages
         val jPages = JsonArray()
         jDocument.add("pages", jPages)
         document.pages.forEach { page ->
             savePage(jPages, page)
         }
+
+        // Only save the master shapes that are actually used from within the document.
+        saveLocalMasters(jDocument)
     }
 
     private fun saveLocalMasters(jRoot: JsonObject) {
@@ -84,13 +86,15 @@ class DocumentToJson(val document: Document) {
         jRoot.add("localMasters", jLocalMasters)
 
         document.masterToLocalCopy.forEach { key, shape ->
-            val jLocalMaster = JsonObject()
-            jLocalMasters.add(jLocalMaster)
+            if (shape in mastersUsed) {
+                val jLocalMaster = JsonObject()
+                jLocalMasters.add(jLocalMaster)
 
-            jLocalMaster.add("id", key)
-            val jShape = JsonObject()
-            jLocalMaster.add("shape", jShape)
-            saveShape(jShape, shape)
+                jLocalMaster.add("id", key)
+                val jShape = JsonObject()
+                jLocalMaster.add("shape", jShape)
+                saveShape(jShape, shape)
+            }
         }
     }
 
@@ -114,6 +118,7 @@ class DocumentToJson(val document: Document) {
         jShape.add("type", shape.javaClass.simpleName)
         shape.linkedFrom?.let {
             jShape.add("linkedFrom", it.id)
+            mastersUsed.add(it)
         }
 
         val metaData = shape.metaData()
