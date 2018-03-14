@@ -21,21 +21,23 @@ package uk.co.nickthecoder.fizzy.gui
 import javafx.scene.Node
 import javafx.scene.canvas.Canvas
 import uk.co.nickthecoder.fizzy.model.Page
+import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.util.ChangeListener
 import uk.co.nickthecoder.fizzy.util.ChangeType
 import uk.co.nickthecoder.fizzy.util.runLater
 import uk.co.nickthecoder.fizzy.view.PageView
+import uk.co.nickthecoder.fizzy.view.ShapeView
 
 /**
  *
  */
-class DrawingCanvas(page: Page, val drawingArea: DrawingArea)
+class DrawingCanvas(page: Page, val singleShape: Shape?, val drawingArea: DrawingArea)
     : BuildableNode, ChangeListener<Page> {
 
     // TODO We need to fit the canvas to the correct size
     val canvas = Canvas(1000.0, 800.0)
 
-    private var pageView = PageView(page, CanvasContext(canvas))
+    private var pageView = if (singleShape == null) PageView(page, CanvasContext(canvas)) else ShapeView(singleShape, CanvasContext(canvas))
 
     var dirty = false
         set(v) {

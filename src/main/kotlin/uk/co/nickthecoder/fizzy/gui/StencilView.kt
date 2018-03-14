@@ -20,9 +20,8 @@ package uk.co.nickthecoder.fizzy.gui
 
 import javafx.event.EventHandler
 import javafx.scene.canvas.Canvas
-import javafx.scene.control.Label
-import javafx.scene.control.TitledPane
-import javafx.scene.control.ToggleButton
+import javafx.scene.control.*
+import javafx.scene.input.MouseEvent
 import javafx.scene.layout.FlowPane
 import javafx.scene.layout.VBox
 import uk.co.nickthecoder.fizzy.collection.CollectionListener
@@ -110,7 +109,21 @@ class StencilButton(val mainWindow: MainWindow, val shape: Shape)
             button.parent.requestFocus()
         }
 
+        button.addEventFilter(MouseEvent.MOUSE_PRESSED) { checkMenu(it) }
+        button.addEventFilter(MouseEvent.MOUSE_RELEASED) { checkMenu(it) }
+
         children.addAll(button, nameLabel)
+    }
+
+    fun checkMenu(event: MouseEvent) {
+        if (event.isPopupTrigger) {
+            event.consume()
+            val menu = ContextMenu()
+            val editMaster = MenuItem("Edit")
+            editMaster.onAction = EventHandler { mainWindow.editMaster(shape) }
+            menu.items.addAll(editMaster)
+            menu.show(button.parent, event.screenX, event.screenY)
+        }
     }
 
     companion object {

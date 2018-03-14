@@ -25,20 +25,22 @@ import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Page
+import uk.co.nickthecoder.fizzy.model.Shape
 
 /**
  * Contains a GlassCanvas on top of a DrawingCanvas.
  * Later, this may also contain other GUI elements such as rulers.
  *
  */
-class DrawingArea(val page: Page)
+class DrawingArea(val page: Page, val singleShape: Shape? = null)
+
     : BuildableNode {
 
-    val controller = Controller(page)
+    val controller = Controller(page, singleShape)
 
     val glassCanvas = GlassCanvas(page, this)
 
-    val drawingCanvas = DrawingCanvas(page, this)
+    val drawingCanvas = DrawingCanvas(page, singleShape, this)
 
     var scale: Double = 1.0
 
@@ -57,7 +59,7 @@ class DrawingArea(val page: Page)
 
     fun panBy(by: Dimension2) {
         pan += by
-        controller.dirty.value ++
+        controller.dirty.value++
         drawingCanvas.dirty = true
     }
 
@@ -65,7 +67,7 @@ class DrawingArea(val page: Page)
         val pagePoint = pixelsToPage(atX, atY)
         scale *= by
         pan += pixelsToPage(atX, atY) - pagePoint
-        controller.dirty.value ++
+        controller.dirty.value++
         drawingCanvas.dirty = true
     }
 

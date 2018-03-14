@@ -163,6 +163,11 @@ class MainWindow(val stage: Stage) : Window() {
         }
     }
 
+    fun editMaster(shape: Shape) {
+        val tab = DocumentTab(shape.document(), "Master", shape.page(), shape)
+        tabs.tabs.add(tab)
+        tabs.selectionModel.select(tab)
+    }
 
     fun documentNew() {
         val doc = Document()

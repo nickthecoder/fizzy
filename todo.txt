@@ -1,9 +1,8 @@
 To Do
 =====
 
-    Image of the shape
-        Right click -> Edit Master to edit that master shape in a special version of a Document Tab???
-    Another pane for the current document's local masters.
+    Right click -> Edit Master to edit that master shape in a special version of a Document Tab???
+    "New" button/menu item to create a new master.
     
 BUGS
     Saving/Loading doesn't respect linked expressions.

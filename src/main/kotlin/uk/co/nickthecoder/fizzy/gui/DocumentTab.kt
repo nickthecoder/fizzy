@@ -21,10 +21,16 @@ package uk.co.nickthecoder.fizzy.gui
 import javafx.scene.control.Tab
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.Page
+import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
 
-class DocumentTab(val document: Document, title: String, page: Page = document.pages[0])
+class DocumentTab(
+        val document: Document,
+        title: String,
+        page: Page = document.pages[0],
+        singleShape: Shape? = null)
+
     : Tab(title) {
 
     var page: Page = page
@@ -33,7 +39,7 @@ class DocumentTab(val document: Document, title: String, page: Page = document.p
             // TODO Rebuild the drawing area for the new page.
         }
 
-    val drawingArea = DrawingArea(page)
+    val drawingArea = DrawingArea(page, singleShape)
 
     val nameListener = object : PropListener {
         override fun dirty(prop: Prop<*>) {
@@ -43,7 +49,9 @@ class DocumentTab(val document: Document, title: String, page: Page = document.p
 
     init {
         content = drawingArea.build()
-        document.name.propListeners.add(nameListener)
+        if (singleShape != null) {
+            document.name.propListeners.add(nameListener)
+        }
     }
 
 }
