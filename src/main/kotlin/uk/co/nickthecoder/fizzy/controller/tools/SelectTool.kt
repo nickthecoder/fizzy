@@ -30,7 +30,7 @@ class SelectTool(controller: Controller)
 
     override fun onMouseClicked(event: CMouseEvent) {
 
-        val shapes = controller.page.findShapesAt(event.point, controller.minDistance)
+        val shapes = controller.findShapesAt(event.point)
         if (shapes.isEmpty()) {
             if (!event.isAdjust) {
                 controller.selection.clear()

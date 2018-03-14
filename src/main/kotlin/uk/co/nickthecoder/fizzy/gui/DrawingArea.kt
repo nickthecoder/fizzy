@@ -48,13 +48,30 @@ class DrawingArea(val page: Page, val singleShape: Shape? = null)
 
     private val stackPane = StackPane()
 
+    init {
+        stackPane.widthProperty().addListener { _, _, _ -> onResized() }
+        stackPane.heightProperty().addListener { _, _, _ -> onResized() }
+    }
 
     override fun build(): Node {
         assert(stackPane.children.size == 0)
         stackPane.children.add(drawingCanvas.build())
         stackPane.children.add(glassCanvas.build())
 
+        if (singleShape != null) {
+            panBy(singleShape.size.value)
+        }
+
         return stackPane
+    }
+
+    fun onResized() {
+        drawingCanvas.canvas.width = stackPane.width
+        drawingCanvas.canvas.height = stackPane.height
+        drawingCanvas.draw()
+        glassCanvas.canvas.width = stackPane.width
+        glassCanvas.canvas.height = stackPane.height
+        glassCanvas.draw()
     }
 
     fun panBy(by: Dimension2) {

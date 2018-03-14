@@ -78,8 +78,6 @@ class FToolBar(val mainWindow: MainWindow)
             Dimension(4.0, Dimension.Units.mm)
     )
 
-    val editLocalMastersButton = ApplicationActions.FILE_EDIT_MASTERS.createButton(sh) { mainWindow.editLocalMasters() }
-
     val openButton = ApplicationActions.DOCUMENT_OPEN.createButton(sh) { mainWindow.documentOpen() }
     val newButton = ApplicationActions.DOCUMENT_NEW.createButton(sh) { mainWindow.documentNew() }
     val saveButton = ApplicationActions.DOCUMENT_SAVE.createButton(sh) { mainWindow.documentSave() }
@@ -114,7 +112,6 @@ class FToolBar(val mainWindow: MainWindow)
 
         toolBar.items.addAll(
                 newButton, openButton, saveButton, saveAsButton,
-                editLocalMastersButton,
                 Separator(),
                 undoButton, redoButton,
                 Separator(),

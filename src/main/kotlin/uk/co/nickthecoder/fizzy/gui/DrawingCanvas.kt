@@ -34,8 +34,7 @@ import uk.co.nickthecoder.fizzy.view.ShapeView
 class DrawingCanvas(page: Page, val singleShape: Shape?, val drawingArea: DrawingArea)
     : BuildableNode, ChangeListener<Page> {
 
-    // TODO We need to fit the canvas to the correct size
-    val canvas = Canvas(1000.0, 800.0)
+    val canvas = Canvas(100.0, 100.0)
 
     private var pageView = if (singleShape == null) PageView(page, CanvasContext(canvas)) else ShapeView(singleShape, CanvasContext(canvas))
 

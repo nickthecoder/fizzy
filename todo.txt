@@ -1,7 +1,6 @@
 To Do
 =====
 
-    Right click -> Edit Master to edit that master shape in a special version of a Document Tab???
     "New" button/menu item to create a new master.
     
 BUGS

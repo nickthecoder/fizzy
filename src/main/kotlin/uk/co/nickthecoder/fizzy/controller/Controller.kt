@@ -142,6 +142,17 @@ class Controller(val page: Page, val singleShape: Shape? = null) {
         tool.onMouseDragged(event)
     }
 
+    fun findShapesAt(pagePoint: Dimension2): List<Shape> {
+        if (singleShape == null) {
+            return page.findShapesAt(pagePoint, minDistance)
+        } else {
+            if (singleShape.isAt(pagePoint, minDistance)) {
+                return listOf(singleShape)
+            } else {
+                return emptyList()
+            }
+        }
+    }
 
     fun createShapeHandles(shape: Shape) {
         removeShapeHandles(shape)

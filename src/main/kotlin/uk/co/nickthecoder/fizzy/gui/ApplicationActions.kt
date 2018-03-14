@@ -36,7 +36,6 @@ object ApplicationActions {
     val TOOL_DELETE = ApplicationAction("tool-delete", "Delete", KeyCode.F4)
     val TOOL_EDIT_GEOMETRY = ApplicationAction("tool-edit-geometry", "Edit Geometry", KeyCode.F5)
 
-    val FILE_EDIT_MASTERS = ApplicationAction("file-editMasterShapes", "Edit Master Shapes", KeyCode.F1, control = true)
     val DEV_DEBUG = ApplicationAction("dev-debug", "Debug", KeyCode.F1, control = true)
 
     val CLOSE_TAB = ApplicationAction("close-tab", "Close Tab", KeyCode.W, control = true)

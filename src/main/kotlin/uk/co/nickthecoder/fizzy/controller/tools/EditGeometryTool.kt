@@ -58,7 +58,7 @@ class EditGeometryTool(controller: Controller)
         controller.handles.clear()
         // So, we haven't pressed any existing handles, lets see if we've clicked a different shape.
         editingShape = null
-        editingShape = controller.page.findShapesAt(event.point, controller.minDistance).lastOrNull()
+        editingShape = controller.findShapesAt(event.point).lastOrNull()
 
         editingShape?.let {
             it.geometry.parts.forEach { part ->

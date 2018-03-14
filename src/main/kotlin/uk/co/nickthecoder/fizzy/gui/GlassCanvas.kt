@@ -45,8 +45,7 @@ import uk.co.nickthecoder.fizzy.util.runLater
  */
 class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
 
-    // TODO We need to fit the canvas to the correct size
-    val canvas = Canvas(1000.0, 800.0)
+    val canvas = Canvas(100.0, 100.0)
 
     val dc = CanvasContext(canvas)
 
