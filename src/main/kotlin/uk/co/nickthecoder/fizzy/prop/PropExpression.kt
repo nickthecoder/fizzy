@@ -54,7 +54,10 @@ private fun <T : Any> evaluate(formula: String, klass: Class<T>, context: Evalua
     throw EvaluationException("Expected type ${klass.simpleName}, but found ${prop.value.javaClass.simpleName}", 0)
 }
 
-abstract class PropExpression<T : Any>(formula: String, val klass: Class<T>, var context: EvaluationContext = constantsContext)
+abstract class PropExpression<T : Any>(
+        formula: String,
+        val klass: Class<T>,
+        var context: EvaluationContext = constantsContext)
 
     : PropCalculation<T>() {
 
@@ -87,6 +90,10 @@ abstract class PropExpression<T : Any>(formula: String, val klass: Class<T>, var
     private var calculatedProperty: Prop<T>? = null
 
     var debug = false
+
+    fun isLinked() = linkedTo != null
+
+    fun linkedTo(): PropExpression<T>? = linkedTo
 
     fun debug() {
         val cp = calculatedProperty

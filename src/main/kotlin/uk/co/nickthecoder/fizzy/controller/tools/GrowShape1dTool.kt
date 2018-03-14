@@ -74,7 +74,7 @@ class GrowShape1dTool(
             this.newShape = newShape
 
             controller.page.document.history.makeChange(
-                    CreateShape(newShape, controller.page)
+                    CreateShape(newShape, controller.parent)
             )
         }
     }

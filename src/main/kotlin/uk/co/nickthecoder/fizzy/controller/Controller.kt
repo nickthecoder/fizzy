@@ -48,6 +48,10 @@ class Controller(val page: Page, val singleShape: Shape? = null) {
             cursorProp.value = v.cursor
         }
 
+    /**
+     *  The parent of new shapes
+     */
+    var parent: ShapeParent = singleShape ?: page
 
     val selection = MutableFList<Shape>()
 

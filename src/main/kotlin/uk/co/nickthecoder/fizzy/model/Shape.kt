@@ -31,7 +31,7 @@ import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.*
 
-abstract class Shape internal constructor(var parent: ShapeParent, val id: Int)
+abstract class Shape internal constructor(var parent: ShapeParent, val linkedFrom: Shape?, val id: Int)
     : ShapeParent, PropListener, HasChangeListeners<Shape>, MetaDataAware {
 
     val name = PropVariable("")

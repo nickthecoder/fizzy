@@ -21,8 +21,8 @@ package uk.co.nickthecoder.fizzy.model
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.prop.*
 
-class ShapeText private constructor(parent: ShapeParent, id: Int = parent.document().generateShapeId())
-    : Shape(parent, id) {
+class ShapeText private constructor(parent: ShapeParent, linkedFrom: Shape?, id: Int = parent.document().generateShapeId())
+    : Shape(parent, linkedFrom, id) {
 
     override val context = createContext(ThisContext(this, ShapeTextPropType.instance))
 
@@ -72,7 +72,7 @@ class ShapeText private constructor(parent: ShapeParent, id: Int = parent.docume
     }
 
     override fun copyInto(parent: ShapeParent, link: Boolean): ShapeText {
-        val newShape = ShapeText(parent)
+        val newShape = ShapeText(parent, if (link) this else null)
         newShape.postInit()
         populateShape(newShape, link)
         return newShape
@@ -118,13 +118,13 @@ class ShapeText private constructor(parent: ShapeParent, id: Int = parent.docume
     companion object {
 
         fun create(parent: ShapeParent): ShapeText {
-            val result = ShapeText(parent)
+            val result = ShapeText(parent, null)
             result.postInit()
             return result
         }
 
-        internal fun create(parent: ShapeParent, id: Int): ShapeText {
-            val result = ShapeText(parent, id)
+        internal fun create(parent: ShapeParent, linkedFrom: Shape?, id: Int): ShapeText {
+            val result = ShapeText(parent, linkedFrom, id)
             result.postInit()
             return result
         }

@@ -36,7 +36,7 @@ data class MetaDataCell(
             } catch (e: Exception) {
                 valueString = "ERROR"
             }
-            return "$cellName : ${cp.formula} = ${valueString}"
+            return "$cellName : ${if (cp.isLinked()) "Linked : " else ""}${cp.formula} = ${valueString}"
         } else {
             return "$cellName : ${cp.value}" // TODO MORE
         }

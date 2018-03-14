@@ -23,8 +23,11 @@ import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.PropCalculation2
 import uk.co.nickthecoder.fizzy.prop.Shape1dPropType
 
-class Shape1d private constructor(parent: ShapeParent, id: Int = parent.document().generateShapeId())
-    : Shape(parent, id) {
+class Shape1d private constructor(
+        parent: ShapeParent,
+        linkedFrom: Shape?,
+        id: Int = parent.document().generateShapeId())
+    : Shape(parent, linkedFrom, id) {
 
     override val context = createContext(ThisContext(this, Shape1dPropType.instance))
 
@@ -47,7 +50,7 @@ class Shape1d private constructor(parent: ShapeParent, id: Int = parent.document
     }
 
     override fun copyInto(parent: ShapeParent, link: Boolean): Shape1d {
-        val newShape = Shape1d(parent)
+        val newShape = Shape1d(parent, if (link) this else null)
         newShape.postInit()
         populateShape(newShape, link)
         return newShape
@@ -62,13 +65,13 @@ class Shape1d private constructor(parent: ShapeParent, id: Int = parent.document
     companion object {
 
         fun create(parent: ShapeParent): Shape1d {
-            val result = Shape1d(parent)
+            val result = Shape1d(parent, null)
             result.postInit()
             return result
         }
 
-        internal fun create(parent: ShapeParent, id: Int): Shape1d {
-            val result = Shape1d(parent, id)
+        internal fun create(parent: ShapeParent, linkedFrom: Shape?, id: Int): Shape1d {
+            val result = Shape1d(parent, linkedFrom, id)
             result.postInit()
             return result
         }

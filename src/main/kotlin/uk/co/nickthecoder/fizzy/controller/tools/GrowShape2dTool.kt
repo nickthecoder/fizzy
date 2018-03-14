@@ -62,7 +62,7 @@ class GrowShape2dTool(
             fillColor?.let { newShape.fillColor.formula = it.toFormula() }
 
             controller.page.document.history.makeChange(
-                    CreateShape(newShape, controller.page)
+                    CreateShape(newShape, controller.parent)
             )
             this.newShape = newShape
         }

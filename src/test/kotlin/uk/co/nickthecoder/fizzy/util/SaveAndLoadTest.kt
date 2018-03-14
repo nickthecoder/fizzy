@@ -33,7 +33,7 @@ class SaveAndLoadTest : MyTestCase() {
     }
 
     override fun tearDown() {
-        file.delete()
+        //file.delete()
     }
 
     private fun appendShapeToMetaDataString(shape: Shape, buffer: StringBuffer) {
@@ -131,6 +131,21 @@ class SaveAndLoadTest : MyTestCase() {
 
         val text = Shape.createText(box, "Hello")
         box.children.add(text)
+
+        val metaData = metaDataToString(doc)
+        FizzyJsonWriter(doc, file).save()
+
+        val loadedDoc = FizzyJsonReader(file).load()
+        assertEquals(metaData, metaDataToString(loadedDoc))
+    }
+
+    @Test
+    fun testLinked() {
+        val doc = Document()
+        val page = Page(doc)
+
+        val box = doc.useMasterShape(PrimitiveStencil.box).copyInto(page, true)
+        page.children.add(box)
 
         val metaData = metaDataToString(doc)
         FizzyJsonWriter(doc, file).save()

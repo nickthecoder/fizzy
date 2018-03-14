@@ -29,10 +29,21 @@ class JsonToDocument(val jRoot: JsonObject) {
 
     var version: Double = 0.0
 
+    private val pathToExp = mutableMapOf<String, PropExpression<*>>()
+
     fun toDocument(): Document {
         version = jRoot.getDouble("version", 0.0)
 
         return loadDocument(jRoot)
+    }
+
+    private fun cacheLinks(parent: ShapeParent) {
+        parent.children.forEach { shape ->
+            shape.metaData().buildExpressionMap("${shape.id}.").forEach { exp, path ->
+                pathToExp[path] = exp
+            }
+            cacheLinks(shape)
+        }
     }
 
     fun loadDocument(jRoot: JsonObject): Document {
@@ -42,6 +53,7 @@ class JsonToDocument(val jRoot: JsonObject) {
         val document = Document(id)
 
         loadLocalMasters(jDocument, document)
+        cacheLinks(document.localMasterShapes)
 
         val jPages = jDocument.optionalArray("pages")
         jPages.forEach { it ->
@@ -82,10 +94,17 @@ class JsonToDocument(val jRoot: JsonObject) {
     fun loadShape(jShape: JsonObject, parent: ShapeParent): Shape {
         val id = jShape.get("id").asInt()
         val type = jShape.get("type").asString()
+        val linkedFromId = jShape.get("linkedFrom")
+
+        val linkedFrom: Shape? = if (linkedFromId == null)
+            null
+        else
+            parent.document().localMasterShapes.findShape(linkedFromId.asInt())
+
         val shape = when (type) {
-            "Shape1d" -> Shape1d.create(parent, id)
-            "Shape2d" -> Shape2d.create(parent, id)
-            "ShapeText" -> ShapeText.create(parent, id)
+            "Shape1d" -> Shape1d.create(parent, linkedFrom, id)
+            "Shape2d" -> Shape2d.create(parent, linkedFrom, id)
+            "ShapeText" -> ShapeText.create(parent, linkedFrom, id)
             else -> throw IllegalStateException("Unknown shape type $type")
         }
 
@@ -140,10 +159,19 @@ class JsonToDocument(val jRoot: JsonObject) {
     fun loadCell(jCell: JsonObject, cell: MetaDataCell) {
         val prop = cell.cellProp
         if (prop is PropExpression<*>) {
-            val formula = jCell.get("f").asString()
+
             val valueString = jCell.get("v").asString()
             prop.formula = valueString
-            prop.formula = formula
+
+            val link = jCell.get("l")
+            if (link == null) {
+                val formula = jCell.get("f").asString()
+                prop.formula = formula
+            } else {
+                val exp = pathToExp[link.asString()]
+                        ?: throw RuntimeException("Path ${link.asString()} not found")
+                prop.copyFrom(exp, true)
+            }
         } else {
             jCell.getString("s", null)?.let {
                 if (prop !is PropVariable) throw IllegalStateException("Expected PropVariable but found $prop")

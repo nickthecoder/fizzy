@@ -140,19 +140,16 @@ class MainWindow(val stage: Stage) : Window() {
     }
 
     fun debug() {
-        document?.let { document ->
+        var foundStale = false
+        controller?.selection?.forEach { shape ->
+            foundStale = foundStale || shape.debugCheckStale()
+        }
 
-            var foundStale = false
+        if (!foundStale) {
+            println("None stale\n")
             controller?.selection?.forEach { shape ->
-                foundStale = foundStale || shape.debugCheckStale()
-            }
-
-            if (!foundStale) {
-                println("None stale\n")
-                controller?.selection?.forEach { shape ->
-                    println("---------------");
-                    println(shape.metaData())
-                }
+                println("---------------");
+                println(shape.metaData())
             }
         }
     }

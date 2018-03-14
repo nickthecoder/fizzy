@@ -41,7 +41,7 @@ class StampShape2dTool(controller: Controller, val masterShape: Shape2d, val onE
         newShape.transform.pin.formula = event.point.toFormula()
 
         controller.page.document.history.makeChange(
-                CreateShape(newShape, controller.page)
+                CreateShape(newShape, controller.parent)
         )
         if (!event.isAdjust) {
             controller.tool = SelectTool(controller)

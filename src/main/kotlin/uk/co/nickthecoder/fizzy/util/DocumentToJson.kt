@@ -40,12 +40,23 @@ import uk.co.nickthecoder.fizzy.prop.PropExpression
  */
 class DocumentToJson(val document: Document) {
 
+    private val expToPath = mutableMapOf<PropExpression<*>, String>()
+
     fun toJson(): JsonObject {
         val jRoot = JsonObject()
         jRoot.add("version", VERSION)
 
+        cacheLinks(document.localMasterShapes)
+
         saveDocument(jRoot)
         return jRoot
+    }
+
+    private fun cacheLinks(parent: ShapeParent) {
+        parent.children.forEach { shape ->
+            expToPath.putAll(shape.metaData().buildExpressionMap("${shape.id}."))
+            cacheLinks(shape)
+        }
     }
 
     private fun saveDocument(jRoot: JsonObject) {
@@ -74,6 +85,8 @@ class DocumentToJson(val document: Document) {
 
         document.masterToLocalCopy.forEach { key, shape ->
             val jLocalMaster = JsonObject()
+            jLocalMasters.add(jLocalMaster)
+
             jLocalMaster.add("id", key)
             val jShape = JsonObject()
             jLocalMaster.add("shape", jShape)
@@ -99,6 +112,9 @@ class DocumentToJson(val document: Document) {
     private fun saveShape(jShape: JsonObject, shape: Shape) {
         jShape.add("id", shape.id)
         jShape.add("type", shape.javaClass.simpleName)
+        shape.linkedFrom?.let {
+            jShape.add("linkedFrom", it.id)
+        }
 
         val metaData = shape.metaData()
         saveMetaData(jShape, metaData)
@@ -156,7 +172,12 @@ class DocumentToJson(val document: Document) {
     private fun saveCell(jCell: JsonObject, cell: MetaDataCell) {
         val cellProp = cell.cellProp
         if (cellProp is PropExpression<*>) {
-            jCell.add("f", cellProp.formula)
+            val link = expToPath[cellProp.linkedTo()]
+            if (link == null) {
+                jCell.add("f", cellProp.formula)
+            } else {
+                jCell.add("l", link)
+            }
             jCell.add("v", cellProp.valueString())
         } else {
             val value = cellProp.value

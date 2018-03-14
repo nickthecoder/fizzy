@@ -116,10 +116,33 @@ class MetaData(val type: String?) {
             row.buildString(buffer, padding + "    ")
             buffer.append(padding).append("}\n")
         }
-        sections.forEach { sectioName, section ->
+        sections.forEach { _, section ->
             buffer.append(padding).append("Section { ")
             section.buildString(buffer, padding + "    ")
             buffer.append(padding).append("}\n")
+        }
+    }
+
+
+    fun buildExpressionMap(prefix: String): Map<PropExpression<*>, String> {
+        val map = mutableMapOf<PropExpression<*>, String>()
+        addToExpressionMap(map, prefix)
+        return map
+    }
+
+    private fun addToExpressionMap(map: MutableMap<PropExpression<*>, String>, prefix: String) {
+        cells.forEach { cell ->
+            val exp = cell.cellProp
+            if (exp is PropExpression<*>) {
+                map[exp] = prefix + cell.cellName
+            }
+        }
+        sections.forEach { name, section ->
+            section.addToExpressionMap(map, prefix + name + ".")
+        }
+
+        rows.forEachIndexed { index, row ->
+            row.addToExpressionMap(map, prefix + index + ".")
         }
     }
 }
