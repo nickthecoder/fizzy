@@ -69,6 +69,7 @@ abstract class PropExpression<T : Any>(
 
     private var linkedTo: PropExpression<T>? = null
 
+    private var error: Boolean = false
 
     var formula: String = formula
         get() = linkedTo?.formula ?: field
@@ -92,6 +93,8 @@ abstract class PropExpression<T : Any>(
     var debug = false
 
     fun isLinked() = linkedTo != null
+
+    fun isError() = error
 
     fun linkedTo(): PropExpression<T>? = linkedTo
 
@@ -137,8 +140,10 @@ abstract class PropExpression<T : Any>(
                 cp = evaluate(formula, klass, context)
                 calculatedProperty = cp
                 listenTo(cp)
+                error = false
                 return cp.value
             } catch (e: Exception) {
+                error = true
                 expressionExceptionHandler(this, e)
                 return defaultValue
             }

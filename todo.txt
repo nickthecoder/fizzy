@@ -1,12 +1,12 @@
 To Do
 =====
 
-"New" button/menu item to create a new master.
-
 Edit shape sheet
-    
+
 BUGS
 ----
+    A linked expressions does not recalculate when the master expression's formula changes???
+    The master can STAY dirty, so changing the formula doesn't fire events???
 
 
 For Version 1

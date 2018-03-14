@@ -166,6 +166,12 @@ class MainWindow(val stage: Stage) : Window() {
         tabs.selectionModel.select(tab)
     }
 
+    fun editShapeSheet(shape: Shape) {
+        val tab = ShapeSheetTab(shape)
+        tabs.tabs.add(tab)
+        tabs.selectionModel.select(tab)
+    }
+
     fun documentNew() {
         val doc = Document()
         doc.pages.add(Page(doc))

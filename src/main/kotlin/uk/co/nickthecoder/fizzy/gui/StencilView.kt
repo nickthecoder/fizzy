@@ -153,13 +153,16 @@ class StencilButton(val mainWindow: MainWindow, val shape: Shape)
             val editMaster = MenuItem("Edit")
             editMaster.onAction = EventHandler { mainWindow.editMaster(shape) }
 
+            val editShapeSheet = MenuItem("Edit Shape Sheet")
+            editShapeSheet.onAction = EventHandler { mainWindow.editShapeSheet(shape) }
+
             val deleteMaster = MenuItem("Delete")
             deleteMaster.onAction = EventHandler {
                 val history = shape.document().history
                 history.makeChange(DeleteShape(shape))
             }
 
-            menu.items.addAll(editMaster, deleteMaster)
+            menu.items.addAll(editMaster, editShapeSheet, deleteMaster)
             menu.show(button.parent, event.screenX, event.screenY)
         }
     }

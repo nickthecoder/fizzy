@@ -19,38 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.gui
 
 import javafx.scene.control.Tab
-import uk.co.nickthecoder.fizzy.model.Document
-import uk.co.nickthecoder.fizzy.model.Page
 import uk.co.nickthecoder.fizzy.model.Shape
-import uk.co.nickthecoder.fizzy.prop.Prop
-import uk.co.nickthecoder.fizzy.prop.PropListener
 
-class DocumentTab(
-        val document: Document,
-        title: String,
-        page: Page = document.pages[0],
-        singleShape: Shape? = null)
+class ShapeSheetTab(val shape: Shape)
+    : Tab("Shape ${shape.id}") {
 
-    : Tab(title) {
-
-    var page: Page = page
-        set(v) {
-            field = v
-        }
-
-    val drawingArea = DrawingArea(page, singleShape)
-
-    val nameListener = object : PropListener {
-        override fun dirty(prop: Prop<*>) {
-            this@DocumentTab.text = document.name.value
-        }
-    }
 
     init {
-        content = drawingArea.build()
-        if (singleShape != null) {
-            document.name.propListeners.add(nameListener)
-        }
+        content = ShapeSheetView(shape).build()
     }
-
 }

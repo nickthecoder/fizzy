@@ -2,7 +2,11 @@
 
 .root {
     stencil-base : #ffff80;
-    stencil-selected : #80ff80
+    stencil-selected : #80ff80;
+
+    linked : stencil-selected;
+    unlinked : stencil-base;
+    error : #ff8080;
 }
 
 /******** COLOR PICKER *******/
@@ -54,5 +58,36 @@
     -fx-base : stencil-selected;
     -fx-hover-base : stencil-selected;
  }
+
+/******** SHAPE SHEET *******/
+
+.namedCellsAndRows {
+    -fx-spacing : 6px;
+}
+
+.named-cells {
+    -fx-hgap : 6px;
+}
+
+.row-cells {
+    -fx-padding : 6px 6px 6px 12px;
+    -fx-hgap : 12px;
+    -fx-background-color: -fx-box-border, -fx-control-inner-background;
+    -fx-background-insets: 0, 1;
+}
+
+.row-cells > .header {
+    -fx-padding : 0 0 6px 0;
+}
+
+.expression {
+    -fx-base : unlinked;
+}
+.expression.linked {
+    -fx-base : linked;
+}
+.expression.error {
+    -fx-base : error;
+}
 
 /******** END *******/
