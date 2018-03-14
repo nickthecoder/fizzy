@@ -30,6 +30,8 @@ import uk.co.nickthecoder.fizzy.controller.tools.GrowShape1dTool
 import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
 import uk.co.nickthecoder.fizzy.controller.tools.StampShape2dTool
 import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.model.history.CreateShape
+import uk.co.nickthecoder.fizzy.model.history.DeleteShape
 import uk.co.nickthecoder.fizzy.view.ShapeView
 
 class StencilView(val mainWindow: MainWindow, val stencil: Document, val localMasters: Boolean = false)
@@ -63,6 +65,9 @@ class StencilView(val mainWindow: MainWindow, val stencil: Document, val localMa
             }
         }
 
+        titledPane.addEventHandler(MouseEvent.MOUSE_PRESSED) { checkMenu(it) }
+        titledPane.addEventHandler(MouseEvent.MOUSE_RELEASED) { checkMenu(it) }
+
         return titledPane
     }
 
@@ -80,6 +85,31 @@ class StencilView(val mainWindow: MainWindow, val stencil: Document, val localMa
 
     fun removeShape(shape: Shape) {
         buttons.children.removeIf { it is StencilButton && it.shape === shape }
+    }
+
+    fun checkMenu(event: MouseEvent) {
+        if (event.isPopupTrigger) {
+            event.consume()
+            val menu = ContextMenu()
+
+            val newShape1dMI = MenuItem("New 1D Shape")
+            newShape1dMI.onAction = EventHandler { createNewShape1d() }
+            val newShape2dMI = MenuItem("New 2D Shape")
+            newShape2dMI.onAction = EventHandler { createNewShape2d() }
+            menu.items.addAll(newShape1dMI, newShape2dMI)
+
+            menu.show(titledPane, event.screenX, event.screenY)
+        }
+    }
+
+    fun createNewShape1d() {
+        val shape = Shape.createLine(stencil.pages[0], end = "Dimension2(100mm, 0mm)")
+        stencil.history.makeChange(CreateShape(shape, stencil.pages[0]))
+    }
+
+    fun createNewShape2d() {
+        val shape = Shape.createBox(stencil.pages[0])
+        stencil.history.makeChange(CreateShape(shape, stencil.pages[0]))
     }
 }
 
@@ -119,9 +149,17 @@ class StencilButton(val mainWindow: MainWindow, val shape: Shape)
         if (event.isPopupTrigger) {
             event.consume()
             val menu = ContextMenu()
+
             val editMaster = MenuItem("Edit")
             editMaster.onAction = EventHandler { mainWindow.editMaster(shape) }
-            menu.items.addAll(editMaster)
+
+            val deleteMaster = MenuItem("Delete")
+            deleteMaster.onAction = EventHandler {
+                val history = shape.document().history
+                history.makeChange(DeleteShape(shape))
+            }
+
+            menu.items.addAll(editMaster, deleteMaster)
             menu.show(button.parent, event.screenX, event.screenY)
         }
     }
