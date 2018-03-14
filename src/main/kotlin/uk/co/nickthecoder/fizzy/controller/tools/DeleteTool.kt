@@ -59,6 +59,7 @@ class DeleteTool(controller: Controller)
         if (releasedShape != null && releasedShape == pressedShape) {
             controller.page.document.history.makeChange(DeleteShape(releasedShape))
         }
+        controller.selection.remove(releasedShape)
         controller.highlightGeometry.value = Controller.NO_GEOMETRY
     }
 

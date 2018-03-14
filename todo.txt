@@ -7,9 +7,6 @@ Edit shape sheet
     
 BUGS
 ----
-    All local masters are saved, even if they aren't used any more.
-        During save, create a set/list of master shapes being used (need a reference on Shape)
-            and only save those local masters in the set/list.
 
 
 For Version 1
