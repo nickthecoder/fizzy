@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.controller
 
 import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.controller.handle.*
 import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
 import uk.co.nickthecoder.fizzy.controller.tools.Tool
@@ -47,6 +48,9 @@ class Controller(val page: Page, val singleShape: Shape? = null) {
             cursorProp.value = v.cursor
         }
 
+
+    val selection = MutableFList<Shape>()
+
     val cursorProp = PropVariable<ToolCursor>(tool.cursor)
 
     val handles = mutableListOf<Handle>()
@@ -63,7 +67,7 @@ class Controller(val page: Page, val singleShape: Shape? = null) {
      */
     val shapeListener = object : ChangeListener<Shape> {
         override fun changed(item: Shape, changeType: ChangeType, obj: Any?) {
-            if (page.document.selection.contains(item)) {
+            if (selection.contains(item)) {
                 createShapeHandles(item)
                 dirty.value++
             }
@@ -108,8 +112,8 @@ class Controller(val page: Page, val singleShape: Shape? = null) {
 
     init {
         tool.beginTool()
-        page.document.selection.listeners.add(selectionListener)
-        page.document.selection.forEach {
+        selection.listeners.add(selectionListener)
+        selection.forEach {
             createShapeHandles(it)
         }
     }

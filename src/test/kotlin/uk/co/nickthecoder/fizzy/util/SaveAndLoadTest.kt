@@ -98,6 +98,7 @@ class SaveAndLoadTest : MyTestCase() {
         box.controlPoints.add(ControlPoint("Dimension2(6cm, 8cm)"))
 
         val metaData = metaDataToString(doc)
+        FizzyJsonWriter(doc, file).save()
 
         val loadedDoc = FizzyJsonReader(file).load()
         assertEquals(metaData, metaDataToString(loadedDoc))
@@ -133,8 +134,6 @@ class SaveAndLoadTest : MyTestCase() {
 
         val metaData = metaDataToString(doc)
         FizzyJsonWriter(doc, file).save()
-
-        println(metaData)
 
         val loadedDoc = FizzyJsonReader(file).load()
         assertEquals(metaData, metaDataToString(loadedDoc))

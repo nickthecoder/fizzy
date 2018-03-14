@@ -37,8 +37,8 @@ class EditGeometryTool(controller: Controller)
 
     init {
         // By clearing the selection, the normal control handles will vanish, and we can add our own.
-        editingShape = controller.page.document.selection.lastOrNull()
-        controller.page.document.selection.clear()
+        editingShape = controller.selection.lastOrNull()
+        controller.selection.clear()
 
         editingShape?.let {
             it.geometry.parts.forEach { part ->
@@ -83,7 +83,7 @@ class EditGeometryTool(controller: Controller)
     override fun endTool(replacement: Tool) {
         if (replacement !is EditGeometryDragHandleTool) {
             controller.handles.clear()
-            editingShape?.let { controller.page.document.selection.add(it) }
+            editingShape?.let { controller.selection.add(it) }
             editingShape = null
         }
     }

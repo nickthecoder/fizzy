@@ -41,7 +41,7 @@ class GrowShape1dTool(
     var newShape: Shape1d? = null
 
     init {
-        controller.page.document.selection.clear()
+        controller.selection.clear()
     }
 
     override fun beginTool() {

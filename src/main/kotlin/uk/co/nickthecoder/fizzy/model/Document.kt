@@ -58,8 +58,6 @@ class Document(val id: String = Document.generateDocumentId())
             onAdded = { if (it.document != this@Document) throw IllegalStateException("Added a page to the incorrect document") }
     )
 
-    val selection = MutableFList<Shape>()
-
     val history = History()
 
     fun findShape(id: Int): Shape? {

@@ -59,7 +59,7 @@ class FColorPicker(
         val changes = mutableListOf<Pair<PropExpression<*>, String>>()
 
         document.history.beginBatch()
-        document.selection.forEach { shape ->
+        mainWindow.controller?.selection?.forEach { shape ->
             changes.add((if (isStroke) shape.strokeColor else shape.fillColor) to fxColor.toFizzy().toFormula())
         }
         document.history.makeChange(ChangeExpressions(changes))

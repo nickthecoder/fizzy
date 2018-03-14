@@ -33,7 +33,7 @@ class StampShape2dTool(controller: Controller, val masterShape: Shape2d, val onE
     override val cursor = ToolCursor.STAMP
 
     init {
-        controller.page.document.selection.clear()
+        controller.selection.clear()
     }
 
     override fun onMouseClicked(event: CMouseEvent) {

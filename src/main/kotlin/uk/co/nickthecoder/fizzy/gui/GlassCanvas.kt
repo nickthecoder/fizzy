@@ -136,7 +136,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
         canvas.addEventHandler(MouseEvent.MOUSE_RELEASED) { onMouseReleased(it) }
         canvas.addEventHandler(MouseEvent.MOUSE_MOVED) { onMouseMoved(it) }
 
-        page.document.selection.listeners.add(selectionListener)
+        drawingArea.controller.selection.listeners.add(selectionListener)
         runLater {
             draw()
         }
@@ -228,7 +228,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
             dc.scale(drawingArea.scale)
             dc.translate(drawingArea.pan)
 
-            page.document.selection.forEach { shape ->
+            drawingArea.controller.selection.forEach { shape ->
                 drawBoundingBox(shape)
             }
             drawingArea.controller.handles.forEach { handle ->

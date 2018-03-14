@@ -44,7 +44,7 @@ class GrowShape2dTool(
     val aspectRatio = masterShape.size.value.aspectRatio()
 
     init {
-        controller.page.document.selection.clear()
+        controller.selection.clear()
     }
 
     override fun onMousePressed(event: CMouseEvent) {
@@ -87,8 +87,8 @@ class GrowShape2dTool(
     override fun onMouseReleased(event: CMouseEvent) {
         controller.page.document.history.endBatch()
         newShape?.let {
-            it.document().selection.clear()
-            it.document().selection.add(it)
+            controller.selection.clear()
+            controller.selection.add(it)
         }
         newShape = null
         startPoint = null

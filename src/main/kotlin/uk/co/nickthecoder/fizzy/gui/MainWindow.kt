@@ -114,13 +114,13 @@ class MainWindow(val stage: Stage) : Window() {
     }
 
     fun onTabChanged(oldTab: Tab?, newTab: Tab?) {
-        document?.selection?.let {
+        controller?.selection?.let {
             shapeSelectionProperty.value = it
             if (oldTab is DocumentTab) {
-                oldTab.document.selection.listeners.remove(selectionListener)
+                oldTab.drawingArea.controller.selection.listeners.remove(selectionListener)
             }
             if (newTab is DocumentTab) {
-                newTab.document.selection.listeners.add(selectionListener)
+                newTab.drawingArea.controller.selection.listeners.add(selectionListener)
             }
             onSelectionChanged()
         }
@@ -129,7 +129,7 @@ class MainWindow(val stage: Stage) : Window() {
 
     fun onSelectionChanged() {
         shapeSelectionProperty.value = null
-        shapeSelectionProperty.value = document?.selection
+        shapeSelectionProperty.value = controller?.selection
     }
 
     fun addDocument(doc: Document) {
@@ -143,13 +143,13 @@ class MainWindow(val stage: Stage) : Window() {
         document?.let { document ->
 
             var foundStale = false
-            document.selection.forEach { shape ->
+            controller?.selection?.forEach { shape ->
                 foundStale = foundStale || shape.debugCheckStale()
             }
 
             if (!foundStale) {
                 println("None stale\n")
-                document.selection.forEach { shape ->
+                controller?.selection?.forEach { shape ->
                     println("---------------");
                     println(shape.metaData())
                 }

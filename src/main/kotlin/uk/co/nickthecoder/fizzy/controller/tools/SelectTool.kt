@@ -26,8 +26,6 @@ import uk.co.nickthecoder.fizzy.model.Shape
 class SelectTool(controller: Controller)
     : Tool(controller) {
 
-    val selection = controller.page.document.selection
-
     var mousePressedPoint = Dimension2.ZERO_mm
 
     override fun onMouseClicked(event: CMouseEvent) {
@@ -35,10 +33,10 @@ class SelectTool(controller: Controller)
         val shapes = controller.page.findShapesAt(event.point, controller.minDistance)
         if (shapes.isEmpty()) {
             if (!event.isAdjust) {
-                selection.clear()
+                controller.selection.clear()
             }
         } else {
-            val latest = selection.lastOrNull()
+            val latest = controller.selection.lastOrNull()
             val shape: Shape?
             if (shapes.size > 1 && shapes.contains(latest) && event.isConstrain) {
                 val i = shapes.indexOf(latest)
@@ -48,14 +46,14 @@ class SelectTool(controller: Controller)
             }
 
             if (event.isAdjust) {
-                if (selection.contains(shape)) {
-                    selection.remove(shape)
+                if (controller.selection.contains(shape)) {
+                    controller.selection.remove(shape)
                 } else {
-                    selection.add(shape)
+                    controller.selection.add(shape)
                 }
             } else {
-                selection.clear()
-                selection.add(shape)
+                controller.selection.clear()
+                controller.selection.add(shape)
             }
         }
     }
@@ -78,9 +76,9 @@ class SelectTool(controller: Controller)
             controller.tool = BoundingBoxTool(controller, event, mousePressedPoint)
             controller.tool.onMouseDragged(event)
         } else {
-            if (!selection.contains(shape)) {
-                selection.clear()
-                selection.add(shape)
+            if (!controller.selection.contains(shape)) {
+                controller.selection.clear()
+                controller.selection.add(shape)
             }
             controller.tool = MoveShapesTool(controller, mousePressedPoint)
             controller.tool.onMouseDragged(event)

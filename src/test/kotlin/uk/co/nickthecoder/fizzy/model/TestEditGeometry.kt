@@ -32,7 +32,7 @@ class TestEditGeometry : MyTestCase() {
         val controller = Controller(page)
 
         val box = createBox(page, "Dimension2(10mm,10mm)", "Dimension2(0mm,0mm)")
-        doc.selection.add(box)
+        controller.selection.add(box)
 
         assertEquals(10.0, box.geometry.parts[1].point.value.x.mm)
         assertEquals(10.0, box.geometry.parts[2].point.value.x.mm)
@@ -64,7 +64,7 @@ class TestEditGeometry : MyTestCase() {
         val controller = Controller(page)
 
         val box = createBox(page, "Dimension2(10mm,10mm)", "Dimension2(0mm,0mm)")
-        doc.selection.add(box)
+        controller.selection.add(box)
 
         val first = box.geometry.parts[0].point
         val last = box.geometry.parts[4].point

@@ -32,7 +32,7 @@ class BoundingBoxTool(controller: Controller, event: CMouseEvent, val startPoint
 
     var endPoint = startPoint
 
-    val selection = controller.page.document.selection
+    val selection = controller.selection
 
     init {
         if (!event.isAdjust) {

@@ -29,7 +29,6 @@ class CreateShape(val newShape: Shape, val parent: ShapeParent)
     }
 
     override fun undo() {
-        newShape.document().selection.remove(newShape)
         parent.children.remove(newShape)
     }
 }

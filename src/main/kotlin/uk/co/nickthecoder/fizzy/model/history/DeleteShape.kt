@@ -25,7 +25,6 @@ class DeleteShape(val shape: Shape) : Change {
     val index = shape.parent.children.indexOf(shape)
 
     override fun redo() {
-        shape.document().selection.remove(shape)
         shape.parent.children.remove(shape)
     }
 
