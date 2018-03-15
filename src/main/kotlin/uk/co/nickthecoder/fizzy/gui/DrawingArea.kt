@@ -32,11 +32,11 @@ import uk.co.nickthecoder.fizzy.model.Shape
  * Later, this may also contain other GUI elements such as rulers.
  *
  */
-class DrawingArea(val page: Page, val singleShape: Shape? = null)
+class DrawingArea(mainWindow: MainWindow, val page: Page, val singleShape: Shape? = null)
 
     : BuildableNode {
 
-    val controller = Controller(page, singleShape)
+    val controller = Controller(page, singleShape, mainWindow)
 
     val glassCanvas = GlassCanvas(page, this)
 

@@ -28,6 +28,25 @@ class SelectTool(controller: Controller)
 
     var mousePressedPoint = Dimension2.ZERO_mm
 
+    override fun onContextMenu(event: CMouseEvent): List<Pair<String, () -> Unit>> {
+        val shapes = controller.findShapesAt(event.point)
+        val latest = controller.selection.lastOrNull()
+        val shape: Shape?
+        if (shapes.size > 1 && shapes.contains(latest) && event.isConstrain) {
+            val i = shapes.indexOf(latest)
+            shape = if (i == 0) shapes.last() else shapes[i - 1]
+        } else {
+            shape = shapes.lastOrNull()
+        }
+
+        if (shape != null) {
+            return listOf(
+                    "Edit Shape Sheet" to { controller.otherActions.editShapeSheet(shape) }
+            )
+        }
+        return super.onContextMenu(event)
+    }
+
     override fun onMouseClicked(event: CMouseEvent) {
 
         val shapes = controller.findShapesAt(event.point)
@@ -42,18 +61,20 @@ class SelectTool(controller: Controller)
                 val i = shapes.indexOf(latest)
                 shape = if (i == 0) shapes.last() else shapes[i - 1]
             } else {
-                shape = shapes.last()
+                shape = shapes.lastOrNull()
             }
 
-            if (event.isAdjust) {
-                if (controller.selection.contains(shape)) {
-                    controller.selection.remove(shape)
+            if (shape != null) {
+                if (event.isAdjust) {
+                    if (controller.selection.contains(shape)) {
+                        controller.selection.remove(shape)
+                    } else {
+                        controller.selection.add(shape)
+                    }
                 } else {
+                    controller.selection.clear()
                     controller.selection.add(shape)
                 }
-            } else {
-                controller.selection.clear()
-                controller.selection.add(shape)
             }
         }
     }

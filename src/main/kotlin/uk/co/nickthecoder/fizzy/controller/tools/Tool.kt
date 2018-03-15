@@ -37,6 +37,8 @@ abstract class Tool(val controller: Controller) {
     open fun onMouseDragged(event: CMouseEvent) {}
     open fun onMouseMoved(event: CMouseEvent) {}
 
+    open fun onContextMenu(event: CMouseEvent): List<Pair<String, () -> Unit>> = emptyList()
+
     open fun draw(dc: DrawContext) {}
 
     /**

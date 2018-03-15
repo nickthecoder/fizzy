@@ -26,6 +26,7 @@ import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
 
 class DocumentTab(
+        mainWindow: MainWindow,
         val document: Document,
         title: String,
         page: Page = document.pages[0],
@@ -38,7 +39,7 @@ class DocumentTab(
             field = v
         }
 
-    val drawingArea = DrawingArea(page, singleShape)
+    val drawingArea = DrawingArea(mainWindow, page, singleShape)
 
     val nameListener = object : PropListener {
         override fun dirty(prop: Prop<*>) {

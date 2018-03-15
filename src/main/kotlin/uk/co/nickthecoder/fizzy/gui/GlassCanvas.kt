@@ -18,9 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.gui
 
+import javafx.event.EventHandler
 import javafx.scene.Cursor
 import javafx.scene.Node
 import javafx.scene.canvas.Canvas
+import javafx.scene.control.ContextMenu
+import javafx.scene.control.MenuItem
 import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
 import uk.co.nickthecoder.fizzy.collection.CollectionListener
@@ -163,6 +166,11 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
         } else {
             drawingArea.controller.onMousePressed(convertEvent(event))
         }
+
+        if (event.isPopupTrigger) {
+            popup(event)
+        }
+
         event.consume()
     }
 
@@ -173,7 +181,23 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
         } else {
             drawingArea.controller.onMouseReleased(convertEvent(event))
         }
+        if (event.isPopupTrigger) {
+            popup(event)
+        }
         event.consume()
+    }
+
+    fun popup(event: MouseEvent) {
+        val items = drawingArea.controller.tool.onContextMenu(convertEvent(event))
+        if (items.isNotEmpty()) {
+            val menu = ContextMenu()
+            items.forEach { item ->
+                val menuItem = MenuItem(item.first)
+                menuItem.onAction = EventHandler { item.second() }
+                menu.items.add(menuItem)
+            }
+            menu.show(canvas, event.screenX, event.screenY)
+        }
     }
 
     fun onMouseMoved(event: MouseEvent) {

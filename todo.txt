@@ -1,13 +1,16 @@
 To Do
 =====
 
-Edit shape sheet
 
 BUGS
 ----
-    A linked expressions does not recalculate when the master expression's formula changes???
+
+A linked expressions does not recalculate when the master expression's formula changes???
     The master can STAY dirty, so changing the formula doesn't fire events???
 
+Cannot ADD extra children to a master shape, and have them appear in all shapes that use the master.
+    If we linked to the original list, and then made a copy of the list when needed, this *might* work.
+        But, we'd have to be REALLY careful about changing data within the children.
 
 For Version 1
 -------------

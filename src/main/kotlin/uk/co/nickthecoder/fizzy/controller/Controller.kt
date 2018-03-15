@@ -36,7 +36,7 @@ import uk.co.nickthecoder.fizzy.util.ChangeType
  * This is a non-gui class, which takes mouse events from GlassCanvas, and performs actions via Tools.
  * It has no dependencies on JavaFX, and can therefore be used easily from JUnit (i.e. bypassing GlassCanvas).
  */
-class Controller(val page: Page, val singleShape: Shape? = null) {
+class Controller(val page: Page, val singleShape: Shape? = null, val otherActions: OtherActions) {
 
     var scale = 1.0
 

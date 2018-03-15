@@ -89,7 +89,7 @@ class Document(val id: String = Document.generateDocumentId())
 
         var localMaster = masterToLocalCopy[id]
         if (localMaster == null) {
-            localMaster = masterShape.copyInto(localMasterShapes, true)
+            localMaster = masterShape.copyInto(localMasterShapes, false)
             localMasterShapes.children.add(localMaster)
             masterToLocalCopy[id] = localMaster
         }

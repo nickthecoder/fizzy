@@ -35,13 +35,15 @@ import uk.co.nickthecoder.fizzy.collection.CollectionListener
 import uk.co.nickthecoder.fizzy.collection.FCollection
 import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.controller.Controller
+import uk.co.nickthecoder.fizzy.controller.OtherActions
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.Page
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.util.FizzyJsonReader
 import uk.co.nickthecoder.fizzy.util.FizzyJsonWriter
 
-class MainWindow(val stage: Stage) : Window() {
+class MainWindow(val stage: Stage)
+    : Window(), OtherActions {
 
     val borderPane = BorderPane()
 
@@ -134,7 +136,7 @@ class MainWindow(val stage: Stage) : Window() {
 
     fun addDocument(doc: Document) {
         val file = doc.file
-        val tab = DocumentTab(doc, if (file == null) "New Document" else file.nameWithoutExtension)
+        val tab = DocumentTab(this, doc, if (file == null) "New Document" else file.nameWithoutExtension)
         tabs.tabs.add(tab)
         tabs.selectionModel.select(tab)
     }
@@ -156,17 +158,17 @@ class MainWindow(val stage: Stage) : Window() {
 
     fun editLocalMasters() {
         document?.let {
-            tabs.tabs.add(DocumentTab(it, "Masters", it.localMasterShapes))
+            tabs.tabs.add(DocumentTab(this, it, "Masters", it.localMasterShapes))
         }
     }
 
     fun editMaster(shape: Shape) {
-        val tab = DocumentTab(shape.document(), "Master", shape.page(), shape)
+        val tab = DocumentTab(this, shape.document(), "Master", shape.page(), shape)
         tabs.tabs.add(tab)
         tabs.selectionModel.select(tab)
     }
 
-    fun editShapeSheet(shape: Shape) {
+    override fun editShapeSheet(shape: Shape) {
         val tab = ShapeSheetTab(shape)
         tabs.tabs.add(tab)
         tabs.selectionModel.select(tab)
@@ -214,6 +216,7 @@ class MainWindow(val stage: Stage) : Window() {
     fun closeTab() {
         tabs.selectionModel.selectedItem?.let { tabs.tabs.remove(it) }
     }
+
 
     companion object {
         val fizzyExtensionFilter = FileChooser.ExtensionFilter("Fizzy Document (*.fizzy)", "*.fizzy")
