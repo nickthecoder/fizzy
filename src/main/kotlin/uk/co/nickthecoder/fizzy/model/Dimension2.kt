@@ -47,13 +47,7 @@ class Dimension2(val x: Dimension, val y: Dimension) {
             x.inDefaultUnits * other.x.inDefaultUnits + y.inDefaultUnits * other.y.inDefaultUnits
 
     fun ratio(other: Dimension2): Vector2 {
-        assert(x.power == other.x.power)
-        assert(y.power == other.y.power)
-
-        return Vector2(
-                x.inDefaultUnits / other.x.inDefaultUnits,
-                y.inDefaultUnits / other.y.inDefaultUnits
-        )
+        return Vector2(x.ratio(other.x), y.ratio(other.y))
     }
 
     /**

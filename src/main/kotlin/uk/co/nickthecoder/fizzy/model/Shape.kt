@@ -25,6 +25,7 @@ import uk.co.nickthecoder.fizzy.evaluator.CompoundEvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
+import uk.co.nickthecoder.fizzy.model.geometry.BezierCurveTo
 import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
@@ -417,7 +418,8 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
                 parent: ShapeParent,
                 start: String = "Dimension2(0mm,0mm)",
                 end: String = "Dimension2(10mm,10mm)",
-                lineWidth: String = "2mm")
+                lineWidth: String = "2mm",
+                bezier: Boolean = false)
                 : Shape1d {
 
             val line = Shape1d.create(parent)
@@ -427,7 +429,11 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
             line.lineWidth.formula = lineWidth
 
             line.geometry.parts.add(MoveTo("Dimension2(0mm,LineWidth/2)"))
-            line.geometry.parts.add(LineTo("Dimension2(Length,LineWidth/2)"))
+            if (bezier) {
+                line.geometry.parts.add(BezierCurveTo("Dimension2(Length/3,LineWidth/2)", "Dimension2(Length*2/3,LineWidth/2)", "Dimension2(Length,LineWidth/2)"))
+            } else {
+                line.geometry.parts.add(LineTo("Dimension2(Length,LineWidth/2)"))
+            }
 
             return line
         }

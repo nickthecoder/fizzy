@@ -25,7 +25,9 @@ import uk.co.nickthecoder.fizzy.controller.handle.Handle
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.geometry.BezierCurveTo
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
+import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.PropExpression
 
 class EditGeometryTool(controller: Controller)
@@ -40,9 +42,15 @@ class EditGeometryTool(controller: Controller)
         editingShape = controller.selection.lastOrNull()
         controller.selection.clear()
 
-        editingShape?.let {
-            it.geometry.parts.forEach { part ->
-                controller.handles.add(GeometryHandle(it, part, controller))
+        editingShape?.let { createHandles(it) }
+    }
+
+    fun createHandles(shape: Shape) {
+        shape.geometry.parts.forEach { part ->
+            controller.handles.add(GeometryHandle(shape, part.point, controller))
+            if (part is BezierCurveTo) {
+                controller.handles.add(GeometryHandle(shape, part.a, controller))
+                controller.handles.add(GeometryHandle(shape, part.b, controller))
             }
         }
     }
@@ -60,11 +68,7 @@ class EditGeometryTool(controller: Controller)
         editingShape = null
         editingShape = controller.findShapesAt(event.point).lastOrNull()
 
-        editingShape?.let {
-            it.geometry.parts.forEach { part ->
-                controller.handles.add(GeometryHandle(it, part, controller))
-            }
-        }
+        editingShape?.let { createHandles(it) }
 
         controller.dirty.value++
 
@@ -130,7 +134,7 @@ class EditGeometryTool(controller: Controller)
                 }
 
                 val newOrigin = Dimension2(minX, minY)
-                val newSize = Dimension2(maxX - minX, maxY - minY)
+                val newSize = Dimension2((maxX - minX).min(Dimension.ONE_POINT), (maxY - minY).min(Dimension.ONE_POINT))
                 val locPin = shape.transform.locPin.value - newOrigin
                 val locRatio = locPin.ratio(newSize)
 
@@ -139,9 +143,17 @@ class EditGeometryTool(controller: Controller)
                         shape.size to newSize.toFormula()
                 )
 
+                fun adjustPoint(point: Dimension2Expression): Pair<Dimension2Expression, String> {
+                    val ratio = (point.value - newOrigin).ratio(newSize)
+                    return point to "Size * ${ratio.toFormula()}"
+                }
+
                 shape.geometry.parts.forEach { part ->
-                    val ratio = (part.point.value - newOrigin).ratio(newSize)
-                    changes.add(part.point to "Size * ${ratio.toFormula()}")
+                    changes.add(adjustPoint(part.point))
+                    if (part is BezierCurveTo) {
+                        changes.add(adjustPoint(part.a))
+                        changes.add(adjustPoint(part.b))
+                    }
                 }
 
                 shape.document().history.makeChange(ChangeExpressions(changes))

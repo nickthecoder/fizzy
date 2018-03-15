@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
+import uk.co.nickthecoder.fizzy.model.geometry.BezierCurveTo
 import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
@@ -76,5 +77,22 @@ class LineToPropType private constructor()
 
     companion object {
         val instance = LineToPropType()
+    }
+}
+
+class BezierToPropType private constructor()
+    : PropType<BezierCurveTo>(BezierCurveTo::class.java) {
+
+    override fun findField(prop: Prop<BezierCurveTo>, name: String): Prop<*>? {
+        return when (name) {
+            "Point" -> prop.value.point
+            "A" -> prop.value.a
+            "B" -> prop.value.b
+            else -> null
+        }
+    }
+
+    companion object {
+        val instance = BezierToPropType()
     }
 }

@@ -64,6 +64,8 @@ interface DrawContext {
     fun lineTo(point: Dimension2)
     fun lineTo(x: Double, y: Double)
 
+    fun bezierCurveTo(c1: Dimension2, c2: Dimension2, end: Dimension2)
+
     fun font(font: FFont)
 
     fun multiLineText(multiLineText: MultiLineText, stroke: Boolean = false, fill: Boolean = true)

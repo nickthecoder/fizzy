@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.view
 
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.ShapeText
+import uk.co.nickthecoder.fizzy.model.geometry.BezierCurveTo
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 
@@ -47,8 +48,11 @@ abstract class View(val dc: DrawContext) {
                 when (part) {
                     is MoveTo -> dc.moveTo(part.point.value)
 
-                    is LineTo -> dc.lineTo(part.point.value)
+                    is BezierCurveTo -> {
+                        dc.bezierCurveTo(part.a.value, part.b.value, part.point.value)
+                    }
 
+                    is LineTo -> dc.lineTo(part.point.value)
                 }
             }
             dc.endPath(shape.strokeColor.value.isVisible(), shape.fillColor.value.isVisible())

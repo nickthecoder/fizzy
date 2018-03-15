@@ -35,6 +35,10 @@ class MockContext : AbsoluteContext() {
         buffer.append("L${point.terse()}\n")
     }
 
+    override fun absoluteBezierTo(c1: Vector2, c2: Vector2, end: Vector2) {
+        buffer.append("B${c1.terse()},${c2.terse()},${end.terse()}")
+    }
+
     override fun absoluteText(point: Vector2, str: String, stroke: Boolean, fill: Boolean) {
         buffer.append("T${point.terse()}:${str.replace("\n", "\\n")}\n")
     }

@@ -26,7 +26,7 @@ import uk.co.nickthecoder.fizzy.model.Vector2
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 
 
-class LineTo(override val point: Dimension2Expression)
+open class LineTo(override val point: Dimension2Expression)
 
     : GeometryPart() {
 

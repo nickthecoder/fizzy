@@ -360,8 +360,8 @@ class Evaluator(val text: CharSequence, val context: EvaluationContext = constan
     companion object {
         init {
             PropType.put(AnglePropType.instance)
+            PropType.put(BezierToPropType.instance)
             PropType.put(BooleanPropType.instance)
-            PropType.put(BooleanPropType.instance, Boolean::class.java)
             PropType.put(BooleanPropType.instance)
             PropType.put(ConnectionPointPropType.instance)
             PropType.put(ColorPropType.instance)

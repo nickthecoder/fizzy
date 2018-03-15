@@ -31,3 +31,7 @@ fun Double.toFormula() = if (this.isNaN()) "NaN" else formulaDoubleFormat.format
 fun Boolean.toFormula() = this.toString()
 
 fun String.toFormula() = "\"${this.replace("\"", "\\\"")}\""
+
+fun Double.ratio(other: Double): Double {
+    return if (this == 0.0 && other == 0.0) 1.0 else this / other
+}

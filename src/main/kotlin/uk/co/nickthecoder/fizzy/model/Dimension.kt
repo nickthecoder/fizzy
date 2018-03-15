@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
+import uk.co.nickthecoder.fizzy.util.ratio
 import uk.co.nickthecoder.fizzy.util.terse
 import uk.co.nickthecoder.fizzy.util.toFormula
 
@@ -130,7 +131,7 @@ class Dimension : Comparable<Dimension> {
 
     fun ratio(b: Dimension): Double {
         assert(power == b.power)
-        return inDefaultUnits / b.inDefaultUnits
+        return inDefaultUnits.ratio(b.inDefaultUnits)
     }
 
     fun sqrt(): Dimension {
@@ -159,6 +160,10 @@ class Dimension : Comparable<Dimension> {
         return inDefaultUnits.compareTo(other.inDefaultUnits)
     }
 
+    fun min(other: Dimension) = if (other < this) other else this
+
+    fun max(other: Dimension) = if (other > this) other else this
+
     override fun toString(): String {
         return if (power == 0.0) {
             "$inDefaultUnits"
@@ -169,5 +174,6 @@ class Dimension : Comparable<Dimension> {
 
     companion object {
         val ZERO_mm = Dimension(0.0, Units.mm, 1.0)
+        val ONE_POINT = Dimension(1.0, Units.pt)
     }
 }

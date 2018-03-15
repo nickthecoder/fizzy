@@ -135,6 +135,14 @@ class CanvasContext(val canvas: Canvas)
         gc.lineTo(x, y)
     }
 
+    override fun bezierCurveTo(c1: Dimension2, c2: Dimension2, end: Dimension2) {
+        gc.bezierCurveTo(
+                c1.x.inDefaultUnits, c1.y.inDefaultUnits,
+                c2.x.inDefaultUnits, c2.y.inDefaultUnits,
+                end.x.inDefaultUnits, end.y.inDefaultUnits
+        )
+    }
+
     override fun font(font: FFont) {
         if (font is JavaFXFFont) {
             gc.font = font.fxFont

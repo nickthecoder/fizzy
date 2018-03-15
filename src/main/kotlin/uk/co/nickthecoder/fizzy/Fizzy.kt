@@ -69,7 +69,7 @@ class Fizzy : Application() {
         box2.connectionPoints.add(ConnectionPoint("(Geometry1.Point1 + Geometry1.Point2) / 2"))
         box2.connectionPoints.add(ConnectionPoint("(Geometry1.Point3 + Geometry1.Point4) / 2"))
 
-        val line = Shape.createLine(page, "Dimension2(10cm,11cm)", "Dimension2(10cm,13cm)")
+        val line = Shape.createLine(page, "Dimension2(10cm,11cm)", "Dimension2(10cm,13cm)", bezier = true)
         page.children.add(line)
 
         line.start.formula = "this.connectTo(Page.Shape1.ConnectionPoint2)"

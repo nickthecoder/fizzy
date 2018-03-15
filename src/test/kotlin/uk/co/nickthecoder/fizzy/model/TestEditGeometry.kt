@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.model
 
 import org.junit.Test
 import uk.co.nickthecoder.fizzy.controller.Controller
+import uk.co.nickthecoder.fizzy.controller.MockOtherActions
 import uk.co.nickthecoder.fizzy.controller.tools.EditGeometryTool
 import uk.co.nickthecoder.fizzy.util.MyTestCase
 
@@ -29,7 +30,7 @@ class TestEditGeometry : MyTestCase() {
     fun testSimple() {
         val doc = Document()
         val page = Page(doc)
-        val controller = Controller(page)
+        val controller = Controller(page, otherActions = MockOtherActions())
 
         val box = createBox(page, "Dimension2(10mm,10mm)", "Dimension2(0mm,0mm)")
         controller.selection.add(box)
@@ -61,7 +62,7 @@ class TestEditGeometry : MyTestCase() {
     fun testUnjoin() {
         val doc = Document()
         val page = Page(doc)
-        val controller = Controller(page)
+        val controller = Controller(page, otherActions = MockOtherActions())
 
         val box = createBox(page, "Dimension2(10mm,10mm)", "Dimension2(0mm,0mm)")
         controller.selection.add(box)

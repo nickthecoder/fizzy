@@ -25,9 +25,6 @@ Edit geometry using the GUI.
     Add additional line segements to the ends
     Combine a child shape with the parent (to add a "hole")
 
-Stencils
-
-
 Edit text
     Double click a shape
         If it is ShapeText or has a child of ShapeText, then edit that

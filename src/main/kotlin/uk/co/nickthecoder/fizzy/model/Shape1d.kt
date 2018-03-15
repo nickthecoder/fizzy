@@ -43,7 +43,7 @@ class Shape1d private constructor(
 
     init {
         listenTo(start, end, size)
-
+        fillColor.formula = "TRANSPARENT"
         transform.locPin.formula = "Dimension2(Length*0.5, LineWidth * 0.5)"
         transform.pin.formula = "(Start+End) * 0.5"
         transform.rotation.formula = "(End-Start).Angle"
