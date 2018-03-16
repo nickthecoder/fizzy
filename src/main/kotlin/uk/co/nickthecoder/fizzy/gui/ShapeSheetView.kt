@@ -26,8 +26,10 @@ import javafx.scene.layout.GridPane
 import javafx.scene.layout.Priority
 import javafx.scene.layout.VBox
 import uk.co.nickthecoder.fizzy.model.MetaData
+import uk.co.nickthecoder.fizzy.model.MetaDataCell
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.PropExpression
+import uk.co.nickthecoder.fizzy.prop.PropVariable
 
 class ShapeSheetView(val shape: Shape) : BuildableNode {
 
@@ -58,14 +60,11 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
             namedCells.styleClass.add("named-cells")
             var index = 0
             metaData.cells.forEach { cell ->
+                val control = createControl(cell)
                 val label = Label(cell.cellName)
-                val exp = cell.cellProp
-                if (exp is PropExpression<*>) {
-                    val control = ExpressionEditor(exp)
-                    namedCells.addRow(index, label, control)
-                    index++
-                    GridPane.setHgrow(control, Priority.ALWAYS)
-                }
+                namedCells.addRow(index, label, control)
+                index++
+                GridPane.setHgrow(control, Priority.ALWAYS)
             }
             namedCellsAndRows.children.add(namedCells)
         }
@@ -74,19 +73,24 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
             val rowCells = GridPane()
             rowCells.styleClass.add("row-cells")
             val columnIndices = mutableMapOf<String, Int>()
+
+
             metaData.rows.forEachIndexed { rowIndex, row ->
                 val rowControls = mutableMapOf<Int, Node>()
+
+                val type = row.type
+                if (type != null) {
+                    if (!columnIndices.containsKey("type")) {
+                        columnIndices["type"] = columnIndices.size
+                    }
+                    rowControls.put(columnIndices["type"]!!, Label(type))
+                }
+
                 row.cells.forEach { cell ->
-                    val exp = cell.cellProp
                     if (!columnIndices.containsKey(cell.cellName)) {
                         columnIndices[cell.cellName] = columnIndices.size
                     }
-                    val control: Node?
-                    if (exp is PropExpression<*>) {
-                        control = ExpressionEditor(exp)
-                    } else {
-                        control = Label(cell.cellProp.value.toString())
-                    }
+                    val control = createControl(cell)
                     rowControls.put(columnIndices[cell.cellName]!!, control)
                 }
                 val controls = Array<Node>(columnIndices.size + 1) { Label() }
@@ -100,7 +104,7 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
                 label.styleClass.add("header")
                 headers[columnIndex + 1] = label
                 if (columnIndex == 0) {
-                    GridPane.setHgrow(headers[1], Priority.ALWAYS)
+                    //GridPane.setHgrow(headers[1], Priority.ALWAYS)
                 }
             }
             rowCells.addRow(0, * headers)
@@ -112,6 +116,18 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
         titledPane.styleClass.add("sheet-section")
 
         vBox.children.add(titledPane)
+    }
+
+    fun createControl(cell: MetaDataCell): Node {
+        val exp = cell.cellProp
+        if (exp is PropExpression<*>) {
+            return ExpressionEditor(exp)
+        } else if (exp is PropVariable<*> && exp.value is String) {
+            @Suppress("UNCHECKED_CAST")
+            return StringEditor(exp as PropVariable<String>)
+        } else {
+            return Label(cell.cellProp.value.toString())
+        }
     }
 }
 

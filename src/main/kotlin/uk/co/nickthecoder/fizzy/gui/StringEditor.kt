@@ -19,28 +19,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.gui
 
 import javafx.scene.control.TextField
-import javafx.scene.control.Tooltip
 import uk.co.nickthecoder.fizzy.prop.Prop
-import uk.co.nickthecoder.fizzy.prop.PropExpression
 import uk.co.nickthecoder.fizzy.prop.PropListener
+import uk.co.nickthecoder.fizzy.prop.PropVariable
 
-class ExpressionEditor(val expression: PropExpression<*>)
-    : TextField(expression.formula), PropListener {
+class StringEditor(val expression: PropVariable<String>)
+    : TextField(expression.value), PropListener {
 
     init {
         expression.propListeners.add(this)
-        styleClass.add("expression")
-        prefColumnCount = 30
+        styleClass.add("prop")
+        prefColumnCount = 10
 
         focusedProperty().addListener { _, _, hasFocus ->
             if (!hasFocus) {
-                if (expression.formula != text.trim()) {
-                    expression.formula = text.trim()
-                    try {
-                        expression.value
-                    } catch (e: Exception) {
-                    }
-                    update()
+                if (expression.value != text) {
+                    expression.value = text
                 }
             }
         }
@@ -48,17 +42,8 @@ class ExpressionEditor(val expression: PropExpression<*>)
     }
 
     fun update() {
-        text = expression.formula
-        tooltip = Tooltip(expression.valueString())
-
-        styleClass.remove("error")
-        styleClass.remove("linked")
-
-        if (expression.isLinked()) {
-            styleClass.add("linked")
-        }
-        if (expression.isError()) {
-            styleClass.add("error")
+        if (text != expression.value) {
+            text = expression.value
         }
     }
 

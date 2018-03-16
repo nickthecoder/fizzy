@@ -134,7 +134,7 @@ class EditGeometryTool(controller: Controller)
                 }
 
                 val newOrigin = Dimension2(minX, minY)
-                val newSize = Dimension2((maxX - minX).min(Dimension.ONE_POINT), (maxY - minY).min(Dimension.ONE_POINT))
+                val newSize = Dimension2((maxX - minX).max(Dimension.ONE_POINT), (maxY - minY).max(Dimension.ONE_POINT))
                 val locPin = shape.transform.locPin.value - newOrigin
                 val locRatio = locPin.ratio(newSize)
 

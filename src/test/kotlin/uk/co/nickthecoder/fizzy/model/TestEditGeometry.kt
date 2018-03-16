@@ -37,22 +37,23 @@ class TestEditGeometry : MyTestCase() {
 
         assertEquals(10.0, box.geometry.parts[1].point.value.x.mm)
         assertEquals(10.0, box.geometry.parts[2].point.value.x.mm)
+        assertEquals(10.0, box.size.value.x.mm, tiny) // Still the same size
 
         controller.tool = EditGeometryTool(controller)
 
         // Drag the 3rd part to the center of the shape (we should have a triangle).
         drag(controller, "Dimension2(5mm,5mm)", "Dimension2(0mm,0mm)")
 
-        assertEquals(5.0, box.geometry.parts[2].point.value.x.mm)
-        assertEquals(10.0, box.size.value.x.mm) // Still the same size
-        assertEquals(5.0, box.transform.locPin.value.x.mm) // Still at 5,5
+        assertEquals(5.0, box.geometry.parts[2].point.value.x.mm, tiny)
+        assertEquals(10.0, box.size.value.x.mm, tiny) // Still the same size
+        assertEquals(5.0, box.transform.locPin.value.x.mm, tiny) // Still at 5,5
 
         // Drag the 2nd part half way along. The size.x should be halved now.
         drag(controller, "Dimension2(5mm,-5mm)", "Dimension2(0mm,-5mm)")
 
-        assertEquals(5.0, box.geometry.parts[1].point.value.x.mm)
-        assertEquals(5.0, box.size.value.x.mm)
-        assertEquals(5.0, box.transform.locPin.value.x.mm) // Still at 5,5
+        assertEquals(5.0, box.geometry.parts[1].point.value.x.mm, tiny)
+        assertEquals(5.0, box.size.value.x.mm, tiny)
+        assertEquals(5.0, box.transform.locPin.value.x.mm, tiny) // Still at 5,5
 
     }
 
@@ -83,38 +84,38 @@ class TestEditGeometry : MyTestCase() {
 
         val postDrag1MetaData = box.metaData().toString()
 
-        assertEquals(5.0, first.value.x.mm)
-        assertEquals(5.0, first.value.y.mm)
-        assertEquals(5.0, last.value.x.mm)
-        assertEquals(5.0, last.value.y.mm)
+        assertEquals(5.0, first.value.x.mm, tiny)
+        assertEquals(5.0, first.value.y.mm, tiny)
+        assertEquals(5.0, last.value.x.mm, tiny)
+        assertEquals(5.0, last.value.y.mm, tiny)
 
         // Drag to the edge,
         // However, now the last is NOT linked, so dragging again will move them away from each other.
         drag(controller, "Dimension2(0mm,0mm)", "Dimension2(-5mm,0mm)")
 
-        assertEquals(0.0, first.value.x.mm)
-        assertEquals(5.0, first.value.y.mm)
-        assertEquals(5.0, last.value.x.mm)
-        assertEquals(5.0, last.value.y.mm)
+        assertEquals(0.0, first.value.x.mm, tiny)
+        assertEquals(5.0, first.value.y.mm, tiny)
+        assertEquals(5.0, last.value.x.mm, tiny)
+        assertEquals(5.0, last.value.y.mm, tiny)
 
         // Undo twice, and we should be back to the start
         doc.history.undo()
 
         assertEquals(postDrag1MetaData, box.metaData().toString())
 
-        assertEquals(5.0, first.value.x.mm)
-        assertEquals(5.0, first.value.y.mm)
-        assertEquals(5.0, last.value.x.mm)
-        assertEquals(5.0, last.value.y.mm)
+        assertEquals(5.0, first.value.x.mm, tiny)
+        assertEquals(5.0, first.value.y.mm, tiny)
+        assertEquals(5.0, last.value.x.mm, tiny)
+        assertEquals(5.0, last.value.y.mm, tiny)
 
         doc.history.undo()
 
         assertEquals(initialMetaData, box.metaData().toString())
 
-        assertEquals(0.0, first.value.x.mm)
-        assertEquals(0.0, first.value.y.mm)
-        assertEquals(0.0, last.value.x.mm) // This line used to fail ;-)
-        assertEquals(0.0, last.value.y.mm)
+        assertEquals(0.0, first.value.x.mm, tiny)
+        assertEquals(0.0, first.value.y.mm, tiny)
+        assertEquals(0.0, last.value.x.mm, tiny) // This line used to fail ;-)
+        assertEquals(0.0, last.value.y.mm, tiny)
 
     }
 
