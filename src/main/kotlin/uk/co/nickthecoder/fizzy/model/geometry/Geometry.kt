@@ -67,6 +67,11 @@ class Geometry(val shape: Shape)
                 parts.add(rowObject)
                 Pair(rowObject, rowObject.metaData())
             }
+            "BezierCurveTo" -> {
+                val rowObject = BezierCurveTo()
+                parts.add(rowObject)
+                Pair(rowObject, rowObject.metaData())
+            }
             else -> throw IllegalStateException("Geometry has no rows of type $type")
         }
     }
