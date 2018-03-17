@@ -27,7 +27,7 @@ import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.view.DrawContext
 
-class GeometryHandle(val shape: Shape, val point: Dimension2Expression, val controller: Controller)
+open class GeometryHandle(val shape: Shape, val point: Dimension2Expression, val controller: Controller)
     : Handle() {
 
     override var position: Dimension2

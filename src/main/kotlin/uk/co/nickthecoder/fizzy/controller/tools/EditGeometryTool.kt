@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.controller.tools
 
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
+import uk.co.nickthecoder.fizzy.controller.handle.BezierGeometryHandle
 import uk.co.nickthecoder.fizzy.controller.handle.GeometryHandle
 import uk.co.nickthecoder.fizzy.controller.handle.Handle
 import uk.co.nickthecoder.fizzy.controller.handle.Shape1dHandle
@@ -58,6 +59,7 @@ class EditGeometryTool(controller: Controller)
             controller.handles.add(Shape1dHandle(shape, shape.end.value, controller, true))
         }
 
+        var previousPart: GeometryPart? = null
         shape.geometry.parts.forEach { part ->
             // Do not include the start and end of Shape1d, because that is very confusing!
             if (shape is Shape1d && (part.point.value.x == Dimension.ZERO_mm || part.point.value.x.isNear(shape.length.value))) {
@@ -66,9 +68,11 @@ class EditGeometryTool(controller: Controller)
                 controller.handles.add(GeometryHandle(shape, part.point, controller))
             }
             if (part is BezierCurveTo) {
-                controller.handles.add(GeometryHandle(shape, part.a, controller))
-                controller.handles.add(GeometryHandle(shape, part.b, controller))
+                controller.handles.add(BezierGeometryHandle(shape, part.a, (previousPart ?: part).point, controller))
+                controller.handles.add(BezierGeometryHandle(shape, part.b, part.point, controller))
             }
+
+            previousPart = part
         }
     }
 
