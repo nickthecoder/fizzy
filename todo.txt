@@ -6,6 +6,11 @@ New add line segments tool.
 
 "New row" button in Edit shape sheet
 
+Add "Properties" section
+    Similar to Scratch, but has a label, and appear in the "Properties" dialog box when the shape is double clicked.
+    Also a "regex" to check input is valid.
+    Values are PropVariable, not PropExpression.
+
 BUGS
 ----
 

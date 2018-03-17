@@ -25,7 +25,12 @@ class ShapeSheetTab(val shape: Shape)
     : Tab("Shape ${shape.id}") {
 
 
+    /**
+     * A reference of the ShapeSheetView is kept, to ensure that its listeners are not gc'd.
+     */
+    private val ssv = ShapeSheetView(shape)
+
     init {
-        content = ShapeSheetView(shape).build()
+        content = ssv.build()
     }
 }

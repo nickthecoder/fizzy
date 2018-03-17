@@ -18,17 +18,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model.history
 
+import uk.co.nickthecoder.fizzy.model.ControlPoint
 import uk.co.nickthecoder.fizzy.model.Shape
-import uk.co.nickthecoder.fizzy.model.geometry.GeometryPart
 
-class AddGeometryPart(val shape: Shape, val index: Int, val geometryPart: GeometryPart)
+class AddControlPoint(val shape: Shape, val index: Int, val controlPoint: ControlPoint = ControlPoint())
     : Change {
 
     override fun redo() {
-        shape.geometry.parts.add(index, geometryPart)
+        shape.controlPoints.add(index, controlPoint)
     }
 
     override fun undo() {
-        shape.geometry.parts.removeAt(index)
+        shape.controlPoints.removeAt(index)
     }
 }

@@ -75,10 +75,10 @@ class Scratch(name: String, var expression: PropExpression<*>, comment: String =
     }
 
     fun addMetaData(metaData: MetaData) {
-        metaData.newCell("Type", type)
         metaData.newCell("Name", name)
-        metaData.newCell("Comment", comment)
         metaData.newCell("Expression", expression)
+        metaData.newCell("Type", type)
+        metaData.newCell("Comment", comment)
     }
 
     fun setContext(context: EvaluationContext) {

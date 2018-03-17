@@ -22,11 +22,11 @@ import javafx.event.EventHandler
 import javafx.scene.Node
 import javafx.scene.control.*
 import javafx.scene.layout.GridPane
-import javafx.scene.layout.Priority
 import javafx.scene.layout.VBox
-import uk.co.nickthecoder.fizzy.model.MetaData
-import uk.co.nickthecoder.fizzy.model.MetaDataCell
-import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.collection.CollectionListener
+import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.model.geometry.GeometryPart
 import uk.co.nickthecoder.fizzy.prop.PropExpression
 import uk.co.nickthecoder.fizzy.prop.PropVariable
 
@@ -37,6 +37,53 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
     private val scroll = ScrollPane(vBox)
 
     private val sectionNameToTitledPane = mutableMapOf<String, TitledPane>()
+
+    private val geometryPartsListener = object : CollectionListener<GeometryPart> {
+        override fun added(collection: FCollection<GeometryPart>, item: GeometryPart) {
+            rebuildSection("Geometry")
+        }
+
+        override fun removed(collection: FCollection<GeometryPart>, item: GeometryPart) {
+            rebuildSection("Geometry")
+        }
+    }
+
+    private val connectionPointsListener = object : CollectionListener<ConnectionPoint> {
+        override fun added(collection: FCollection<ConnectionPoint>, item: ConnectionPoint) {
+            rebuildSection("ConnectionPoint")
+        }
+
+        override fun removed(collection: FCollection<ConnectionPoint>, item: ConnectionPoint) {
+            rebuildSection("ConnectionPoint")
+        }
+    }
+
+    private val controlPointsListener = object : CollectionListener<ControlPoint> {
+        override fun added(collection: FCollection<ControlPoint>, item: ControlPoint) {
+            rebuildSection("ControlPoint")
+        }
+
+        override fun removed(collection: FCollection<ControlPoint>, item: ControlPoint) {
+            rebuildSection("ControlPoint")
+        }
+    }
+
+    private val scratchListener = object : CollectionListener<Scratch> {
+        override fun added(collection: FCollection<Scratch>, item: Scratch) {
+            rebuildSection("Scratch")
+        }
+
+        override fun removed(collection: FCollection<Scratch>, item: Scratch) {
+            rebuildSection("Scratch")
+        }
+    }
+
+    init {
+        shape.geometry.parts.listeners.add(geometryPartsListener)
+        shape.connectionPoints.listeners.add(connectionPointsListener)
+        shape.controlPoints.listeners.add(controlPointsListener)
+        shape.scratches.listeners.add(scratchListener)
+    }
 
     override fun build(): Node {
         vBox.styleClass.add("shape-sheet")
@@ -87,7 +134,6 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
                 val label = Label(cell.cellName)
                 namedCells.addRow(index, label, control)
                 index++
-                GridPane.setHgrow(control, Priority.ALWAYS)
             }
             namedCellsAndRows.children.add(namedCells)
         }
@@ -125,9 +171,6 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
                 val label = Label(columnName)
                 label.styleClass.add("header")
                 headers[columnIndex + 1] = label
-                if (columnIndex == 0) {
-                    //GridPane.setHgrow(headers[1], Priority.ALWAYS)
-                }
             }
             rowCells.addRow(0, * headers)
 
@@ -137,8 +180,7 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
             if (metaData.rowFactories.size == 1) {
                 val button = Button(metaData.rowFactories[0].label)
                 button.onAction = EventHandler {
-                    metaData.rowFactories[0].create()
-                    rebuildSection(sectionName)
+                    metaData.rowFactories[0].create(metaData.rows.size)
                 }
                 namedCellsAndRows.children.add(button)
             } else {
@@ -146,8 +188,7 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
                 metaData.rowFactories.forEach { factory ->
                     val menuItem = MenuItem(factory.label)
                     menuItem.onAction = EventHandler {
-                        factory.create()
-                        rebuildSection(sectionName)
+                        factory.create(metaData.rows.size)
                     }
                     button.items.add(menuItem)
                 }

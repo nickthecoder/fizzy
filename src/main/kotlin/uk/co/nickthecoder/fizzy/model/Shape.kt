@@ -29,6 +29,9 @@ import uk.co.nickthecoder.fizzy.model.geometry.BezierCurveTo
 import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
+import uk.co.nickthecoder.fizzy.model.history.AddConnectionPoint
+import uk.co.nickthecoder.fizzy.model.history.AddControlPoint
+import uk.co.nickthecoder.fizzy.model.history.AddScratch
 import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.*
 
@@ -319,25 +322,28 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
         geometry.addMetaData(geometrySection)
 
         val connectionPointsSection = metaData.newSection("ConnectionPoint")
-        connectionPointsSection.rowFactories.add(RowFactory("New Connection Point") { connectionPoints.add(ConnectionPoint()) })
+        connectionPointsSection.rowFactories.add(RowFactory("New Connection Point") { index ->
+            document().history.makeChange(AddConnectionPoint(this, index))
+        })
         connectionPoints.forEach { connectionPoint ->
             val connectionPointRow = connectionPointsSection.newRow(null)
             connectionPoint.addMetaData(connectionPointRow)
         }
 
         val controlPointsSection = metaData.newSection("ControlPoint")
-        controlPointsSection.rowFactories.add(RowFactory("New Control Point") { controlPoints.add(ControlPoint()) })
+        controlPointsSection.rowFactories.add(RowFactory("New Control Point") { index ->
+            document().history.makeChange(AddControlPoint(this, index))
+        })
         controlPoints.forEach { controlPoint ->
             val controlPointRow = controlPointsSection.newRow(null)
             controlPoint.addMetaData(controlPointRow)
         }
 
         val scratchSection = metaData.newSection("Scratch")
-        scratchSection.rowFactories.add(RowFactory("Boolean") { scratches.add(Scratch("boolean")) })
-        scratchSection.rowFactories.add(RowFactory("Double") { scratches.add(Scratch("double")) })
-        scratchSection.rowFactories.add(RowFactory("Dimension") { scratches.add(Scratch("Dimension")) })
-        scratchSection.rowFactories.add(RowFactory("Dimension2") { scratches.add(Scratch("Dimension2")) })
         // TODO Add the rest (in a loop!!!)
+        scratchSection.rowFactories.add(RowFactory("Dimension2") { index ->
+            document().history.makeChange(AddScratch(this, index, Scratch("Dimension2")))
+        })
         scratches.forEach { scratch ->
             val scratchRow = scratchSection.newRow(null)
             scratch.addMetaData(scratchRow)

@@ -22,7 +22,7 @@ import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropExpression
 import uk.co.nickthecoder.fizzy.prop.PropVariable
 
-class RowFactory(val label: String, val create: () -> Unit)
+class RowFactory(val label: String, val create: (index: Int) -> Unit)
 
 /**
  * Holds references to all [PropExpression]s within a [Shape] in a generic hierarchy. This is used when saving a
