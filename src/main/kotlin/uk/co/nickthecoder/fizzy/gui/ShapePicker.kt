@@ -70,7 +70,7 @@ class ShapePicker(val mainWindow: MainWindow, val items: Array<ShapePickerItem>,
 
         mainWindow.documentTab?.drawingArea?.controller?.let { controller ->
             when (shape) {
-                is Shape1d -> controller.tool = GrowShape1dTool(controller, shape, strokeColor, fillColor)
+                is Shape1d -> controller.tool = GrowShape1dTool(controller, shape, strokeColor)
                 is Shape2d -> controller.tool = GrowShape2dTool(controller, shape, strokeColor, fillColor)
                 else -> {
                     //controller.tool = StampShape2dTool(controller, shape)

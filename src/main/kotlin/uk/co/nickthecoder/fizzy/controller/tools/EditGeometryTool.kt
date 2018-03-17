@@ -28,6 +28,8 @@ import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.Shape1d
 import uk.co.nickthecoder.fizzy.model.geometry.BezierCurveTo
+import uk.co.nickthecoder.fizzy.model.geometry.GeometryPart
+import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.PropExpression
@@ -73,13 +75,21 @@ class EditGeometryTool(controller: Controller)
     override fun onMousePressed(event: CMouseEvent) {
         mousePressedPoint = event.point
 
+        // If we've pressed an existing handle, or only the current shape's geometry, then do nothing.
+        // onDragDetected will take over from here.
         controller.handles.forEach { handle ->
             if (handle.isAt(mousePressedPoint, event.scale)) {
                 return
             }
         }
+        editingShape?.let {
+            if (it.isAt(event.point, controller.minDistance)) {
+                return
+            }
+        }
+
+        // So, we haven't pressed any existing handles, or along the current shape, so lets see if we've clicked a different shape.
         controller.handles.clear()
-        // So, we haven't pressed any existing handles, lets see if we've clicked a different shape.
         editingShape = null
         editingShape = controller.findShapesAt(event.point).lastOrNull()
 
@@ -87,6 +97,18 @@ class EditGeometryTool(controller: Controller)
 
         controller.dirty.value++
 
+    }
+
+    fun convertToBezierCurve(shape: Shape, part: GeometryPart, prevPoint: Dimension2): BezierCurveTo {
+        // TODO Use History.
+        val index = shape.geometry.parts.indexOf(part)
+        shape.geometry.parts.removeAt(index)
+        val a = (prevPoint * 2.0 + part.point.value) / 3.0
+        val b = (prevPoint + part.point.value * 2.0) / 3.0
+        val bezier = BezierCurveTo(a, b, part.point.value)
+        shape.geometry.parts.add(index, bezier)
+
+        return bezier
     }
 
     override fun onDragDetected(event: CMouseEvent) {
@@ -101,6 +123,34 @@ class EditGeometryTool(controller: Controller)
                 return
             }
         }
+
+        // If we've started dragging a LineTo, then convert it into a Bezier curve, and drag the control handle.
+        editingShape?.let { shape ->
+            var prev: Dimension2? = null
+            shape.geometry.parts.forEach { part ->
+                val local = shape.fromPageToLocal.value * mousePressedPoint
+                if (prev != null) {
+                    if (part is LineTo && part.isAlong(shape, local, prev!!, shape.lineWidth.value, controller.minDistance)) {
+                        val length = (part.point.value - prev!!).length()
+                        val along = (local - prev!!).length().ratio(length)
+
+                        val bezier = convertToBezierCurve(shape, part, prev!!)
+                        createHandles(shape)
+
+                        val point = if (along < 0.5) bezier.a else bezier.b
+                        controller.handles.forEach { handle ->
+                            if (handle is GeometryHandle && handle.point == point) {
+                                controller.tool = EditGeometryDragHandleTool(this, handle, handle.position)
+                                controller.tool.onMouseDragged(event)
+                            }
+                        }
+                        return
+                    }
+                }
+                prev = part.point.value
+            }
+        }
+
     }
 
     override fun endTool(replacement: Tool) {
