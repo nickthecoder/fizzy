@@ -22,6 +22,7 @@ import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
 import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.model.history.AddGeometryPart
+import uk.co.nickthecoder.fizzy.model.history.RemoveGeometryPart
 import uk.co.nickthecoder.fizzy.prop.BooleanExpression
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
@@ -99,6 +100,9 @@ class Geometry(val shape: Shape)
         metaData.rowFactories.add(RowFactory("BezierCurveTo") { index ->
             shape.document().history.makeChange(AddGeometryPart(shape, index, BezierCurveTo()))
         })
+        metaData.rowRemoval = { index ->
+            shape.document().history.makeChange(RemoveGeometryPart(shape, index))
+        }
     }
 
     fun isAt(localPoint: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean {

@@ -38,6 +38,7 @@ class MetaData(val type: String?) {
 
     val rowFactories = mutableListOf<RowFactory>()
 
+    var rowRemoval: ((Int) -> Unit)? = null
 
     fun isEmpty() = cells.isEmpty() && sections.isEmpty() && rows.isEmpty()
 

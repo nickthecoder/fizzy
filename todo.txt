@@ -4,7 +4,6 @@ To Do
 New add line segments tool.
     Drag an end point to create a new line.
 
-"New row" button in Edit shape sheet
 
 Add "Properties" section
     Similar to Scratch, but has a label, and appear in the "Properties" dialog box when the shape is double clicked.

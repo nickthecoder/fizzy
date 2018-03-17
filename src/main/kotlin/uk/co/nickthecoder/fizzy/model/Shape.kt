@@ -29,9 +29,7 @@ import uk.co.nickthecoder.fizzy.model.geometry.BezierCurveTo
 import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
-import uk.co.nickthecoder.fizzy.model.history.AddConnectionPoint
-import uk.co.nickthecoder.fizzy.model.history.AddControlPoint
-import uk.co.nickthecoder.fizzy.model.history.AddScratch
+import uk.co.nickthecoder.fizzy.model.history.*
 import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.*
 
@@ -325,6 +323,9 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
         connectionPointsSection.rowFactories.add(RowFactory("New Connection Point") { index ->
             document().history.makeChange(AddConnectionPoint(this, index))
         })
+        connectionPointsSection.rowRemoval = { index ->
+            document().history.makeChange(RemoveConnectionPoint(this, index))
+        }
         connectionPoints.forEach { connectionPoint ->
             val connectionPointRow = connectionPointsSection.newRow(null)
             connectionPoint.addMetaData(connectionPointRow)
@@ -334,6 +335,9 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
         controlPointsSection.rowFactories.add(RowFactory("New Control Point") { index ->
             document().history.makeChange(AddControlPoint(this, index))
         })
+        controlPointsSection.rowRemoval = { index ->
+            document().history.makeChange(RemoveControlPoint(this, index))
+        }
         controlPoints.forEach { controlPoint ->
             val controlPointRow = controlPointsSection.newRow(null)
             controlPoint.addMetaData(controlPointRow)
@@ -344,6 +348,9 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
         scratchSection.rowFactories.add(RowFactory("Dimension2") { index ->
             document().history.makeChange(AddScratch(this, index, Scratch("Dimension2")))
         })
+        scratchSection.rowRemoval = { index ->
+            document().history.makeChange(RemoveScratch(this, index))
+        }
         scratches.forEach { scratch ->
             val scratchRow = scratchSection.newRow(null)
             scratch.addMetaData(scratchRow)

@@ -104,7 +104,7 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
         titledPane.styleClass.add("sheet-section")
         sectionNameToTitledPane[name] = titledPane
 
-        buildSection(name, titledPane, metaData)
+        buildSection(titledPane, metaData)
         vBox.children.add(titledPane)
     }
 
@@ -114,13 +114,13 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
         metaData.sections.forEach { name, section ->
             if (name == sectionName) {
                 sectionNameToTitledPane[name]?.let { titledPane ->
-                    buildSection(name, titledPane, section)
+                    buildSection(titledPane, section)
                 }
             }
         }
     }
 
-    private fun buildSection(sectionName: String, titledPane: TitledPane, metaData: MetaData) {
+    private fun buildSection(titledPane: TitledPane, metaData: MetaData) {
 
         val namedCellsAndRows = VBox()
         namedCellsAndRows.styleClass.addAll("namedCellsAndRows")
@@ -162,7 +162,30 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
                     rowControls.put(columnIndices[cell.cellName]!!, control)
                 }
                 val controls = Array<Node>(columnIndices.size + 1) { Label() }
-                controls[0] = Label("${rowIndex + 1}")
+                val indexMenu = MenuButton("${rowIndex + 1}")
+                if (metaData.rowFactories.size == 1) {
+                    val insertMI = MenuItem("Insert ${metaData.rowFactories[0].label}")
+                    insertMI.onAction = EventHandler {
+                        metaData.rowFactories[0].create(rowIndex)
+                    }
+                    indexMenu.items.add(insertMI)
+                } else if (metaData.rowFactories.isNotEmpty()) {
+                    metaData.rowFactories.forEach { factory ->
+                        val insertMI = MenuItem("Insert ${factory.label}")
+                        insertMI.onAction = EventHandler {
+                            factory.create(rowIndex)
+                        }
+                        indexMenu.items.add(insertMI)
+                    }
+                }
+                val deleteMI = MenuItem("Delete Row")
+                deleteMI.onAction = EventHandler {
+                    metaData.rowRemoval?.invoke(rowIndex)
+                }
+                indexMenu.items.add(deleteMI)
+
+
+                controls[0] = indexMenu
                 rowControls.forEach { i, control -> controls[i + 1] = control }
                 rowCells.addRow(rowIndex + 1, * controls)
             }
