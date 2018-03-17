@@ -24,7 +24,11 @@ import uk.co.nickthecoder.fizzy.controller.handle.Handle
 import uk.co.nickthecoder.fizzy.controller.handle.Shape1dHandle
 import uk.co.nickthecoder.fizzy.model.Dimension2
 
-open class DragHandleTool(controller: Controller, val handle: Handle, startPosition: Dimension2)
+open class DragHandleTool(
+        controller: Controller,
+        val handle: Handle,
+        startPosition: Dimension2,
+        val nextTool: Tool = SelectTool(controller))
     : Tool(controller) {
 
     val offset = startPosition - handle.position
@@ -52,7 +56,7 @@ open class DragHandleTool(controller: Controller, val handle: Handle, startPosit
     }
 
     override fun onMouseReleased(event: CMouseEvent) {
-        controller.tool = SelectTool(controller)
+        controller.tool = nextTool
         controller.page.document.history.endBatch()
     }
 }

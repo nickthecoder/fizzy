@@ -20,10 +20,12 @@ package uk.co.nickthecoder.fizzy.controller.handle
 
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
+import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
+import uk.co.nickthecoder.fizzy.view.DrawContext
 
 class GeometryHandle(val shape: Shape, val point: Dimension2Expression, val controller: Controller)
     : Handle() {
@@ -44,6 +46,13 @@ class GeometryHandle(val shape: Shape, val point: Dimension2Expression, val cont
                 ChangeExpressions(listOf(point to localPoint.toFormula()))
         )
         controller.dirty.value++
+    }
+
+    override fun draw(dc: DrawContext) {
+        dc.use {
+            dc.rotate(Angle.degrees(45.0))
+            super.draw(dc)
+        }
     }
 
     override fun toString() = "GeoHandle @ $position"

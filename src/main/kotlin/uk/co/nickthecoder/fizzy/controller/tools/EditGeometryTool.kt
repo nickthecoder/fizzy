@@ -22,13 +22,16 @@ import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.controller.handle.GeometryHandle
 import uk.co.nickthecoder.fizzy.controller.handle.Handle
+import uk.co.nickthecoder.fizzy.controller.handle.Shape1dHandle
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.Shape1d
 import uk.co.nickthecoder.fizzy.model.geometry.BezierCurveTo
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.PropExpression
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class EditGeometryTool(controller: Controller)
     : Tool(controller) {
@@ -37,17 +40,29 @@ class EditGeometryTool(controller: Controller)
 
     var mousePressedPoint = Dimension2.ZERO_mm
 
-    init {
-        // By clearing the selection, the normal control handles will vanish, and we can add our own.
-        editingShape = controller.selection.lastOrNull()
-        controller.selection.clear()
+    override fun beginTool() {
+        if (editingShape == null) {
+            // By clearing the selection, the normal control handles will vanish, and we can add our own.
+            editingShape = controller.selection.lastOrNull()
+            controller.selection.clear()
+        }
 
         editingShape?.let { createHandles(it) }
     }
 
     fun createHandles(shape: Shape) {
+        if (shape is Shape1d) {
+            controller.handles.add(Shape1dHandle(shape, shape.start.value, controller, false))
+            controller.handles.add(Shape1dHandle(shape, shape.end.value, controller, true))
+        }
+
         shape.geometry.parts.forEach { part ->
-            controller.handles.add(GeometryHandle(shape, part.point, controller))
+            // Do not include the start and end of Shape1d, because that is very confusing!
+            if (shape is Shape1d && (part.point.value.x == Dimension.ZERO_mm || part.point.value.x.isNear(shape.length.value))) {
+                // Ignore it
+            } else {
+                controller.handles.add(GeometryHandle(shape, part.point, controller))
+            }
             if (part is BezierCurveTo) {
                 controller.handles.add(GeometryHandle(shape, part.a, controller))
                 controller.handles.add(GeometryHandle(shape, part.b, controller))
@@ -78,7 +93,11 @@ class EditGeometryTool(controller: Controller)
 
         controller.handles.forEach { handle ->
             if (handle.isAt(mousePressedPoint, event.scale)) {
-                controller.tool = EditGeometryDragHandleTool(this, handle, mousePressedPoint)
+                if (handle is GeometryHandle) {
+                    controller.tool = EditGeometryDragHandleTool(this, handle, mousePressedPoint)
+                } else {
+                    controller.tool = DragHandleTool(controller, handle, mousePressedPoint, nextTool = this)
+                }
                 return
             }
         }
@@ -107,52 +126,72 @@ class EditGeometryTool(controller: Controller)
         }
 
         override fun onMouseReleased(event: CMouseEvent) {
-            // By now, we've changed many of the geometries, and their points are now constants. These should be
-            // expressed in terms of the shape's size (so that when the shape grows, the geometry also grows.
-            // But size will also be wrong.
 
             editGeometryTool.editingShape?.let { shape ->
 
-                var minX = Dimension(Double.MAX_VALUE)
-                var minY = Dimension(Double.MAX_VALUE)
-                var maxX = Dimension(-Double.MAX_VALUE)
-                var maxY = Dimension(-Double.MAX_VALUE)
+                val changes = mutableListOf<Pair<PropExpression<*>, String>>()
 
-                shape.geometry.parts.forEach { part ->
-                    if (part.point.value.x < minX) {
-                        minX = part.point.value.x
+                if (shape is Shape1d) {
+
+                    fun adjustPoint(point: Dimension2Expression): Pair<Dimension2Expression, String> {
+                        val xRatio = point.value.x.ratio(shape.length.value)
+                        val yRatio = point.value.y.ratio(shape.length.value)
+                        return point to "Length * Vector2( ${xRatio.toFormula()}, ${yRatio.toFormula()} )"
                     }
-                    if (part.point.value.y < minY) {
-                        minY = part.point.value.y
+
+                    // Express the geometry parts' x value in terms of length
+                    shape.geometry.parts.forEach { part ->
+                        changes.add(adjustPoint(part.point))
+                        if (part is BezierCurveTo) {
+                            changes.add(adjustPoint(part.a))
+                            changes.add(adjustPoint(part.b))
+                        }
                     }
-                    if (part.point.value.x > maxX) {
-                        maxX = part.point.value.x
+
+                } else {
+                    // By now, we've changed many of the geometries, and their points are now constants. These should be
+                    // expressed in terms of the shape's size (so that when the shape grows, the geometry also grows.
+                    // But size will also be wrong.
+
+                    var minX = Dimension(Double.MAX_VALUE)
+                    var minY = Dimension(Double.MAX_VALUE)
+                    var maxX = Dimension(-Double.MAX_VALUE)
+                    var maxY = Dimension(-Double.MAX_VALUE)
+
+                    shape.geometry.parts.forEach { part ->
+                        if (part.point.value.x < minX) {
+                            minX = part.point.value.x
+                        }
+                        if (part.point.value.y < minY) {
+                            minY = part.point.value.y
+                        }
+                        if (part.point.value.x > maxX) {
+                            maxX = part.point.value.x
+                        }
+                        if (part.point.value.y > maxY) {
+                            maxY = part.point.value.y
+                        }
                     }
-                    if (part.point.value.y > maxY) {
-                        maxY = part.point.value.y
+
+                    val newOrigin = Dimension2(minX, minY)
+                    val newSize = Dimension2((maxX - minX).max(Dimension.ONE_POINT), (maxY - minY).max(Dimension.ONE_POINT))
+                    val locPin = shape.transform.locPin.value - newOrigin
+                    val locRatio = locPin.ratio(newSize)
+
+                    changes.add(shape.transform.locPin to "Size * ${locRatio.toFormula()}")
+                    changes.add(shape.size to newSize.toFormula())
+
+                    fun adjustPoint(point: Dimension2Expression): Pair<Dimension2Expression, String> {
+                        val ratio = (point.value - newOrigin).ratio(newSize)
+                        return point to "Size * ${ratio.toFormula()}"
                     }
-                }
 
-                val newOrigin = Dimension2(minX, minY)
-                val newSize = Dimension2((maxX - minX).max(Dimension.ONE_POINT), (maxY - minY).max(Dimension.ONE_POINT))
-                val locPin = shape.transform.locPin.value - newOrigin
-                val locRatio = locPin.ratio(newSize)
-
-                val changes = mutableListOf<Pair<PropExpression<*>, String>>(
-                        shape.transform.locPin to "Size * ${locRatio.toFormula()}",
-                        shape.size to newSize.toFormula()
-                )
-
-                fun adjustPoint(point: Dimension2Expression): Pair<Dimension2Expression, String> {
-                    val ratio = (point.value - newOrigin).ratio(newSize)
-                    return point to "Size * ${ratio.toFormula()}"
-                }
-
-                shape.geometry.parts.forEach { part ->
-                    changes.add(adjustPoint(part.point))
-                    if (part is BezierCurveTo) {
-                        changes.add(adjustPoint(part.a))
-                        changes.add(adjustPoint(part.b))
+                    shape.geometry.parts.forEach { part ->
+                        changes.add(adjustPoint(part.point))
+                        if (part is BezierCurveTo) {
+                            changes.add(adjustPoint(part.a))
+                            changes.add(adjustPoint(part.b))
+                        }
                     }
                 }
 

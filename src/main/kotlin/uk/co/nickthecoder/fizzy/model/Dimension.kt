@@ -120,12 +120,20 @@ class Dimension : Comparable<Dimension> {
         return Dimension(inUnits(units) * b.inUnits(units), units, power + b.power)
     }
 
+    operator fun times(b: Vector2): Dimension2 {
+        return Dimension2(this * b.x, this * b.y)
+    }
+
     operator fun div(b: Double): Dimension {
         return Dimension(units, inDefaultUnits / b, power)
     }
 
     operator fun div(b: Dimension): Dimension {
         return Dimension(inUnits(units) / b.inUnits(units), units, power - b.power)
+    }
+
+    operator fun div(b: Vector2): Dimension2 {
+        return Dimension2(this / b.x, this / b.y)
     }
 
 

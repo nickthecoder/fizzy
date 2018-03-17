@@ -425,7 +425,11 @@ class TimesOperator(precedence: Int) : BinaryOperator("*", precedence) {
 
             } else if (b.value is Double) {
                 return PropCalculation2(a as Prop<Dimension>, b as Prop<Double>) { av, bv -> av * bv }
+
+            } else if (b.value is Vector2) {
+                return PropCalculation2(a as Prop<Dimension>, b as Prop<Vector2>) { av, bv -> av * bv }
             }
+
 
         } else if (a.value is Dimension2) {
             if (b.value is Dimension2) {
@@ -496,6 +500,9 @@ class DivOperator(precedence: Int) : BinaryOperator("/", precedence) {
 
             } else if (b.value is Double) {
                 return PropCalculation2(a as Prop<Dimension>, b as Prop<Double>) { av, bv -> av / bv }
+
+            } else if (b.value is Vector2) {
+                return PropCalculation2(a as Prop<Dimension>, b as Prop<Vector2>) { av, bv -> av / bv }
             }
 
         } else if (a.value is Dimension2) {
