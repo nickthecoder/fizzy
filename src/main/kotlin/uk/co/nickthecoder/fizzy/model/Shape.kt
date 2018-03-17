@@ -319,18 +319,25 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
         geometry.addMetaData(geometrySection)
 
         val connectionPointsSection = metaData.newSection("ConnectionPoint")
+        connectionPointsSection.rowFactories.add(RowFactory("New Connection Point") { connectionPoints.add(ConnectionPoint()) })
         connectionPoints.forEach { connectionPoint ->
             val connectionPointRow = connectionPointsSection.newRow(null)
             connectionPoint.addMetaData(connectionPointRow)
         }
 
         val controlPointsSection = metaData.newSection("ControlPoint")
+        controlPointsSection.rowFactories.add(RowFactory("New Control Point") { controlPoints.add(ControlPoint()) })
         controlPoints.forEach { controlPoint ->
             val controlPointRow = controlPointsSection.newRow(null)
             controlPoint.addMetaData(controlPointRow)
         }
 
         val scratchSection = metaData.newSection("Scratch")
+        scratchSection.rowFactories.add(RowFactory("Boolean") { scratches.add(Scratch("boolean")) })
+        scratchSection.rowFactories.add(RowFactory("Double") { scratches.add(Scratch("double")) })
+        scratchSection.rowFactories.add(RowFactory("Dimension") { scratches.add(Scratch("Dimension")) })
+        scratchSection.rowFactories.add(RowFactory("Dimension2") { scratches.add(Scratch("Dimension2")) })
+        // TODO Add the rest (in a loop!!!)
         scratches.forEach { scratch ->
             val scratchRow = scratchSection.newRow(null)
             scratch.addMetaData(scratchRow)

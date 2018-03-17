@@ -26,7 +26,7 @@ import uk.co.nickthecoder.fizzy.util.toFormula
 
 private fun createPropExpression(type: String): PropExpression<*> {
     return when (type) {
-        "boolean" -> DoubleExpression(false.toFormula())
+        "boolean" -> BooleanExpression(false.toFormula())
         "double" -> DoubleExpression(0.0.toFormula())
         "String" -> StringExpression("".toFormula())
         "Dimension" -> DimensionExpression(Dimension.ZERO_mm)

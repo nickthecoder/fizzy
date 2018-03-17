@@ -22,6 +22,8 @@ import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropExpression
 import uk.co.nickthecoder.fizzy.prop.PropVariable
 
+class RowFactory(val label: String, val create: () -> Unit)
+
 /**
  * Holds references to all [PropExpression]s within a [Shape] in a generic hierarchy. This is used when saving a
  * document, for debugging, and also within the unit tests.
@@ -33,6 +35,8 @@ class MetaData(val type: String?) {
     val sections = mutableMapOf<String, MetaData>()
 
     val rows = mutableListOf<MetaData>()
+
+    val rowFactories = mutableListOf<RowFactory>()
 
 
     fun isEmpty() = cells.isEmpty() && sections.isEmpty() && rows.isEmpty()

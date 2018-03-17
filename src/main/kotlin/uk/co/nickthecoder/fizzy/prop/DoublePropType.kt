@@ -42,5 +42,5 @@ class DoubleExpression
 
     override fun copy(link: Boolean) = if (link) DoubleExpression(this) else DoubleExpression(formula, constantsContext)
 
-    override fun valueString() = value.toDouble().toFormula()
+    override fun valueString() = value.toFormula()
 }

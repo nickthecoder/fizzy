@@ -18,10 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.gui
 
+import javafx.event.EventHandler
 import javafx.scene.Node
-import javafx.scene.control.Label
-import javafx.scene.control.ScrollPane
-import javafx.scene.control.TitledPane
+import javafx.scene.control.*
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.Priority
 import javafx.scene.layout.VBox
@@ -37,6 +36,8 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
 
     private val scroll = ScrollPane(vBox)
 
+    private val sectionNameToTitledPane = mutableMapOf<String, TitledPane>()
+
     override fun build(): Node {
         vBox.styleClass.add("shape-sheet")
 
@@ -51,6 +52,28 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
     }
 
     fun buildSection(name: String, metaData: MetaData) {
+
+        val titledPane = TitledPane(name, Label())
+        titledPane.styleClass.add("sheet-section")
+        sectionNameToTitledPane[name] = titledPane
+
+        buildSection(name, titledPane, metaData)
+        vBox.children.add(titledPane)
+    }
+
+    fun rebuildSection(sectionName: String) {
+        val metaData = shape.metaData()
+
+        metaData.sections.forEach { name, section ->
+            if (name == sectionName) {
+                sectionNameToTitledPane[name]?.let { titledPane ->
+                    buildSection(name, titledPane, section)
+                }
+            }
+        }
+    }
+
+    private fun buildSection(sectionName: String, titledPane: TitledPane, metaData: MetaData) {
 
         val namedCellsAndRows = VBox()
         namedCellsAndRows.styleClass.addAll("namedCellsAndRows")
@@ -73,7 +96,6 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
             val rowCells = GridPane()
             rowCells.styleClass.add("row-cells")
             val columnIndices = mutableMapOf<String, Int>()
-
 
             metaData.rows.forEachIndexed { rowIndex, row ->
                 val rowControls = mutableMapOf<Int, Node>()
@@ -111,11 +133,29 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
 
             namedCellsAndRows.children.add(rowCells)
         }
+        if (metaData.rowFactories.isNotEmpty()) {
+            if (metaData.rowFactories.size == 1) {
+                val button = Button(metaData.rowFactories[0].label)
+                button.onAction = EventHandler {
+                    metaData.rowFactories[0].create()
+                    rebuildSection(sectionName)
+                }
+                namedCellsAndRows.children.add(button)
+            } else {
+                val button = MenuButton("New Row")
+                metaData.rowFactories.forEach { factory ->
+                    val menuItem = MenuItem(factory.label)
+                    menuItem.onAction = EventHandler {
+                        factory.create()
+                        rebuildSection(sectionName)
+                    }
+                    button.items.add(menuItem)
+                }
+                namedCellsAndRows.children.add(button)
+            }
+        }
 
-        val titledPane = TitledPane(name, namedCellsAndRows)
-        titledPane.styleClass.add("sheet-section")
-
-        vBox.children.add(titledPane)
+        titledPane.content = namedCellsAndRows
     }
 
     fun createControl(cell: MetaDataCell): Node {

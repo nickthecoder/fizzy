@@ -89,6 +89,9 @@ class Geometry(val shape: Shape)
             val row = metaData.newRow(part.javaClass.simpleName)
             part.addMetaData(row)
         }
+        metaData.rowFactories.add(RowFactory("MoveTo") { parts.add(MoveTo()) })
+        metaData.rowFactories.add(RowFactory("LineTo") { parts.add(LineTo()) })
+        metaData.rowFactories.add(RowFactory("BezierCurveTo") { parts.add(BezierCurveTo()) })
     }
 
     fun isAt(localPoint: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean {
