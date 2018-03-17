@@ -31,7 +31,9 @@ import uk.co.nickthecoder.fizzy.model.Shape1d
 import uk.co.nickthecoder.fizzy.model.geometry.BezierCurveTo
 import uk.co.nickthecoder.fizzy.model.geometry.GeometryPart
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
+import uk.co.nickthecoder.fizzy.model.history.AddGeometryPart
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
+import uk.co.nickthecoder.fizzy.model.history.RemoveGeometryPart
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.prop.PropExpression
 import uk.co.nickthecoder.fizzy.util.toFormula
@@ -104,13 +106,16 @@ class EditGeometryTool(controller: Controller)
     }
 
     fun convertToBezierCurve(shape: Shape, part: GeometryPart, prevPoint: Dimension2): BezierCurveTo {
-        // TODO Use History.
+        val history = shape.document().history
+        history.beginBatch()
+
         val index = shape.geometry.parts.indexOf(part)
-        shape.geometry.parts.removeAt(index)
+        history.makeChange(RemoveGeometryPart(shape, index))
         val a = (prevPoint * 2.0 + part.point.value) / 3.0
         val b = (prevPoint + part.point.value * 2.0) / 3.0
         val bezier = BezierCurveTo(a, b, part.point.value)
-        shape.geometry.parts.add(index, bezier)
+        history.makeChange(AddGeometryPart(shape, index, bezier))
+        history.endBatch()
 
         return bezier
     }

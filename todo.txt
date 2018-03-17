@@ -3,16 +3,8 @@ To Do
 
 New add line segments tool.
     Drag an end point to create a new line.
-    Adjust key allows the end point to be moved???
 
-When editing geometry of a shape1d, if the first, or last geometry is dragged, then recalculate the start/end.
-    Then recalculate the other points based on the new size.
-    It the middle of a line is dragged, then convert ir into a bezier.
-        Note : later the middle may create an arc, and the 1/3 points create a bezier.
-
-
-Show type in shape sheet
-"New row" button
+"New row" button in Edit shape sheet
 
 BUGS
 ----

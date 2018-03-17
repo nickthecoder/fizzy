@@ -83,8 +83,14 @@ class FToolBar(val mainWindow: MainWindow)
     val saveButton = ApplicationActions.DOCUMENT_SAVE.createButton(sh) { mainWindow.documentSave() }
     val saveAsButton = ApplicationActions.DOCUMENT_SAVE_AS.createButton(sh) { mainWindow.documentSaveAs() }
 
-    val undoButton = ApplicationActions.EDIT_UNDO.createButton(sh) { document?.history?.undo() }
-    val redoButton = ApplicationActions.EDIT_REDO.createButton(sh) { document?.history?.redo() }
+    val undoButton = ApplicationActions.EDIT_UNDO.createButton(sh) {
+        document?.history?.undo()
+        clearSelection()
+    }
+    val redoButton = ApplicationActions.EDIT_REDO.createButton(sh) {
+        document?.history?.redo()
+        clearSelection()
+    }
 
     val selectToolButton = ApplicationActions.TOOL_SELECT.createButton(sh) { controller?.let { it.tool = SelectTool(it) } }
     val editGeometryToolButton = ApplicationActions.TOOL_EDIT_GEOMETRY.createButton(sh) { controller?.let { it.tool = EditGeometryTool(it) } }
@@ -105,6 +111,12 @@ class FToolBar(val mainWindow: MainWindow)
     // These don't belong here - move to a "Stencil" picker sometime.
     val stampToolButton = Button("Stamp")
 
+
+    fun clearSelection() {
+        controller?.selection?.clear()
+        controller?.handles?.clear()
+        controller?.dirty?.let { it.value++ }
+    }
 
     override fun build(): Node {
 
