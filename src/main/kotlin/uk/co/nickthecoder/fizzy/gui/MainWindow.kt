@@ -31,8 +31,7 @@ import javafx.stage.FileChooser
 import javafx.stage.Stage
 import javafx.stage.Window
 import uk.co.nickthecoder.fizzy.Fizzy
-import uk.co.nickthecoder.fizzy.collection.CollectionListener
-import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.controller.OtherActions
@@ -81,12 +80,12 @@ class MainWindow(val stage: Stage)
 
     val shapeSelectionProperty: Property<FList<Shape>> = SimpleObjectProperty<FList<Shape>>()
 
-    private var selectionListener = object : CollectionListener<Shape> {
-        override fun added(collection: FCollection<Shape>, item: Shape) {
+    private var selectionListener = object : ListListener<Shape> {
+        override fun added(list: FList<Shape>, item: Shape, index: Int) {
             onSelectionChanged()
         }
 
-        override fun removed(collection: FCollection<Shape>, item: Shape) {
+        override fun removed(list: FList<Shape>, item: Shape, index: Int) {
             onSelectionChanged()
         }
     }

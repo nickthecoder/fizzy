@@ -20,14 +20,14 @@ package uk.co.nickthecoder.fizzy.collection
 
 import uk.co.nickthecoder.fizzy.util.Listeners
 
-class CollectionListeners<T>
-    : Listeners<CollectionListener<T>>() {
+class ListListeners<T>
+    : Listeners<ListListener<T>>() {
 
-    fun fireAdded(collection: FCollection<T>, element: T) {
-        forEach { it.added(collection, element) }
+    fun fireAdded(list: FList<T>, element: T, index: Int) {
+        forEach { it.added(list, element, index) }
     }
 
-    fun fireRemoved(collection: FCollection<T>, element: T) {
-        forEach { it.removed(collection, element) }
+    fun fireRemoved(list: FList<T>, element: T, index: Int) {
+        forEach { it.removed(list, element, index) }
     }
 }

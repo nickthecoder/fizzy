@@ -18,8 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.controller
 
-import uk.co.nickthecoder.fizzy.collection.CollectionListener
-import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.collection.ListListener
+import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.controller.handle.*
 import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
@@ -81,14 +81,14 @@ class Controller(val page: Page, val singleShape: Shape? = null, val otherAction
     /**
      * When the selection changes, we need to draw, to update the bounding boxes and handles on display.
      */
-    val selectionListener = object : CollectionListener<Shape> {
+    val selectionListener = object : ListListener<Shape> {
 
-        override fun added(collection: FCollection<Shape>, item: Shape) {
+        override fun added(list: FList<Shape>, item: Shape, index: Int) {
             item.changeListeners.add(shapeListener)
             createShapeHandles(item)
         }
 
-        override fun removed(collection: FCollection<Shape>, item: Shape) {
+        override fun removed(list: FList<Shape>, item: Shape, index: Int) {
             item.changeListeners.remove(shapeListener)
             removeShapeHandles(item)
         }

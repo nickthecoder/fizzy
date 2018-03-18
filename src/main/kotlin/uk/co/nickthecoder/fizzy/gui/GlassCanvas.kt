@@ -26,8 +26,8 @@ import javafx.scene.control.ContextMenu
 import javafx.scene.control.MenuItem
 import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
-import uk.co.nickthecoder.fizzy.collection.CollectionListener
-import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.collection.ListListener
+import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.controller.tools.ToolCursor
@@ -69,14 +69,14 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
     /**
      * When the selection changes, we need to draw, to update the bounding boxes and handles on display.
      */
-    val selectionListener = object : CollectionListener<Shape> {
+    val selectionListener = object : ListListener<Shape> {
 
-        override fun added(collection: FCollection<Shape>, item: Shape) {
+        override fun added(list: FList<Shape>, item: Shape, index: Int) {
             item.changeListeners.add(shapeListener)
             dirty = true
         }
 
-        override fun removed(collection: FCollection<Shape>, item: Shape) {
+        override fun removed(list: FList<Shape>, item: Shape, index: Int) {
             item.changeListeners.remove(shapeListener)
             dirty = true
         }

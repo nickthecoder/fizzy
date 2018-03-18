@@ -18,8 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.util
 
-import uk.co.nickthecoder.fizzy.collection.CollectionListener
-import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.collection.FList
+import uk.co.nickthecoder.fizzy.collection.ListListener
 
 /**
  * Coordinates add/remove/change events from a collection of children (C) to their parent's listeners.
@@ -35,14 +35,14 @@ import uk.co.nickthecoder.fizzy.collection.FCollection
  * When an item in the collection changes, the parent's [ChangeListener]s are notified by firing a
  * [ChangeListener.changed].
  */
-class ChangeAndCollectionListener<P : HasChangeListeners<P>, C : HasChangeListeners<C>>(
+class ChangeAndListListener<P : HasChangeListeners<P>, C : HasChangeListeners<C>>(
         val parent: P,
-        child: FCollection<C>,
-        val onAdded: ((item: C) -> Unit)? = null,
-        val onRemoved: ((item: C) -> Unit)? = null
+        child: FList<C>,
+        val onAdded: ((item: C, index: Int) -> Unit)? = null,
+        val onRemoved: ((item: C, index: Int) -> Unit)? = null
 )
 
-    : ChangeListener<C>, CollectionListener<C> {
+    : ChangeListener<C>, ListListener<C> {
 
     init {
         child.listeners.add(this)
@@ -52,16 +52,16 @@ class ChangeAndCollectionListener<P : HasChangeListeners<P>, C : HasChangeListen
         parent.changeListeners.fireChanged(parent, changeType, obj)
     }
 
-    override fun added(collection: FCollection<C>, item: C) {
+    override fun added(list: FList<C>, item: C, index: Int) {
         parent.changeListeners.fireChanged(parent, ChangeType.ADD, item)
         item.changeListeners.add(this)
-        onAdded?.invoke(item)
+        onAdded?.invoke(item, index)
     }
 
-    override fun removed(collection: FCollection<C>, item: C) {
+    override fun removed(list: FList<C>, item: C, index: Int) {
         parent.changeListeners.fireChanged(parent, ChangeType.REMOVE, item)
         item.changeListeners.remove(this)
-        onRemoved?.invoke(item)
+        onRemoved?.invoke(item, index)
     }
 
 }

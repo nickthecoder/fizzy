@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.util
 
 /**
- * Used by [ChangeAndCollectionListener].
+ * Used by [ChangeAndListListener].
  */
 interface HasChangeListeners<T> {
     val changeListeners: ChangeListeners<T>

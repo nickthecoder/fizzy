@@ -18,8 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
-import uk.co.nickthecoder.fizzy.collection.CollectionListener
-import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.collection.ListListener
+import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.util.FizzyJsonReader
 import java.io.File
@@ -30,12 +30,12 @@ object Stencils {
 
     val stencils = MutableFList<Document>()
 
-    private val directoriesListener = object : CollectionListener<File> {
-        override fun added(collection: FCollection<File>, item: File) {
+    private val directoriesListener = object : ListListener<File> {
+        override fun added(list: FList<File>, item: File, index: Int) {
             addStencils(item)
         }
 
-        override fun removed(collection: FCollection<File>, item: File) {
+        override fun removed(list: FList<File>, item: File, index: Int) {
             removeStencils(item)
         }
     }

@@ -18,8 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
-import uk.co.nickthecoder.fizzy.collection.CollectionListener
-import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.collection.FList
+import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.evaluator.CompoundEvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
@@ -86,18 +86,18 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
     /**
      * When child Shapes change, this causes that even to bubble up to listeners of this Shape.
      */
-    private val shapeListener = object : ChangeListener<Shape>, CollectionListener<Shape> {
+    private val shapeListener = object : ChangeListener<Shape>, ListListener<Shape> {
 
         override fun changed(item: Shape, changeType: ChangeType, obj: Any?) {
             changeListeners.fireChanged(this@Shape)
         }
 
-        override fun added(collection: FCollection<Shape>, item: Shape) {
+        override fun added(list: FList<Shape>, item: Shape, index: Int) {
             changeListeners.fireChanged(this@Shape, ChangeType.ADD, item)
             item.changeListeners.add(this)
         }
 
-        override fun removed(collection: FCollection<Shape>, item: Shape) {
+        override fun removed(list: FList<Shape>, item: Shape, index: Int) {
             changeListeners.fireChanged(this@Shape, ChangeType.REMOVE, item)
             item.changeListeners.add(this)
         }
@@ -110,7 +110,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
     }
 
     /**
-     * Keeps references to [ChangeAndCollectionListener], so that they are not gc'd.
+     * Keeps references to [ChangeAndListListener], so that they are not gc'd.
      * They do not need to be referenced directly, they take care of everything themselves.
      */
     protected val collectionListeners = mutableListOf<Any>()
@@ -125,17 +125,17 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
 
         listenTo(name, lineWidth, strokeCap, strokeJoin, strokeColor, fillColor)
 
-        collectionListeners.add(ChangeAndCollectionListener(this, connectionPoints,
-                onAdded = { item -> item.shape = this },
-                onRemoved = { item -> item.shape = null }
+        collectionListeners.add(ChangeAndListListener(this, connectionPoints,
+                onAdded = { item, _ -> item.shape = this },
+                onRemoved = { item, _ -> item.shape = null }
         ))
-        collectionListeners.add(ChangeAndCollectionListener(this, controlPoints,
-                onAdded = { item -> item.shape = this },
-                onRemoved = { item -> item.shape = null }
+        collectionListeners.add(ChangeAndListListener(this, controlPoints,
+                onAdded = { item, _ -> item.shape = this },
+                onRemoved = { item, _ -> item.shape = null }
         ))
-        collectionListeners.add(ChangeAndCollectionListener(this, scratches,
-                onAdded = { item -> item.setContext(context) },
-                onRemoved = { item -> item.setContext(constantsContext) }
+        collectionListeners.add(ChangeAndListListener(this, scratches,
+                onAdded = { item, _ -> item.setContext(context) },
+                onRemoved = { item, _ -> item.setContext(constantsContext) }
         ))
     }
 

@@ -24,8 +24,8 @@ import javafx.scene.control.*
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.FlowPane
 import javafx.scene.layout.VBox
-import uk.co.nickthecoder.fizzy.collection.CollectionListener
-import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.collection.ListListener
+import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.controller.tools.GrowShape1dTool
 import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
 import uk.co.nickthecoder.fizzy.controller.tools.StampShape2dTool
@@ -41,12 +41,12 @@ class StencilView(val mainWindow: MainWindow, val stencil: Document, val localMa
 
     val buttons = FlowPane()
 
-    val pageChangeListener = object : CollectionListener<Shape> {
-        override fun added(collection: FCollection<Shape>, item: Shape) {
+    val pageChangeListener = object : ListListener<Shape> {
+        override fun added(list: FList<Shape>, item: Shape, index: Int) {
             addShape(item)
         }
 
-        override fun removed(collection: FCollection<Shape>, item: Shape) {
+        override fun removed(list: FList<Shape>, item: Shape, index: Int) {
             removeShape(item)
         }
     }

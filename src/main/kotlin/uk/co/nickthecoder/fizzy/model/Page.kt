@@ -20,7 +20,7 @@ package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.prop.PropConstant
-import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
+import uk.co.nickthecoder.fizzy.util.ChangeAndListListener
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
@@ -33,8 +33,8 @@ class Page internal constructor(val document: Document, add: Boolean)
 
     override val children = MutableFList<Shape>()
 
-    private val childrenListener = ChangeAndCollectionListener(this, children,
-            onAdded = { if (it.page() != this@Page) throw IllegalStateException("Added a $it to a different page") }
+    private val childrenListener = ChangeAndListListener(this, children,
+            onAdded = { item, _ -> if (item.page() != this@Page) throw IllegalStateException("Added $item to a different page") }
     )
 
     init {

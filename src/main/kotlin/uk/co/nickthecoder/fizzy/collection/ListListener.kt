@@ -18,11 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.collection
 
-interface CollectionListener<T> {
+interface ListListener<T> {
 
-    fun added(collection: FCollection<T>, item: T)
+    fun added(list: FList<T>, item: T, index: Int)
 
-    fun removed(collection: FCollection<T>, item: T)
+    fun removed(list: FList<T>, item: T, index: Int)
 
 }
-

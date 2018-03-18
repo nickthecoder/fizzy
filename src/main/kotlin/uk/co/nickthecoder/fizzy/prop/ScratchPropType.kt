@@ -18,12 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-import uk.co.nickthecoder.fizzy.collection.CollectionListener
-import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.collection.ListListener
+import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.model.Scratch
-import uk.co.nickthecoder.fizzy.util.ChangeListeners
-import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 
 class ScratchList : MutableFList<Scratch>()
 
@@ -46,12 +44,12 @@ class ScratchListPropType private constructor()
 }
 
 class FindScratchField(val scratchList: ScratchList, val name: String)
-    : PropCalculation<Any>(), CollectionListener<Scratch> {
+    : PropCalculation<Any>(), ListListener<Scratch> {
 
     /**
      * If the scratch is removed, we need to become dirty!
      */
-    override fun removed(collection: FCollection<Scratch>, item: Scratch) {
+    override fun removed(list: FList<Scratch>, item: Scratch, index: Int) {
         if (item.name.value == name) {
             dirty = true
         }
@@ -60,7 +58,7 @@ class FindScratchField(val scratchList: ScratchList, val name: String)
     /**
      * If the name has been added back again, become dirty (probably not needed, but it won't hurt).
      */
-    override fun added(collection: FCollection<Scratch>, item: Scratch) {
+    override fun added(list: FList<Scratch>, item: Scratch, index: Int) {
         if (item.name.value == name) {
             dirty = true
         }

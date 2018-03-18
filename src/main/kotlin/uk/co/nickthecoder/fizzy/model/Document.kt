@@ -21,7 +21,7 @@ package uk.co.nickthecoder.fizzy.model
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.model.history.History
 import uk.co.nickthecoder.fizzy.prop.PropVariable
-import uk.co.nickthecoder.fizzy.util.ChangeAndCollectionListener
+import uk.co.nickthecoder.fizzy.util.ChangeAndListListener
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
 import java.io.File
@@ -54,8 +54,8 @@ class Document(val id: String = Document.generateDocumentId())
 
     private var previousId = 0
 
-    private val pagesListener = ChangeAndCollectionListener(this, pages,
-            onAdded = { if (it.document != this@Document) throw IllegalStateException("Added a page to the incorrect document") }
+    private val pagesListener = ChangeAndListListener(this, pages,
+            onAdded = { item, _ -> if (item.document != this@Document) throw IllegalStateException("Added a page to the incorrect document") }
     )
 
     val history = History()

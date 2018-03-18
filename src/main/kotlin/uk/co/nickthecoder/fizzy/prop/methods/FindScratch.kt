@@ -18,24 +18,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop.methods
 
-import uk.co.nickthecoder.fizzy.collection.CollectionListener
-import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.collection.ListListener
+import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.model.Scratch
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.Prop
 
 class FindScratch(prop: Prop<Shape>)
-    : TypedMethod1<Shape, String>(prop, String::class.java), CollectionListener<Scratch> {
+    : TypedMethod1<Shape, String>(prop, String::class.java), ListListener<Scratch> {
 
-    override fun added(collection: FCollection<Scratch>, item: Scratch) {
+    override fun added(list: FList<Scratch>, item: Scratch, index: Int) {
         dirty = true
     }
 
-    override fun removed(collection: FCollection<Scratch>, item: Scratch) {
+    override fun removed(list: FList<Scratch>, item: Scratch, index: Int) {
         dirty = true
     }
 
-    private var oldValue : Any? = null
+    private var oldValue: Any? = null
 
     override fun eval(a: String): Any {
         val scratch = prop.value.findScratch(a)

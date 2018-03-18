@@ -23,8 +23,8 @@ import javafx.scene.Node
 import javafx.scene.control.*
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.VBox
-import uk.co.nickthecoder.fizzy.collection.CollectionListener
-import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.collection.ListListener
+import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.model.geometry.GeometryPart
 import uk.co.nickthecoder.fizzy.prop.PropExpression
@@ -38,42 +38,42 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
 
     private val sectionNameToTitledPane = mutableMapOf<String, TitledPane>()
 
-    private val geometryPartsListener = object : CollectionListener<GeometryPart> {
-        override fun added(collection: FCollection<GeometryPart>, item: GeometryPart) {
+    private val geometryPartsListener = object : ListListener<GeometryPart> {
+        override fun added(list: FList<GeometryPart>, item: GeometryPart, index: Int) {
             rebuildSection("Geometry")
         }
 
-        override fun removed(collection: FCollection<GeometryPart>, item: GeometryPart) {
+        override fun removed(list: FList<GeometryPart>, item: GeometryPart, index: Int) {
             rebuildSection("Geometry")
         }
     }
 
-    private val connectionPointsListener = object : CollectionListener<ConnectionPoint> {
-        override fun added(collection: FCollection<ConnectionPoint>, item: ConnectionPoint) {
+    private val connectionPointsListener = object : ListListener<ConnectionPoint> {
+        override fun added(list: FList<ConnectionPoint>, item: ConnectionPoint, index: Int) {
             rebuildSection("ConnectionPoint")
         }
 
-        override fun removed(collection: FCollection<ConnectionPoint>, item: ConnectionPoint) {
+        override fun removed(list: FList<ConnectionPoint>, item: ConnectionPoint, index: Int) {
             rebuildSection("ConnectionPoint")
         }
     }
 
-    private val controlPointsListener = object : CollectionListener<ControlPoint> {
-        override fun added(collection: FCollection<ControlPoint>, item: ControlPoint) {
+    private val controlPointsListener = object : ListListener<ControlPoint> {
+        override fun added(list: FList<ControlPoint>, item: ControlPoint, index: Int) {
             rebuildSection("ControlPoint")
         }
 
-        override fun removed(collection: FCollection<ControlPoint>, item: ControlPoint) {
+        override fun removed(list: FList<ControlPoint>, item: ControlPoint, index: Int) {
             rebuildSection("ControlPoint")
         }
     }
 
-    private val scratchListener = object : CollectionListener<Scratch> {
-        override fun added(collection: FCollection<Scratch>, item: Scratch) {
+    private val scratchListener = object : ListListener<Scratch> {
+        override fun added(list: FList<Scratch>, item: Scratch, index: Int) {
             rebuildSection("Scratch")
         }
 
-        override fun removed(collection: FCollection<Scratch>, item: Scratch) {
+        override fun removed(list: FList<Scratch>, item: Scratch, index: Int) {
             rebuildSection("Scratch")
         }
     }

@@ -38,12 +38,12 @@ class Geometry(val shape: Shape)
 
     override val changeListeners = ChangeListeners<Geometry>()
 
-    private val geometryPartsListener = ChangeAndCollectionListener(this, parts,
-            onAdded = { part ->
+    private val geometryPartsListener = ChangeAndListListener(this, parts,
+            onAdded = { part, _ ->
                 part.geometry = this
                 part.setContext(shape.context)
             },
-            onRemoved = { part ->
+            onRemoved = { part, _ ->
                 part.geometry = null
                 part.setContext(constantsContext)
             }

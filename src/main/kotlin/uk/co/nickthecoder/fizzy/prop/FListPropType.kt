@@ -18,8 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop
 
-import uk.co.nickthecoder.fizzy.collection.CollectionListener
-import uk.co.nickthecoder.fizzy.collection.FCollection
+import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.collection.FList
 import java.util.regex.Pattern
 
@@ -62,7 +61,7 @@ class FListPropType private constructor()
 }
 
 class ListPropertyAccess(val listProp: Prop<FList<Any>>, val index: Int, val fieldName: String)
-    : PropCalculation<Any>(), CollectionListener<Any> {
+    : PropCalculation<Any>(), ListListener<Any> {
 
     var oldField: Prop<*>? = null
 
@@ -71,11 +70,11 @@ class ListPropertyAccess(val listProp: Prop<FList<Any>>, val index: Int, val fie
         listProp.value.listeners.add(this)
     }
 
-    override fun added(collection: FCollection<Any>, item: Any) {
+    override fun added(list: FList<Any>, item: Any, index: Int) {
         dirty = true
     }
 
-    override fun removed(collection: FCollection<Any>, item: Any) {
+    override fun removed(list: FList<Any>, item: Any, index: Int) {
         dirty = true
     }
 
