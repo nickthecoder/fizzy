@@ -90,4 +90,23 @@
     -fx-base : error;
 }
 
+/******** STANDARD LAYOUTS *******/
+
+.buttons {
+    -fx-padding : 6px;
+    -fx-alignment: top-right;
+}
+
+.buttons .button {
+    -fx-min-width: 100px;
+}
+
+/******** CUSTOM PROPERTIES *******/
+
+.custom-properties {
+    -fx-padding : 6px 6px 6px 12px;
+    -fx-hgap : 12px;
+    -fx-vgap : 6px;
+}
+
 /******** END *******/

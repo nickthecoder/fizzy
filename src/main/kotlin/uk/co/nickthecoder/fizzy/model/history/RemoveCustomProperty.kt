@@ -18,17 +18,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model.history
 
+import uk.co.nickthecoder.fizzy.model.CustomProperty
 import uk.co.nickthecoder.fizzy.model.Shape
-import uk.co.nickthecoder.fizzy.model.UserData
 
-class AddUserData(val shape: Shape, val index: Int, val userData: UserData)
+class RemoveCustomProperty(val shape: Shape, val index: Int)
     : Change {
 
+    val customProperty: CustomProperty = shape.customProperties[index]
+
     override fun redo() {
-        shape.userDataList.add(index, userData)
+        shape.customProperties.removeAt(index)
     }
 
     override fun undo() {
-        shape.userDataList.removeAt(index)
+        shape.customProperties.add(index, customProperty)
     }
 }

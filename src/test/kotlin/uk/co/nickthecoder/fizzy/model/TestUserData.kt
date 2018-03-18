@@ -30,31 +30,31 @@ class TestUserData : MyTestCase() {
         val page = Page(doc)
         val box = createBox(page)
 
-        box.userDataList.add(UserData("foo", "Foo Label", "Foo"))
-        box.userDataList.add(UserData("bar", "Bar Label", "Bar"))
+        box.customProperties.add(CustomProperty("foo", "Foo Label", "Foo"))
+        box.customProperties.add(CustomProperty("bar", "Bar Label", "Bar"))
 
-        box.scratches.add(Scratch("ref1", DoubleExpression("UserData.foo")))
-        box.scratches.add(Scratch("ref2", DoubleExpression("UserData.bar")))
+        box.scratches.add(Scratch("ref1", DoubleExpression("CustomProperty.foo")))
+        box.scratches.add(Scratch("ref2", DoubleExpression("CustomProperty.bar")))
 
         // Check the values directly
-        assertEquals("Foo", box.userDataList[0].data.value)
-        assertEquals("Bar", box.userDataList[1].data.value)
+        assertEquals("Foo", box.customProperties[0].data.value)
+        assertEquals("Bar", box.customProperties[1].data.value)
 
         // Check the values via a Scratch
         assertEquals("Foo", box.scratches[0].expression.value)
         assertEquals("Bar", box.scratches[1].expression.value)
 
         // Swap the names of foo and bar
-        box.userDataList[0].name.value = "bar"
-        box.userDataList[1].name.value = "foo"
+        box.customProperties[0].name.value = "bar"
+        box.customProperties[1].name.value = "foo"
 
         // Note, these are the same tests, with the 0 and 1 switched over.
         assertEquals("Foo", box.scratches[1].expression.value)
         assertEquals("Bar", box.scratches[0].expression.value)
 
         // Change the values
-        box.userDataList[0].data.value = "Changed 0"
-        box.userDataList[1].data.value = "Changed 1"
+        box.customProperties[0].data.value = "Changed 0"
+        box.customProperties[1].data.value = "Changed 1"
 
         // Note the indices are still switched!
         assertEquals("Changed 0", box.scratches[1].expression.value)

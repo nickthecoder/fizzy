@@ -70,7 +70,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
 
     val scratches = ScratchList()
 
-    val userDataList = UserDataList()
+    val customProperties = CustomPropertyList()
 
 
     override val fromLocalToParent
@@ -139,7 +139,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
                 onAdded = { item, _ -> item.setContext(context) },
                 onRemoved = { item, _ -> item.setContext(constantsContext) }
         ))
-        collectionListeners.add(ChangeAndListListener(this, userDataList))
+        collectionListeners.add(ChangeAndListListener(this, customProperties))
     }
 
     protected fun createContext(thisContext: ThisContext<*>) = CompoundEvaluationContext(listOf(
@@ -236,16 +236,6 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
         return null
     }
 
-    fun findUserData(name: String): UserData? {
-        userDataList.forEach { userData ->
-            if (userData.name.value == name) {
-                return userData
-            }
-        }
-
-        return null
-    }
-
     /**
      * Listens to the expression, so that when it changes, Shape's listeners are informed.
      * The expression's [EvaluationContext] is also set.
@@ -274,8 +264,8 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
         scratches.forEach { scratch ->
             newShape.scratches.add(scratch.copy(link))
         }
-        userDataList.forEach { userData ->
-            newShape.userDataList.add(userData.copy())
+        customProperties.forEach { customProperty ->
+            newShape.customProperties.add(customProperty.copy())
         }
 
         metaData().copyInto(newShape.metaData(), link)
@@ -298,10 +288,10 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
                 scratches.add(scratch)
                 Pair(scratch, scratch.metaData())
             }
-            "UserData" -> {
-                val userDataItem = UserData("", "", "")
-                userDataList.add(userDataItem)
-                Pair(userDataItem, userDataItem.metaData())
+            "CustomProperty" -> {
+                val customProperty = CustomProperty("", "", "")
+                customProperties.add(customProperty)
+                Pair(customProperty, customProperty.metaData())
             }
             else -> throw IllegalStateException("Shape does not have any rows of type $type")
         }
@@ -315,7 +305,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
             "ConnectionPoint" -> Pair(connectionPoints, metaData().sections[sectionName]!!)
             "ControlPoint" -> Pair(controlPoints, metaData().sections[sectionName]!!)
             "Scratch" -> Pair(scratches, metaData().sections[sectionName]!!)
-            "UserData" -> Pair(userDataList, metaData().sections[sectionName]!!)
+            "CustomProperty" -> Pair(customProperties, metaData().sections[sectionName]!!)
             else -> throw IllegalStateException("Shape does not have a section named $sectionName")
         }
     }
@@ -377,16 +367,16 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
             scratch.addMetaData(scratchRow)
         }
 
-        val userDataSection = metaData.newSection("UserData")
-        userDataSection.rowFactories.add(RowFactory("New User Data") { index ->
-            document().history.makeChange(AddUserData(this, index, UserData("", "", "")))
+        val customPropertySection = metaData.newSection("CustomProperty")
+        customPropertySection.rowFactories.add(RowFactory("New Custom Property") { index ->
+            document().history.makeChange(AddCustomProperty(this, index, CustomProperty("", "", "")))
         })
-        userDataSection.rowRemoval = { index ->
-            document().history.makeChange(RemoveUserData(this, index))
+        customPropertySection.rowRemoval = { index ->
+            document().history.makeChange(RemoveCustomProperty(this, index))
         }
-        userDataList.forEach { userData ->
-            val userDataRow = userDataSection.newRow(null)
-            userData.addMetaData(userDataRow)
+        customProperties.forEach { customProperty ->
+            val customPropertyRow = customPropertySection.newRow(null)
+            customProperty.addMetaData(customPropertyRow)
         }
 
     }

@@ -20,44 +20,44 @@ package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.collection.ListListener
+import uk.co.nickthecoder.fizzy.model.CustomProperty
+import uk.co.nickthecoder.fizzy.model.CustomPropertyList
 import uk.co.nickthecoder.fizzy.model.Shape
-import uk.co.nickthecoder.fizzy.model.UserData
-import uk.co.nickthecoder.fizzy.model.UserDataList
 
 /**
  * Allows for the following syntax :
- *     UserData.Foo
- * Where "Foo" is the name of a [UserData].
- * The expression "Scratch" puts [Shape.userDataList] onto the stack, and because it is a specialised class ( [UserDataList] ),
- * and not the generic FList<UserData>, we can set up a PropType for this scenario.
+ *     CustomProperty.Foo
+ * Where "Foo" is the name of a [CustomProperty].
+ * The expression "Scratch" puts [Shape.customProperties] onto the stack, and because it is a specialised class ( [CustomPropertyList] ),
+ * and not the generic FList<CustomProperty>, we can set up a PropType for this scenario.
  *
- * [FindUserData] does the tricky part, listening for the properties etc.
+ * [FindCustomeProperty] does the tricky part, listening for the properties etc.
  */
-class UserDataListPropType private constructor()
-    : PropType<UserDataList>(UserDataList::class.java) {
+class CustomPropertyListPropType private constructor()
+    : PropType<CustomPropertyList>(CustomPropertyList::class.java) {
 
-    override fun findField(prop: Prop<UserDataList>, name: String): Prop<*>? {
-        // Lets us access a user data value using : UserData.TheName
+    override fun findField(prop: Prop<CustomPropertyList>, name: String): Prop<*>? {
+        // Lets us access a CustomProperty data value using : CustomProperty.TheName
         prop.value.forEach { property ->
             if (property.name.value == name) {
-                return FindUserData(prop.value, name)
+                return FindCustomeProperty(prop.value, name)
             }
         }
         return super.findField(prop, name)
     }
 
     companion object {
-        val instance = UserDataListPropType()
+        val instance = CustomPropertyListPropType()
     }
 }
 
-class FindUserData(val propertyList: UserDataList, val name: String)
-    : PropCalculation<Any>(), ListListener<UserData> {
+class FindCustomeProperty(val propertyList: CustomPropertyList, val name: String)
+    : PropCalculation<Any>(), ListListener<CustomProperty> {
 
     /**
      * If the scratch is removed, we need to become dirty!
      */
-    override fun removed(list: FList<UserData>, item: UserData, index: Int) {
+    override fun removed(list: FList<CustomProperty>, item: CustomProperty, index: Int) {
         if (item.name.value == name) {
             dirty = true
         }
@@ -66,7 +66,7 @@ class FindUserData(val propertyList: UserDataList, val name: String)
     /**
      * If the name has been added back again, become dirty (probably not needed, but it won't hurt).
      */
-    override fun added(list: FList<UserData>, item: UserData, index: Int) {
+    override fun added(list: FList<CustomProperty>, item: CustomProperty, index: Int) {
         if (item.name.value == name) {
             dirty = true
         }
@@ -75,7 +75,7 @@ class FindUserData(val propertyList: UserDataList, val name: String)
     /**
      * Listen to the name, so that if it changes, we become dirty (and will throw when re-evaluated).
      */
-    var userDataName: Prop<String>? = null
+    var customPropertyName: Prop<String>? = null
         set(v) {
             if (field != v) {
                 field?.let { unlistenTo(it) }
@@ -84,7 +84,7 @@ class FindUserData(val propertyList: UserDataList, val name: String)
             }
         }
 
-    var userDataData: Prop<*>? = null
+    var customPropertyData: Prop<*>? = null
         set(v) {
             field?.propListeners?.remove(this)
             v?.propListeners?.add(this)
@@ -93,12 +93,12 @@ class FindUserData(val propertyList: UserDataList, val name: String)
     override fun eval(): Any {
         propertyList.forEach { property ->
             if (property.name.value == name) {
-                userDataData = property.data
-                userDataName = property.name
+                customPropertyData = property.data
+                customPropertyName = property.name
                 return property.data.value
             }
         }
-        throw RuntimeException("UserData $name not found")
+        throw RuntimeException("CustomProperty $name not found")
     }
 
 }

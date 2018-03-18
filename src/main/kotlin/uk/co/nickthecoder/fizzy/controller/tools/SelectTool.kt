@@ -40,9 +40,14 @@ class SelectTool(controller: Controller)
         }
 
         if (shape != null) {
-            return listOf(
+            val list = mutableListOf(
                     "Edit Shape Sheet" to { controller.otherActions.editShapeSheet(shape) }
             )
+
+            if (shape.customProperties.isNotEmpty()) {
+                list.add("Custom Properties …" to { controller.otherActions.editCustomProperties(shape) })
+            }
+            return list
         }
         return super.onContextMenu(event)
     }

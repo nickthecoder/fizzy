@@ -23,10 +23,13 @@ import uk.co.nickthecoder.fizzy.model.Shape
 interface OtherActions {
 
     fun editShapeSheet(shape: Shape)
+    fun editCustomProperties(shape: Shape)
 
 }
 
 class MockOtherActions : OtherActions {
-    override fun editShapeSheet(shape: Shape) {
-    }
+
+    override fun editShapeSheet(shape: Shape) {}
+    override fun editCustomProperties(shape: Shape) {}
+
 }

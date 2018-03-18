@@ -31,8 +31,8 @@ import javafx.stage.FileChooser
 import javafx.stage.Stage
 import javafx.stage.Window
 import uk.co.nickthecoder.fizzy.Fizzy
-import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.collection.FList
+import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.controller.OtherActions
 import uk.co.nickthecoder.fizzy.model.Document
@@ -171,6 +171,10 @@ class MainWindow(val stage: Stage)
         val tab = ShapeSheetTab(shape)
         tabs.tabs.add(tab)
         tabs.selectionModel.select(tab)
+    }
+
+    override fun editCustomProperties(shape: Shape) {
+        CustomPropertiesWindow(this, shape)
     }
 
     fun documentNew() {

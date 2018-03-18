@@ -58,7 +58,7 @@ abstract class ShapePropType<T : Shape>(klass: Class<T>)
             "ConnectionPoint" -> PropValue(prop.value.connectionPoints)
             "ControlPoint" -> PropValue(prop.value.controlPoints)
             "Scratch" -> PropValue(prop.value.scratches)
-            "UserData" -> PropValue(prop.value.userDataList)
+            "CustomProperty" -> PropValue(prop.value.customProperties)
 
             "LineWidth" -> PropField("Shape.LineWidth", prop) { prop.value.lineWidth }
             "StrokeColor" -> PropField("Shape.StrokeColor", prop) { prop.value.strokeColor }
