@@ -41,13 +41,17 @@ class Geometry(val shape: Shape)
     private val geometryPartsListener = ChangeAndListListener(this, parts,
             onAdded = { part, index ->
                 part.geometry = this
-                part.internalPrevPart = if (index == 0) part else parts[index - 1]
                 part.setContext(shape.context)
+                part.internalPrevPart = if (index == 0) part else parts[index - 1]
+
+                if (index < parts.size - 1) {
+                    parts[index + 1].internalPrevPart = part
+                }
             },
             onRemoved = { part, index ->
                 part.geometry = null
-                part.internalPrevPart = part
                 part.setContext(constantsContext)
+                part.internalPrevPart = part
                 if (index < parts.size) {
                     parts[index].internalPrevPart = if (index == 0) parts[index] else parts[index - 1]
                 }
@@ -130,7 +134,7 @@ class Geometry(val shape: Shape)
             val first = parts[0].point.value
             val last = parts[parts.size - 1].point.value
             if (first != last) {
-                if (first != last && GeometryPart.isCrossing(localPoint, last, first)) {
+                if (first != last && LineTo.isCrossing(localPoint, last, first)) {
                     oddEven = !oddEven
                 }
             }

@@ -19,11 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model.geometry
 
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
-import uk.co.nickthecoder.fizzy.model.Dimension2
-import uk.co.nickthecoder.fizzy.model.MetaData
-import uk.co.nickthecoder.fizzy.model.MetaDataCell
-import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
+import uk.co.nickthecoder.fizzy.prop.Prop
 
 /**
  * Cubic bezier curves are defined by four points. The start and end points, plus two control points, which
@@ -40,8 +38,8 @@ import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
  *
  * https://pomax.github.io/bezierinfo/
  */
-class BezierCurveTo(val a: Dimension2Expression, val b: Dimension2Expression, point: Dimension2Expression)
-    : LineTo(point) {
+class BezierCurveTo(val a: Dimension2Expression, val b: Dimension2Expression, override val point: Dimension2Expression)
+    : GeometryPart() {
 
     constructor(aFormula: String, bFormula: String, pointFormula: String) :
             this(Dimension2Expression(aFormula), Dimension2Expression(bFormula), Dimension2Expression(pointFormula))
@@ -51,10 +49,43 @@ class BezierCurveTo(val a: Dimension2Expression, val b: Dimension2Expression, po
 
     constructor() : this(Dimension2.ZERO_mm, Dimension2.ZERO_mm, Dimension2.ZERO_mm)
 
+    val pointsCache = mutableListOf<Dimension2>()
+
+    /**
+     * When the prevPart changes, then we need to clear the pointsCache, and listen to the previous part's point
+     * (and un-listen to the old version).
+     */
+    override var internalPrevPart: GeometryPart
+        get() = super.internalPrevPart
+        set(v) {
+            if (super.internalPrevPart != this) {
+                super.internalPrevPart.point.propListeners.remove(this)
+            }
+            super.internalPrevPart = v
+            if (v != this) {
+                v.point.propListeners.add(this)
+            }
+        }
+
     init {
         a.propListeners.add(this)
         b.propListeners.add(this)
         point.propListeners.add(this)
+    }
+
+    override fun setContext(context: EvaluationContext) {
+        point.context = context
+        a.context = context
+        b.context = context
+    }
+
+    /**
+     * When any of my data changes, or of the previous GeometryPart's point changes,
+     * clear the pointsCache.
+     */
+    override fun dirty(prop: Prop<*>) {
+        super.dirty(prop)
+        pointsCache.clear()
     }
 
     override fun addMetaData(metaData: MetaData) {
@@ -63,11 +94,6 @@ class BezierCurveTo(val a: Dimension2Expression, val b: Dimension2Expression, po
         metaData.cells.add(MetaDataCell("B", b))
     }
 
-    override fun setContext(context: EvaluationContext) {
-        point.context = context
-        a.context = context
-        b.context = context
-    }
 
     /**
      * B(t) = (1-t)³ P0 + 3(1-t)²t P1 + 3(1-t)t² P2 + t³ P3
@@ -85,9 +111,60 @@ class BezierCurveTo(val a: Dimension2Expression, val b: Dimension2Expression, po
                 point.value * (along * along * along)
     }
 
+    fun ensurePointsCache() {
+        if (pointsCache.isEmpty()) {
+            for (i in 1..16) {
+                val t = i.toDouble() / 16.0
+                pointsCache.add(pointAlong(prevPart.point.value, t))
+            }
+        }
+    }
+
+    override fun isCrossing(here: Dimension2, prev2: Dimension2): Boolean {
+        ensurePointsCache()
+
+        var result = false
+        var prev = prevPart.point.value
+        pointsCache.forEach { p ->
+            if (LineTo.isCrossing(here, prev, p)) {
+                result = !result
+            }
+            prev = p
+        }
+        return result
+    }
+
+    override fun isAlong(shape: Shape?, here: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean {
+        ensurePointsCache()
+
+        var prev = prevPart.point.value
+        pointsCache.forEach { p ->
+            if (LineTo.isAlong(shape, here, prev, p, lineWidth, minDistance)) {
+                return true
+            }
+            prev = p
+        }
+        return false
+    }
+
     override fun checkAlong(shape: Shape, here: Dimension2): Pair<Double, Double>? {
-        //TODO Implement
-        return super.checkAlong(shape, here)
+        ensurePointsCache()
+
+        var minDistance: Double = Double.MAX_VALUE
+        var minAlong = 0.0
+        var prev = prevPart.point.value
+        val interval = 1.0 / (pointsCache.size)
+
+        pointsCache.forEachIndexed { index, p ->
+            LineTo.checkAlong(shape, here, prev, p)?.let { (dist, along) ->
+                if (dist < minDistance) {
+                    minDistance = dist
+                    minAlong = interval * (index + along)
+                }
+            }
+            prev = p
+        }
+        return minDistance to minAlong
     }
 
     override fun copy(link: Boolean): GeometryPart = BezierCurveTo(a.copy(link), b.copy(link), point.copy(link))

@@ -92,9 +92,8 @@ open class MutableFList<T>(override val backing: MutableList<T> = mutableListOf<
 
     override fun set(index: Int, element: T): T {
         val result = backing.set(index, element)
-        listeners.fireRemoved(this, result, index)
-        listeners.fireAdded(this, element, index)
-
+        backing.removeAt(index)
+        backing.add(index, element)
         return result
     }
 

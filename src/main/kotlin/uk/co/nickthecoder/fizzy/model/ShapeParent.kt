@@ -68,23 +68,24 @@ interface ShapeParent {
         children.forEach { child ->
             if (child !== exclude) {
                 val localPoint = child.fromPageToLocal.value * atPagePoint
-
-
                 // Ignore geometries that cannot be connected to.
                 if (child.geometry.connect.value) {
 
+                    val nonMoveCount = child.geometry.parts.count { it !is MoveTo }
+                    val interval = 1.0 / nonMoveCount
                     var moveToCount = 0
+
                     child.geometry.parts.forEachIndexed { index, part ->
                         if (part is MoveTo) {
                             moveToCount++
                         } else {
 
-                            val result = part.checkAlong(child, localPoint)
-                            if (result != null && result.first < nearestDistance) {
-                                val nonMoveCount = child.geometry.parts.count { it !is MoveTo }
-                                nearest = child.geometry
-                                nearestDistance = result.first
-                                nearestAlong = (index - moveToCount).toDouble() / nonMoveCount.toDouble() + result.second / nonMoveCount
+                            part.checkAlong(child, localPoint)?.let { (dist, along) ->
+                                if (dist < nearestDistance) {
+                                    nearest = child.geometry
+                                    nearestDistance = dist
+                                    nearestAlong = ((index - moveToCount) + along) * interval
+                                }
                             }
                         }
                     }

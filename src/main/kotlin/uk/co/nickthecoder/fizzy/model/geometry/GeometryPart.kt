@@ -52,7 +52,7 @@ abstract class GeometryPart
     /**
      * The previous geometry part, or 'this' if there is no previous part.
      */
-    internal var internalPrevPart: GeometryPart = this
+    open internal var internalPrevPart: GeometryPart = this
 
     /**
      * The previous geometry part, or 'this' if there is no previous part.
@@ -113,21 +113,6 @@ abstract class GeometryPart
 
     abstract fun copy(link: Boolean): GeometryPart
 
-    companion object {
-
-        /**
-         * Tests if a horizontal ray crosses the line segment from prev to next.
-         * See https://wrf.ecse.rpi.edu//Research/Short_Notes/pnpoly.html
-         */
-        fun isCrossing(here: Dimension2, prev: Dimension2, next: Dimension2): Boolean {
-            val testx = here.x.inDefaultUnits
-            val testy = here.y.inDefaultUnits
-            return ((next.y.inDefaultUnits > testy) != (prev.y.inDefaultUnits > testy)) &&
-                    (testx < (prev.x.inDefaultUnits - next.x.inDefaultUnits) * (testy - next.y.inDefaultUnits)
-                            / (prev.y.inDefaultUnits - next.y.inDefaultUnits) + next.x.inDefaultUnits)
-        }
-
-    }
 }
 
 class GeometryPartProp(geometryPart: GeometryPart)
