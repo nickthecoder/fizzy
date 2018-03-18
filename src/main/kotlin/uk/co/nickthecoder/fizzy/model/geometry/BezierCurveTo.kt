@@ -22,6 +22,7 @@ import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.MetaData
 import uk.co.nickthecoder.fizzy.model.MetaDataCell
+import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 
 /**
@@ -36,6 +37,8 @@ import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
  * B(t) = (1-t)³ P0 + 3(1-t)²t P1 + 3(1-t)t² P2 + t³ P3
  *
  * Where t is in the range 0..1. P0 is the start, P1 and P2 are the two control points, and P3 is the end point.
+ *
+ * https://pomax.github.io/bezierinfo/
  */
 class BezierCurveTo(val a: Dimension2Expression, val b: Dimension2Expression, point: Dimension2Expression)
     : LineTo(point) {
@@ -80,6 +83,11 @@ class BezierCurveTo(val a: Dimension2Expression, val b: Dimension2Expression, po
                 a.value * (3 * oneMinusT2 * along) +
                 b.value * (3 * oneMinusT * along * along) +
                 point.value * (along * along * along)
+    }
+
+    override fun checkAlong(shape: Shape, here: Dimension2, prev: Dimension2): Pair<Double, Double>? {
+        //TODO Implement
+        return super.checkAlong(shape, here, prev)
     }
 
     override fun copy(link: Boolean): GeometryPart = BezierCurveTo(a.copy(link), b.copy(link), point.copy(link))
