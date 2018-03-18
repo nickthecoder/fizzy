@@ -20,22 +20,16 @@ package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.collection.ListListener
-import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.UserData
-
-/**
- * An empty class definition, subclassing MutableFList<Scratch>.
- * See [ScratchListPropType] for details on why this exists.
- */
-class UserDataList : MutableFList<UserData>()
+import uk.co.nickthecoder.fizzy.model.UserDataList
 
 /**
  * Allows for the following syntax :
  *     UserData.Foo
  * Where "Foo" is the name of a [UserData].
- * The expression "Scratch" puts [Shape.userDataList] onto the stack, and because it is a specialised class ( [ScratchList] ),
- * and not the generic FList<Scratch>, we can set up a PropType for this scenario.
+ * The expression "Scratch" puts [Shape.userDataList] onto the stack, and because it is a specialised class ( [UserDataList] ),
+ * and not the generic FList<UserData>, we can set up a PropType for this scenario.
  *
  * [FindUserData] does the tricky part, listening for the properties etc.
  */
@@ -43,7 +37,7 @@ class UserDataListPropType private constructor()
     : PropType<UserDataList>(UserDataList::class.java) {
 
     override fun findField(prop: Prop<UserDataList>, name: String): Prop<*>? {
-        // Lets us access a scratch value using : Scratch.TheScratchName
+        // Lets us access a user data value using : UserData.TheName
         prop.value.forEach { property ->
             if (property.name.value == name) {
                 return FindUserData(prop.value, name)

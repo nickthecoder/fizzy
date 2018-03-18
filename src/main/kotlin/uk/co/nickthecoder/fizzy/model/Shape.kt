@@ -275,7 +275,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
             newShape.scratches.add(scratch.copy(link))
         }
         userDataList.forEach { userData ->
-            newShape.userDataList.add(userData.copy(link))
+            newShape.userDataList.add(userData.copy())
         }
 
         metaData().copyInto(newShape.metaData(), link)

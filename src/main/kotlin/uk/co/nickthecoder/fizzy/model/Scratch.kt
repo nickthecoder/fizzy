@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
+import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.prop.*
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
@@ -36,6 +37,12 @@ private fun createPropExpression(type: String): PropExpression<*> {
         else -> throw IllegalArgumentException("Scratch. Unknown type $type")
     }
 }
+
+/**
+ * An empty class definition, subclassing MutableFList<Scratch>.
+ * See [ScratchListPropType] for details on why this exists.
+ */
+class ScratchList : MutableFList<Scratch>()
 
 class Scratch(name: String, var expression: PropExpression<*>, comment: String = "")
     : HasChangeListeners<Scratch>, PropListener, MetaDataAware {

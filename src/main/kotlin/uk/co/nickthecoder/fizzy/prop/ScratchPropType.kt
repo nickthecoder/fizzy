@@ -20,15 +20,9 @@ package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.collection.ListListener
-import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.model.Scratch
+import uk.co.nickthecoder.fizzy.model.ScratchList
 import uk.co.nickthecoder.fizzy.model.Shape
-
-/**
- * An empty class definition, subclassing MutableFList<Scratch>.
- * See [ScratchListPropType] for details on why this exists.
- */
-class ScratchList : MutableFList<Scratch>()
 
 /**
  * Allows for the following syntax :

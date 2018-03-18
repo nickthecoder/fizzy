@@ -18,11 +18,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
+import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.prop.Prop
 import uk.co.nickthecoder.fizzy.prop.PropListener
 import uk.co.nickthecoder.fizzy.prop.PropVariable
+import uk.co.nickthecoder.fizzy.prop.UserDataListPropType
 import uk.co.nickthecoder.fizzy.util.ChangeListeners
 import uk.co.nickthecoder.fizzy.util.HasChangeListeners
+
+/**
+ * An empty class definition, subclassing MutableFList<Scratch>.
+ * See [UserDataListPropType] for details on why this exists.
+ */
+class UserDataList : MutableFList<UserData>()
 
 class UserData(name: String, label: String = name, data: String)
     : HasChangeListeners<UserData>, PropListener, MetaDataAware {
@@ -57,5 +65,5 @@ class UserData(name: String, label: String = name, data: String)
         changeListeners.fireChanged(this)
     }
 
-    fun copy(link: Boolean) = UserData(name = name.value, label = label.value, data = data.value)
+    fun copy() = UserData(name = name.value, label = label.value, data = data.value)
 }
