@@ -24,7 +24,19 @@ import uk.co.nickthecoder.fizzy.model.MetaData
 import uk.co.nickthecoder.fizzy.model.MetaDataCell
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 
-
+/**
+ * Cubic bezier curves are defined by four points. The start and end points, plus two control points, which
+ * the line usually heads towards, but donsn't touch.
+ * The Start point is the [GeometryPart.point] of the previous geometry part in the list.
+ * The end point is this.[point], and the two control points are [a] and [b].
+ *
+ * https://en.wikipedia.org/wiki/B%C3%A9zier_curve
+ * A point along the curve is given by :
+ *
+ * B(t) = (1-t)³ P0 + 3(1-t)²t P1 + 3(1-t)t² P2 + t³ P3
+ *
+ * Where t is in the range 0..1. P0 is the start, P1 and P2 are the two control points, and P3 is the end point.
+ */
 class BezierCurveTo(val a: Dimension2Expression, val b: Dimension2Expression, point: Dimension2Expression)
     : LineTo(point) {
 
@@ -52,6 +64,22 @@ class BezierCurveTo(val a: Dimension2Expression, val b: Dimension2Expression, po
         point.context = context
         a.context = context
         b.context = context
+    }
+
+    /**
+     * B(t) = (1-t)³ P0 + 3(1-t)²t P1 + 3(1-t)t² P2 + t³ P3
+     *
+     * If we use "along" as the value for t in the cubic bezier curve equation above,
+     * then we can get a point along the curve.
+     */
+    override fun pointAlong(prev: Dimension2, along: Double): Dimension2 {
+        val oneMinusT = 1 - along
+        val oneMinusT2 = oneMinusT * oneMinusT
+        val oneMinusT3 = oneMinusT2 * oneMinusT
+        return prev * oneMinusT3 +
+                a.value * (3 * oneMinusT2 * along) +
+                b.value * (3 * oneMinusT * along * along) +
+                point.value * (along * along * along)
     }
 
     override fun copy(link: Boolean): GeometryPart = BezierCurveTo(a.copy(link), b.copy(link), point.copy(link))
