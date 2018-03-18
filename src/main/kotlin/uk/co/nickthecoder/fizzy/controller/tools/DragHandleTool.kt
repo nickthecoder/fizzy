@@ -23,6 +23,7 @@ import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.controller.handle.Handle
 import uk.co.nickthecoder.fizzy.controller.handle.Shape1dHandle
 import uk.co.nickthecoder.fizzy.model.Dimension2
+import uk.co.nickthecoder.fizzy.model.NO_SHAPE
 
 open class DragHandleTool(
         controller: Controller,
@@ -47,7 +48,7 @@ open class DragHandleTool(
     override fun endTool(replacement: Tool) {
         if (handle is Shape1dHandle) {
             controller.showConnectionPoints.value = false
-            controller.highlightGeometry.value = Controller.NO_GEOMETRY
+            controller.highlightShape.value = NO_SHAPE
         }
     }
 

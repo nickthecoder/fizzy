@@ -22,6 +22,7 @@ import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.Color
 import uk.co.nickthecoder.fizzy.model.Dimension2
+import uk.co.nickthecoder.fizzy.model.NO_SHAPE
 import uk.co.nickthecoder.fizzy.model.Shape1d
 import uk.co.nickthecoder.fizzy.model.history.CreateShape
 
@@ -50,7 +51,7 @@ class GrowShape1dTool(
 
     override fun endTool(replacement: Tool) {
         controller.showConnectionPoints.value = false
-        controller.highlightGeometry.value = Controller.NO_GEOMETRY
+        controller.highlightShape.value = NO_SHAPE
     }
 
     override fun onMousePressed(event: CMouseEvent) {
@@ -87,14 +88,14 @@ class GrowShape1dTool(
             // Either a connection to another shape, or the point of the mouse event.
             val (connectFormula, _, geometry) = Controller.connectData(event.point, it, event.scale)
 
-            controller.highlightGeometry.value = geometry ?: Controller.NO_GEOMETRY
+            controller.highlightShape.value = geometry ?: NO_SHAPE
 
             it.end.formula = connectFormula ?: event.point.toFormula()
         }
     }
 
     override fun onMouseReleased(event: CMouseEvent) {
-        controller.highlightGeometry.value = Controller.NO_GEOMETRY
+        controller.highlightShape.value = NO_SHAPE
         newShape = null
         controller.page.document.history.endBatch()
     }

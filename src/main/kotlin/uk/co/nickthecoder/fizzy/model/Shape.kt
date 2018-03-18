@@ -534,3 +534,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
     }
 
 }
+
+private val noDocument = Document()
+private val noPage = Page(noDocument)
+val NO_SHAPE = Shape2d.create(noPage)

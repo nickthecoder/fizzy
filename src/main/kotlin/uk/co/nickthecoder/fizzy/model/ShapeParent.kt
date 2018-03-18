@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.collection.MutableFList
-import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.prop.Prop
 
@@ -60,8 +59,8 @@ interface ShapeParent {
      * Finds the nearest geometry that a point can be connected to.
      * Returns the Geometry, the distance and the amount along.
      */
-    fun findNearestConnectionGeometry(atPagePoint: Dimension2, exclude: Shape): Triple<Geometry, Double, Double>? {
-        var nearest: Geometry? = null
+    fun findNearestConnectionGeometry(atPagePoint: Dimension2, exclude: Shape): Triple<Shape, Double, Double>? {
+        var nearest: Shape? = null
         var nearestDistance = Double.MAX_VALUE
         var nearestAlong = 0.0
 
@@ -82,7 +81,7 @@ interface ShapeParent {
 
                             part.checkAlong(child, localPoint)?.let { (dist, along) ->
                                 if (dist < nearestDistance) {
-                                    nearest = child.geometry
+                                    nearest = child
                                     nearestDistance = dist
                                     nearestAlong = ((index - moveToCount) + along) * interval
                                 }

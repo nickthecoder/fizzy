@@ -26,13 +26,12 @@ import javafx.scene.control.ContextMenu
 import javafx.scene.control.MenuItem
 import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
-import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.collection.FList
+import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
-import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.controller.tools.ToolCursor
 import uk.co.nickthecoder.fizzy.model.*
-import uk.co.nickthecoder.fizzy.model.geometry.Geometry
+import uk.co.nickthecoder.fizzy.model.geometry.BezierCurveTo
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
 import uk.co.nickthecoder.fizzy.prop.Prop
@@ -129,7 +128,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
 
         drawingArea.controller.dirty.propListeners.add(dirtyListener)
         drawingArea.controller.showConnectionPoints.propListeners.add(dirtyListener)
-        drawingArea.controller.highlightGeometry.propListeners.add(dirtyListener)
+        drawingArea.controller.highlightShape.propListeners.add(dirtyListener)
 
         canvas.addEventHandler(MouseEvent.MOUSE_PRESSED) { onMousePressed(it) }
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED) { onMouseClicked(it) }
@@ -270,25 +269,30 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
                 }
             }
 
-            if (drawingArea.controller.highlightGeometry.value !== Controller.NO_GEOMETRY) {
-                highlightGeometry(drawingArea.controller.highlightGeometry.value)
+            if (drawingArea.controller.highlightShape.value !== NO_SHAPE) {
+                highlightShape(drawingArea.controller.highlightShape.value)
             }
         }
 
         dirty = false
     }
 
-    fun highlightGeometry(geometry: Geometry) {
+    fun highlightShape(shape: Shape) {
         dc.use() {
             dc.lineWidth(4.0 / drawingArea.scale)
             dc.lineColor(GREEN_BASE)
 
             dc.beginPath()
-            geometry.parts.forEach { part ->
-                val pagePoint = geometry.shape.fromLocalToPage.value * part.point.value
+            shape.geometry.parts.forEach { part ->
+                val pagePoint = shape.geometry.shape.fromLocalToPage.value * part.point.value
                 when (part) {
                     is MoveTo -> dc.moveTo(pagePoint)
                     is LineTo -> dc.lineTo(pagePoint)
+                    is BezierCurveTo -> dc.bezierCurveTo(
+                            shape.geometry.shape.fromLocalToPage.value * part.a.value,
+                            shape.geometry.shape.fromLocalToPage.value * part.b.value,
+                            pagePoint)
+
                     else -> dc.lineTo(pagePoint)
                 }
             }

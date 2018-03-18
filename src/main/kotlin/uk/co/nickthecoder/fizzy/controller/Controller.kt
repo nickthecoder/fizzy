@@ -18,8 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.controller
 
-import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.collection.FList
+import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.collection.MutableFList
 import uk.co.nickthecoder.fizzy.controller.handle.*
 import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
@@ -27,7 +27,6 @@ import uk.co.nickthecoder.fizzy.controller.tools.Tool
 import uk.co.nickthecoder.fizzy.controller.tools.ToolCursor
 import uk.co.nickthecoder.fizzy.gui.GlassCanvas
 import uk.co.nickthecoder.fizzy.model.*
-import uk.co.nickthecoder.fizzy.model.geometry.Geometry
 import uk.co.nickthecoder.fizzy.prop.PropVariable
 import uk.co.nickthecoder.fizzy.util.ChangeListener
 import uk.co.nickthecoder.fizzy.util.ChangeType
@@ -109,10 +108,10 @@ class Controller(val page: Page, val singleShape: Shape? = null, val otherAction
 
     /**
      * When dragging a line end point, if it hovers over a connectable geometry, then
-     * set this to it, and GlassCanvas will highlight it. Reset it back to [NO_GEOMETRY]
+     * set this to it, and GlassCanvas will highlight it. Reset it back to [NO_SHAPE]
      * afterwards.
      */
-    val highlightGeometry = PropVariable(NO_GEOMETRY)
+    val highlightShape: PropVariable<Shape> = PropVariable(NO_SHAPE)
 
     init {
         tool.beginTool()
@@ -221,8 +220,6 @@ class Controller(val page: Page, val singleShape: Shape? = null, val otherAction
 
     companion object {
 
-        val NO_GEOMETRY = Geometry.NO_GEOMETRY
-
         val HANDLE_SIZE = 3.0 // Half width (or height) of handles excluding the stroke.
         val HANDLE_NEAR = HANDLE_SIZE + 2.0 // The size when testing if the mouse is at the handle
         val LINE_NEAR = Dimension(4.0) // The distance away from a line, and still be able to select it.
@@ -232,7 +229,7 @@ class Controller(val page: Page, val singleShape: Shape? = null, val otherAction
             return connectData(pagePoint, shape, scale).first
         }
 
-        fun connectData(pagePoint: Dimension2, shape: Shape, scale: Double): Triple<String?, ConnectionPoint?, Geometry?> {
+        fun connectData(pagePoint: Dimension2, shape: Shape, scale: Double): Triple<String?, ConnectionPoint?, Shape?> {
 
             // Look for connection points
             shape.page().findNearestConnectionPoint(pagePoint, shape)?.let { (connectionPoint, distance) ->
@@ -242,9 +239,9 @@ class Controller(val page: Page, val singleShape: Shape? = null, val otherAction
             }
 
             // Look for geometries that can be connected to.
-            shape.page().findNearestConnectionGeometry(pagePoint, shape)?.let { (geometry, distance, along) ->
+            shape.page().findNearestConnectionGeometry(pagePoint, shape)?.let { (shape, distance, along) ->
                 if (distance < HANDLE_NEAR / scale) {
-                    return Triple(geometry.connectAlongFormula(along), null, geometry)
+                    return Triple(shape.geometry.connectAlongFormula(along), null, shape)
                 }
             }
 

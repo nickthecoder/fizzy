@@ -191,11 +191,4 @@ class Geometry(val shape: Shape)
         }
     }
 
-    companion object {
-        private val noDocument = Document()
-        private val noPage = Page(noDocument)
-        private val noShape = Shape2d.create(noPage)
-        val NO_GEOMETRY = noShape.geometry
-    }
-
 }
