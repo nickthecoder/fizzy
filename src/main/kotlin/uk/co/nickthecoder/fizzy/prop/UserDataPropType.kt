@@ -21,49 +21,49 @@ package uk.co.nickthecoder.fizzy.prop
 import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.collection.MutableFList
-import uk.co.nickthecoder.fizzy.model.Scratch
 import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.UserData
 
 /**
  * An empty class definition, subclassing MutableFList<Scratch>.
  * See [ScratchListPropType] for details on why this exists.
  */
-class ScratchList : MutableFList<Scratch>()
+class UserDataList : MutableFList<UserData>()
 
 /**
  * Allows for the following syntax :
- *     Scratch.Foo
- * Where "Foo" is the name of a [Scratch].
- * The expression "Scratch" puts [Shape.scratches] onto the stack, and because it is a specialised class ( [ScratchList] ),
+ *     UserData.Foo
+ * Where "Foo" is the name of a [UserData].
+ * The expression "Scratch" puts [Shape.userDataList] onto the stack, and because it is a specialised class ( [ScratchList] ),
  * and not the generic FList<Scratch>, we can set up a PropType for this scenario.
  *
- * [FindScratchField] does the tricky part, listening for the properties etc.
+ * [FindUserData] does the tricky part, listening for the properties etc.
  */
-class ScratchListPropType private constructor()
-    : PropType<ScratchList>(ScratchList::class.java) {
+class UserDataListPropType private constructor()
+    : PropType<UserDataList>(UserDataList::class.java) {
 
-    override fun findField(prop: Prop<ScratchList>, name: String): Prop<*>? {
+    override fun findField(prop: Prop<UserDataList>, name: String): Prop<*>? {
         // Lets us access a scratch value using : Scratch.TheScratchName
-        prop.value.forEach { scratch ->
-            if (scratch.name.value == name) {
-                return FindScratchField(prop.value, name)
+        prop.value.forEach { property ->
+            if (property.name.value == name) {
+                return FindUserData(prop.value, name)
             }
         }
         return super.findField(prop, name)
     }
 
     companion object {
-        val instance = ScratchListPropType()
+        val instance = UserDataListPropType()
     }
 }
 
-class FindScratchField(val scratchList: ScratchList, val name: String)
-    : PropCalculation<Any>(), ListListener<Scratch> {
+class FindUserData(val propertyList: UserDataList, val name: String)
+    : PropCalculation<Any>(), ListListener<UserData> {
 
     /**
      * If the scratch is removed, we need to become dirty!
      */
-    override fun removed(list: FList<Scratch>, item: Scratch, index: Int) {
+    override fun removed(list: FList<UserData>, item: UserData, index: Int) {
         if (item.name.value == name) {
             dirty = true
         }
@@ -72,7 +72,7 @@ class FindScratchField(val scratchList: ScratchList, val name: String)
     /**
      * If the name has been added back again, become dirty (probably not needed, but it won't hurt).
      */
-    override fun added(list: FList<Scratch>, item: Scratch, index: Int) {
+    override fun added(list: FList<UserData>, item: UserData, index: Int) {
         if (item.name.value == name) {
             dirty = true
         }
@@ -81,7 +81,7 @@ class FindScratchField(val scratchList: ScratchList, val name: String)
     /**
      * Listen to the name, so that if it changes, we become dirty (and will throw when re-evaluated).
      */
-    var scratchNameProp: Prop<String>? = null
+    var userDataName: Prop<String>? = null
         set(v) {
             if (field != v) {
                 field?.let { unlistenTo(it) }
@@ -90,21 +90,21 @@ class FindScratchField(val scratchList: ScratchList, val name: String)
             }
         }
 
-    var scratchExpression: PropExpression<*>? = null
+    var userDataData: Prop<*>? = null
         set(v) {
             field?.propListeners?.remove(this)
             v?.propListeners?.add(this)
         }
 
     override fun eval(): Any {
-        scratchList.forEach { scratch ->
-            if (scratch.name.value == name) {
-                scratchExpression = scratch.expression
-                scratchNameProp = scratch.name
-                return scratch.expression.value
+        propertyList.forEach { property ->
+            if (property.name.value == name) {
+                userDataData = property.data
+                userDataName = property.name
+                return property.data.value
             }
         }
-        throw RuntimeException("Scratch $name not found")
+        throw RuntimeException("UserData $name not found")
     }
 
 }

@@ -36,8 +36,6 @@ Edit text
 
 Edit children within a parent shape
 
-Curves (bezier or arc or both).
-    Along, isAt etc.
 
 Soon
 ----

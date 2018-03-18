@@ -34,6 +34,8 @@ class TestScratch : MyTestCase() {
         box.scratches.add(Scratch("bar", DoubleExpression("10")))
         box.scratches.add(Scratch("ref1", DoubleExpression("this.findScratch(\"foo\")")))
         box.scratches.add(Scratch("ref2", DoubleExpression("this.findScratch(\"bar\")")))
+        box.scratches.add(Scratch("ref3", DoubleExpression("Scratch.foo")))
+        box.scratches.add(Scratch("ref4", DoubleExpression("Scratch.bar")))
 
         // Check the values directly
         assertEquals(100.0, box.scratches[0].expression.value)
@@ -43,14 +45,20 @@ class TestScratch : MyTestCase() {
         assertEquals(100.0, box.scratches[2].expression.value)
         assertEquals(10.0, box.scratches[3].expression.value)
 
+        // Check via the newer (better, easier) syntax
+        assertEquals(100.0, box.scratches[4].expression.value)
+        assertEquals(10.0, box.scratches[5].expression.value)
+
         // Swap the names of foo and bar
         box.scratches[0].name.value = "bar"
         box.scratches[1].name.value = "foo"
 
-        // Note, these are the same tests, with the 3 and 4 switched over.
-
+        // Note, these are the same tests, with the 2 and 3 switched over.
         assertEquals(100.0, box.scratches[3].expression.value)
         assertEquals(10.0, box.scratches[2].expression.value)
+
+        assertEquals(100.0, box.scratches[5].expression.value)
+        assertEquals(10.0, box.scratches[4].expression.value)
 
         // Change the values
         box.scratches[0].expression.formula = "80"
@@ -59,5 +67,8 @@ class TestScratch : MyTestCase() {
         // Note the indices are still switched!
         assertEquals(80.0, box.scratches[3].expression.value)
         assertEquals(60.0, box.scratches[2].expression.value)
+
+        assertEquals(80.0, box.scratches[5].expression.value)
+        assertEquals(60.0, box.scratches[4].expression.value)
     }
 }

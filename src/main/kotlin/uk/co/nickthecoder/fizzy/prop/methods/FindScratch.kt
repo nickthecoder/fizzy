@@ -18,12 +18,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.prop.methods
 
-import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.collection.FList
+import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.model.Scratch
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.prop.Prop
 
+/**
+ * A method for getting to the value of a [Scratch]. To use this, the syntax is :
+ *   this.findScratch( "NameOfScratch" )
+ *
+ * This is cumbersome, and there is now an easier syntax :
+ *   this.Scratch.NameOfScratch
+ *
+ * This replacement uses FindScratchField and a special type for the scratch list, which can then
+ * have its own ScratchListPropType.
+ */
 class FindScratch(prop: Prop<Shape>)
     : TypedMethod1<Shape, String>(prop, String::class.java), ListListener<Scratch> {
 
