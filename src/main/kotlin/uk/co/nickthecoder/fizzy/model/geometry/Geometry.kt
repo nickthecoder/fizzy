@@ -116,18 +116,13 @@ class Geometry(val shape: Shape)
 
     fun isAt(localPoint: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean {
 
-        var prev: Dimension2? = null
-
         // Adapted from : https://wrf.ecse.rpi.edu//Research/Short_Notes/pnpoly.html
         var oddEven = false
         if (shape.fillColor.value.isVisible() && parts.size > 2) {
             parts.forEach { part ->
-                prev?.let {
-                    if (part.isCrossing(localPoint, it)) {
-                        oddEven = !oddEven
-                    }
+                if (part.isCrossing(localPoint)) {
+                    oddEven = !oddEven
                 }
-                prev = part.point.value
             }
             // If the Geometry is not closed. i.e. if the first point isn't the same as the last point,
             // then add an extra line to close the shape.
@@ -177,18 +172,13 @@ class Geometry(val shape: Shape)
         var partIndex = Math.floor(nonMoveCount * alongClipped).toInt()
         val partAlong = (alongClipped - partIndex.toDouble() / nonMoveCount) * nonMoveCount
 
-        var prev: Dimension2? = null
         for (part in parts) {
             if (part !is MoveTo) {
                 if (partIndex == 0) {
-                    if (prev != null) {
-                        return part.pointAlong(prev, partAlong)
-                    }
-                    break
+                    return part.pointAlong(partAlong)
                 }
                 partIndex--
             }
-            prev = part.point.value
         }
         return Dimension2.ZERO_mm
     }

@@ -101,7 +101,8 @@ class BezierCurveTo(val a: Dimension2Expression, val b: Dimension2Expression, ov
      * If we use "along" as the value for t in the cubic bezier curve equation above,
      * then we can get a point along the curve.
      */
-    override fun pointAlong(prev: Dimension2, along: Double): Dimension2 {
+    override fun pointAlong(along: Double): Dimension2 {
+        val prev = prevPart.point.value
         val oneMinusT = 1 - along
         val oneMinusT2 = oneMinusT * oneMinusT
         val oneMinusT3 = oneMinusT2 * oneMinusT
@@ -115,12 +116,12 @@ class BezierCurveTo(val a: Dimension2Expression, val b: Dimension2Expression, ov
         if (pointsCache.isEmpty()) {
             for (i in 1..16) {
                 val t = i.toDouble() / 16.0
-                pointsCache.add(pointAlong(prevPart.point.value, t))
+                pointsCache.add(pointAlong(t))
             }
         }
     }
 
-    override fun isCrossing(here: Dimension2, prev2: Dimension2): Boolean {
+    override fun isCrossing(here: Dimension2): Boolean {
         ensurePointsCache()
 
         var result = false

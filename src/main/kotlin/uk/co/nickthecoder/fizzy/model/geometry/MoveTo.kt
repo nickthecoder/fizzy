@@ -47,9 +47,9 @@ class MoveTo(override val point: Dimension2Expression)
 
     override fun checkAlong(shape: Shape, here: Dimension2): Pair<Double, Double>? = null
 
-    override fun isCrossing(here: Dimension2, prev: Dimension2) = false
+    override fun isCrossing(here: Dimension2) = false
 
-    override fun pointAlong(prev: Dimension2, along: Double) = Dimension2.ZERO_mm
+    override fun pointAlong(along: Double) = Dimension2.ZERO_mm
 
     override fun copy(link: Boolean): GeometryPart = MoveTo(point.copy(link))
 

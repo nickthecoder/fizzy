@@ -107,9 +107,9 @@ abstract class GeometryPart
      * Used to test if a point is withing a polygon.
      * Does a horizontal ray cross the line segment from [prev] to this.[point].
      */
-    abstract fun isCrossing(here: Dimension2, prev: Dimension2): Boolean
+    abstract fun isCrossing(here: Dimension2): Boolean
 
-    abstract fun pointAlong(prev: Dimension2, along: Double): Dimension2
+    abstract fun pointAlong(along: Double): Dimension2
 
     abstract fun copy(link: Boolean): GeometryPart
 

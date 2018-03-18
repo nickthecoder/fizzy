@@ -58,10 +58,10 @@ class LineTo(override val point: Dimension2Expression)
      *
      * vert[i] = myPoint, vert[j] = prev, test = here
      */
-    override fun isCrossing(here: Dimension2, prev: Dimension2) = isCrossing(here, prev, point.value)
+    override fun isCrossing(here: Dimension2) = isCrossing(here, prevPart.point.value, point.value)
 
-    override fun pointAlong(prev: Dimension2, along: Double): Dimension2 {
-        return prev + (point.value - prev) * along
+    override fun pointAlong(along: Double): Dimension2 {
+        return prevPart.point.value + (point.value - prevPart.point.value) * along
     }
 
     override fun copy(link: Boolean): GeometryPart = LineTo(point.copy(link))
