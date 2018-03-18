@@ -39,13 +39,18 @@ class Geometry(val shape: Shape)
     override val changeListeners = ChangeListeners<Geometry>()
 
     private val geometryPartsListener = ChangeAndListListener(this, parts,
-            onAdded = { part, _ ->
+            onAdded = { part, index ->
                 part.geometry = this
+                part.internalPrevPart = if (index == 0) part else parts[index - 1]
                 part.setContext(shape.context)
             },
-            onRemoved = { part, _ ->
+            onRemoved = { part, index ->
                 part.geometry = null
+                part.internalPrevPart = part
                 part.setContext(constantsContext)
+                if (index < parts.size) {
+                    parts[index].internalPrevPart = if (index == 0) parts[index] else parts[index - 1]
+                }
             }
     )
 
@@ -135,14 +140,10 @@ class Geometry(val shape: Shape)
         }
 
         if (shape.strokeColor.value.isVisible()) {
-            prev = null
             parts.forEach { part ->
-                prev?.let {
-                    if (part.isAlong(shape, localPoint, it, lineWidth, minDistance)) {
-                        return true
-                    }
+                if (part.isAlong(shape, localPoint, lineWidth, minDistance)) {
+                    return true
                 }
-                prev = part.point.value
             }
         }
 

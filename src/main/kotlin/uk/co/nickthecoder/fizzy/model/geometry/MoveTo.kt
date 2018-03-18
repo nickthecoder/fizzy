@@ -43,9 +43,9 @@ class MoveTo(override val point: Dimension2Expression)
         point.context = context
     }
 
-    override fun isAlong(shape: Shape?, here: Dimension2, prev: Dimension2, lineWidth: Dimension, minDistance: Dimension) = false
+    override fun isAlong(shape: Shape?, here: Dimension2, lineWidth: Dimension, minDistance: Dimension) = false
 
-    override fun checkAlong(shape: Shape, here: Dimension2, prev: Dimension2): Pair<Double, Double>? = null
+    override fun checkAlong(shape: Shape, here: Dimension2): Pair<Double, Double>? = null
 
     override fun isCrossing(here: Dimension2, prev: Dimension2) = false
 

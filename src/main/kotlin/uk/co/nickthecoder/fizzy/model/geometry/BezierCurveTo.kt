@@ -85,9 +85,9 @@ class BezierCurveTo(val a: Dimension2Expression, val b: Dimension2Expression, po
                 point.value * (along * along * along)
     }
 
-    override fun checkAlong(shape: Shape, here: Dimension2, prev: Dimension2): Pair<Double, Double>? {
+    override fun checkAlong(shape: Shape, here: Dimension2): Pair<Double, Double>? {
         //TODO Implement
-        return super.checkAlong(shape, here, prev)
+        return super.checkAlong(shape, here)
     }
 
     override fun copy(link: Boolean): GeometryPart = BezierCurveTo(a.copy(link), b.copy(link), point.copy(link))

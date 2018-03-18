@@ -49,6 +49,17 @@ abstract class GeometryPart
      */
     abstract val point: Dimension2Expression
 
+    /**
+     * The previous geometry part, or 'this' if there is no previous part.
+     */
+    internal var internalPrevPart: GeometryPart = this
+
+    /**
+     * The previous geometry part, or 'this' if there is no previous part.
+     */
+    val prevPart: GeometryPart
+        get() = internalPrevPart
+
     override fun metaData(): MetaData {
         val metaData = MetaData(null)
         addMetaData(metaData)
@@ -74,11 +85,10 @@ abstract class GeometryPart
      * "close enough", based on the zoom level of the view (even when the line width is very thin at that zoom level).
      *
      * @param here The point to test, in local coordinates.
-     * @param prev The end point of the previous GeometryPart (and therefore the start of this one).
      * @param lineWidth The thickness of the line in local coordinates
      * @param minDistance The distance in page coordinates that can also be considered touching (used when lineWidth is thin).
      */
-    abstract fun isAlong(shape: Shape?, here: Dimension2, prev: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean
+    abstract fun isAlong(shape: Shape?, here: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean
 
     /**
      * If the point is not along the line (e.g. it is passed the start/end points), then null is returned.
@@ -89,10 +99,9 @@ abstract class GeometryPart
      * The ratio should be in the range 0..1 and should be suitable to be passed into [pointAlong] for the 'along' parameter.
      *
      * @param here The point to test, in local coordinate system
-     * @param prev The end point of the previous GeometryPart (and therefore the start of this one).
      * @return distance in page coordinates , how far along the line in the range 0..1
      */
-    abstract fun checkAlong(shape: Shape, here: Dimension2, prev: Dimension2): Pair<Double, Double>?
+    abstract fun checkAlong(shape: Shape, here: Dimension2): Pair<Double, Double>?
 
     /**
      * Used to test if a point is withing a polygon.

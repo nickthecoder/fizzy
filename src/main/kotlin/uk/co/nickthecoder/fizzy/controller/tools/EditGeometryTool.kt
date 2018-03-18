@@ -139,7 +139,7 @@ class EditGeometryTool(controller: Controller)
             shape.geometry.parts.forEach { part ->
                 val local = shape.fromPageToLocal.value * mousePressedPoint
                 if (prev != null) {
-                    if (part is LineTo && part.isAlong(shape, local, prev!!, shape.lineWidth.value, controller.minDistance)) {
+                    if (part is LineTo && part.isAlong(shape, local, shape.lineWidth.value, controller.minDistance)) {
                         val length = (part.point.value - prev!!).length()
                         val along = (local - prev!!).length().ratio(length)
 

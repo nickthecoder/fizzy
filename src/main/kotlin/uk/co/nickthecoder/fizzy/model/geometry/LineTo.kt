@@ -44,7 +44,9 @@ open class LineTo(override final val point: Dimension2Expression)
         point.context = context
     }
 
-    override fun isAlong(shape: Shape?, here: Dimension2, prev: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean {
+    override fun isAlong(shape: Shape?, here: Dimension2, lineWidth: Dimension, minDistance: Dimension): Boolean {
+
+        val prev = prevPart.point.value
 
         // Using the following diagram given by Henry. A is prev, B is myPoint and C is here :
         // https://math.stackexchange.com/questions/60070/checking-whether-a-point-lies-on-a-wide-line-segment
@@ -94,7 +96,9 @@ open class LineTo(override final val point: Dimension2Expression)
 
     }
 
-    override fun checkAlong(shape: Shape, here: Dimension2, prev: Dimension2): Pair<Double, Double>? {
+    override fun checkAlong(shape: Shape, here: Dimension2): Pair<Double, Double>? {
+
+        val prev = prevPart.point.value
 
         // Using the following diagram given by Henry. A is prev, B is myPoint and C is here :
         // https://math.stackexchange.com/questions/60070/checking-whether-a-point-lies-on-a-wide-line-segment

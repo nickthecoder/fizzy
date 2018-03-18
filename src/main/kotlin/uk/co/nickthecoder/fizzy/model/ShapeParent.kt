@@ -73,14 +73,13 @@ interface ShapeParent {
                 // Ignore geometries that cannot be connected to.
                 if (child.geometry.connect.value) {
 
-                    var prev: Dimension2? = null
-
                     var moveToCount = 0
                     child.geometry.parts.forEachIndexed { index, part ->
-                        if (part is MoveTo) moveToCount++
+                        if (part is MoveTo) {
+                            moveToCount++
+                        } else {
 
-                        prev?.let {
-                            val result = part.checkAlong(child, localPoint, it)
+                            val result = part.checkAlong(child, localPoint)
                             if (result != null && result.first < nearestDistance) {
                                 val nonMoveCount = child.geometry.parts.count { it !is MoveTo }
                                 nearest = child.geometry
@@ -88,7 +87,6 @@ interface ShapeParent {
                                 nearestAlong = (index - moveToCount).toDouble() / nonMoveCount.toDouble() + result.second / nonMoveCount
                             }
                         }
-                        prev = part.point.value
                     }
                 }
             }
