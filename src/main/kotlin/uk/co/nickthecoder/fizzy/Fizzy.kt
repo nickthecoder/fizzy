@@ -26,9 +26,9 @@ import javafx.scene.image.ImageView
 import javafx.stage.Stage
 import uk.co.nickthecoder.fizzy.gui.JavaFXFFont
 import uk.co.nickthecoder.fizzy.gui.MainWindow
-import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.model.fontFactory
 import uk.co.nickthecoder.fizzy.prop.expressionExceptionHandler
-import uk.co.nickthecoder.fizzy.util.FizzyJsonWriter
+import uk.co.nickthecoder.fizzy.util.FizzyJsonReader
 import uk.co.nickthecoder.fizzy.util.runLaterHandler
 import java.io.File
 
@@ -42,40 +42,7 @@ class Fizzy : Application() {
         fontFactory = { name, size -> JavaFXFFont(name, size) }
         expressionExceptionHandler = { pe, message -> println("Failed to evaluate ${pe.formula} : $message") }
 
-        // For now, we create a test document to display.
-        val doc = Document()
-        val page = Page(doc)
-
-        val box1 = Shape.createBox(page, "Dimension2(20cm,10cm)", "Dimension2(40cm,10cm)")
-        val box2 = Shape.createBox(page, "Dimension2(20cm,10cm)", "Dimension2(40cm,30cm)")
-
-        box1.children.add(box1.createText("A very very very long piece of text\nin\na Box1", alignY = 0.0))
-        box2.children.add(box2.createText("Lots\nof\nlines\nof\ntext\nin\nBox2", alignX = 0.0))
-
-        val text1 = Shape.createText(page, "Hello\nWorld\nNick\nThe\nCoder", at = "Dimension2(40cm, 20cm)")
-        val text2 = Shape.createText(page, "Left\nAlign", at = "Dimension2(30cm, 20cm)", alignX = 0.0)
-        val text3 = Shape.createText(page, "Right\nAlign", at = "Dimension2(50cm, 20cm)", alignX = 1.0)
-
-        page.children.add(text1)
-        page.children.add(text2)
-        page.children.add(text3)
-
-        page.children.add(box1)
-        page.children.add(box2)
-
-        box1.connectionPoints.add(ConnectionPoint("(Geometry1.Point1 + Geometry1.Point2) / 2"))
-        box1.connectionPoints.add(ConnectionPoint("(Geometry1.Point3 + Geometry1.Point4) / 2"))
-
-        box2.connectionPoints.add(ConnectionPoint("(Geometry1.Point1 + Geometry1.Point2) / 2"))
-        box2.connectionPoints.add(ConnectionPoint("(Geometry1.Point3 + Geometry1.Point4) / 2"))
-
-        val line = Shape.createLine(page, "Dimension2(10cm,11cm)", "Dimension2(10cm,13cm)", bezier = true)
-        page.children.add(line)
-
-        line.start.formula = "this.connectTo(Page.Shape1.ConnectionPoint2)"
-        line.end.formula = "this.connectAlong(Page.Shape2.Geometry1, 0.125)"
-
-        FizzyJsonWriter(doc, File("example.fizzy")).save()
+        val doc = FizzyJsonReader(File("example.fizzy")).load()
 
         val mainWindow = MainWindow(primaryStage)
         mainWindow.addDocument(doc)

@@ -77,13 +77,6 @@ class Page internal constructor(val document: Document, add: Boolean)
         return null
     }
 
-    /**
-     * Makes a local copy of the master shape. Creates a new shape based on the copy of the master.
-     */
-    fun copyMasterShape(masterShape: Shape): Shape {
-        val localMaster = document.useMasterShape(masterShape)
-        val copy = localMaster.copyInto(this, true)
-        return copy
-    }
+
 
 }

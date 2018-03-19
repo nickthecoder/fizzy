@@ -108,7 +108,7 @@ class LineTo(override val point: Dimension2Expression)
             val ACsquared = ACx * ACx + ACy * ACy
 
             // Is it within the thickness of the line?
-            if ((ABsquared * ACsquared) <= lineWidth.inDefaultUnits * lineWidth.inDefaultUnits + ACdotAB * ACdotAB) {
+            if (ACsquared - (ACdotAB * ACdotAB / ABsquared) <= lineWidth.inDefaultUnits * lineWidth.inDefaultUnits / 4) {
                 return true
             }
 

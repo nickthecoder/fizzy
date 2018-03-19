@@ -97,6 +97,9 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
         override fun added(list: FList<Shape>, item: Shape, index: Int) {
             changeListeners.fireChanged(this@Shape, ChangeType.ADD, item)
             item.changeListeners.add(this)
+            if (item.parent !== this@Shape) {
+                throw IllegalStateException("Added a shape to the wrong parent")
+            }
         }
 
         override fun removed(list: FList<Shape>, item: Shape, index: Int) {

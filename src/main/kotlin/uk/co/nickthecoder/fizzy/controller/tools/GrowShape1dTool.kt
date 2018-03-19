@@ -64,7 +64,7 @@ class GrowShape1dTool(
             val parentStart = controller.parent.fromPageToLocal.value * startPoint
             val parentEnd = controller.parent.fromPageToLocal.value * event.point
 
-            val newShape = controller.page.copyMasterShape(masterShape) as Shape1d
+            val newShape = controller.page.document.copyMasterShape(masterShape, controller.parent) as Shape1d
 
             // Either a connection to another shape, or the point of the onMousePressed event.
             val connectFormula = Controller.connectFormula(startPoint, newShape, event.scale)

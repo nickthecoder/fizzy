@@ -37,7 +37,7 @@ class StampShape2dTool(controller: Controller, val masterShape: Shape2d, val onE
     }
 
     override fun onMouseClicked(event: CMouseEvent) {
-        val newShape = controller.page.copyMasterShape(masterShape) as Shape2d
+        val newShape = controller.page.document.copyMasterShape(masterShape, controller.parent) as Shape2d
         val parentPoint = controller.parent.fromPageToLocal.value * event.point
 
         newShape.transform.pin.formula = parentPoint.toFormula()

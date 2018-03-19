@@ -33,9 +33,10 @@ class Shape1dHandle(val shape1d: Shape1d, position: Dimension2, val controller: 
 
         val (connectFormula, _, highlightShape) = Controller.connectData(dragPoint, shape1d, event.scale)
         controller.highlightShape.value = highlightShape ?: NO_SHAPE
+        val parentPoint = shape1d.parent.fromPageToLocal.value * dragPoint
 
         shape.document().history.makeChange(
-                ChangeExpression(startEnd, connectFormula ?: dragPoint.toFormula())
+                ChangeExpression(startEnd, connectFormula ?: parentPoint.toFormula())
         )
     }
 }

@@ -76,6 +76,15 @@ class Document(val id: String = Document.generateDocumentId())
     }
 
     /**
+     * Makes a local copy of the master shape. Creates a new shape based on the copy of the master.
+     */
+    fun copyMasterShape(masterShape: Shape, parent: ShapeParent): Shape {
+        val localMaster = useMasterShape(masterShape)
+        val copy = localMaster.copyInto(parent, true)
+        return copy
+    }
+
+    /**
      * Takes a master shapes, and returns the local copy of that master shape.
      * If there isn't a copy of the master shape is in [localMasterShapes], then a copy is added.
      */

@@ -103,8 +103,9 @@ class ShapeTransform(val shape: Shape)
             fromLocalToParent.propListeners.add(this)
         }
 
-        override fun eval() =
-                shape.parent.fromLocalToPage.value * fromLocalToParent.value
+        override fun eval(): Matrix33 {
+            return shape.parent.fromLocalToPage.value * fromLocalToParent.value
+        }
     }
     /**
      * A matrix which can transform a local coordinate into a coordinate of the page.
