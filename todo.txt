@@ -1,8 +1,19 @@
 To Do
 =====
 
+Allow deleting of shapes when entered a shape.
+
+Duplicate a master shape.
+
+Add text tool
+
 BUGS
 ----
+
+Document's next id is not set when loading.
+
+If a size expression is NaN or Inf, then drawing takes forever.
+   Skip that operation instead (or use a default value).
 
 For Version 1
 -------------
@@ -21,7 +32,6 @@ Edit text
 
 Edit children within a parent shape
 
-Add text
 
 Soon
 ----

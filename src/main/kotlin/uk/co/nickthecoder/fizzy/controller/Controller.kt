@@ -145,6 +145,8 @@ class Controller(val page: Page, val singleShape: Shape? = null, val otherAction
         tool.onMouseDragged(event)
     }
 
+    fun findShapeAt(pagePoint: Dimension2) = findShapesAt(pagePoint).lastOrNull()
+
     fun findShapesAt(pagePoint: Dimension2): List<Shape> {
 
         if (parent is Shape) {

@@ -143,6 +143,13 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
                 onRemoved = { item, _ -> item.setContext(constantsContext) }
         ))
         collectionListeners.add(ChangeAndListListener(this, customProperties))
+
+        metaData().cells.forEach { cell ->
+            val exp = cell.cellProp
+            if (exp is PropExpression<*>) {
+                exp.context = context
+            }
+        }
     }
 
     protected fun createContext(thisContext: ThisContext<*>) = CompoundEvaluationContext(listOf(

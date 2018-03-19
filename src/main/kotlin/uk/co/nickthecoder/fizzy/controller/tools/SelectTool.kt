@@ -58,7 +58,9 @@ class SelectTool(controller: Controller)
         return super.onContextMenu(event)
     }
 
-    override fun onMouseClicked(event: CMouseEvent) {
+    override fun onMousePressed(event: CMouseEvent) {
+
+        mousePressedPoint = event.point
 
         val shapes = controller.findShapesAt(event.point)
         if (shapes.isEmpty()) {
@@ -91,10 +93,6 @@ class SelectTool(controller: Controller)
         }
     }
 
-    override fun onMousePressed(event: CMouseEvent) {
-        mousePressedPoint = event.point
-    }
-
     override fun onDragDetected(event: CMouseEvent) {
 
         controller.handles.forEach { handle ->
@@ -104,15 +102,10 @@ class SelectTool(controller: Controller)
             }
         }
 
-        val shape = controller.page.findShapeAt(event.point, controller.minDistance)
-        if (shape == null) {
+        if (controller.selection.isEmpty()) {
             controller.tool = BoundingBoxTool(controller, event, mousePressedPoint)
             controller.tool.onMouseDragged(event)
         } else {
-            if (!controller.selection.contains(shape)) {
-                controller.selection.clear()
-                controller.selection.add(shape)
-            }
             controller.tool = MoveShapesTool(controller, mousePressedPoint)
             controller.tool.onMouseDragged(event)
         }

@@ -32,7 +32,7 @@ class DeleteTool(controller: Controller)
     private var pressedShape: Shape? = null
 
     override fun onMouseMoved(event: CMouseEvent) {
-        val shape = controller.page.findShapeAt(event.point, controller.minDistance)
+        val shape = controller.findShapeAt(event.point)
         if (shape == null) {
             controller.highlightShape.value = NO_SHAPE
         } else {
@@ -41,13 +41,13 @@ class DeleteTool(controller: Controller)
     }
 
     override fun onMousePressed(event: CMouseEvent) {
-        controller.page.findShapeAt(event.point, controller.minDistance)?.let {
+        controller.findShapeAt(event.point)?.let {
             pressedShape = it
         }
     }
 
     override fun onMouseDragged(event: CMouseEvent) {
-        val draggedShaped = controller.page.findShapeAt(event.point, controller.minDistance)
+        val draggedShaped = controller.findShapeAt(event.point)
         if (draggedShaped === pressedShape && draggedShaped != null) {
             controller.highlightShape.value = draggedShaped
         } else {
@@ -56,7 +56,7 @@ class DeleteTool(controller: Controller)
     }
 
     override fun onMouseReleased(event: CMouseEvent) {
-        val releasedShape = controller.page.findShapeAt(event.point, controller.minDistance)
+        val releasedShape = controller.findShapeAt(event.point)
         if (releasedShape != null && releasedShape == pressedShape) {
             controller.page.document.history.makeChange(DeleteShape(releasedShape))
         }
