@@ -1,0 +1,2253 @@
+{
+  "version": 0.1,
+  "document": {
+    "id": "66609107-a5b3-4df9-bfe6-0f1780ad4dfb",
+    "pages": [
+      {
+        "shapes": [
+          {
+            "id": 1,
+            "type": "Shape2d",
+            "cells": [
+              {
+                "name": "Name",
+                "s": "Resistor 1"
+              },
+              {
+                "name": "LineWidth",
+                "f": "4pt",
+                "v": "4 pt"
+              },
+              {
+                "name": "Size",
+                "f": "Dimension2(60 mm,12 mm)",
+                "v": "Dimension2(60 mm,12 mm)"
+              },
+              {
+                "name": "LineColor",
+                "f": "BLACK",
+                "v": "RGB(0,0,0)"
+              },
+              {
+                "name": "FillColor",
+                "f": "TRANSPARENT",
+                "v": "RGBA(0,0,0,0)"
+              },
+              {
+                "name": "StrokeCap",
+                "f": "STROKE_CAP_ROUND",
+                "v": "STROKE_CAP_ROUND"
+              },
+              {
+                "name": "StrokeJoin",
+                "f": "STROKE_JOIN_ROUND",
+                "v": "STROKE_JOIN_ROUND"
+              }
+            ],
+            "sections": [
+              {
+                "Section": "Transform",
+                "cells": [
+                  {
+                    "name": "Pin",
+                    "f": "Dimension2(9 mm,37 mm)",
+                    "v": "Dimension2(9 mm,37 mm)"
+                  },
+                  {
+                    "name": "LocPin",
+                    "f": "Size * Vector2(0.5,0.5)",
+                    "v": "Dimension2(30 mm,6 mm)"
+                  },
+                  {
+                    "name": "Scale",
+                    "f": "Vector2(1, 1)",
+                    "v": "Vector2(1,1)"
+                  },
+                  {
+                    "name": "Rotation",
+                    "f": "0 deg",
+                    "v": "0 deg"
+                  }
+                ]
+              },
+              {
+                "Section": "Geometry",
+                "cells": [
+                  {
+                    "name": "Connect",
+                    "f": "true",
+                    "v": "true"
+                  }
+                ],
+                "rows": [
+                  {
+                    "type": "MoveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(0,0.5)",
+                        "v": "Dimension2(0 mm,6 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(2/18,0.5)",
+                        "v": "Dimension2(6.666666667 mm,6 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(3/18,1)",
+                        "v": "Dimension2(10 mm,12 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(5/18,0)",
+                        "v": "Dimension2(16.666666667 mm,0 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(7/18,1)",
+                        "v": "Dimension2(23.333333333 mm,12 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(9/18,0)",
+                        "v": "Dimension2(30 mm,0 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(11/18,1)",
+                        "v": "Dimension2(36.666666667 mm,12 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(13/18,0)",
+                        "v": "Dimension2(43.333333333 mm,0 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(15/18,1)",
+                        "v": "Dimension2(50 mm,12 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(16/18,0.5)",
+                        "v": "Dimension2(53.333333333 mm,6 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(1.0,0.5)",
+                        "v": "Dimension2(60 mm,6 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "ConnectionPoint",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Geometry.Point1",
+                        "v": "Dimension2(0 mm,6 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Geometry.Point11",
+                        "v": "Dimension2(60 mm,6 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "CustomProperty",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Name",
+                        "s": "Resistance"
+                      },
+                      {
+                        "name": "Label",
+                        "s": "Resistance"
+                      },
+                      {
+                        "name": "Value",
+                        "s": ""
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Name",
+                        "s": "ComponentID"
+                      },
+                      {
+                        "name": "Label",
+                        "s": "Component ID"
+                      },
+                      {
+                        "name": "Value",
+                        "s": ""
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "type": "Shape2d",
+            "cells": [
+              {
+                "name": "Name",
+                "s": "Capacitor"
+              },
+              {
+                "name": "LineWidth",
+                "f": "4pt",
+                "v": "4 pt"
+              },
+              {
+                "name": "Size",
+                "f": "Dimension2(36 mm,32 mm)",
+                "v": "Dimension2(36 mm,32 mm)"
+              },
+              {
+                "name": "LineColor",
+                "f": "TRANSPARENT",
+                "v": "RGBA(0,0,0,0)"
+              },
+              {
+                "name": "FillColor",
+                "f": "WHITE",
+                "v": "RGB(1,1,1)"
+              },
+              {
+                "name": "StrokeCap",
+                "f": "STROKE_CAP_ROUND",
+                "v": "STROKE_CAP_ROUND"
+              },
+              {
+                "name": "StrokeJoin",
+                "f": "STROKE_JOIN_ROUND",
+                "v": "STROKE_JOIN_ROUND"
+              }
+            ],
+            "sections": [
+              {
+                "Section": "Transform",
+                "cells": [
+                  {
+                    "name": "Pin",
+                    "f": "Dimension2(2.5 mm,10 mm)",
+                    "v": "Dimension2(2.5 mm,10 mm)"
+                  },
+                  {
+                    "name": "LocPin",
+                    "f": "Size * Vector2(0.5,0.5)",
+                    "v": "Dimension2(18 mm,16 mm)"
+                  },
+                  {
+                    "name": "Scale",
+                    "f": "Vector2(1, 1)",
+                    "v": "Vector2(1,1)"
+                  },
+                  {
+                    "name": "Rotation",
+                    "f": "0 deg",
+                    "v": "0 deg"
+                  }
+                ]
+              },
+              {
+                "Section": "Geometry",
+                "cells": [
+                  {
+                    "name": "Connect",
+                    "f": "true",
+                    "v": "true"
+                  }
+                ],
+                "rows": [
+                  {
+                    "type": "MoveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(1/3,0)",
+                        "v": "Dimension2(12 mm,0 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(1/3,1)",
+                        "v": "Dimension2(12 mm,32 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(2/3,1)",
+                        "v": "Dimension2(24 mm,32 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(2/3,0)",
+                        "v": "Dimension2(24 mm,0 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Geometry.Point1",
+                        "v": "Dimension2(12 mm,0 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "MoveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(0,0.5 )",
+                        "v": "Dimension2(0 mm,16 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "ConnectionPoint",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(0,0.5)",
+                        "v": "Dimension2(0 mm,16 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(1,0.5)",
+                        "v": "Dimension2(36 mm,16 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "CustomProperty",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Name",
+                        "s": "Capacitance"
+                      },
+                      {
+                        "name": "Label",
+                        "s": "Capacitance"
+                      },
+                      {
+                        "name": "Value",
+                        "s": ""
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Name",
+                        "s": "ComponentID"
+                      },
+                      {
+                        "name": "Label",
+                        "s": "Component ID"
+                      },
+                      {
+                        "name": "Value",
+                        "s": ""
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "children": [
+              {
+                "id": 4,
+                "type": "Shape2d",
+                "linkedFrom": 1,
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "outline"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "l": "1.LineWidth",
+                    "v": "2 mm"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "Parent.Size",
+                    "v": "Dimension2(36 mm,32 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "RGB(0,0,0)",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "RGBA(1,1,1,0)",
+                    "v": "RGBA(1,1,1,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "l": "1.StrokeCap",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "l": "1.StrokeJoin",
+                    "v": "STROKE_JOIN_ROUND"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Dimension2(0mm,0mm)",
+                        "v": "Dimension2(0 mm,0 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Dimension2(0mm,0mm)",
+                        "v": "Dimension2(0 mm,0 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "l": "1.Transform.Scale",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "l": "1.Transform.Rotation",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "l": "1.Geometry.Connect",
+                        "v": "true"
+                      }
+                    ],
+                    "rows": [
+                      {
+                        "type": "MoveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 0,0.5 )",
+                            "v": "Dimension2(0 mm,16 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "LineTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 1/3,0.5)",
+                            "v": "Dimension2(12 mm,16 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "MoveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 2/3,0.5)",
+                            "v": "Dimension2(24 mm,16 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "LineTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 1,0.5)",
+                            "v": "Dimension2(36 mm,16 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "MoveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 1/3,0 )",
+                            "v": "Dimension2(12 mm,0 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "LineTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 1/3,1 )",
+                            "v": "Dimension2(12 mm,32 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "MoveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 2/3,0 )",
+                            "v": "Dimension2(24 mm,0 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "LineTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 2/3,1 )",
+                            "v": "Dimension2(24 mm,32 mm)"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "type": "Shape2d",
+            "cells": [
+              {
+                "name": "Name",
+                "s": "Capacitor (Polarised)"
+              },
+              {
+                "name": "LineWidth",
+                "f": "4pt",
+                "v": "4 pt"
+              },
+              {
+                "name": "Size",
+                "f": "Dimension2(36 mm,32 mm)",
+                "v": "Dimension2(36 mm,32 mm)"
+              },
+              {
+                "name": "LineColor",
+                "f": "TRANSPARENT",
+                "v": "RGBA(0,0,0,0)"
+              },
+              {
+                "name": "FillColor",
+                "f": "WHITE",
+                "v": "RGB(1,1,1)"
+              },
+              {
+                "name": "StrokeCap",
+                "f": "STROKE_CAP_ROUND",
+                "v": "STROKE_CAP_ROUND"
+              },
+              {
+                "name": "StrokeJoin",
+                "f": "STROKE_JOIN_ROUND",
+                "v": "STROKE_JOIN_ROUND"
+              }
+            ],
+            "sections": [
+              {
+                "Section": "Transform",
+                "cells": [
+                  {
+                    "name": "Pin",
+                    "f": "Dimension2(2.5 mm,10 mm)",
+                    "v": "Dimension2(2.5 mm,10 mm)"
+                  },
+                  {
+                    "name": "LocPin",
+                    "f": "Size * Vector2(0.5,0.5)",
+                    "v": "Dimension2(18 mm,16 mm)"
+                  },
+                  {
+                    "name": "Scale",
+                    "f": "Vector2(1, 1)",
+                    "v": "Vector2(1,1)"
+                  },
+                  {
+                    "name": "Rotation",
+                    "f": "0 deg",
+                    "v": "0 deg"
+                  }
+                ]
+              },
+              {
+                "Section": "Geometry",
+                "cells": [
+                  {
+                    "name": "Connect",
+                    "f": "true",
+                    "v": "true"
+                  }
+                ],
+                "rows": [
+                  {
+                    "type": "MoveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(1/3,0)",
+                        "v": "Dimension2(12 mm,0 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(1/3,1)",
+                        "v": "Dimension2(12 mm,32 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(2/3,1)",
+                        "v": "Dimension2(24 mm,32 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "BezierCurveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2( 2/3,0 )",
+                        "v": "Dimension2(24 mm,0 mm)"
+                      },
+                      {
+                        "name": "A",
+                        "f": "Size * Vector2( 0.5,0.6)",
+                        "v": "Dimension2(18 mm,19.2 mm)"
+                      },
+                      {
+                        "name": "B",
+                        "f": "Size * Vector2( 0.5,0.4 )",
+                        "v": "Dimension2(18 mm,12.8 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(1/3,0)",
+                        "v": "Dimension2(12 mm,0 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "MoveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(1/3,0.5)",
+                        "v": "Dimension2(12 mm,16 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "ConnectionPoint",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(0,0.5)",
+                        "v": "Dimension2(0 mm,16 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(1,0.5)",
+                        "v": "Dimension2(36 mm,16 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "CustomProperty",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Name",
+                        "s": "Capacitance"
+                      },
+                      {
+                        "name": "Label",
+                        "s": "Capacitance"
+                      },
+                      {
+                        "name": "Value",
+                        "s": ""
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Name",
+                        "s": "ComponentID"
+                      },
+                      {
+                        "name": "Label",
+                        "s": "Component ID"
+                      },
+                      {
+                        "name": "Value",
+                        "s": ""
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "children": [
+              {
+                "id": 6,
+                "type": "Shape2d",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "outline"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "2mm",
+                    "v": "2 mm"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "Parent.Size",
+                    "v": "Dimension2(36 mm,32 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "RGB(0,0,0)",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "RGBA(1,1,1,0)",
+                    "v": "RGBA(1,1,1,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Dimension2(0mm,0mm)",
+                        "v": "Dimension2(0 mm,0 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Dimension2(0mm,0mm)",
+                        "v": "Dimension2(0 mm,0 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "true",
+                        "v": "true"
+                      }
+                    ],
+                    "rows": [
+                      {
+                        "type": "MoveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 0,0.5 )",
+                            "v": "Dimension2(0 mm,16 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "LineTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 1/3,0.5)",
+                            "v": "Dimension2(12 mm,16 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "MoveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 0.55,0.5)",
+                            "v": "Dimension2(19.8 mm,16 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "LineTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 1,0.5)",
+                            "v": "Dimension2(36 mm,16 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "MoveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 1/3,0 )",
+                            "v": "Dimension2(12 mm,0 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "LineTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 1/3,1 )",
+                            "v": "Dimension2(12 mm,32 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "MoveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 2/3,0 )",
+                            "v": "Dimension2(24 mm,0 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "BezierCurveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 2/3,1 )",
+                            "v": "Dimension2(24 mm,32 mm)"
+                          },
+                          {
+                            "name": "A",
+                            "f": "Size * Vector2( 0.5,0.4 )",
+                            "v": "Dimension2(18 mm,12.8 mm)"
+                          },
+                          {
+                            "name": "B",
+                            "f": "Size * Vector2( 0.5,0.6)",
+                            "v": "Dimension2(18 mm,19.2 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "MoveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 0.1, 1)",
+                            "v": "Dimension2(3.6 mm,32 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "LineTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 0.1, 0.8)",
+                            "v": "Dimension2(3.6 mm,25.6 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "MoveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 0, 0.9)",
+                            "v": "Dimension2(0 mm,28.8 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "LineTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "f": "Size * Vector2( 0.2, 0.9)",
+                            "v": "Dimension2(7.2 mm,28.8 mm)"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "type": "Shape2d",
+            "cells": [
+              {
+                "name": "Name",
+                "s": "Resistor 2"
+              },
+              {
+                "name": "LineWidth",
+                "f": "4pt",
+                "v": "4 pt"
+              },
+              {
+                "name": "Size",
+                "f": "Dimension2(60 mm,12 mm)",
+                "v": "Dimension2(60 mm,12 mm)"
+              },
+              {
+                "name": "LineColor",
+                "f": "BLACK",
+                "v": "RGB(0,0,0)"
+              },
+              {
+                "name": "FillColor",
+                "f": "WHITE",
+                "v": "RGB(1,1,1)"
+              },
+              {
+                "name": "StrokeCap",
+                "f": "STROKE_CAP_ROUND",
+                "v": "STROKE_CAP_ROUND"
+              },
+              {
+                "name": "StrokeJoin",
+                "f": "STROKE_JOIN_ROUND",
+                "v": "STROKE_JOIN_ROUND"
+              }
+            ],
+            "sections": [
+              {
+                "Section": "Transform",
+                "cells": [
+                  {
+                    "name": "Pin",
+                    "f": "Dimension2(9 mm,37 mm)",
+                    "v": "Dimension2(9 mm,37 mm)"
+                  },
+                  {
+                    "name": "LocPin",
+                    "f": "Size * Vector2(0.5,0.5)",
+                    "v": "Dimension2(30 mm,6 mm)"
+                  },
+                  {
+                    "name": "Scale",
+                    "f": "Vector2(1, 1)",
+                    "v": "Vector2(1,1)"
+                  },
+                  {
+                    "name": "Rotation",
+                    "f": "0 deg",
+                    "v": "0 deg"
+                  }
+                ]
+              },
+              {
+                "Section": "Geometry",
+                "cells": [
+                  {
+                    "name": "Connect",
+                    "f": "true",
+                    "v": "true"
+                  }
+                ],
+                "rows": [
+                  {
+                    "type": "MoveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(0,0.5)",
+                        "v": "Dimension2(0 mm,6 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(2/18,0.5)",
+                        "v": "Dimension2(6.666666667 mm,6 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "MoveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(16/18,0.5)",
+                        "v": "Dimension2(53.333333333 mm,6 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(1.0,0.5)",
+                        "v": "Dimension2(60 mm,6 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "MoveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(2/18,0)",
+                        "v": "Dimension2(6.666666667 mm,0 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(16/18,0)",
+                        "v": "Dimension2(53.333333333 mm,0 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(16/18,1)",
+                        "v": "Dimension2(53.333333333 mm,12 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(2/18,1)",
+                        "v": "Dimension2(6.666666667 mm,12 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Geometry.Point5",
+                        "v": "Dimension2(6.666666667 mm,0 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "ConnectionPoint",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Geometry.Point1",
+                        "v": "Dimension2(0 mm,6 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Geometry.Point4",
+                        "v": "Dimension2(60 mm,6 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "CustomProperty",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Name",
+                        "s": "Resistance"
+                      },
+                      {
+                        "name": "Label",
+                        "s": "Resistance"
+                      },
+                      {
+                        "name": "Value",
+                        "s": ""
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Name",
+                        "s": "ComponentID"
+                      },
+                      {
+                        "name": "Label",
+                        "s": "Component ID"
+                      },
+                      {
+                        "name": "Value",
+                        "s": ""
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "type": "Shape2d",
+            "cells": [
+              {
+                "name": "Name",
+                "s": "Connection"
+              },
+              {
+                "name": "LineWidth",
+                "f": "2mm",
+                "v": "2 mm"
+              },
+              {
+                "name": "Size",
+                "f": "Dimension2(20mm,20mm)",
+                "v": "Dimension2(20 mm,20 mm)"
+              },
+              {
+                "name": "LineColor",
+                "f": "TRANSPARENT",
+                "v": "RGBA(0,0,0,0)"
+              },
+              {
+                "name": "FillColor",
+                "f": "BLACK",
+                "v": "RGB(0,0,0)"
+              },
+              {
+                "name": "StrokeCap",
+                "f": "STROKE_CAP_ROUND",
+                "v": "STROKE_CAP_ROUND"
+              },
+              {
+                "name": "StrokeJoin",
+                "f": "STROKE_JOIN_ROUND",
+                "v": "STROKE_JOIN_ROUND"
+              }
+            ],
+            "sections": [
+              {
+                "Section": "Transform",
+                "cells": [
+                  {
+                    "name": "Pin",
+                    "f": "Dimension2(0mm,0mm)",
+                    "v": "Dimension2(0 mm,0 mm)"
+                  },
+                  {
+                    "name": "LocPin",
+                    "f": "Size * Vector2(0.5,0.5)",
+                    "v": "Dimension2(10 mm,10 mm)"
+                  },
+                  {
+                    "name": "Scale",
+                    "f": "Vector2(1, 1)",
+                    "v": "Vector2(1,1)"
+                  },
+                  {
+                    "name": "Rotation",
+                    "f": "0 deg",
+                    "v": "0 deg"
+                  }
+                ]
+              },
+              {
+                "Section": "Geometry",
+                "cells": [
+                  {
+                    "name": "Connect",
+                    "f": "false",
+                    "v": "false"
+                  }
+                ],
+                "rows": [
+                  {
+                    "type": "MoveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(0.4,0.4)",
+                        "v": "Dimension2(8 mm,8 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "BezierCurveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(0.6,0.4)",
+                        "v": "Dimension2(12 mm,8 mm)"
+                      },
+                      {
+                        "name": "A",
+                        "f": "Size * Vector2(0.45,0.35)",
+                        "v": "Dimension2(9 mm,7 mm)"
+                      },
+                      {
+                        "name": "B",
+                        "f": "Size * Vector2(0.55,0.35)",
+                        "v": "Dimension2(11 mm,7 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "BezierCurveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(0.6,0.6)",
+                        "v": "Dimension2(12 mm,12 mm)"
+                      },
+                      {
+                        "name": "A",
+                        "f": "Size * Vector2(0.65,0.45)",
+                        "v": "Dimension2(13 mm,9 mm)"
+                      },
+                      {
+                        "name": "B",
+                        "f": "Size * Vector2(0.65,0.55)",
+                        "v": "Dimension2(13 mm,11 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "BezierCurveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(0.4,0.6)",
+                        "v": "Dimension2(8 mm,12 mm)"
+                      },
+                      {
+                        "name": "A",
+                        "f": "Size * Vector2(0.55,0.65)",
+                        "v": "Dimension2(11 mm,13 mm)"
+                      },
+                      {
+                        "name": "B",
+                        "f": "Size * Vector2(0.45,0.65)",
+                        "v": "Dimension2(9 mm,13 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "BezierCurveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size * Vector2(0.4,0.4)",
+                        "v": "Dimension2(8 mm,8 mm)"
+                      },
+                      {
+                        "name": "A",
+                        "f": "Size * Vector2(0.35,0.55)",
+                        "v": "Dimension2(7 mm,11 mm)"
+                      },
+                      {
+                        "name": "B",
+                        "f": "Size * Vector2(0.35,0.45)",
+                        "v": "Dimension2(7 mm,9 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "ConnectionPoint",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Size/2",
+                        "v": "Dimension2(10 mm,10 mm)"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "type": "Shape1d",
+            "cells": [
+              {
+                "name": "Name",
+                "s": "Wire"
+              },
+              {
+                "name": "LineWidth",
+                "f": "2mm",
+                "v": "2 mm"
+              },
+              {
+                "name": "Size",
+                "f": "Dimension2((End-Start).Length,LineWidth)",
+                "v": "Dimension2(100.000000016 mm,2 mm)"
+              },
+              {
+                "name": "LineColor",
+                "f": "BLACK",
+                "v": "RGB(0,0,0)"
+              },
+              {
+                "name": "FillColor",
+                "f": "TRANSPARENT",
+                "v": "RGBA(0,0,0,0)"
+              },
+              {
+                "name": "StrokeCap",
+                "f": "STROKE_CAP_ROUND",
+                "v": "STROKE_CAP_ROUND"
+              },
+              {
+                "name": "StrokeJoin",
+                "f": "STROKE_JOIN_ROUND",
+                "v": "STROKE_JOIN_ROUND"
+              },
+              {
+                "name": "Start",
+                "f": "connectAlong( Page.Shape3.Geometry, 0.885416667)",
+                "v": "Dimension2(1.999999984 mm,-6 mm)"
+              },
+              {
+                "name": "End",
+                "f": "Dimension2(102 mm,-6 mm)",
+                "v": "Dimension2(102 mm,-6 mm)"
+              }
+            ],
+            "sections": [
+              {
+                "Section": "Transform",
+                "cells": [
+                  {
+                    "name": "Pin",
+                    "f": "(Start+End) * 0.5",
+                    "v": "Dimension2(51.999999992 mm,-6 mm)"
+                  },
+                  {
+                    "name": "LocPin",
+                    "f": "Dimension2(Length*0.5, LineWidth * 0.5)",
+                    "v": "Dimension2(50.000000008 mm,1 mm)"
+                  },
+                  {
+                    "name": "Scale",
+                    "f": "Vector2(1, 1)",
+                    "v": "Vector2(1,1)"
+                  },
+                  {
+                    "name": "Rotation",
+                    "f": "(End-Start).Angle",
+                    "v": "0 deg"
+                  }
+                ]
+              },
+              {
+                "Section": "Geometry",
+                "cells": [
+                  {
+                    "name": "Connect",
+                    "f": "false",
+                    "v": "false"
+                  }
+                ],
+                "rows": [
+                  {
+                    "type": "MoveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Dimension2(0mm,LineWidth/2)",
+                        "v": "Dimension2(0 mm,1 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Dimension2(Length,LineWidth/2)",
+                        "v": "Dimension2(100.000000016 mm,1 mm)"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "children": [
+              {
+                "id": 11,
+                "type": "Shape2d",
+                "linkedFrom": 10,
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "Connection"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "l": "10.LineWidth",
+                    "v": "2 mm"
+                  },
+                  {
+                    "name": "Size",
+                    "l": "10.Size",
+                    "v": "Dimension2(20 mm,20 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "l": "10.LineColor",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "l": "10.FillColor",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "l": "10.StrokeCap",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "l": "10.StrokeJoin",
+                    "v": "STROKE_JOIN_ROUND"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Dimension2(0mm,1mm)",
+                        "v": "Dimension2(0 mm,1 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "l": "10.Transform.LocPin",
+                        "v": "Dimension2(10 mm,10 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "l": "10.Transform.Scale",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "l": "10.Transform.Rotation",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "l": "10.Geometry.Connect",
+                        "v": "false"
+                      }
+                    ],
+                    "rows": [
+                      {
+                        "type": "MoveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "l": "10.Geometry.0.Point",
+                            "v": "Dimension2(8 mm,8 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "BezierCurveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "l": "10.Geometry.1.Point",
+                            "v": "Dimension2(12 mm,8 mm)"
+                          },
+                          {
+                            "name": "A",
+                            "l": "10.Geometry.1.A",
+                            "v": "Dimension2(9 mm,7 mm)"
+                          },
+                          {
+                            "name": "B",
+                            "l": "10.Geometry.1.B",
+                            "v": "Dimension2(11 mm,7 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "BezierCurveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "l": "10.Geometry.2.Point",
+                            "v": "Dimension2(12 mm,12 mm)"
+                          },
+                          {
+                            "name": "A",
+                            "l": "10.Geometry.2.A",
+                            "v": "Dimension2(13 mm,9 mm)"
+                          },
+                          {
+                            "name": "B",
+                            "l": "10.Geometry.2.B",
+                            "v": "Dimension2(13 mm,11 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "BezierCurveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "l": "10.Geometry.3.Point",
+                            "v": "Dimension2(8 mm,12 mm)"
+                          },
+                          {
+                            "name": "A",
+                            "l": "10.Geometry.3.A",
+                            "v": "Dimension2(11 mm,13 mm)"
+                          },
+                          {
+                            "name": "B",
+                            "l": "10.Geometry.3.B",
+                            "v": "Dimension2(9 mm,13 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "BezierCurveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "l": "10.Geometry.4.Point",
+                            "v": "Dimension2(8 mm,8 mm)"
+                          },
+                          {
+                            "name": "A",
+                            "l": "10.Geometry.4.A",
+                            "v": "Dimension2(7 mm,11 mm)"
+                          },
+                          {
+                            "name": "B",
+                            "l": "10.Geometry.4.B",
+                            "v": "Dimension2(7 mm,9 mm)"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "ConnectionPoint",
+                    "rows": [
+                      {
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "l": "10.ConnectionPoint.0.Point",
+                            "v": "Dimension2(10 mm,10 mm)"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 13,
+                "type": "Shape2d",
+                "linkedFrom": 10,
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "Connection"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "l": "10.LineWidth",
+                    "v": "2 mm"
+                  },
+                  {
+                    "name": "Size",
+                    "l": "10.Size",
+                    "v": "Dimension2(20 mm,20 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "l": "10.LineColor",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "l": "10.FillColor",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "l": "10.StrokeCap",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "l": "10.StrokeJoin",
+                    "v": "STROKE_JOIN_ROUND"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Dimension2(Parent.Length,1mm)",
+                        "v": "Dimension2(100.000000016 mm,1 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "l": "10.Transform.LocPin",
+                        "v": "Dimension2(10 mm,10 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "l": "10.Transform.Scale",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "l": "10.Transform.Rotation",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "l": "10.Geometry.Connect",
+                        "v": "false"
+                      }
+                    ],
+                    "rows": [
+                      {
+                        "type": "MoveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "l": "10.Geometry.0.Point",
+                            "v": "Dimension2(8 mm,8 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "BezierCurveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "l": "10.Geometry.1.Point",
+                            "v": "Dimension2(12 mm,8 mm)"
+                          },
+                          {
+                            "name": "A",
+                            "l": "10.Geometry.1.A",
+                            "v": "Dimension2(9 mm,7 mm)"
+                          },
+                          {
+                            "name": "B",
+                            "l": "10.Geometry.1.B",
+                            "v": "Dimension2(11 mm,7 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "BezierCurveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "l": "10.Geometry.2.Point",
+                            "v": "Dimension2(12 mm,12 mm)"
+                          },
+                          {
+                            "name": "A",
+                            "l": "10.Geometry.2.A",
+                            "v": "Dimension2(13 mm,9 mm)"
+                          },
+                          {
+                            "name": "B",
+                            "l": "10.Geometry.2.B",
+                            "v": "Dimension2(13 mm,11 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "BezierCurveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "l": "10.Geometry.3.Point",
+                            "v": "Dimension2(8 mm,12 mm)"
+                          },
+                          {
+                            "name": "A",
+                            "l": "10.Geometry.3.A",
+                            "v": "Dimension2(11 mm,13 mm)"
+                          },
+                          {
+                            "name": "B",
+                            "l": "10.Geometry.3.B",
+                            "v": "Dimension2(9 mm,13 mm)"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "BezierCurveTo",
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "l": "10.Geometry.4.Point",
+                            "v": "Dimension2(8 mm,8 mm)"
+                          },
+                          {
+                            "name": "A",
+                            "l": "10.Geometry.4.A",
+                            "v": "Dimension2(7 mm,11 mm)"
+                          },
+                          {
+                            "name": "B",
+                            "l": "10.Geometry.4.B",
+                            "v": "Dimension2(7 mm,9 mm)"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "ConnectionPoint",
+                    "rows": [
+                      {
+                        "cells": [
+                          {
+                            "name": "Point",
+                            "l": "10.ConnectionPoint.0.Point",
+                            "v": "Dimension2(10 mm,10 mm)"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "localMasters": [
+      {
+        "id": "4c8b8f8c-c31f-4d61-95a3-7f07d7ea8696:1",
+        "shape": {
+          "id": 1,
+          "type": "Shape2d",
+          "cells": [
+            {
+              "name": "Name",
+              "s": ""
+            },
+            {
+              "name": "LineWidth",
+              "f": "2mm",
+              "v": "2 mm"
+            },
+            {
+              "name": "Size",
+              "f": "Dimension2(100mm,100mm)",
+              "v": "Dimension2(100 mm,100 mm)"
+            },
+            {
+              "name": "LineColor",
+              "f": "BLACK",
+              "v": "RGB(0,0,0)"
+            },
+            {
+              "name": "FillColor",
+              "f": "WHITE",
+              "v": "RGB(1,1,1)"
+            },
+            {
+              "name": "StrokeCap",
+              "f": "STROKE_CAP_ROUND",
+              "v": "STROKE_CAP_ROUND"
+            },
+            {
+              "name": "StrokeJoin",
+              "f": "STROKE_JOIN_ROUND",
+              "v": "STROKE_JOIN_ROUND"
+            }
+          ],
+          "sections": [
+            {
+              "Section": "Transform",
+              "cells": [
+                {
+                  "name": "Pin",
+                  "f": "Dimension2(0mm,0mm)",
+                  "v": "Dimension2(0 mm,0 mm)"
+                },
+                {
+                  "name": "LocPin",
+                  "f": "Size / 2",
+                  "v": "Dimension2(50 mm,50 mm)"
+                },
+                {
+                  "name": "Scale",
+                  "f": "Vector2(1, 1)",
+                  "v": "Vector2(1,1)"
+                },
+                {
+                  "name": "Rotation",
+                  "f": "0 deg",
+                  "v": "0 deg"
+                }
+              ]
+            },
+            {
+              "Section": "Geometry",
+              "cells": [
+                {
+                  "name": "Connect",
+                  "f": "true",
+                  "v": "true"
+                }
+              ],
+              "rows": [
+                {
+                  "type": "MoveTo",
+                  "cells": [
+                    {
+                      "name": "Point",
+                      "f": "Size * Vector2(0,0) + Dimension2(LineWidth/2, LineWidth/2)",
+                      "v": "Dimension2(1 mm,1 mm)"
+                    }
+                  ]
+                },
+                {
+                  "type": "LineTo",
+                  "cells": [
+                    {
+                      "name": "Point",
+                      "f": "Size * Vector2(1,0) + Dimension2(-LineWidth/2, LineWidth/2)",
+                      "v": "Dimension2(99 mm,1 mm)"
+                    }
+                  ]
+                },
+                {
+                  "type": "LineTo",
+                  "cells": [
+                    {
+                      "name": "Point",
+                      "f": "Size * Vector2(1,1) + Dimension2(-LineWidth/2, -LineWidth/2)",
+                      "v": "Dimension2(99 mm,99 mm)"
+                    }
+                  ]
+                },
+                {
+                  "type": "LineTo",
+                  "cells": [
+                    {
+                      "name": "Point",
+                      "f": "Size * Vector2(0,1) + Dimension2(LineWidth/2, -LineWidth/2)",
+                      "v": "Dimension2(1 mm,99 mm)"
+                    }
+                  ]
+                },
+                {
+                  "type": "LineTo",
+                  "cells": [
+                    {
+                      "name": "Point",
+                      "f": "Geometry1.Point1",
+                      "v": "Dimension2(1 mm,1 mm)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "66609107-a5b3-4df9-bfe6-0f1780ad4dfb:8",
+        "shape": {
+          "id": 10,
+          "type": "Shape2d",
+          "cells": [
+            {
+              "name": "Name",
+              "s": "Connection"
+            },
+            {
+              "name": "LineWidth",
+              "f": "2mm",
+              "v": "2 mm"
+            },
+            {
+              "name": "Size",
+              "f": "Dimension2(20mm,20mm)",
+              "v": "Dimension2(20 mm,20 mm)"
+            },
+            {
+              "name": "LineColor",
+              "f": "TRANSPARENT",
+              "v": "RGBA(0,0,0,0)"
+            },
+            {
+              "name": "FillColor",
+              "f": "BLACK",
+              "v": "RGB(0,0,0)"
+            },
+            {
+              "name": "StrokeCap",
+              "f": "STROKE_CAP_ROUND",
+              "v": "STROKE_CAP_ROUND"
+            },
+            {
+              "name": "StrokeJoin",
+              "f": "STROKE_JOIN_ROUND",
+              "v": "STROKE_JOIN_ROUND"
+            }
+          ],
+          "sections": [
+            {
+              "Section": "Transform",
+              "cells": [
+                {
+                  "name": "Pin",
+                  "f": "Dimension2(0mm,0mm)",
+                  "v": "Dimension2(0 mm,0 mm)"
+                },
+                {
+                  "name": "LocPin",
+                  "f": "Size * Vector2(0.5,0.5)",
+                  "v": "Dimension2(10 mm,10 mm)"
+                },
+                {
+                  "name": "Scale",
+                  "f": "Vector2(1, 1)",
+                  "v": "Vector2(1,1)"
+                },
+                {
+                  "name": "Rotation",
+                  "f": "0 deg",
+                  "v": "0 deg"
+                }
+              ]
+            },
+            {
+              "Section": "Geometry",
+              "cells": [
+                {
+                  "name": "Connect",
+                  "f": "false",
+                  "v": "false"
+                }
+              ],
+              "rows": [
+                {
+                  "type": "MoveTo",
+                  "cells": [
+                    {
+                      "name": "Point",
+                      "f": "Size * Vector2(0.4,0.4)",
+                      "v": "Dimension2(8 mm,8 mm)"
+                    }
+                  ]
+                },
+                {
+                  "type": "BezierCurveTo",
+                  "cells": [
+                    {
+                      "name": "Point",
+                      "f": "Size * Vector2(0.6,0.4)",
+                      "v": "Dimension2(12 mm,8 mm)"
+                    },
+                    {
+                      "name": "A",
+                      "f": "Size * Vector2(0.45,0.35)",
+                      "v": "Dimension2(9 mm,7 mm)"
+                    },
+                    {
+                      "name": "B",
+                      "f": "Size * Vector2(0.55,0.35)",
+                      "v": "Dimension2(11 mm,7 mm)"
+                    }
+                  ]
+                },
+                {
+                  "type": "BezierCurveTo",
+                  "cells": [
+                    {
+                      "name": "Point",
+                      "f": "Size * Vector2(0.6,0.6)",
+                      "v": "Dimension2(12 mm,12 mm)"
+                    },
+                    {
+                      "name": "A",
+                      "f": "Size * Vector2(0.65,0.45)",
+                      "v": "Dimension2(13 mm,9 mm)"
+                    },
+                    {
+                      "name": "B",
+                      "f": "Size * Vector2(0.65,0.55)",
+                      "v": "Dimension2(13 mm,11 mm)"
+                    }
+                  ]
+                },
+                {
+                  "type": "BezierCurveTo",
+                  "cells": [
+                    {
+                      "name": "Point",
+                      "f": "Size * Vector2(0.4,0.6)",
+                      "v": "Dimension2(8 mm,12 mm)"
+                    },
+                    {
+                      "name": "A",
+                      "f": "Size * Vector2(0.55,0.65)",
+                      "v": "Dimension2(11 mm,13 mm)"
+                    },
+                    {
+                      "name": "B",
+                      "f": "Size * Vector2(0.45,0.65)",
+                      "v": "Dimension2(9 mm,13 mm)"
+                    }
+                  ]
+                },
+                {
+                  "type": "BezierCurveTo",
+                  "cells": [
+                    {
+                      "name": "Point",
+                      "f": "Size * Vector2(0.4,0.4)",
+                      "v": "Dimension2(8 mm,8 mm)"
+                    },
+                    {
+                      "name": "A",
+                      "f": "Size * Vector2(0.35,0.55)",
+                      "v": "Dimension2(7 mm,11 mm)"
+                    },
+                    {
+                      "name": "B",
+                      "f": "Size * Vector2(0.35,0.45)",
+                      "v": "Dimension2(7 mm,9 mm)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "Section": "ConnectionPoint",
+              "rows": [
+                {
+                  "cells": [
+                    {
+                      "name": "Point",
+                      "f": "Size/2",
+                      "v": "Dimension2(10 mm,10 mm)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
