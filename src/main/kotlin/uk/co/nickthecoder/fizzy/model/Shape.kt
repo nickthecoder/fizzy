@@ -261,6 +261,12 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
 
     abstract fun copyInto(parent: ShapeParent, link: Boolean): Shape
 
+    fun duplicate(): Shape {
+        val copy = copyInto(parent, false)
+        parent.children.add(copy)
+        return copy
+    }
+
     protected fun populateShape(newShape: Shape, link: Boolean) {
 
         geometry.copyInto(newShape, link)
@@ -278,6 +284,10 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
             newShape.customProperties.add(customProperty.copy())
         }
 
+        children.forEach { child ->
+            val copy = child.copyInto(newShape, link)
+            newShape.children.add(copy)
+        }
         metaData().copyInto(newShape.metaData(), link)
     }
 

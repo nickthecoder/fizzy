@@ -155,12 +155,6 @@ class MainWindow(val stage: Stage)
         }
     }
 
-    fun editLocalMasters() {
-        document?.let {
-            tabs.tabs.add(DocumentTab(this, it, "Masters", it.localMasterShapes))
-        }
-    }
-
     fun editMaster(shape: Shape) {
         val tab = DocumentTab(this, shape.document(), "Master", shape.page(), shape)
         tabs.tabs.add(tab)

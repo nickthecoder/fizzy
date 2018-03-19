@@ -24,8 +24,8 @@ import javafx.scene.control.*
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.FlowPane
 import javafx.scene.layout.VBox
-import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.collection.FList
+import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.controller.tools.GrowShape1dTool
 import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
 import uk.co.nickthecoder.fizzy.controller.tools.StampShape2dTool
@@ -156,13 +156,16 @@ class StencilButton(val mainWindow: MainWindow, val shape: Shape)
             val editShapeSheet = MenuItem("Edit Shape Sheet")
             editShapeSheet.onAction = EventHandler { mainWindow.editShapeSheet(shape) }
 
+            val duplicateShape = MenuItem("Duplicate Shape")
+            duplicateShape.onAction = EventHandler { shape.duplicate() }
+
             val deleteMaster = MenuItem("Delete")
             deleteMaster.onAction = EventHandler {
                 val history = shape.document().history
                 history.makeChange(DeleteShape(shape))
             }
 
-            menu.items.addAll(editMaster, editShapeSheet, deleteMaster)
+            menu.items.addAll(editMaster, editShapeSheet, duplicateShape, deleteMaster)
             menu.show(button.parent, event.screenX, event.screenY)
         }
     }
