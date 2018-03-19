@@ -117,7 +117,7 @@ class ShapeTransform(val shape: Shape)
         }
 
         override fun eval() =
-                shape.parent.fromPageToLocal.value * fromParentToLocal.value
+                fromParentToLocal.value * shape.parent.fromPageToLocal.value
     }
 
     override fun metaData(): MetaData {
