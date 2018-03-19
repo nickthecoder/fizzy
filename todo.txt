@@ -1,8 +1,6 @@
 To Do
 =====
 
-Allow deleting of shapes when entered a shape.
-
 Add text tool
 
 BUGS

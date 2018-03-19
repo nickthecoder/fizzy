@@ -125,6 +125,8 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
      * which calls [postInit]. This is to ensure that 'this' is not leaked from the constructor.
      */
     open protected fun postInit() {
+        document().usedId(id)
+
         children.listeners.add(shapeListener)
         geometry.changeListeners.add(geometryListener)
 

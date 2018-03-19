@@ -70,6 +70,15 @@ class Document(val id: String = Document.generateDocumentId())
         return null
     }
 
+    internal fun usedId(id: Int) {
+        if (id < previousId) {
+            println("WARNING : Reusing a smaller ID $id vs $previousId")
+        }
+        if (id > previousId) {
+            previousId = id
+        }
+    }
+
     fun generateShapeId(): Int {
         previousId++
         return previousId
