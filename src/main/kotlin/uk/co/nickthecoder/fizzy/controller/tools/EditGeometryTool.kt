@@ -20,10 +20,7 @@ package uk.co.nickthecoder.fizzy.controller.tools
 
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
-import uk.co.nickthecoder.fizzy.controller.handle.BezierGeometryHandle
-import uk.co.nickthecoder.fizzy.controller.handle.GeometryHandle
-import uk.co.nickthecoder.fizzy.controller.handle.Handle
-import uk.co.nickthecoder.fizzy.controller.handle.Shape1dHandle
+import uk.co.nickthecoder.fizzy.controller.handle.*
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
@@ -55,7 +52,75 @@ class EditGeometryTool(controller: Controller)
         editingShape?.let { createHandles(it) }
     }
 
+    override fun onContextMenu(event: CMouseEvent): List<Pair<String, () -> Unit>> {
+
+        val result = mutableListOf<Pair<String, () -> Unit>>()
+
+        editingShape?.let { shape ->
+
+            val history = shape.document().history
+            controller.handles.forEach { handle ->
+                if (handle.isAt(event.point, event.scale) && handle is GeometryHandle) {
+                    result.add(
+                            "Delete Point" to {
+                                history.beginBatch()
+                                history.makeChange(RemoveGeometryPart(handle.shape, handle.geometryPart.index()))
+                                history.endBatch()
+                                //TODO Adjust size and parts to new size
+                                createHandles(shape)
+                            }
+                    )
+                }
+            }
+
+            shape.geometry.parts.forEach { part ->
+                val localPoint = shape.fromPageToLocal.value * event.point
+                part.checkAlong(shape, localPoint)?.let { (distance, _) ->
+                    if (distance < Controller.HANDLE_NEAR / controller.scale) {
+                        val i = part.index()
+                        result.add(
+                                "Split" to {
+                                    history.beginBatch()
+                                    history.makeChange(AddGeometryPart(shape, i, LineTo(localPoint)))
+                                    //TODO Adjust size and parts to new size
+                                    history.endBatch()
+                                    createHandles(shape)
+                                }
+                        )
+                        if (part is LineTo) {
+                            result.add(
+                                    "Convert To Curve" to {
+                                        history.beginBatch()
+                                        val prev = part.prevPart.point.value
+                                        val a = (prev * 2.0 + part.point.value) / 3.0
+                                        val b = (prev + part.point.value * 2.0) / 3.0
+                                        history.makeChange(RemoveGeometryPart(shape, i))
+                                        history.makeChange(AddGeometryPart(shape, i, BezierCurveTo(a, b, part.point.value)))
+                                        history.endBatch()
+                                        createHandles(shape)
+                                    }
+                            )
+                        } else {
+                            result.add(
+                                    "Convert To Line" to {
+                                        history.beginBatch()
+                                        history.makeChange(RemoveGeometryPart(shape, i))
+                                        history.makeChange(AddGeometryPart(shape, i, LineTo(part.point.value)))
+                                        history.endBatch()
+                                        createHandles(shape)
+                                    }
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        return result
+    }
+
     fun createHandles(shape: Shape) {
+        controller.handles.clear()
         if (shape is Shape1d) {
             controller.handles.add(Shape1dHandle(shape, shape.start.value, controller, false))
             controller.handles.add(Shape1dHandle(shape, shape.end.value, controller, true))
@@ -67,15 +132,16 @@ class EditGeometryTool(controller: Controller)
             if (shape is Shape1d && (part.point.value.x == Dimension.ZERO_mm || part.point.value.x.isNear(shape.length.value))) {
                 // Ignore it
             } else {
-                controller.handles.add(GeometryHandle(shape, part.point, controller))
+                controller.handles.add(GeometryHandle(shape, part, part.point, controller))
             }
             if (part is BezierCurveTo) {
-                controller.handles.add(BezierGeometryHandle(shape, part.a, (previousPart ?: part).point, controller))
-                controller.handles.add(BezierGeometryHandle(shape, part.b, part.point, controller))
+                controller.handles.add(BezierGeometryHandle(shape, part, part.a, (previousPart ?: part).point, controller))
+                controller.handles.add(BezierGeometryHandle(shape, part, part.b, part.point, controller))
             }
 
             previousPart = part
         }
+        controller.dirty.value++
     }
 
     override fun onMousePressed(event: CMouseEvent) {
@@ -124,7 +190,7 @@ class EditGeometryTool(controller: Controller)
 
         controller.handles.forEach { handle ->
             if (handle.isAt(mousePressedPoint, event.scale)) {
-                if (handle is GeometryHandle) {
+                if (handle is AbstractGeometryHandle) {
                     controller.tool = EditGeometryDragHandleTool(this, handle, mousePressedPoint)
                 } else {
                     controller.tool = DragHandleTool(controller, handle, mousePressedPoint, nextTool = this)
@@ -148,7 +214,7 @@ class EditGeometryTool(controller: Controller)
 
                         val point = if (along < 0.5) bezier.a else bezier.b
                         controller.handles.forEach { handle ->
-                            if (handle is GeometryHandle && handle.point == point) {
+                            if (handle is AbstractGeometryHandle && handle.point == point) {
                                 controller.tool = EditGeometryDragHandleTool(this, handle, handle.position)
                                 controller.tool.onMouseDragged(event)
                             }

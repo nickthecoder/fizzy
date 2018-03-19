@@ -21,16 +21,18 @@ package uk.co.nickthecoder.fizzy.controller.handle
 import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.geometry.GeometryPart
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.view.DrawContext
 
 class BezierGeometryHandle(
         shape: Shape,
+        part: GeometryPart,
         point: Dimension2Expression,
         val otherPoint: Dimension2Expression,
         controller: Controller)
 
-    : GeometryHandle(shape, point, controller) {
+    : AbstractGeometryHandle(shape, part, point, controller) {
 
     override fun draw(dc: DrawContext) {
         dc.use {

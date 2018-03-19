@@ -15,17 +15,6 @@ Aims
     Create circuit diagrams
     Create flow charts
 
-
-Add "Properties" section
-    Similar to Scratch, but has a label, and appear in the "Properties" dialog box when the shape is double clicked.
-    Also a "regex" to check input is valid.
-    Values are PropVariable, not PropExpression.
-
-Edit geometry using the GUI.
-    Move multiple geometry handles in one operation
-    Delete handles
-    Add additional line segements to the ends
-
 Edit text
     Double click a shape
         If it is ShapeText or has a child of ShapeText, then edit that

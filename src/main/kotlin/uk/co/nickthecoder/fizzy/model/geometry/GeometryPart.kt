@@ -60,6 +60,10 @@ abstract class GeometryPart
     val prevPart: GeometryPart
         get() = internalPrevPart
 
+    fun index(): Int {
+        return geometry?.parts?.indexOf(this) ?: -1
+    }
+
     override fun metaData(): MetaData {
         val metaData = MetaData(null)
         addMetaData(metaData)

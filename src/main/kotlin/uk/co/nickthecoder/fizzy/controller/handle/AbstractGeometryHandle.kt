@@ -23,11 +23,12 @@ import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.Angle
 import uk.co.nickthecoder.fizzy.model.Dimension2
 import uk.co.nickthecoder.fizzy.model.Shape
+import uk.co.nickthecoder.fizzy.model.geometry.GeometryPart
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
 import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
 import uk.co.nickthecoder.fizzy.view.DrawContext
 
-open class GeometryHandle(val shape: Shape, val point: Dimension2Expression, val controller: Controller)
+abstract class AbstractGeometryHandle(val shape: Shape, val geometryPart: GeometryPart, val point: Dimension2Expression, val controller: Controller)
     : Handle() {
 
     override var position: Dimension2
@@ -58,3 +59,6 @@ open class GeometryHandle(val shape: Shape, val point: Dimension2Expression, val
     override fun toString() = "GeoHandle @ $position"
 
 }
+
+class GeometryHandle(shape: Shape, geometryPart: GeometryPart, point: Dimension2Expression, controller: Controller)
+    : AbstractGeometryHandle(shape, geometryPart, point, controller)
