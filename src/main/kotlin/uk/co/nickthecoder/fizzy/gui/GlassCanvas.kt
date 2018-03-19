@@ -250,6 +250,11 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
             dc.scale(drawingArea.scale)
             dc.translate(drawingArea.pan)
 
+            val parent = drawingArea.controller.parent
+            if (parent is Shape) {
+                highlightShape(parent)
+            }
+
             drawingArea.controller.selection.forEach { shape ->
                 drawBoundingBox(shape)
             }

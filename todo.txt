@@ -1,10 +1,6 @@
 To Do
 =====
 
-New add line segments tool.
-    Drag an end point to create a new line.
-
-
 BUGS
 ----
 
@@ -25,6 +21,7 @@ Edit text
 
 Edit children within a parent shape
 
+Add text
 
 Soon
 ----

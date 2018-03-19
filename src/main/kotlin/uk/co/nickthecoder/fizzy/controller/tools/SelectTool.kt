@@ -40,7 +40,13 @@ class SelectTool(controller: Controller)
         }
 
         if (shape != null) {
-            val list = mutableListOf(
+            val list: MutableList<Pair<String, () -> Unit>> = mutableListOf(
+                    "Enter Shape" to {
+                        controller.parent = shape
+                        controller.selection.clear()
+                        controller.selection.addAll(shape.children)
+                        Unit
+                    },
                     "Edit Shape Sheet" to { controller.otherActions.editShapeSheet(shape) }
             )
 
@@ -58,6 +64,7 @@ class SelectTool(controller: Controller)
         if (shapes.isEmpty()) {
             if (!event.isAdjust) {
                 controller.selection.clear()
+                controller.parent = controller.page // Exit from editing a group if we ARE editing a group.
             }
         } else {
             val latest = controller.selection.lastOrNull()

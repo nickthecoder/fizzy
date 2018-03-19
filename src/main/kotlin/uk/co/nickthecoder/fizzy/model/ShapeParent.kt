@@ -32,6 +32,8 @@ interface ShapeParent {
 
     fun findShape(name: String): Shape?
 
+    fun findShapesAt(pagePoint: Dimension2, minDistance: Dimension) = children.filter { it.isAt(pagePoint, minDistance) }
+
     fun findNearestConnectionPoint(atPagePoint: Dimension2, exclude: Shape): Pair<ConnectionPoint, Double>? {
         var nearest: ConnectionPoint? = null
         var distance = Double.MAX_VALUE

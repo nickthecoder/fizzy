@@ -38,7 +38,7 @@ class GrowShape1dTool(
 
     override val cursor = ToolCursor.GROW
 
-    var start: Dimension2? = null
+    var startPoint: Dimension2? = null
     var newShape: Shape1d? = null
 
     init {
@@ -55,19 +55,22 @@ class GrowShape1dTool(
     }
 
     override fun onMousePressed(event: CMouseEvent) {
-        start = event.point
+        startPoint = event.point
         controller.page.document.history.beginBatch()
     }
 
     override fun onDragDetected(event: CMouseEvent) {
-        start?.let { start ->
+        startPoint?.let { startPoint ->
+            val parentStart = controller.parent.fromPageToLocal.value * startPoint
+            val parentEnd = controller.parent.fromPageToLocal.value * event.point
+
             val newShape = controller.page.copyMasterShape(masterShape) as Shape1d
 
             // Either a connection to another shape, or the point of the onMousePressed event.
-            val connectFormula = Controller.connectFormula(start, newShape, event.scale)
+            val connectFormula = Controller.connectFormula(startPoint, newShape, event.scale)
 
-            newShape.start.formula = connectFormula ?: start.toFormula()
-            newShape.end.formula = event.point.toFormula()
+            newShape.start.formula = connectFormula ?: parentStart.toFormula()
+            newShape.end.formula = parentEnd.toFormula()
 
             strokeColor?.let { newShape.strokeColor.formula = it.toFormula() }
             fillColor?.let { newShape.fillColor.formula = it.toFormula() }
@@ -84,13 +87,14 @@ class GrowShape1dTool(
         newShape?.let {
             // Note, we don't need to change the end point using a Change, because the Batch will only be completed
             // when the drag is completed. At which point the end point is set correctly.
+            val parentEnd = controller.parent.fromPageToLocal.value * event.point
 
             // Either a connection to another shape, or the point of the mouse event.
             val (connectFormula, _, geometry) = Controller.connectData(event.point, it, event.scale)
 
             controller.highlightShape.value = geometry ?: NO_SHAPE
 
-            it.end.formula = connectFormula ?: event.point.toFormula()
+            it.end.formula = connectFormula ?: parentEnd.toFormula()
         }
     }
 

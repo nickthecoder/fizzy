@@ -70,15 +70,18 @@ class GrowShape2dTool(
 
     override fun onMouseDragged(event: CMouseEvent) {
         startPoint?.let { startPoint ->
+            val parentStart = controller.parent.fromPageToLocal.value * startPoint
+            val parentEnd = controller.parent.fromPageToLocal.value * event.point
+
             newShape?.let { newShape ->
 
-                var newSize = (event.point - startPoint)
+                var newSize = (parentEnd - parentStart)
                 if (event.isConstrain) {
                     newSize = newSize.keepAspectRatio(aspectRatio)
                 }
                 val ratio = newShape.transform.locPin.value.ratio(newShape.size.value)
 
-                newShape.transform.pin.formula = (startPoint + newSize * ratio).toFormula()
+                newShape.transform.pin.formula = (parentStart + newSize * ratio).toFormula()
                 newShape.size.formula = newSize.toFormula()
             }
         }

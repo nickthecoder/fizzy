@@ -146,8 +146,15 @@ class Controller(val page: Page, val singleShape: Shape? = null, val otherAction
     }
 
     fun findShapesAt(pagePoint: Dimension2): List<Shape> {
+
+        if (parent is Shape) {
+            return parent.findShapesAt(pagePoint, minDistance)
+        }
+
+        // If we are at the top-level (i.e. not entered a shape), then only test the singleShape if we are in
+        // singleShape mode, otherwise test for all shapes on the page (parent will be a Page at this point).
         if (singleShape == null) {
-            return page.findShapesAt(pagePoint, minDistance)
+            return parent.findShapesAt(pagePoint, minDistance)
         } else {
             if (singleShape.isAt(pagePoint, minDistance)) {
                 return listOf(singleShape)

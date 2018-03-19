@@ -77,8 +77,6 @@ class Page internal constructor(val document: Document, add: Boolean)
         return null
     }
 
-    fun findShapesAt(pagePoint: Dimension2, minDistance: Dimension) = children.filter { it.isAt(pagePoint, minDistance) }
-
     /**
      * Makes a local copy of the master shape. Creates a new shape based on the copy of the master.
      */
