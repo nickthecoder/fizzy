@@ -171,20 +171,23 @@ class Controller(val page: Page, val singleShape: Shape? = null, val otherAction
 
         if (shape is Shape2d) {
             val corners = shapeCorners(shape)
-            handles.add(Shape2dSizeHandle(shape, corners[0], -1, -1))
-            handles.add(Shape2dSizeHandle(shape, corners[1], 1, -1))
-            handles.add(Shape2dSizeHandle(shape, corners[2], 1, 1))
-            handles.add(Shape2dSizeHandle(shape, corners[3], -1, 1))
+            if (!shape.locks.size.value) {
+                handles.add(Shape2dSizeHandle(shape, corners[0], -1, -1))
+                handles.add(Shape2dSizeHandle(shape, corners[1], 1, -1))
+                handles.add(Shape2dSizeHandle(shape, corners[2], 1, 1))
+                handles.add(Shape2dSizeHandle(shape, corners[3], -1, 1))
 
-            handles.add(Shape2dSizeHandle(shape, (corners[0] + corners[1]) / 2.0, 0, -1))
-            handles.add(Shape2dSizeHandle(shape, (corners[1] + corners[2]) / 2.0, 1, 0))
-            handles.add(Shape2dSizeHandle(shape, (corners[2] + corners[3]) / 2.0, 0, 1))
-            handles.add(Shape2dSizeHandle(shape, (corners[3] + corners[0]) / 2.0, -1, 0))
-
-            handles.add(RotationHandle(shape,
-                    (corners[0] + corners[1]) / 2.0 +
-                            (corners[1] - corners[2]).normalise()
-                                    * Dimension(GlassCanvas.ROTATE_DISTANCE)))
+                handles.add(Shape2dSizeHandle(shape, (corners[0] + corners[1]) / 2.0, 0, -1))
+                handles.add(Shape2dSizeHandle(shape, (corners[1] + corners[2]) / 2.0, 1, 0))
+                handles.add(Shape2dSizeHandle(shape, (corners[2] + corners[3]) / 2.0, 0, 1))
+                handles.add(Shape2dSizeHandle(shape, (corners[3] + corners[0]) / 2.0, -1, 0))
+            }
+            if (!shape.locks.rotation.value) {
+                handles.add(RotationHandle(shape,
+                        (corners[0] + corners[1]) / 2.0 +
+                                (corners[1] - corners[2]).normalise()
+                                        * Dimension(GlassCanvas.ROTATE_DISTANCE)))
+            }
 
         } else if (shape is Shape1d) {
             val ends = shape1dEnds(shape)

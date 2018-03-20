@@ -28,6 +28,8 @@ class ShapeText private constructor(parent: ShapeParent, linkedFrom: Shape?, id:
 
     override val transform = ShapeTransform(this)
 
+    override val locks = Locks(this, context)
+
     override val size = Dimension2Expression("textSize()")
 
     val text = StringExpression("")

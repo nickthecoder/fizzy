@@ -57,10 +57,11 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
     // Note, this is abstract to avoid leaking 'this' in the constructor, so it is only instantiated in final sub-classes
     abstract val transform: ShapeTransform
 
+    abstract val locks: Locks
+
     override var changeListeners = ChangeListeners<Shape>()
 
     final override val children = MutableFList<Shape>()
-
 
     val geometry = Geometry(this)
 
@@ -324,6 +325,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
         return when (sectionName) {
             "Geometry" -> Pair(geometry, metaData().sections[sectionName]!!)
             "Transform" -> Pair(transform, metaData().sections[sectionName]!!)
+            "Lock" -> Pair(locks, metaData().sections[sectionName]!!)
             "ConnectionPoint" -> Pair(connectionPoints, metaData().sections[sectionName]!!)
             "ControlPoint" -> Pair(controlPoints, metaData().sections[sectionName]!!)
             "Scratch" -> Pair(scratches, metaData().sections[sectionName]!!)
@@ -348,6 +350,8 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
         metaData.newCell("StrokeJoin", strokeJoin)
 
         transform.addMetaData(metaData)
+
+        locks.addMetaData(metaData)
 
         val geometrySection = metaData.newSection("Geometry")
         geometry.addMetaData(geometrySection)

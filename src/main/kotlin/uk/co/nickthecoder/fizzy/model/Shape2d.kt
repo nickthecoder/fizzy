@@ -33,6 +33,8 @@ class Shape2d private constructor(
 
     override val transform = ShapeTransform(this)
 
+    override val locks = Locks(this, context)
+
     override val size = Dimension2Expression("Dimension2(1mm,1mm)")
 
 

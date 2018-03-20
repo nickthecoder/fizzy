@@ -71,9 +71,6 @@ class Document(val id: String = Document.generateDocumentId())
     }
 
     internal fun usedId(id: Int) {
-        if (id < previousId) {
-            println("WARNING : Reusing a smaller ID $id vs $previousId")
-        }
         if (id > previousId) {
             previousId = id
         }

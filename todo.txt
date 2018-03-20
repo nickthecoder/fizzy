@@ -6,8 +6,6 @@ Add text tool
 BUGS
 ----
 
-Document's next id is not set when loading.
-
 If a size expression is NaN or Inf, then drawing takes forever.
    Skip that operation instead (or use a default value).
 
@@ -25,9 +23,6 @@ Edit text
             For Shape2d parents, make the size of the ShapeText the same size as the parent.
     At the beginning, just remember the "caret" position, and line Index without showing it
     Add a "key" event handler (which will need a "consume" method).
-
-Edit children within a parent shape
-
 
 Soon
 ----

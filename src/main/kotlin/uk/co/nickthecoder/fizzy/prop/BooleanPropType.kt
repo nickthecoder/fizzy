@@ -35,7 +35,7 @@ class BooleanExpression
 
     constructor(expression: String, context: EvaluationContext = constantsContext) : super(expression, Boolean::class.java, context)
 
-    constructor(value: Boolean) : this(value.toFormula())
+    constructor(value: Boolean, context: EvaluationContext = constantsContext) : this(value.toFormula(), context)
 
     constructor(other: BooleanExpression) : super(other)
 

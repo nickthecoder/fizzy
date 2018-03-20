@@ -49,7 +49,7 @@ class ShapeTransform(val shape: Shape)
 
     val rotation = AngleExpression("0 deg", shape.context)
 
-    // TODO Add flipX and flipY (we don't have Boolean properties yet!)
+    // TODO Add flipX and flipY
 
     /**
      * A matrix which can transform a point from the coordinate system of the parent to local coordinates.

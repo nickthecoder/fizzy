@@ -33,6 +33,8 @@ class Shape1d private constructor(
 
     override val transform = ShapeTransform(this)
 
+    override val locks = Locks(this, context)
+
     val start = Dimension2Expression("Dimension2(0mm,0mm)")
 
     val end = Dimension2Expression("Dimension2(1mm,1mm)")
