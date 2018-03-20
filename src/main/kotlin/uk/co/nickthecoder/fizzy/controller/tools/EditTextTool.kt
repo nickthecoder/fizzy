@@ -68,19 +68,75 @@ class EditTextTool(controller: Controller)
             if (isNewShape) {
                 isNewShape = false
                 controller.page.document.history.makeChange(CreateShape(it, controller.parent))
-                println("Added $it to ${it.parent}")
             }
 
             val text = it.text.value
             val newText = text.substring(0, caretPosition) + event.text + text.substring(caretPosition)
             caretPosition++
             controller.page.document.history.makeChange(ChangeExpression(it.text, newText.toFormula()))
-            println("Now $newText ${newText.length}")
             event.consume()
+        }
+    }
+
+    override fun onKeyPressed(event: CKeyEvent) {
+        editingShape?.let { shape ->
+            val oldText = shape.text.value
+            var newText: String? = null
+
+            var used = true
+            when (event.key) {
+                CKeyEvent.ENTER -> {
+                    newText = (oldText.substring(0, caretPosition) + "\n" + oldText.substring(caretPosition))
+                    caretPosition++
+                }
+                CKeyEvent.BACK_SPACE -> {
+                    if (caretPosition > 0) {
+                        newText = oldText.substring(0, caretPosition - 1) + oldText.substring(caretPosition)
+                        caretPosition--
+                    }
+                }
+                CKeyEvent.DELETE -> {
+                    if (caretPosition < oldText.length) {
+                        newText = oldText.substring(0, caretPosition) + oldText.substring(caretPosition + 1)
+                    }
+                }
+                CKeyEvent.LEFT -> {
+                    if (caretPosition > 0) {
+                        caretPosition--
+                    }
+                }
+                CKeyEvent.RIGHT -> {
+                    if (caretPosition < oldText.length) {
+                        caretPosition++
+                    }
+                }
+                CKeyEvent.HOME -> {
+                    caretPosition = 0
+                }
+                CKeyEvent.END -> {
+                    caretPosition = oldText.length
+                }
+                CKeyEvent.ESCAPE -> {
+                    controller.tool = SelectTool(controller)
+                    return
+                }
+                else -> {
+                    used = false
+                }
+            }
+
+            if (newText != null) {
+                controller.page.document.history.makeChange(ChangeExpression(shape.text, newText.toFormula()))
+            }
+
+            if (used) {
+                event.consume()
+            }
         }
     }
 
     override fun endTool(replacement: Tool) {
         controller.page.document.history.endBatch()
     }
+
 }

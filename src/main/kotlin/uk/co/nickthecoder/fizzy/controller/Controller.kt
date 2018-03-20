@@ -125,6 +125,10 @@ class Controller(val page: Page, val singleShape: Shape? = null, val otherAction
         tool.onKeyTyped(event)
     }
 
+    fun onKeyPressed(event: CKeyEvent) {
+        tool.onKeyPressed(event)
+    }
+
     fun onMousePressed(event: CMouseEvent) {
         tool.onMousePressed(event)
     }

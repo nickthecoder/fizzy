@@ -139,6 +139,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
         canvas.addEventHandler(MouseEvent.MOUSE_RELEASED) { onMouseReleased(it) }
         canvas.addEventHandler(MouseEvent.MOUSE_MOVED) { onMouseMoved(it) }
         canvas.addEventHandler(KeyEvent.KEY_TYPED) { onKeyTyped(it) }
+        canvas.addEventHandler(KeyEvent.KEY_PRESSED) { onKeyPressed(it) }
 
         drawingArea.controller.selection.listeners.add(selectionListener)
         runLater {
@@ -164,6 +165,14 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
             if (fEvent.consumed) {
                 event.consume()
             }
+        }
+    }
+
+    fun onKeyPressed(event: KeyEvent) {
+        val fEvent = convertEvent(event)
+        drawingArea.controller.onKeyPressed(fEvent)
+        if (fEvent.consumed) {
+            event.consume()
         }
     }
 

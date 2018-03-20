@@ -30,11 +30,13 @@ class CKeyEvent(
     }
 
     companion object {
-        val ENTER = "Enter"
-        val BACKSPACE = "Backspace"
-        val LEFT = "Left"
-        val RIGHT = "Right"
-        val DELETE = "Delete"
-        val ESCAPE = "Esc"
+        val ENTER = "ENTER"
+        val BACK_SPACE = "BACK_SPACE"
+        val LEFT = "LEFT"
+        val RIGHT = "RIGHT"
+        val DELETE = "DELETE"
+        val HOME = "HOME"
+        val END = "END"
+        val ESCAPE = "ESCAPE"
     }
 }

@@ -3,6 +3,7 @@ To Do
 
 Scroll on StencilsView
 
+and implement keys BACKSPACE, DEL, LEFT, RIGHT, HOME, END
 
 BUGS
 ----
@@ -28,7 +29,7 @@ Edit text
 Soon
 ----
 
-Add a caret to the EditTextTool, and implement keys BACKSPACE, DEL, LEFT, RIGHT, HOME, END
+Add a caret to the EditTextTool, 
 
 Implement FlipX & Y
     Is there much point? Text will be reversed!
