@@ -27,9 +27,11 @@ import uk.co.nickthecoder.fizzy.controller.tools.Tool
 import uk.co.nickthecoder.fizzy.controller.tools.ToolCursor
 import uk.co.nickthecoder.fizzy.gui.GlassCanvas
 import uk.co.nickthecoder.fizzy.model.*
+import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
 import uk.co.nickthecoder.fizzy.prop.PropVariable
 import uk.co.nickthecoder.fizzy.util.ChangeListener
 import uk.co.nickthecoder.fizzy.util.ChangeType
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 /**
  * This is a non-gui class, which takes mouse events from GlassCanvas, and performs actions via Tools.
@@ -238,6 +240,20 @@ class Controller(val page: Page, val singleShape: Shape? = null, val otherAction
         return true
     }
 
+    fun flip(x: Boolean, y: Boolean) {
+        page.document.history.beginBatch()
+        if (x) {
+            selection.forEach { shape ->
+                page.document.history.makeChange(ChangeExpressions(listOf(shape.transform.flipX to (!shape.transform.flipX.value).toFormula())))
+            }
+        }
+        if (y) {
+            selection.forEach { shape ->
+                page.document.history.makeChange(ChangeExpressions(listOf(shape.transform.flipY to (!shape.transform.flipY.value).toFormula())))
+            }
+        }
+        page.document.history.endBatch()
+    }
 
     /**
      * Calculates how much [delta] should be adjusted by to snap the shape.

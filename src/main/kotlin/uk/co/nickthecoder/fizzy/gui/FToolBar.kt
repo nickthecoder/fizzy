@@ -18,13 +18,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.gui
 
-import javafx.event.EventHandler
 import javafx.scene.Node
-import javafx.scene.control.Button
 import javafx.scene.control.Separator
 import javafx.scene.control.ToolBar
 import uk.co.nickthecoder.fizzy.controller.Controller
-import uk.co.nickthecoder.fizzy.controller.tools.*
+import uk.co.nickthecoder.fizzy.controller.tools.DeleteTool
+import uk.co.nickthecoder.fizzy.controller.tools.EditGeometryTool
+import uk.co.nickthecoder.fizzy.controller.tools.EditTextTool
+import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.PrimitiveStencil
@@ -106,9 +107,8 @@ class FToolBar(val mainWindow: MainWindow)
     val strokeJoinPicker = StrokeJoinPicker(mainWindow)
     val strokeCapPicker = StrokeCapPicker(mainWindow)
 
-    // These don't belong here - move to a "Stencil" picker sometime.
-    val stampToolButton = Button("Stamp")
-
+    val flipXButton = ApplicationActions.EDIT_FLIP_X.createButton(sh) { controller?.flip(true, false) }
+    val flipYButton = ApplicationActions.EDIT_FLIP_Y.createButton(sh) { controller?.flip(false, true) }
 
     fun clearSelection() {
         controller?.selection?.clear()
@@ -118,19 +118,16 @@ class FToolBar(val mainWindow: MainWindow)
 
     override fun build(): Node {
 
-        stampToolButton.onAction = EventHandler { controller?.let { it.tool = StampShape2dTool(it, PrimitiveStencil.pentangle) } }
-
         toolBar.items.addAll(
                 newButton, openButton, saveButton, saveAsButton,
                 Separator(),
-                undoButton, redoButton,
+                undoButton, redoButton, flipXButton, flipYButton,
                 Separator(),
                 selectToolButton, primitive1dButton, primitive2dButton, deleteToolButton, editGeometryToolButton, editTextToolButton,
                 Separator(),
                 fillColorPicker.build(), strokeColorPicker.build(),
                 lineWidthPicker.build(), strokeJoinPicker.build(), strokeCapPicker.build(),
                 Separator(),
-                stampToolButton,
                 debugButton
         )
 

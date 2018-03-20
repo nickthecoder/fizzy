@@ -5103,7 +5103,7 @@
                       },
                       {
                         "name": "Value",
-                        "s": "abcdef"
+                        "s": ""
                       }
                     ]
                   },
@@ -5119,7 +5119,7 @@
                       },
                       {
                         "name": "Value",
-                        "s": "123"
+                        "s": ""
                       }
                     ]
                   }
@@ -5902,7 +5902,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(0 mm,4.927864552 mm)"
+                    "v": "Dimension2(8.080126762 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -5927,7 +5927,7 @@
                   {
                     "name": "Text",
                     "f": "Parent.CustomProperty.ProductCode",
-                    "v": "\"123\""
+                    "v": "\"\""
                   },
                   {
                     "name": "FontName",
@@ -6039,7 +6039,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(0 mm,4.927864552 mm)"
+                    "v": "Dimension2(14.471466064 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -6064,7 +6064,7 @@
                   {
                     "name": "Text",
                     "f": "Parent.CustomProperty.ComponentID",
-                    "v": "\"abcdef\""
+                    "v": "\"\""
                   },
                   {
                     "name": "FontName",

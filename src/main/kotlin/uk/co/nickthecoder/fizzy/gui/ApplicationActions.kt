@@ -30,6 +30,9 @@ object ApplicationActions {
     val EDIT_UNDO = ApplicationAction("edit-undo", "Undo", KeyCode.Z, control = true)
     val EDIT_REDO = ApplicationAction("edit-redo", "Redo", KeyCode.Z, control = true, shift = true)
 
+    val EDIT_FLIP_X = ApplicationAction("edit-flip-x", "Flip Horizontally", KeyCode.H, control = true)
+    val EDIT_FLIP_Y = ApplicationAction("edit-flip-y", "Flip Vertically", KeyCode.J, control = true)
+
     val TOOL_SELECT = ApplicationAction("tool-select", "Select", KeyCode.F1)
     val TOOL_PRIMITIVE1D = ApplicationAction("tool-primitive1d", "Create Lines", KeyCode.F2)
     val TOOL_PRIMITIVE2D = ApplicationAction("tool-primitive2d", "Create Basic Shapes", KeyCode.F3)
