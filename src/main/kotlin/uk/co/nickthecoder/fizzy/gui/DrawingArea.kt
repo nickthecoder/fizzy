@@ -42,7 +42,7 @@ class DrawingArea(mainWindow: MainWindow, val page: Page, val singleShape: Shape
 
     val drawingCanvas = DrawingCanvas(page, singleShape, this)
 
-    var scale: Double = 1.0
+    var scale: Double = 96.0 / 25.4
 
     var pan: Dimension2 = Dimension2.ZERO_mm
 

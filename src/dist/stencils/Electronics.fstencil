@@ -15,13 +15,13 @@
               },
               {
                 "name": "LineWidth",
-                "f": "4pt",
-                "v": "4 pt"
+                "f": "1pt",
+                "v": "1 pt"
               },
               {
                 "name": "Size",
-                "f": "Dimension2(60 mm,12 mm)",
-                "v": "Dimension2(60 mm,12 mm)"
+                "f": "Dimension2(20 mm,4 mm)",
+                "v": "Dimension2(20 mm,4 mm)"
               },
               {
                 "name": "LineColor",
@@ -56,7 +56,7 @@
                   {
                     "name": "LocPin",
                     "f": "Size * Vector2(0.5,0.5)",
-                    "v": "Dimension2(30 mm,6 mm)"
+                    "v": "Dimension2(10 mm,2 mm)"
                   },
                   {
                     "name": "Scale",
@@ -101,7 +101,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0,0.5)",
-                        "v": "Dimension2(0 mm,6 mm)"
+                        "v": "Dimension2(0 mm,2 mm)"
                       }
                     ]
                   },
@@ -111,7 +111,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(2/18,0.5)",
-                        "v": "Dimension2(6.666666667 mm,6 mm)"
+                        "v": "Dimension2(2.222222222 mm,2 mm)"
                       }
                     ]
                   },
@@ -121,7 +121,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(3/18,1)",
-                        "v": "Dimension2(10 mm,12 mm)"
+                        "v": "Dimension2(3.333333333 mm,4 mm)"
                       }
                     ]
                   },
@@ -131,7 +131,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(5/18,0)",
-                        "v": "Dimension2(16.666666667 mm,0 mm)"
+                        "v": "Dimension2(5.555555556 mm,0 mm)"
                       }
                     ]
                   },
@@ -141,7 +141,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(7/18,1)",
-                        "v": "Dimension2(23.333333333 mm,12 mm)"
+                        "v": "Dimension2(7.777777778 mm,4 mm)"
                       }
                     ]
                   },
@@ -151,7 +151,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(9/18,0)",
-                        "v": "Dimension2(30 mm,0 mm)"
+                        "v": "Dimension2(10 mm,0 mm)"
                       }
                     ]
                   },
@@ -161,7 +161,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(11/18,1)",
-                        "v": "Dimension2(36.666666667 mm,12 mm)"
+                        "v": "Dimension2(12.222222222 mm,4 mm)"
                       }
                     ]
                   },
@@ -171,7 +171,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(13/18,0)",
-                        "v": "Dimension2(43.333333333 mm,0 mm)"
+                        "v": "Dimension2(14.444444444 mm,0 mm)"
                       }
                     ]
                   },
@@ -181,7 +181,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(15/18,1)",
-                        "v": "Dimension2(50 mm,12 mm)"
+                        "v": "Dimension2(16.666666667 mm,4 mm)"
                       }
                     ]
                   },
@@ -191,7 +191,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(16/18,0.5)",
-                        "v": "Dimension2(53.333333333 mm,6 mm)"
+                        "v": "Dimension2(17.777777778 mm,2 mm)"
                       }
                     ]
                   },
@@ -201,7 +201,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(1.0,0.5)",
-                        "v": "Dimension2(60 mm,6 mm)"
+                        "v": "Dimension2(20 mm,2 mm)"
                       }
                     ]
                   }
@@ -215,7 +215,7 @@
                       {
                         "name": "Point",
                         "f": "Geometry.Point1",
-                        "v": "Dimension2(0 mm,6 mm)"
+                        "v": "Dimension2(0 mm,2 mm)"
                       }
                     ]
                   },
@@ -224,7 +224,7 @@
                       {
                         "name": "Point",
                         "f": "Geometry.Point11",
-                        "v": "Dimension2(60 mm,6 mm)"
+                        "v": "Dimension2(20 mm,2 mm)"
                       }
                     ]
                   }
@@ -238,7 +238,7 @@
                       {
                         "name": "Point",
                         "f": "LocPin",
-                        "v": "Dimension2(30 mm,6 mm)"
+                        "v": "Dimension2(10 mm,2 mm)"
                       }
                     ]
                   },
@@ -247,7 +247,7 @@
                       {
                         "name": "Point",
                         "f": "ConnectionPoint.Point1",
-                        "v": "Dimension2(0 mm,6 mm)"
+                        "v": "Dimension2(0 mm,2 mm)"
                       }
                     ]
                   },
@@ -256,7 +256,7 @@
                       {
                         "name": "Point",
                         "f": "ConnectionPoint.Point2",
-                        "v": "Dimension2(60 mm,6 mm)"
+                        "v": "Dimension2(20 mm,2 mm)"
                       }
                     ]
                   }
@@ -397,7 +397,7 @@
                       {
                         "name": "Pin",
                         "f": "Parent.Size * Vector2( 0.5, -0.2 )",
-                        "v": "Dimension2(30 mm,-2.4 mm)"
+                        "v": "Dimension2(10 mm,-0.8 mm)"
                       },
                       {
                         "name": "LocPin",
@@ -524,7 +524,7 @@
                       {
                         "name": "Pin",
                         "f": "Parent.Size * Vector2( 0.5, 1.1 )",
-                        "v": "Dimension2(30 mm,13.2 mm)"
+                        "v": "Dimension2(10 mm,4.4 mm)"
                       },
                       {
                         "name": "LocPin",
@@ -567,13 +567,13 @@
               },
               {
                 "name": "LineWidth",
-                "f": "4pt",
-                "v": "4 pt"
+                "f": "1pt",
+                "v": "1 pt"
               },
               {
                 "name": "Size",
-                "f": "Dimension2(36 mm,32 mm)",
-                "v": "Dimension2(36 mm,32 mm)"
+                "f": "Dimension2(12 mm,12 mm)",
+                "v": "Dimension2(12 mm,12 mm)"
               },
               {
                 "name": "LineColor",
@@ -608,7 +608,7 @@
                   {
                     "name": "LocPin",
                     "f": "Size * Vector2(0.5,0.5)",
-                    "v": "Dimension2(18 mm,16 mm)"
+                    "v": "Dimension2(6 mm,6 mm)"
                   },
                   {
                     "name": "Scale",
@@ -653,7 +653,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(1/3,0)",
-                        "v": "Dimension2(12 mm,0 mm)"
+                        "v": "Dimension2(4 mm,0 mm)"
                       }
                     ]
                   },
@@ -663,7 +663,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(1/3,1)",
-                        "v": "Dimension2(12 mm,32 mm)"
+                        "v": "Dimension2(4 mm,12 mm)"
                       }
                     ]
                   },
@@ -673,7 +673,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(2/3,1)",
-                        "v": "Dimension2(24 mm,32 mm)"
+                        "v": "Dimension2(8 mm,12 mm)"
                       }
                     ]
                   },
@@ -683,7 +683,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(2/3,0)",
-                        "v": "Dimension2(24 mm,0 mm)"
+                        "v": "Dimension2(8 mm,0 mm)"
                       }
                     ]
                   },
@@ -693,7 +693,7 @@
                       {
                         "name": "Point",
                         "f": "Geometry.Point1",
-                        "v": "Dimension2(12 mm,0 mm)"
+                        "v": "Dimension2(4 mm,0 mm)"
                       }
                     ]
                   },
@@ -703,7 +703,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0,0.5 )",
-                        "v": "Dimension2(0 mm,16 mm)"
+                        "v": "Dimension2(0 mm,6 mm)"
                       }
                     ]
                   }
@@ -717,7 +717,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0,0.5)",
-                        "v": "Dimension2(0 mm,16 mm)"
+                        "v": "Dimension2(0 mm,6 mm)"
                       }
                     ]
                   },
@@ -726,7 +726,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(1,0.5)",
-                        "v": "Dimension2(36 mm,16 mm)"
+                        "v": "Dimension2(12 mm,6 mm)"
                       }
                     ]
                   }
@@ -740,7 +740,7 @@
                       {
                         "name": "Point",
                         "f": "LocPin",
-                        "v": "Dimension2(18 mm,16 mm)"
+                        "v": "Dimension2(6 mm,6 mm)"
                       }
                     ]
                   },
@@ -749,7 +749,7 @@
                       {
                         "name": "Point",
                         "f": "ConnectionPoint.Point1",
-                        "v": "Dimension2(0 mm,16 mm)"
+                        "v": "Dimension2(0 mm,6 mm)"
                       }
                     ]
                   },
@@ -758,7 +758,7 @@
                       {
                         "name": "Point",
                         "f": "ConnectionPoint.Point2",
-                        "v": "Dimension2(36 mm,16 mm)"
+                        "v": "Dimension2(12 mm,6 mm)"
                       }
                     ]
                   }
@@ -814,13 +814,13 @@
                   },
                   {
                     "name": "LineWidth",
-                    "l": "1.LineWidth",
-                    "v": "2 mm"
+                    "f": "1pt",
+                    "v": "1 pt"
                   },
                   {
                     "name": "Size",
                     "f": "Parent.Size",
-                    "v": "Dimension2(36 mm,32 mm)"
+                    "v": "Dimension2(12 mm,12 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -889,8 +889,8 @@
                     "cells": [
                       {
                         "name": "Connect",
-                        "l": "1.Geometry.Connect",
-                        "v": "true"
+                        "f": "false",
+                        "v": "false"
                       }
                     ],
                     "rows": [
@@ -900,7 +900,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 0,0.5 )",
-                            "v": "Dimension2(0 mm,16 mm)"
+                            "v": "Dimension2(0 mm,6 mm)"
                           }
                         ]
                       },
@@ -910,7 +910,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 1/3,0.5)",
-                            "v": "Dimension2(12 mm,16 mm)"
+                            "v": "Dimension2(4 mm,6 mm)"
                           }
                         ]
                       },
@@ -920,7 +920,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 2/3,0.5)",
-                            "v": "Dimension2(24 mm,16 mm)"
+                            "v": "Dimension2(8 mm,6 mm)"
                           }
                         ]
                       },
@@ -930,7 +930,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 1,0.5)",
-                            "v": "Dimension2(36 mm,16 mm)"
+                            "v": "Dimension2(12 mm,6 mm)"
                           }
                         ]
                       },
@@ -940,7 +940,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 1/3,0 )",
-                            "v": "Dimension2(12 mm,0 mm)"
+                            "v": "Dimension2(4 mm,0 mm)"
                           }
                         ]
                       },
@@ -950,7 +950,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 1/3,1 )",
-                            "v": "Dimension2(12 mm,32 mm)"
+                            "v": "Dimension2(4 mm,12 mm)"
                           }
                         ]
                       },
@@ -960,7 +960,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 2/3,0 )",
-                            "v": "Dimension2(24 mm,0 mm)"
+                            "v": "Dimension2(8 mm,0 mm)"
                           }
                         ]
                       },
@@ -970,7 +970,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 2/3,1 )",
-                            "v": "Dimension2(24 mm,32 mm)"
+                            "v": "Dimension2(8 mm,12 mm)"
                           }
                         ]
                       }
@@ -994,7 +994,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(10.324606895 mm,18.890148163 mm)"
+                    "v": "Dimension2(0 mm,18.890148163 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -1074,12 +1074,12 @@
                       {
                         "name": "Pin",
                         "f": "Parent.Size * Vector2( 0.5, 1.1 )",
-                        "v": "Dimension2(18 mm,35.2 mm)"
+                        "v": "Dimension2(6 mm,13.2 mm)"
                       },
                       {
                         "name": "LocPin",
                         "f": "Size * Vector2(AlignX,AlignY)",
-                        "v": "Dimension2(5.162303448 mm,0 mm)"
+                        "v": "Dimension2(0 mm,0 mm)"
                       },
                       {
                         "name": "Scale",
@@ -1121,7 +1121,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(10.324606895 mm,18.890148163 mm)"
+                    "v": "Dimension2(0 mm,18.890148163 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -1201,12 +1201,12 @@
                       {
                         "name": "Pin",
                         "f": "Parent.Size * Vector2( 0.5, -0.2 )",
-                        "v": "Dimension2(18 mm,-6.4 mm)"
+                        "v": "Dimension2(6 mm,-2.4 mm)"
                       },
                       {
                         "name": "LocPin",
                         "f": "Size * Vector2(AlignX,AlignY)",
-                        "v": "Dimension2(5.162303448 mm,18.890148163 mm)"
+                        "v": "Dimension2(0 mm,18.890148163 mm)"
                       },
                       {
                         "name": "Scale",
@@ -1244,13 +1244,13 @@
               },
               {
                 "name": "LineWidth",
-                "f": "4pt",
-                "v": "4 pt"
+                "f": "1pt",
+                "v": "1 pt"
               },
               {
                 "name": "Size",
-                "f": "Dimension2(36 mm,32 mm)",
-                "v": "Dimension2(36 mm,32 mm)"
+                "f": "Dimension2(12 mm,12 mm)",
+                "v": "Dimension2(12 mm,12 mm)"
               },
               {
                 "name": "LineColor",
@@ -1285,7 +1285,7 @@
                   {
                     "name": "LocPin",
                     "f": "Size * Vector2(0.5,0.5)",
-                    "v": "Dimension2(18 mm,16 mm)"
+                    "v": "Dimension2(6 mm,6 mm)"
                   },
                   {
                     "name": "Scale",
@@ -1330,7 +1330,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(1/3,0)",
-                        "v": "Dimension2(12 mm,0 mm)"
+                        "v": "Dimension2(4 mm,0 mm)"
                       }
                     ]
                   },
@@ -1340,7 +1340,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(1/3,1)",
-                        "v": "Dimension2(12 mm,32 mm)"
+                        "v": "Dimension2(4 mm,12 mm)"
                       }
                     ]
                   },
@@ -1350,7 +1350,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(2/3,1)",
-                        "v": "Dimension2(24 mm,32 mm)"
+                        "v": "Dimension2(8 mm,12 mm)"
                       }
                     ]
                   },
@@ -1360,17 +1360,17 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2( 2/3,0 )",
-                        "v": "Dimension2(24 mm,0 mm)"
+                        "v": "Dimension2(8 mm,0 mm)"
                       },
                       {
                         "name": "A",
                         "f": "Size * Vector2( 0.5,0.6)",
-                        "v": "Dimension2(18 mm,19.2 mm)"
+                        "v": "Dimension2(6 mm,7.2 mm)"
                       },
                       {
                         "name": "B",
                         "f": "Size * Vector2( 0.5,0.4 )",
-                        "v": "Dimension2(18 mm,12.8 mm)"
+                        "v": "Dimension2(6 mm,4.8 mm)"
                       }
                     ]
                   },
@@ -1380,7 +1380,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(1/3,0)",
-                        "v": "Dimension2(12 mm,0 mm)"
+                        "v": "Dimension2(4 mm,0 mm)"
                       }
                     ]
                   },
@@ -1390,7 +1390,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(1/3,0.5)",
-                        "v": "Dimension2(12 mm,16 mm)"
+                        "v": "Dimension2(4 mm,6 mm)"
                       }
                     ]
                   }
@@ -1404,7 +1404,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0,0.5)",
-                        "v": "Dimension2(0 mm,16 mm)"
+                        "v": "Dimension2(0 mm,6 mm)"
                       }
                     ]
                   },
@@ -1413,7 +1413,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(1,0.5)",
-                        "v": "Dimension2(36 mm,16 mm)"
+                        "v": "Dimension2(12 mm,6 mm)"
                       }
                     ]
                   }
@@ -1427,7 +1427,7 @@
                       {
                         "name": "Point",
                         "f": "LocPin",
-                        "v": "Dimension2(18 mm,16 mm)"
+                        "v": "Dimension2(6 mm,6 mm)"
                       }
                     ]
                   },
@@ -1436,7 +1436,7 @@
                       {
                         "name": "Point",
                         "f": "ConnectionPoint.Point1",
-                        "v": "Dimension2(0 mm,16 mm)"
+                        "v": "Dimension2(0 mm,6 mm)"
                       }
                     ]
                   },
@@ -1445,7 +1445,7 @@
                       {
                         "name": "Point",
                         "f": "ConnectionPoint.Point2",
-                        "v": "Dimension2(36 mm,16 mm)"
+                        "v": "Dimension2(12 mm,6 mm)"
                       }
                     ]
                   }
@@ -1500,23 +1500,23 @@
                   },
                   {
                     "name": "LineWidth",
-                    "f": "2mm",
-                    "v": "2 mm"
+                    "f": "1pt",
+                    "v": "1 pt"
                   },
                   {
                     "name": "Size",
                     "f": "Parent.Size",
-                    "v": "Dimension2(36 mm,32 mm)"
+                    "v": "Dimension2(12 mm,12 mm)"
                   },
                   {
                     "name": "LineColor",
-                    "f": "RGB(0,0,0)",
+                    "f": "BLACK",
                     "v": "RGB(0,0,0)"
                   },
                   {
                     "name": "FillColor",
-                    "f": "RGBA(1,1,1,0)",
-                    "v": "RGBA(1,1,1,0)"
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
                   },
                   {
                     "name": "StrokeCap",
@@ -1575,8 +1575,8 @@
                     "cells": [
                       {
                         "name": "Connect",
-                        "f": "true",
-                        "v": "true"
+                        "f": "false",
+                        "v": "false"
                       }
                     ],
                     "rows": [
@@ -1586,7 +1586,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 0,0.5 )",
-                            "v": "Dimension2(0 mm,16 mm)"
+                            "v": "Dimension2(0 mm,6 mm)"
                           }
                         ]
                       },
@@ -1596,7 +1596,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 1/3,0.5)",
-                            "v": "Dimension2(12 mm,16 mm)"
+                            "v": "Dimension2(4 mm,6 mm)"
                           }
                         ]
                       },
@@ -1606,7 +1606,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 0.55,0.5)",
-                            "v": "Dimension2(19.8 mm,16 mm)"
+                            "v": "Dimension2(6.6 mm,6 mm)"
                           }
                         ]
                       },
@@ -1616,7 +1616,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 1,0.5)",
-                            "v": "Dimension2(36 mm,16 mm)"
+                            "v": "Dimension2(12 mm,6 mm)"
                           }
                         ]
                       },
@@ -1626,7 +1626,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 1/3,0 )",
-                            "v": "Dimension2(12 mm,0 mm)"
+                            "v": "Dimension2(4 mm,0 mm)"
                           }
                         ]
                       },
@@ -1636,7 +1636,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 1/3,1 )",
-                            "v": "Dimension2(12 mm,32 mm)"
+                            "v": "Dimension2(4 mm,12 mm)"
                           }
                         ]
                       },
@@ -1646,7 +1646,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 2/3,0 )",
-                            "v": "Dimension2(24 mm,0 mm)"
+                            "v": "Dimension2(8 mm,0 mm)"
                           }
                         ]
                       },
@@ -1656,17 +1656,17 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 2/3,1 )",
-                            "v": "Dimension2(24 mm,32 mm)"
+                            "v": "Dimension2(8 mm,12 mm)"
                           },
                           {
                             "name": "A",
                             "f": "Size * Vector2( 0.5,0.4 )",
-                            "v": "Dimension2(18 mm,12.8 mm)"
+                            "v": "Dimension2(6 mm,4.8 mm)"
                           },
                           {
                             "name": "B",
                             "f": "Size * Vector2( 0.5,0.6)",
-                            "v": "Dimension2(18 mm,19.2 mm)"
+                            "v": "Dimension2(6 mm,7.2 mm)"
                           }
                         ]
                       },
@@ -1676,7 +1676,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 0.1, 1)",
-                            "v": "Dimension2(3.6 mm,32 mm)"
+                            "v": "Dimension2(1.2 mm,12 mm)"
                           }
                         ]
                       },
@@ -1686,7 +1686,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 0.1, 0.8)",
-                            "v": "Dimension2(3.6 mm,25.6 mm)"
+                            "v": "Dimension2(1.2 mm,9.6 mm)"
                           }
                         ]
                       },
@@ -1696,7 +1696,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 0, 0.9)",
-                            "v": "Dimension2(0 mm,28.8 mm)"
+                            "v": "Dimension2(0 mm,10.8 mm)"
                           }
                         ]
                       },
@@ -1706,7 +1706,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2( 0.2, 0.9)",
-                            "v": "Dimension2(7.2 mm,28.8 mm)"
+                            "v": "Dimension2(2.4 mm,10.8 mm)"
                           }
                         ]
                       }
@@ -1810,7 +1810,7 @@
                       {
                         "name": "Pin",
                         "f": "Parent.Size * Vector2( 0.5, -0.2 )",
-                        "v": "Dimension2(18 mm,-6.4 mm)"
+                        "v": "Dimension2(6 mm,-2.4 mm)"
                       },
                       {
                         "name": "LocPin",
@@ -1937,7 +1937,7 @@
                       {
                         "name": "Pin",
                         "f": "Parent.Size * Vector2( 0.5, 1.1 )",
-                        "v": "Dimension2(18 mm,35.2 mm)"
+                        "v": "Dimension2(6 mm,13.2 mm)"
                       },
                       {
                         "name": "LocPin",
@@ -1980,13 +1980,13 @@
               },
               {
                 "name": "LineWidth",
-                "f": "4pt",
-                "v": "4 pt"
+                "f": "1pt",
+                "v": "1 pt"
               },
               {
                 "name": "Size",
-                "f": "Dimension2(60 mm,12 mm)",
-                "v": "Dimension2(60 mm,12 mm)"
+                "f": "Dimension2(20 mm,4 mm)",
+                "v": "Dimension2(20 mm,4 mm)"
               },
               {
                 "name": "LineColor",
@@ -2015,13 +2015,13 @@
                 "cells": [
                   {
                     "name": "Pin",
-                    "f": "Dimension2(12.644314869 mm,39.551020408 mm)",
-                    "v": "Dimension2(12.644314869 mm,39.551020408 mm)"
+                    "f": "Dimension2(9 mm,37mm)",
+                    "v": "Dimension2(9 mm,37 mm)"
                   },
                   {
                     "name": "LocPin",
                     "f": "Size * Vector2(0.5,0.5)",
-                    "v": "Dimension2(30 mm,6 mm)"
+                    "v": "Dimension2(10 mm,2 mm)"
                   },
                   {
                     "name": "Scale",
@@ -2066,7 +2066,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0,0.5)",
-                        "v": "Dimension2(0 mm,6 mm)"
+                        "v": "Dimension2(0 mm,2 mm)"
                       }
                     ]
                   },
@@ -2076,7 +2076,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(2/18,0.5)",
-                        "v": "Dimension2(6.666666667 mm,6 mm)"
+                        "v": "Dimension2(2.222222222 mm,2 mm)"
                       }
                     ]
                   },
@@ -2086,7 +2086,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(16/18,0.5)",
-                        "v": "Dimension2(53.333333333 mm,6 mm)"
+                        "v": "Dimension2(17.777777778 mm,2 mm)"
                       }
                     ]
                   },
@@ -2096,7 +2096,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(1.0,0.5)",
-                        "v": "Dimension2(60 mm,6 mm)"
+                        "v": "Dimension2(20 mm,2 mm)"
                       }
                     ]
                   },
@@ -2106,7 +2106,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(2/18,0)",
-                        "v": "Dimension2(6.666666667 mm,0 mm)"
+                        "v": "Dimension2(2.222222222 mm,0 mm)"
                       }
                     ]
                   },
@@ -2116,7 +2116,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(16/18,0)",
-                        "v": "Dimension2(53.333333333 mm,0 mm)"
+                        "v": "Dimension2(17.777777778 mm,0 mm)"
                       }
                     ]
                   },
@@ -2126,7 +2126,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(16/18,1)",
-                        "v": "Dimension2(53.333333333 mm,12 mm)"
+                        "v": "Dimension2(17.777777778 mm,4 mm)"
                       }
                     ]
                   },
@@ -2136,7 +2136,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(2/18,1)",
-                        "v": "Dimension2(6.666666667 mm,12 mm)"
+                        "v": "Dimension2(2.222222222 mm,4 mm)"
                       }
                     ]
                   },
@@ -2146,7 +2146,7 @@
                       {
                         "name": "Point",
                         "f": "Geometry.Point5",
-                        "v": "Dimension2(6.666666667 mm,0 mm)"
+                        "v": "Dimension2(2.222222222 mm,0 mm)"
                       }
                     ]
                   }
@@ -2160,7 +2160,7 @@
                       {
                         "name": "Point",
                         "f": "Geometry.Point1",
-                        "v": "Dimension2(0 mm,6 mm)"
+                        "v": "Dimension2(0 mm,2 mm)"
                       }
                     ]
                   },
@@ -2169,7 +2169,7 @@
                       {
                         "name": "Point",
                         "f": "Geometry.Point4",
-                        "v": "Dimension2(60 mm,6 mm)"
+                        "v": "Dimension2(20 mm,2 mm)"
                       }
                     ]
                   }
@@ -2183,7 +2183,7 @@
                       {
                         "name": "Point",
                         "f": "LocPin",
-                        "v": "Dimension2(30 mm,6 mm)"
+                        "v": "Dimension2(10 mm,2 mm)"
                       }
                     ]
                   },
@@ -2192,7 +2192,7 @@
                       {
                         "name": "Point",
                         "f": "ConnectionPoint.Point1",
-                        "v": "Dimension2(0 mm,6 mm)"
+                        "v": "Dimension2(0 mm,2 mm)"
                       }
                     ]
                   },
@@ -2201,7 +2201,7 @@
                       {
                         "name": "Point",
                         "f": "ConnectionPoint.Point2",
-                        "v": "Dimension2(60 mm,6 mm)"
+                        "v": "Dimension2(20 mm,2 mm)"
                       }
                     ]
                   }
@@ -2342,7 +2342,7 @@
                       {
                         "name": "Pin",
                         "f": "Parent.Size * Vector2( 0.5, -0.2 )",
-                        "v": "Dimension2(30 mm,-2.4 mm)"
+                        "v": "Dimension2(10 mm,-0.8 mm)"
                       },
                       {
                         "name": "LocPin",
@@ -2469,7 +2469,7 @@
                       {
                         "name": "Pin",
                         "f": "Parent.Size * Vector2( 0.5, 1.1 )",
-                        "v": "Dimension2(30 mm,13.2 mm)"
+                        "v": "Dimension2(10 mm,4.4 mm)"
                       },
                       {
                         "name": "LocPin",
@@ -2512,13 +2512,13 @@
               },
               {
                 "name": "LineWidth",
-                "f": "2mm",
-                "v": "2 mm"
+                "f": "1pt",
+                "v": "1 pt"
               },
               {
                 "name": "Size",
-                "f": "Dimension2(20mm,20mm)",
-                "v": "Dimension2(20 mm,20 mm)"
+                "f": "Dimension2(5mm,5mm)",
+                "v": "Dimension2(5 mm,5 mm)"
               },
               {
                 "name": "LineColor",
@@ -2553,7 +2553,7 @@
                   {
                     "name": "LocPin",
                     "f": "Size * Vector2(0.5,0.5)",
-                    "v": "Dimension2(10 mm,10 mm)"
+                    "v": "Dimension2(2.5 mm,2.5 mm)"
                   },
                   {
                     "name": "Scale",
@@ -2598,7 +2598,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0.4,0.4)",
-                        "v": "Dimension2(8 mm,8 mm)"
+                        "v": "Dimension2(2 mm,2 mm)"
                       }
                     ]
                   },
@@ -2608,17 +2608,17 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0.6,0.4)",
-                        "v": "Dimension2(12 mm,8 mm)"
+                        "v": "Dimension2(3 mm,2 mm)"
                       },
                       {
                         "name": "A",
                         "f": "Size * Vector2(0.45,0.35)",
-                        "v": "Dimension2(9 mm,7 mm)"
+                        "v": "Dimension2(2.25 mm,1.75 mm)"
                       },
                       {
                         "name": "B",
                         "f": "Size * Vector2(0.55,0.35)",
-                        "v": "Dimension2(11 mm,7 mm)"
+                        "v": "Dimension2(2.75 mm,1.75 mm)"
                       }
                     ]
                   },
@@ -2628,17 +2628,17 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0.6,0.6)",
-                        "v": "Dimension2(12 mm,12 mm)"
+                        "v": "Dimension2(3 mm,3 mm)"
                       },
                       {
                         "name": "A",
                         "f": "Size * Vector2(0.65,0.45)",
-                        "v": "Dimension2(13 mm,9 mm)"
+                        "v": "Dimension2(3.25 mm,2.25 mm)"
                       },
                       {
                         "name": "B",
                         "f": "Size * Vector2(0.65,0.55)",
-                        "v": "Dimension2(13 mm,11 mm)"
+                        "v": "Dimension2(3.25 mm,2.75 mm)"
                       }
                     ]
                   },
@@ -2648,17 +2648,17 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0.4,0.6)",
-                        "v": "Dimension2(8 mm,12 mm)"
+                        "v": "Dimension2(2 mm,3 mm)"
                       },
                       {
                         "name": "A",
                         "f": "Size * Vector2(0.55,0.65)",
-                        "v": "Dimension2(11 mm,13 mm)"
+                        "v": "Dimension2(2.75 mm,3.25 mm)"
                       },
                       {
                         "name": "B",
                         "f": "Size * Vector2(0.45,0.65)",
-                        "v": "Dimension2(9 mm,13 mm)"
+                        "v": "Dimension2(2.25 mm,3.25 mm)"
                       }
                     ]
                   },
@@ -2668,17 +2668,17 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0.4,0.4)",
-                        "v": "Dimension2(8 mm,8 mm)"
+                        "v": "Dimension2(2 mm,2 mm)"
                       },
                       {
                         "name": "A",
                         "f": "Size * Vector2(0.35,0.55)",
-                        "v": "Dimension2(7 mm,11 mm)"
+                        "v": "Dimension2(1.75 mm,2.75 mm)"
                       },
                       {
                         "name": "B",
                         "f": "Size * Vector2(0.35,0.45)",
-                        "v": "Dimension2(7 mm,9 mm)"
+                        "v": "Dimension2(1.75 mm,2.25 mm)"
                       }
                     ]
                   }
@@ -2692,7 +2692,7 @@
                       {
                         "name": "Point",
                         "f": "Size/2",
-                        "v": "Dimension2(10 mm,10 mm)"
+                        "v": "Dimension2(2.5 mm,2.5 mm)"
                       }
                     ]
                   }
@@ -2706,7 +2706,7 @@
                       {
                         "name": "Point",
                         "f": "LocPin",
-                        "v": "Dimension2(10 mm,10 mm)"
+                        "v": "Dimension2(2.5 mm,2.5 mm)"
                       }
                     ]
                   }
@@ -2724,13 +2724,13 @@
               },
               {
                 "name": "LineWidth",
-                "f": "2mm",
-                "v": "2 mm"
+                "f": "1pt",
+                "v": "1 pt"
               },
               {
                 "name": "Size",
                 "f": "Dimension2((End-Start).Length,LineWidth)",
-                "v": "Dimension2(100.000000016 mm,2 mm)"
+                "v": "Dimension2(100.167082644 mm,1 pt)"
               },
               {
                 "name": "LineColor",
@@ -2755,7 +2755,7 @@
               {
                 "name": "Start",
                 "f": "connectAlong( Page.Shape3.Geometry, 0.885416667)",
-                "v": "Dimension2(1.999999984 mm,-6 mm)"
+                "v": "Dimension2(2.333333328 mm,4 mm)"
               },
               {
                 "name": "End",
@@ -2770,12 +2770,12 @@
                   {
                     "name": "Pin",
                     "f": "(Start+End) * 0.5",
-                    "v": "Dimension2(51.999999992 mm,-6 mm)"
+                    "v": "Dimension2(52.166666664 mm,-1 mm)"
                   },
                   {
                     "name": "LocPin",
                     "f": "Dimension2(Length*0.5, LineWidth * 0.5)",
-                    "v": "Dimension2(50.000000008 mm,1 mm)"
+                    "v": "Dimension2(50.083541322 mm,0.5 pt)"
                   },
                   {
                     "name": "Scale",
@@ -2785,7 +2785,7 @@
                   {
                     "name": "Rotation",
                     "f": "(End-Start).Angle",
-                    "v": "0 deg"
+                    "v": "-5.729565249 deg"
                   }
                 ]
               },
@@ -2805,7 +2805,7 @@
                       {
                         "name": "Point",
                         "f": "Dimension2(0mm,LineWidth/2)",
-                        "v": "Dimension2(0 mm,1 mm)"
+                        "v": "Dimension2(0 mm,0.5 pt)"
                       }
                     ]
                   },
@@ -2815,7 +2815,7 @@
                       {
                         "name": "Point",
                         "f": "Dimension2(Length,LineWidth/2)",
-                        "v": "Dimension2(100.000000016 mm,1 mm)"
+                        "v": "Dimension2(100.167082644 mm,0.5 pt)"
                       }
                     ]
                   }
@@ -2834,13 +2834,13 @@
                   },
                   {
                     "name": "LineWidth",
-                    "l": "10.LineWidth",
-                    "v": "2 mm"
+                    "f": "1pt",
+                    "v": "1 pt"
                   },
                   {
                     "name": "Size",
-                    "l": "10.Size",
-                    "v": "Dimension2(20 mm,20 mm)"
+                    "f": "Dimension2(5mm,5mm)",
+                    "v": "Dimension2(5 mm,5 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -2869,13 +2869,13 @@
                     "cells": [
                       {
                         "name": "Pin",
-                        "f": "Dimension2(0mm,1mm)",
-                        "v": "Dimension2(0 mm,1 mm)"
+                        "f": "Dimension2(0mm,Parent.LineWidth/2)",
+                        "v": "Dimension2(0 mm,0.5 pt)"
                       },
                       {
                         "name": "LocPin",
                         "l": "10.Transform.LocPin",
-                        "v": "Dimension2(10 mm,10 mm)"
+                        "v": "Dimension2(2.5 mm,2.5 mm)"
                       },
                       {
                         "name": "Scale",
@@ -2920,7 +2920,7 @@
                           {
                             "name": "Point",
                             "l": "10.Geometry.0.Point",
-                            "v": "Dimension2(8 mm,8 mm)"
+                            "v": "Dimension2(2 mm,2 mm)"
                           }
                         ]
                       },
@@ -2930,17 +2930,17 @@
                           {
                             "name": "Point",
                             "l": "10.Geometry.1.Point",
-                            "v": "Dimension2(12 mm,8 mm)"
+                            "v": "Dimension2(3 mm,2 mm)"
                           },
                           {
                             "name": "A",
                             "l": "10.Geometry.1.A",
-                            "v": "Dimension2(9 mm,7 mm)"
+                            "v": "Dimension2(2.25 mm,1.75 mm)"
                           },
                           {
                             "name": "B",
                             "l": "10.Geometry.1.B",
-                            "v": "Dimension2(11 mm,7 mm)"
+                            "v": "Dimension2(2.75 mm,1.75 mm)"
                           }
                         ]
                       },
@@ -2950,17 +2950,17 @@
                           {
                             "name": "Point",
                             "l": "10.Geometry.2.Point",
-                            "v": "Dimension2(12 mm,12 mm)"
+                            "v": "Dimension2(3 mm,3 mm)"
                           },
                           {
                             "name": "A",
                             "l": "10.Geometry.2.A",
-                            "v": "Dimension2(13 mm,9 mm)"
+                            "v": "Dimension2(3.25 mm,2.25 mm)"
                           },
                           {
                             "name": "B",
                             "l": "10.Geometry.2.B",
-                            "v": "Dimension2(13 mm,11 mm)"
+                            "v": "Dimension2(3.25 mm,2.75 mm)"
                           }
                         ]
                       },
@@ -2970,17 +2970,17 @@
                           {
                             "name": "Point",
                             "l": "10.Geometry.3.Point",
-                            "v": "Dimension2(8 mm,12 mm)"
+                            "v": "Dimension2(2 mm,3 mm)"
                           },
                           {
                             "name": "A",
                             "l": "10.Geometry.3.A",
-                            "v": "Dimension2(11 mm,13 mm)"
+                            "v": "Dimension2(2.75 mm,3.25 mm)"
                           },
                           {
                             "name": "B",
                             "l": "10.Geometry.3.B",
-                            "v": "Dimension2(9 mm,13 mm)"
+                            "v": "Dimension2(2.25 mm,3.25 mm)"
                           }
                         ]
                       },
@@ -2990,17 +2990,17 @@
                           {
                             "name": "Point",
                             "l": "10.Geometry.4.Point",
-                            "v": "Dimension2(8 mm,8 mm)"
+                            "v": "Dimension2(2 mm,2 mm)"
                           },
                           {
                             "name": "A",
                             "l": "10.Geometry.4.A",
-                            "v": "Dimension2(7 mm,11 mm)"
+                            "v": "Dimension2(1.75 mm,2.75 mm)"
                           },
                           {
                             "name": "B",
                             "l": "10.Geometry.4.B",
-                            "v": "Dimension2(7 mm,9 mm)"
+                            "v": "Dimension2(1.75 mm,2.25 mm)"
                           }
                         ]
                       }
@@ -3014,7 +3014,7 @@
                           {
                             "name": "Point",
                             "l": "10.ConnectionPoint.0.Point",
-                            "v": "Dimension2(10 mm,10 mm)"
+                            "v": "Dimension2(2.5 mm,2.5 mm)"
                           }
                         ]
                       }
@@ -3033,13 +3033,13 @@
                   },
                   {
                     "name": "LineWidth",
-                    "l": "10.LineWidth",
-                    "v": "2 mm"
+                    "f": "1pt",
+                    "v": "1 pt"
                   },
                   {
                     "name": "Size",
-                    "l": "10.Size",
-                    "v": "Dimension2(20 mm,20 mm)"
+                    "f": "Dimension2(5mm,5mm)",
+                    "v": "Dimension2(5 mm,5 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -3068,13 +3068,13 @@
                     "cells": [
                       {
                         "name": "Pin",
-                        "f": "Dimension2(Parent.Length,1mm)",
-                        "v": "Dimension2(100.000000016 mm,1 mm)"
+                        "f": "Dimension2(Parent.Length,Parent.LineWidth/2)",
+                        "v": "Dimension2(100.167082644 mm,0.5 pt)"
                       },
                       {
                         "name": "LocPin",
                         "l": "10.Transform.LocPin",
-                        "v": "Dimension2(10 mm,10 mm)"
+                        "v": "Dimension2(2.5 mm,2.5 mm)"
                       },
                       {
                         "name": "Scale",
@@ -3119,7 +3119,7 @@
                           {
                             "name": "Point",
                             "l": "10.Geometry.0.Point",
-                            "v": "Dimension2(8 mm,8 mm)"
+                            "v": "Dimension2(2 mm,2 mm)"
                           }
                         ]
                       },
@@ -3129,17 +3129,17 @@
                           {
                             "name": "Point",
                             "l": "10.Geometry.1.Point",
-                            "v": "Dimension2(12 mm,8 mm)"
+                            "v": "Dimension2(3 mm,2 mm)"
                           },
                           {
                             "name": "A",
                             "l": "10.Geometry.1.A",
-                            "v": "Dimension2(9 mm,7 mm)"
+                            "v": "Dimension2(2.25 mm,1.75 mm)"
                           },
                           {
                             "name": "B",
                             "l": "10.Geometry.1.B",
-                            "v": "Dimension2(11 mm,7 mm)"
+                            "v": "Dimension2(2.75 mm,1.75 mm)"
                           }
                         ]
                       },
@@ -3149,17 +3149,17 @@
                           {
                             "name": "Point",
                             "l": "10.Geometry.2.Point",
-                            "v": "Dimension2(12 mm,12 mm)"
+                            "v": "Dimension2(3 mm,3 mm)"
                           },
                           {
                             "name": "A",
                             "l": "10.Geometry.2.A",
-                            "v": "Dimension2(13 mm,9 mm)"
+                            "v": "Dimension2(3.25 mm,2.25 mm)"
                           },
                           {
                             "name": "B",
                             "l": "10.Geometry.2.B",
-                            "v": "Dimension2(13 mm,11 mm)"
+                            "v": "Dimension2(3.25 mm,2.75 mm)"
                           }
                         ]
                       },
@@ -3169,17 +3169,17 @@
                           {
                             "name": "Point",
                             "l": "10.Geometry.3.Point",
-                            "v": "Dimension2(8 mm,12 mm)"
+                            "v": "Dimension2(2 mm,3 mm)"
                           },
                           {
                             "name": "A",
                             "l": "10.Geometry.3.A",
-                            "v": "Dimension2(11 mm,13 mm)"
+                            "v": "Dimension2(2.75 mm,3.25 mm)"
                           },
                           {
                             "name": "B",
                             "l": "10.Geometry.3.B",
-                            "v": "Dimension2(9 mm,13 mm)"
+                            "v": "Dimension2(2.25 mm,3.25 mm)"
                           }
                         ]
                       },
@@ -3189,17 +3189,17 @@
                           {
                             "name": "Point",
                             "l": "10.Geometry.4.Point",
-                            "v": "Dimension2(8 mm,8 mm)"
+                            "v": "Dimension2(2 mm,2 mm)"
                           },
                           {
                             "name": "A",
                             "l": "10.Geometry.4.A",
-                            "v": "Dimension2(7 mm,11 mm)"
+                            "v": "Dimension2(1.75 mm,2.75 mm)"
                           },
                           {
                             "name": "B",
                             "l": "10.Geometry.4.B",
-                            "v": "Dimension2(7 mm,9 mm)"
+                            "v": "Dimension2(1.75 mm,2.25 mm)"
                           }
                         ]
                       }
@@ -3213,7 +3213,7 @@
                           {
                             "name": "Point",
                             "l": "10.ConnectionPoint.0.Point",
-                            "v": "Dimension2(10 mm,10 mm)"
+                            "v": "Dimension2(2.5 mm,2.5 mm)"
                           }
                         ]
                       }
@@ -3233,13 +3233,13 @@
               },
               {
                 "name": "LineWidth",
-                "f": "2mm",
-                "v": "2 mm"
+                "f": "1pt",
+                "v": "1 pt"
               },
               {
                 "name": "Size",
-                "f": "Dimension2(100mm,100mm)",
-                "v": "Dimension2(100 mm,100 mm)"
+                "f": "Dimension2(20mm,20mm)",
+                "v": "Dimension2(20 mm,20 mm)"
               },
               {
                 "name": "LineColor",
@@ -3268,13 +3268,13 @@
                 "cells": [
                   {
                     "name": "Pin",
-                    "f": "Dimension2(230 mm,128 mm)",
-                    "v": "Dimension2(230 mm,128 mm)"
+                    "f": "Dimension2(74.347916667 mm,28 mm)",
+                    "v": "Dimension2(74.347916667 mm,28 mm)"
                   },
                   {
                     "name": "LocPin",
                     "f": "Size / 2",
-                    "v": "Dimension2(50 mm,50 mm)"
+                    "v": "Dimension2(10 mm,10 mm)"
                   },
                   {
                     "name": "Scale",
@@ -3319,7 +3319,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0.18,0.18)",
-                        "v": "Dimension2(18 mm,18 mm)"
+                        "v": "Dimension2(3.6 mm,3.6 mm)"
                       }
                     ]
                   },
@@ -3329,17 +3329,17 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0.82,0.18)",
-                        "v": "Dimension2(82 mm,18 mm)"
+                        "v": "Dimension2(16.4 mm,3.6 mm)"
                       },
                       {
                         "name": "A",
                         "f": "Size * Vector2(1/3,0)",
-                        "v": "Dimension2(33.333333333 mm,0 mm)"
+                        "v": "Dimension2(6.666666667 mm,0 mm)"
                       },
                       {
                         "name": "B",
                         "f": "Size * Vector2(2/3,0)",
-                        "v": "Dimension2(66.666666667 mm,0 mm)"
+                        "v": "Dimension2(13.333333333 mm,0 mm)"
                       }
                     ]
                   },
@@ -3349,17 +3349,17 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0.82,0.82)",
-                        "v": "Dimension2(82 mm,82 mm)"
+                        "v": "Dimension2(16.4 mm,16.4 mm)"
                       },
                       {
                         "name": "A",
-                        "f": "Dimension2(99 mm,33.666666667 mm)",
-                        "v": "Dimension2(99 mm,33.666666667 mm)"
+                        "f": "Size * Vector2(1,1/3)",
+                        "v": "Dimension2(20 mm,6.666666667 mm)"
                       },
                       {
                         "name": "B",
-                        "f": "Dimension2(99 mm,66.333333333 mm)",
-                        "v": "Dimension2(99 mm,66.333333333 mm)"
+                        "f": "Size * Vector2(1,2/3)",
+                        "v": "Dimension2(20 mm,13.333333333 mm)"
                       }
                     ]
                   },
@@ -3369,17 +3369,17 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0.18,0.82)",
-                        "v": "Dimension2(18 mm,82 mm)"
+                        "v": "Dimension2(3.6 mm,16.4 mm)"
                       },
                       {
                         "name": "A",
-                        "f": "Dimension2(66.333333333 mm,99 mm)",
-                        "v": "Dimension2(66.333333333 mm,99 mm)"
+                        "f": "Size * Vector2(2/3,1)",
+                        "v": "Dimension2(13.333333333 mm,20 mm)"
                       },
                       {
                         "name": "B",
-                        "f": "Dimension2(33.666666667 mm,99 mm)",
-                        "v": "Dimension2(33.666666667 mm,99 mm)"
+                        "f": "Size * Vector2(1/3, 1)",
+                        "v": "Dimension2(6.666666667 mm,20 mm)"
                       }
                     ]
                   },
@@ -3389,17 +3389,17 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0.18,0.18)",
-                        "v": "Dimension2(18 mm,18 mm)"
+                        "v": "Dimension2(3.6 mm,3.6 mm)"
                       },
                       {
                         "name": "A",
-                        "f": "Dimension2(1 mm,66.333333333 mm)",
-                        "v": "Dimension2(1 mm,66.333333333 mm)"
+                        "f": "Size * Vector2(0,2/3)",
+                        "v": "Dimension2(0 mm,13.333333333 mm)"
                       },
                       {
                         "name": "B",
-                        "f": "Dimension2(1 mm,33.666666667 mm)",
-                        "v": "Dimension2(1 mm,33.666666667 mm)"
+                        "f": "Size * Vector2(0, 1/3)",
+                        "v": "Dimension2(0 mm,6.666666667 mm)"
                       }
                     ]
                   }
@@ -3413,7 +3413,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0,0.5)",
-                        "v": "Dimension2(0 mm,50 mm)"
+                        "v": "Dimension2(0 mm,10 mm)"
                       }
                     ]
                   },
@@ -3422,7 +3422,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(2/3,0.05)",
-                        "v": "Dimension2(66.666666667 mm,5 mm)"
+                        "v": "Dimension2(13.333333333 mm,1 mm)"
                       }
                     ]
                   },
@@ -3431,7 +3431,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(2/3,0.95)",
-                        "v": "Dimension2(66.666666667 mm,95 mm)"
+                        "v": "Dimension2(13.333333333 mm,19 mm)"
                       }
                     ]
                   }
@@ -3445,7 +3445,7 @@
                       {
                         "name": "Point",
                         "f": "LocPin",
-                        "v": "Dimension2(50 mm,50 mm)"
+                        "v": "Dimension2(10 mm,10 mm)"
                       }
                     ]
                   },
@@ -3454,7 +3454,7 @@
                       {
                         "name": "Point",
                         "f": "ConnectionPoint.Point1",
-                        "v": "Dimension2(0 mm,50 mm)"
+                        "v": "Dimension2(0 mm,10 mm)"
                       }
                     ]
                   },
@@ -3463,7 +3463,7 @@
                       {
                         "name": "Point",
                         "f": "ConnectionPoint.Point2",
-                        "v": "Dimension2(66.666666667 mm,5 mm)"
+                        "v": "Dimension2(13.333333333 mm,1 mm)"
                       }
                     ]
                   },
@@ -3472,7 +3472,7 @@
                       {
                         "name": "Point",
                         "f": "ConnectionPoint.Point3",
-                        "v": "Dimension2(66.666666667 mm,95 mm)"
+                        "v": "Dimension2(13.333333333 mm,19 mm)"
                       }
                     ]
                   }
@@ -3523,17 +3523,17 @@
                 "cells": [
                   {
                     "name": "Name",
-                    "s": "Details"
+                    "s": "lines"
                   },
                   {
                     "name": "LineWidth",
-                    "f": "2mm",
-                    "v": "2 mm"
+                    "f": "1pt",
+                    "v": "1 pt"
                   },
                   {
                     "name": "Size",
                     "f": "Parent.Size",
-                    "v": "Dimension2(100 mm,100 mm)"
+                    "v": "Dimension2(20 mm,20 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -3613,7 +3613,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(0,0.5)",
-                            "v": "Dimension2(0 mm,50 mm)"
+                            "v": "Dimension2(0 mm,10 mm)"
                           }
                         ]
                       },
@@ -3623,7 +3623,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(1/3,0.5)",
-                            "v": "Dimension2(33.333333333 mm,50 mm)"
+                            "v": "Dimension2(6.666666667 mm,10 mm)"
                           }
                         ]
                       },
@@ -3633,7 +3633,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(1/3,0.75)",
-                            "v": "Dimension2(33.333333333 mm,75 mm)"
+                            "v": "Dimension2(6.666666667 mm,15 mm)"
                           }
                         ]
                       },
@@ -3643,7 +3643,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(1/3,0.25)",
-                            "v": "Dimension2(33.333333333 mm,25 mm)"
+                            "v": "Dimension2(6.666666667 mm,5 mm)"
                           }
                         ]
                       },
@@ -3653,7 +3653,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(1/3,0.4)",
-                            "v": "Dimension2(33.333333333 mm,40 mm)"
+                            "v": "Dimension2(6.666666667 mm,8 mm)"
                           }
                         ]
                       },
@@ -3663,7 +3663,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(2/3,0.15)",
-                            "v": "Dimension2(66.666666667 mm,15 mm)"
+                            "v": "Dimension2(13.333333333 mm,3 mm)"
                           }
                         ]
                       },
@@ -3673,7 +3673,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(2/3,0.05)",
-                            "v": "Dimension2(66.666666667 mm,5 mm)"
+                            "v": "Dimension2(13.333333333 mm,1 mm)"
                           }
                         ]
                       },
@@ -3683,7 +3683,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(1/3,0.6)",
-                            "v": "Dimension2(33.333333333 mm,60 mm)"
+                            "v": "Dimension2(6.666666667 mm,12 mm)"
                           }
                         ]
                       },
@@ -3693,7 +3693,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(2/3,0.85)",
-                            "v": "Dimension2(66.666666667 mm,85 mm)"
+                            "v": "Dimension2(13.333333333 mm,17 mm)"
                           }
                         ]
                       },
@@ -3703,7 +3703,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(2/3,0.95)",
-                            "v": "Dimension2(66.666666667 mm,95 mm)"
+                            "v": "Dimension2(13.333333333 mm,19 mm)"
                           }
                         ]
                       }
@@ -3718,17 +3718,17 @@
                 "cells": [
                   {
                     "name": "Name",
-                    "s": "Arrow"
+                    "s": "arrow"
                   },
                   {
                     "name": "LineWidth",
-                    "l": "17.LineWidth",
-                    "v": "2 mm"
+                    "f": "1pt",
+                    "v": "1 pt"
                   },
                   {
                     "name": "Size",
-                    "f": "Dimension2(16 mm,12 mm)",
-                    "v": "Dimension2(16 mm,12 mm)"
+                    "f": "Parent.Size / 8",
+                    "v": "Dimension2(2.5 mm,2.5 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -3758,12 +3758,12 @@
                       {
                         "name": "Pin",
                         "f": "Parent.Size * Vector2(1/3,0.4)",
-                        "v": "Dimension2(33.333333333 mm,40 mm)"
+                        "v": "Dimension2(6.666666667 mm,8 mm)"
                       },
                       {
                         "name": "LocPin",
-                        "f": "Dimension2(0mm,6mm)",
-                        "v": "Dimension2(0 mm,6 mm)"
+                        "f": "Dimension2(0mm,Size.Y/2)",
+                        "v": "Dimension2(0 mm,1.25 mm)"
                       },
                       {
                         "name": "Scale",
@@ -3808,7 +3808,7 @@
                           {
                             "name": "Point",
                             "f": "Size* Vector2(0,0.5)",
-                            "v": "Dimension2(0 mm,6 mm)"
+                            "v": "Dimension2(0 mm,1.25 mm)"
                           }
                         ]
                       },
@@ -3818,7 +3818,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(1,1)",
-                            "v": "Dimension2(16 mm,12 mm)"
+                            "v": "Dimension2(2.5 mm,2.5 mm)"
                           }
                         ]
                       },
@@ -3828,7 +3828,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(1,0)",
-                            "v": "Dimension2(16 mm,0 mm)"
+                            "v": "Dimension2(2.5 mm,0 mm)"
                           }
                         ]
                       },
@@ -3838,7 +3838,7 @@
                           {
                             "name": "Point",
                             "f": "Geometry.Point1",
-                            "v": "Dimension2(0 mm,6 mm)"
+                            "v": "Dimension2(0 mm,1.25 mm)"
                           }
                         ]
                       }
@@ -3852,12 +3852,12 @@
                 "cells": [
                   {
                     "name": "Name",
-                    "s": ""
+                    "s": "collector"
                   },
                   {
                     "name": "LineWidth",
-                    "f": "2mm",
-                    "v": "2 mm"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "Size",
@@ -3896,8 +3896,8 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "Parent.Size.X / 5",
+                    "v": "4 mm"
                   },
                   {
                     "name": "AlignX",
@@ -3916,23 +3916,23 @@
                   },
                   {
                     "name": "MarginTop",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginRight",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginBottom",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginLeft",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   }
                 ],
                 "sections": [
@@ -3941,8 +3941,8 @@
                     "cells": [
                       {
                         "name": "Pin",
-                        "f": "Dimension2(78.204081635 mm,105.816326545 mm)",
-                        "v": "Dimension2(78.204081635 mm,105.816326545 mm)"
+                        "f": "Parent.Size * Vector2( 0.7,0.75 )",
+                        "v": "Dimension2(14 mm,15 mm)"
                       },
                       {
                         "name": "LocPin",
@@ -3979,17 +3979,17 @@
                 "cells": [
                   {
                     "name": "Name",
-                    "s": ""
+                    "s": "base"
                   },
                   {
                     "name": "LineWidth",
-                    "f": "2mm",
-                    "v": "2 mm"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(11.132825851 mm,18.890148163 mm)"
+                    "v": "Dimension2(3.430175781 mm,5.8203125 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -4023,8 +4023,8 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "Parent.Size.X / 5",
+                    "v": "4 mm"
                   },
                   {
                     "name": "AlignX",
@@ -4043,23 +4043,23 @@
                   },
                   {
                     "name": "MarginTop",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginRight",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginBottom",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginLeft",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   }
                 ],
                 "sections": [
@@ -4068,13 +4068,13 @@
                     "cells": [
                       {
                         "name": "Pin",
-                        "f": "Dimension2(-9.734693872 mm,37.265306115 mm)",
-                        "v": "Dimension2(-9.734693872 mm,37.265306115 mm)"
+                        "f": "Parent.Size * Vector2( 0.2,0.65 )",
+                        "v": "Dimension2(4 mm,13 mm)"
                       },
                       {
                         "name": "LocPin",
                         "f": "Size * Vector2(AlignX,AlignY)",
-                        "v": "Dimension2(5.566412926 mm,9.445074081 mm)"
+                        "v": "Dimension2(1.715087891 mm,2.91015625 mm)"
                       },
                       {
                         "name": "Scale",
@@ -4106,17 +4106,17 @@
                 "cells": [
                   {
                     "name": "Name",
-                    "s": ""
+                    "s": "emitter"
                   },
                   {
                     "name": "LineWidth",
-                    "f": "2mm",
-                    "v": "2 mm"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(10.253293037 mm,18.890148163 mm)"
+                    "v": "Dimension2(3.159179688 mm,5.8203125 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -4150,8 +4150,8 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "Parent.Size.X / 5",
+                    "v": "4 mm"
                   },
                   {
                     "name": "AlignX",
@@ -4170,23 +4170,23 @@
                   },
                   {
                     "name": "MarginTop",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginRight",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginBottom",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginLeft",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   }
                 ],
                 "sections": [
@@ -4195,13 +4195,13 @@
                     "cells": [
                       {
                         "name": "Pin",
-                        "f": "Dimension2(78.061224493 mm,-7.306122453 mm)",
-                        "v": "Dimension2(78.061224493 mm,-7.306122453 mm)"
+                        "f": "Parent.Size * Vector2( 0.7,0.3 )",
+                        "v": "Dimension2(14 mm,6 mm)"
                       },
                       {
                         "name": "LocPin",
                         "f": "Size * Vector2(AlignX,AlignY)",
-                        "v": "Dimension2(5.126646519 mm,9.445074081 mm)"
+                        "v": "Dimension2(1.579589844 mm,2.91015625 mm)"
                       },
                       {
                         "name": "Scale",
@@ -4323,7 +4323,7 @@
                       {
                         "name": "Pin",
                         "f": "Parent.Size * Vector2( 1, 0.45 )",
-                        "v": "Dimension2(100 mm,45 mm)"
+                        "v": "Dimension2(20 mm,9 mm)"
                       },
                       {
                         "name": "LocPin",
@@ -4450,7 +4450,7 @@
                       {
                         "name": "Pin",
                         "f": "Parent.Size * Vector2( 1, 0.55 )",
-                        "v": "Dimension2(100 mm,55 mm)"
+                        "v": "Dimension2(20 mm,11 mm)"
                       },
                       {
                         "name": "LocPin",
@@ -4493,13 +4493,13 @@
               },
               {
                 "name": "LineWidth",
-                "f": "2mm",
-                "v": "2 mm"
+                "f": "1pt",
+                "v": "1 pt"
               },
               {
                 "name": "Size",
-                "f": "Dimension2(100mm,100mm)",
-                "v": "Dimension2(100 mm,100 mm)"
+                "f": "Dimension2(20mm,20mm)",
+                "v": "Dimension2(20 mm,20 mm)"
               },
               {
                 "name": "LineColor",
@@ -4528,13 +4528,13 @@
                 "cells": [
                   {
                     "name": "Pin",
-                    "f": "Dimension2(230 mm,128 mm)",
-                    "v": "Dimension2(230 mm,128 mm)"
+                    "f": "Dimension2(74.347916667 mm,28 mm)",
+                    "v": "Dimension2(74.347916667 mm,28 mm)"
                   },
                   {
                     "name": "LocPin",
                     "f": "Size / 2",
-                    "v": "Dimension2(50 mm,50 mm)"
+                    "v": "Dimension2(10 mm,10 mm)"
                   },
                   {
                     "name": "Scale",
@@ -4579,7 +4579,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0.18,0.18)",
-                        "v": "Dimension2(18 mm,18 mm)"
+                        "v": "Dimension2(3.6 mm,3.6 mm)"
                       }
                     ]
                   },
@@ -4589,17 +4589,17 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0.82,0.18)",
-                        "v": "Dimension2(82 mm,18 mm)"
+                        "v": "Dimension2(16.4 mm,3.6 mm)"
                       },
                       {
                         "name": "A",
                         "f": "Size * Vector2(1/3,0)",
-                        "v": "Dimension2(33.333333333 mm,0 mm)"
+                        "v": "Dimension2(6.666666667 mm,0 mm)"
                       },
                       {
                         "name": "B",
                         "f": "Size * Vector2(2/3,0)",
-                        "v": "Dimension2(66.666666667 mm,0 mm)"
+                        "v": "Dimension2(13.333333333 mm,0 mm)"
                       }
                     ]
                   },
@@ -4609,17 +4609,17 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0.82,0.82)",
-                        "v": "Dimension2(82 mm,82 mm)"
+                        "v": "Dimension2(16.4 mm,16.4 mm)"
                       },
                       {
                         "name": "A",
-                        "f": "Dimension2(99 mm,33.666666667 mm)",
-                        "v": "Dimension2(99 mm,33.666666667 mm)"
+                        "f": "Size * Vector2(1,1/3)",
+                        "v": "Dimension2(20 mm,6.666666667 mm)"
                       },
                       {
                         "name": "B",
-                        "f": "Dimension2(99 mm,66.333333333 mm)",
-                        "v": "Dimension2(99 mm,66.333333333 mm)"
+                        "f": "Size * Vector2(1,2/3)",
+                        "v": "Dimension2(20 mm,13.333333333 mm)"
                       }
                     ]
                   },
@@ -4629,17 +4629,17 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0.18,0.82)",
-                        "v": "Dimension2(18 mm,82 mm)"
+                        "v": "Dimension2(3.6 mm,16.4 mm)"
                       },
                       {
                         "name": "A",
-                        "f": "Dimension2(66.333333333 mm,99 mm)",
-                        "v": "Dimension2(66.333333333 mm,99 mm)"
+                        "f": "Size * Vector2(2/3,1)",
+                        "v": "Dimension2(13.333333333 mm,20 mm)"
                       },
                       {
                         "name": "B",
-                        "f": "Dimension2(33.666666667 mm,99 mm)",
-                        "v": "Dimension2(33.666666667 mm,99 mm)"
+                        "f": "Size * Vector2(1/3, 1)",
+                        "v": "Dimension2(6.666666667 mm,20 mm)"
                       }
                     ]
                   },
@@ -4649,17 +4649,17 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0.18,0.18)",
-                        "v": "Dimension2(18 mm,18 mm)"
+                        "v": "Dimension2(3.6 mm,3.6 mm)"
                       },
                       {
                         "name": "A",
-                        "f": "Dimension2(1 mm,66.333333333 mm)",
-                        "v": "Dimension2(1 mm,66.333333333 mm)"
+                        "f": "Size * Vector2(0,2/3)",
+                        "v": "Dimension2(0 mm,13.333333333 mm)"
                       },
                       {
                         "name": "B",
-                        "f": "Dimension2(1 mm,33.666666667 mm)",
-                        "v": "Dimension2(1 mm,33.666666667 mm)"
+                        "f": "Size * Vector2(0, 1/3)",
+                        "v": "Dimension2(0 mm,6.666666667 mm)"
                       }
                     ]
                   }
@@ -4673,7 +4673,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(0,0.5)",
-                        "v": "Dimension2(0 mm,50 mm)"
+                        "v": "Dimension2(0 mm,10 mm)"
                       }
                     ]
                   },
@@ -4682,7 +4682,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(2/3,0.05)",
-                        "v": "Dimension2(66.666666667 mm,5 mm)"
+                        "v": "Dimension2(13.333333333 mm,1 mm)"
                       }
                     ]
                   },
@@ -4691,7 +4691,7 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(2/3,0.95)",
-                        "v": "Dimension2(66.666666667 mm,95 mm)"
+                        "v": "Dimension2(13.333333333 mm,19 mm)"
                       }
                     ]
                   }
@@ -4705,7 +4705,7 @@
                       {
                         "name": "Point",
                         "f": "LocPin",
-                        "v": "Dimension2(50 mm,50 mm)"
+                        "v": "Dimension2(10 mm,10 mm)"
                       }
                     ]
                   },
@@ -4714,7 +4714,7 @@
                       {
                         "name": "Point",
                         "f": "ConnectionPoint.Point1",
-                        "v": "Dimension2(0 mm,50 mm)"
+                        "v": "Dimension2(0 mm,10 mm)"
                       }
                     ]
                   },
@@ -4723,7 +4723,7 @@
                       {
                         "name": "Point",
                         "f": "ConnectionPoint.Point2",
-                        "v": "Dimension2(66.666666667 mm,5 mm)"
+                        "v": "Dimension2(13.333333333 mm,1 mm)"
                       }
                     ]
                   },
@@ -4732,7 +4732,7 @@
                       {
                         "name": "Point",
                         "f": "ConnectionPoint.Point3",
-                        "v": "Dimension2(66.666666667 mm,95 mm)"
+                        "v": "Dimension2(13.333333333 mm,19 mm)"
                       }
                     ]
                   }
@@ -4783,17 +4783,17 @@
                 "cells": [
                   {
                     "name": "Name",
-                    "s": "Details"
+                    "s": "lines"
                   },
                   {
                     "name": "LineWidth",
-                    "f": "2mm",
-                    "v": "2 mm"
+                    "f": "1pt",
+                    "v": "1 pt"
                   },
                   {
                     "name": "Size",
                     "f": "Parent.Size",
-                    "v": "Dimension2(100 mm,100 mm)"
+                    "v": "Dimension2(20 mm,20 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -4873,7 +4873,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(0,0.5)",
-                            "v": "Dimension2(0 mm,50 mm)"
+                            "v": "Dimension2(0 mm,10 mm)"
                           }
                         ]
                       },
@@ -4883,7 +4883,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(1/3,0.5)",
-                            "v": "Dimension2(33.333333333 mm,50 mm)"
+                            "v": "Dimension2(6.666666667 mm,10 mm)"
                           }
                         ]
                       },
@@ -4893,7 +4893,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(1/3,0.75)",
-                            "v": "Dimension2(33.333333333 mm,75 mm)"
+                            "v": "Dimension2(6.666666667 mm,15 mm)"
                           }
                         ]
                       },
@@ -4903,7 +4903,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(1/3,0.25)",
-                            "v": "Dimension2(33.333333333 mm,25 mm)"
+                            "v": "Dimension2(6.666666667 mm,5 mm)"
                           }
                         ]
                       },
@@ -4913,7 +4913,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(1/3,0.4)",
-                            "v": "Dimension2(33.333333333 mm,40 mm)"
+                            "v": "Dimension2(6.666666667 mm,8 mm)"
                           }
                         ]
                       },
@@ -4923,7 +4923,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(2/3,0.15)",
-                            "v": "Dimension2(66.666666667 mm,15 mm)"
+                            "v": "Dimension2(13.333333333 mm,3 mm)"
                           }
                         ]
                       },
@@ -4933,7 +4933,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(2/3,0.05)",
-                            "v": "Dimension2(66.666666667 mm,5 mm)"
+                            "v": "Dimension2(13.333333333 mm,1 mm)"
                           }
                         ]
                       },
@@ -4943,7 +4943,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(1/3,0.6)",
-                            "v": "Dimension2(33.333333333 mm,60 mm)"
+                            "v": "Dimension2(6.666666667 mm,12 mm)"
                           }
                         ]
                       },
@@ -4953,7 +4953,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(2/3,0.85)",
-                            "v": "Dimension2(66.666666667 mm,85 mm)"
+                            "v": "Dimension2(13.333333333 mm,17 mm)"
                           }
                         ]
                       },
@@ -4963,7 +4963,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(2/3,0.95)",
-                            "v": "Dimension2(66.666666667 mm,95 mm)"
+                            "v": "Dimension2(13.333333333 mm,19 mm)"
                           }
                         ]
                       }
@@ -4977,17 +4977,17 @@
                 "cells": [
                   {
                     "name": "Name",
-                    "s": "Arrow"
+                    "s": "arrow"
                   },
                   {
                     "name": "LineWidth",
-                    "f": "2mm",
-                    "v": "2 mm"
+                    "f": "1pt",
+                    "v": "1 pt"
                   },
                   {
                     "name": "Size",
-                    "f": "Dimension2(16 mm,12 mm)",
-                    "v": "Dimension2(16 mm,12 mm)"
+                    "f": "Parent.Size / 8",
+                    "v": "Dimension2(2.5 mm,2.5 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -5017,12 +5017,12 @@
                       {
                         "name": "Pin",
                         "f": "Parent.Size * Vector2(2/3,0.85)",
-                        "v": "Dimension2(66.666666667 mm,85 mm)"
+                        "v": "Dimension2(13.333333333 mm,17 mm)"
                       },
                       {
                         "name": "LocPin",
-                        "f": "Dimension2(0mm,6mm)",
-                        "v": "Dimension2(0 mm,6 mm)"
+                        "f": "Dimension2(0mm,Size.Y/2)",
+                        "v": "Dimension2(0 mm,1.25 mm)"
                       },
                       {
                         "name": "Scale",
@@ -5067,7 +5067,7 @@
                           {
                             "name": "Point",
                             "f": "Size* Vector2(0,0.5)",
-                            "v": "Dimension2(0 mm,6 mm)"
+                            "v": "Dimension2(0 mm,1.25 mm)"
                           }
                         ]
                       },
@@ -5077,7 +5077,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(1,1)",
-                            "v": "Dimension2(16 mm,12 mm)"
+                            "v": "Dimension2(2.5 mm,2.5 mm)"
                           }
                         ]
                       },
@@ -5087,7 +5087,7 @@
                           {
                             "name": "Point",
                             "f": "Size * Vector2(1,0)",
-                            "v": "Dimension2(16 mm,0 mm)"
+                            "v": "Dimension2(2.5 mm,0 mm)"
                           }
                         ]
                       },
@@ -5097,7 +5097,7 @@
                           {
                             "name": "Point",
                             "f": "Geometry.Point1",
-                            "v": "Dimension2(0 mm,6 mm)"
+                            "v": "Dimension2(0 mm,1.25 mm)"
                           }
                         ]
                       }
@@ -5111,12 +5111,12 @@
                 "cells": [
                   {
                     "name": "Name",
-                    "s": ""
+                    "s": "collector"
                   },
                   {
                     "name": "LineWidth",
-                    "f": "2mm",
-                    "v": "2 mm"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "Size",
@@ -5155,8 +5155,8 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "Parent.Size.X / 5",
+                    "v": "4 mm"
                   },
                   {
                     "name": "AlignX",
@@ -5175,23 +5175,23 @@
                   },
                   {
                     "name": "MarginTop",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginRight",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginBottom",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginLeft",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   }
                 ],
                 "sections": [
@@ -5200,8 +5200,8 @@
                     "cells": [
                       {
                         "name": "Pin",
-                        "f": "Dimension2(79.64431487 mm,-5.720116618 mm)",
-                        "v": "Dimension2(79.64431487 mm,-5.720116618 mm)"
+                        "f": "Parent.Size * Vector2( 0.7,0.3 )",
+                        "v": "Dimension2(14 mm,6 mm)"
                       },
                       {
                         "name": "LocPin",
@@ -5238,7 +5238,7 @@
                 "cells": [
                   {
                     "name": "Name",
-                    "s": ""
+                    "s": "emitter"
                   },
                   {
                     "name": "LineWidth",
@@ -5282,8 +5282,8 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "Parent.Size.X / 5",
+                    "v": "4 mm"
                   },
                   {
                     "name": "AlignX",
@@ -5302,23 +5302,23 @@
                   },
                   {
                     "name": "MarginTop",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginRight",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginBottom",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginLeft",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   }
                 ],
                 "sections": [
@@ -5327,8 +5327,8 @@
                     "cells": [
                       {
                         "name": "Pin",
-                        "f": "Dimension2(78.551020408 mm,108.364431487 mm)",
-                        "v": "Dimension2(78.551020408 mm,108.364431487 mm)"
+                        "f": "Parent.Size * Vector2( 0.7,0.75 )",
+                        "v": "Dimension2(14 mm,15 mm)"
                       },
                       {
                         "name": "LocPin",
@@ -5365,12 +5365,12 @@
                 "cells": [
                   {
                     "name": "Name",
-                    "s": ""
+                    "s": "base"
                   },
                   {
                     "name": "LineWidth",
-                    "f": "2mm",
-                    "v": "2 mm"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "Size",
@@ -5409,8 +5409,8 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "Parent.Size.X / 5",
+                    "v": "4 mm"
                   },
                   {
                     "name": "AlignX",
@@ -5429,23 +5429,23 @@
                   },
                   {
                     "name": "MarginTop",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginRight",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginBottom",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   },
                   {
                     "name": "MarginLeft",
-                    "f": "FontSize/2",
-                    "v": "23 pt"
+                    "f": "0pt",
+                    "v": "0 pt"
                   }
                 ],
                 "sections": [
@@ -5454,8 +5454,8 @@
                     "cells": [
                       {
                         "name": "Pin",
-                        "f": "Dimension2(-10.160349851 mm,37.177842565 mm)",
-                        "v": "Dimension2(-10.160349851 mm,37.177842565 mm)"
+                        "f": "Parent.Size * Vector2( 0.2,0.65 )",
+                        "v": "Dimension2(4 mm,13 mm)"
                       },
                       {
                         "name": "LocPin",
@@ -5582,7 +5582,7 @@
                       {
                         "name": "Pin",
                         "f": "Parent.Size * Vector2( 1, 0.55 )",
-                        "v": "Dimension2(100 mm,55 mm)"
+                        "v": "Dimension2(20 mm,11 mm)"
                       },
                       {
                         "name": "LocPin",
@@ -5709,7 +5709,7 @@
                       {
                         "name": "Pin",
                         "f": "Parent.Size * Vector2( 1, 0.45 )",
-                        "v": "Dimension2(100 mm,45 mm)"
+                        "v": "Dimension2(20 mm,9 mm)"
                       },
                       {
                         "name": "LocPin",

@@ -1,6 +1,7 @@
 To Do
 =====
 
+Get initial scaling to 96 pixels per inch.
 
 BUGS
 ----
