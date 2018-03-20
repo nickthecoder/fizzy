@@ -1,7 +1,6 @@
 To Do
 =====
 
-Add text tool
 
 BUGS
 ----
@@ -27,6 +26,21 @@ Edit text
 Soon
 ----
 
+Add a caret to the EditTextTool, and implement keys BACKSPACE, DEL, LEFT, RIGHT, HOME, END
+
+Implement FlipX & Y
+    Is there much point? Text will be reversed!
+
+Layers
+    Instead of shapes being IN a layer, perhaps layers should just be a way of turning a shape's visibility on/off.
+    i.e. a child shape can be in a different layer to its parent.
+        Useful for turning text on/off for all shapes on a page.
+    For simplisity, we could make the Shape's layer attribute NOT be a PropExpression, but a simple string.
+        Note this is NOT a constant! Maybe we need a new PropValue to hold them, and strongly typed versions such as StringValue.
+    A layer could have an alias, which allows it to have a different name in the GUI e.g. to change to a different language.
+    As this is not a structural item, it isn't needed to be done early.
+
+
 Cannot ADD extra children to a master shape, and have them appear in all shapes that use the master.
     If we linked to the original list, and then made a copy of the list when needed, this *might* work.
         But, we'd have to be REALLY careful about changing data within the children.
@@ -43,16 +57,6 @@ Allow Color to be specified as #rrggbb or #rrggbbaa
 TestShape has some tests commented out.
 
 Test Shape.copyInto
-
-Create a ShapeGroup,
-    then look for all "is RealShape" and implement the other half.
-    Some stuff in RealShape should be moved to Shape, such as Scratch, ConnectionPoints, ControlPoints...
-
-Add more drawing tests
-    Box in Box
-    Simple line
-
-Create tests for rotated shapes.
 
 Create tests for each of the Tools
 
@@ -79,8 +83,6 @@ Rounded corners
     Do this for internal/external corners, or both.
 
 
-Line end type. pointy, rounded, mitred??? Use rounded for polygon, and pointy for box.
-
 ControlPoints
     Free (can move anywhere)
     Line (along a single line of a given angle)
@@ -97,11 +99,8 @@ ControlPoints
 Maybe
 -----
 
-Redo expressions???
-    When parsing an expression, all operators, fields, functions etc all return a Prop, but also add to a list of Props and Lists that they depend upon.
-    The PropExpression then listens to each of these, and when one changes, re-parse.
-
-Lines joined from the MIDDLE. But when arc is created it should connect differently
+Lines joined from the MIDDLE of a shape, but starts from the edge of its geometry.
+    When arc is created it should connect differently
 
 Add a limit to the number of items in History.
    Each batch can be assigned a number, so memory hungy operations will cause History to dimish quicker.
@@ -121,20 +120,8 @@ As well as ControlPoints, can we also add sliders to control shapes. e.g. a slid
 
 Consider "1+1" creating a PropConstant.
 
-Layers
-    Instead of shapes being IN a layer, perhaps layers should just be a way of turning a shape's visibility on/off.
-    i.e. a child shape can be in a different layer to its parent.
-        Useful for turning text on/off for all shapes on a page.
-    For simplisity, we could make the Shape's layer attribute NOT be a PropExpression, but a simple string.
-        Note this is NOT a constant! Maybe we need a new PropValue to hold them, and strongly typed versions such as StringValue.
-    A layer could have an alias, which allows it to have a different name in the GUI e.g. to change to a different language.
-    As this is not a structural item, it isn't needed to be done early.
-
 Later
 -----
-
-Implement FlipX & Y
-    Is there much point? Text will be reversed!
 
 Optimise isAt by checking the bounding box first.
     Do we want this? It wouldn't allow a shape to have part sticking out of it? e.g. a resistor with wires hanging out each end.
@@ -142,27 +129,7 @@ Optimise isAt by checking the bounding box first.
     Need to update the existing tests, so that the optimisation doesn't ruin the edge case tests!
 
 Create an SVGDrawContext to convert to SVG.
-    This can be used to in the unit tests ;-)
 
-When designing the Glass view, allow actions from JUnit tests
-    e.g. mouseDownAt( x,y ), mouseMove( x,y )
-    in this way, I can test most functionality without starting JavaFX.
-    In fact, I could have a view without ANY JavaFX code (including mouse events or canvases)
-    Could even split the JavaFX stuff into a separate module.
-
-Allow FList items to be MOVED, so that listeners don't hear a REMOVE and an ADD event, just a single MOVED?/CHANGED? event..
-
-Be able to "click" a part of an expression and get to the definition.
-    i.e. with : "shape3.geometry1[0].point"
-    shape3 and geometry1 and [0] and point should all be "links"
-
-Consider a "isNear" method for Angle, Double, Dimension, Dimension2 and Vector (takes a 2nd parameter for the closeness). 
-    Add a TINY (double) constant. Use TINY mm for a dimension??? (or just SHORT)
-
-Round corners without changing the Geometry.
-    Any time a corner is detected, replace it with a rounded corner
-    Probably done in the PageView.
-    Only applies to two LineTo s in succession?
 
 Problems
 --------
@@ -172,17 +139,6 @@ When a shape is deleted, then the connections must be broken.
     I don't think it is a problem. If the end is moved, it will take on a new value.
     Saving won't be a problem either, as it will save the cached value as well as the broken formula.
     Note. We must save the "next Shape ID", otherwise reloading a document may reuse the same ID.
-
-How are Shapes and Master Shapes related?
-    I want Shapes to change if their Master Shape changes, therefore they have to be linked.
-    Some properties of a Shape can be changed per-Shape (such as Pin and its control points, its text etc)
-    Assume that only the properties are linked, and not the structure (i.e. each Section object is unique, and not linked).
-        Then each PropExpression can either be on the master, or be overriden on the Shape.
-        So PropExpression must be TWO things, either a link to the master's expression, its own expression string.
-    Note, a document should be stand-alone, so it can exist without the corresponding stencil.
-        Therefore a document should COPY any master shapes from the stencil into itself.
-        There's a problem with Shape's ids being unique, as different stencils will have Shapes with the same id.
-            Maybe forbid/discourage user-editted formulars from using IDs, only the GUI can do that (e.g. when joining/glueing shapes together).
 
 Font sizes and Real-World sizes
     Creating floor plans, the Dimensions are LARGE, but the page size is small.
@@ -201,17 +157,6 @@ Can a zig-zag connecting line have any number of segments?
     Joining two components, the zig zag can head out and in using the snap points' directions, but we may want many "way points".
     Could just rely on "magic" which allows Fizzy to generate additional Geometry parts of pre-defined expressions.
     For snapping along the lines, it could refer to a Geometry section instead of (or as an alternative to) a pair of points.
-
-How should text be stored?
-    Maybe every shape can (optionally) have a single piece of text associated with it.
-        Except groups???
-    Should the text have independent rotation? Yes
-    The text is often a "property" of the top-level shape, in which case, how is the text edited from the
-        properties dialog AND the GUI?
-        Using the GUI : If text is editable AND the expression is a simple link, then edit the item the link points to.
-            Could generalise this behaviour for other purposes.
-    Any RealShape can have a Text section
-	Double click the shape to start editing the text.
 
 Notes
 -----
@@ -239,19 +184,6 @@ A Document should have a set of custom properties / styles that its Shapes can r
 For example, a line width and line color which many shapes all share.
     These can be expressions, and therefore can reference other custom properties.
 
-When a compound object such as Dimension2 is shown in the spreadsheet, we need to be able to edit is as a whole,
-    or by its constituent parts.
-    Show split whenever possible?
-
-    OR any compound objects have TWO implementations of Expression, split and un-split.
-        Split has two separate expression strings.
-        In this way the GUI always shows in the way it was designed.
-            We can still have a split/un-split button
-
-    NOTE. Is is always possible to split an expression by duplicating the expression, and added "(blah).x" and "(blah).y"
-        but if we then un-split it, it will give a horrible mess, but we could use a simple regex to see if
-        merging can be done nicely without making a mess (i.e. check that both expressions are " *( *blah *).x"
-        or " *blah *.x" where blah doesn't have any operators.
 
 Much Later
 ----------

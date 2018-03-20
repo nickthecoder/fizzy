@@ -90,8 +90,8 @@
                 "cells": [
                   {
                     "name": "Connect",
-                    "f": "true",
-                    "v": "true"
+                    "f": "false",
+                    "v": "false"
                   }
                 ],
                 "rows": [
@@ -224,6 +224,38 @@
                       {
                         "name": "Point",
                         "f": "Geometry.Point11",
+                        "v": "Dimension2(60 mm,6 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "SnapPoint",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "LocPin",
+                        "v": "Dimension2(30 mm,6 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "ConnectionPoint.Point1",
+                        "v": "Dimension2(0 mm,6 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "ConnectionPoint.Point2",
                         "v": "Dimension2(60 mm,6 mm)"
                       }
                     ]
@@ -610,8 +642,8 @@
                 "cells": [
                   {
                     "name": "Connect",
-                    "f": "true",
-                    "v": "true"
+                    "f": "false",
+                    "v": "false"
                   }
                 ],
                 "rows": [
@@ -694,6 +726,38 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(1,0.5)",
+                        "v": "Dimension2(36 mm,16 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "SnapPoint",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "LocPin",
+                        "v": "Dimension2(18 mm,16 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "ConnectionPoint.Point1",
+                        "v": "Dimension2(0 mm,16 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "ConnectionPoint.Point2",
                         "v": "Dimension2(36 mm,16 mm)"
                       }
                     ]
@@ -954,8 +1018,8 @@
                   },
                   {
                     "name": "Text",
-                    "f": "\"1\"",
-                    "v": "\"1\""
+                    "f": "Parent.CustomProperty.Capacitance",
+                    "v": "\"\""
                   },
                   {
                     "name": "FontName",
@@ -1081,8 +1145,8 @@
                   },
                   {
                     "name": "Text",
-                    "f": "\"2\"",
-                    "v": "\"2\""
+                    "f": "Parent.CustomProperty.ComponentID",
+                    "v": "\"\""
                   },
                   {
                     "name": "FontName",
@@ -1255,8 +1319,8 @@
                 "cells": [
                   {
                     "name": "Connect",
-                    "f": "true",
-                    "v": "true"
+                    "f": "false",
+                    "v": "false"
                   }
                 ],
                 "rows": [
@@ -1349,6 +1413,38 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(1,0.5)",
+                        "v": "Dimension2(36 mm,16 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "SnapPoint",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "LocPin",
+                        "v": "Dimension2(18 mm,16 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "ConnectionPoint.Point1",
+                        "v": "Dimension2(0 mm,16 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "ConnectionPoint.Point2",
                         "v": "Dimension2(36 mm,16 mm)"
                       }
                     ]
@@ -1959,8 +2055,8 @@
                 "cells": [
                   {
                     "name": "Connect",
-                    "f": "true",
-                    "v": "true"
+                    "f": "false",
+                    "v": "false"
                   }
                 ],
                 "rows": [
@@ -2073,6 +2169,38 @@
                       {
                         "name": "Point",
                         "f": "Geometry.Point4",
+                        "v": "Dimension2(60 mm,6 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "SnapPoint",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "LocPin",
+                        "v": "Dimension2(30 mm,6 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "ConnectionPoint.Point1",
+                        "v": "Dimension2(0 mm,6 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "ConnectionPoint.Point2",
                         "v": "Dimension2(60 mm,6 mm)"
                       }
                     ]
@@ -2564,6 +2692,20 @@
                       {
                         "name": "Point",
                         "f": "Size/2",
+                        "v": "Dimension2(10 mm,10 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "SnapPoint",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "LocPin",
                         "v": "Dimension2(10 mm,10 mm)"
                       }
                     ]
@@ -3166,8 +3308,8 @@
                 "cells": [
                   {
                     "name": "Connect",
-                    "f": "true",
-                    "v": "true"
+                    "f": "false",
+                    "v": "false"
                   }
                 ],
                 "rows": [
@@ -3289,6 +3431,47 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(2/3,0.95)",
+                        "v": "Dimension2(66.666666667 mm,95 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "SnapPoint",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "LocPin",
+                        "v": "Dimension2(50 mm,50 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "ConnectionPoint.Point1",
+                        "v": "Dimension2(0 mm,50 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "ConnectionPoint.Point2",
+                        "v": "Dimension2(66.666666667 mm,5 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "ConnectionPoint.Point3",
                         "v": "Dimension2(66.666666667 mm,95 mm)"
                       }
                     ]
@@ -4385,8 +4568,8 @@
                 "cells": [
                   {
                     "name": "Connect",
-                    "f": "true",
-                    "v": "true"
+                    "f": "false",
+                    "v": "false"
                   }
                 ],
                 "rows": [
@@ -4508,6 +4691,47 @@
                       {
                         "name": "Point",
                         "f": "Size * Vector2(2/3,0.95)",
+                        "v": "Dimension2(66.666666667 mm,95 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "SnapPoint",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "LocPin",
+                        "v": "Dimension2(50 mm,50 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "ConnectionPoint.Point1",
+                        "v": "Dimension2(0 mm,50 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "ConnectionPoint.Point2",
+                        "v": "Dimension2(66.666666667 mm,5 mm)"
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "ConnectionPoint.Point3",
                         "v": "Dimension2(66.666666667 mm,95 mm)"
                       }
                     ]
@@ -5278,7 +5502,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(11.116978645 mm,18.890148163 mm)"
+                    "v": "Dimension2(0 mm,18.890148163 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -5405,7 +5629,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(10.324606895 mm,18.890148163 mm)"
+                    "v": "Dimension2(0 mm,18.890148163 mm)"
                   },
                   {
                     "name": "LineColor",

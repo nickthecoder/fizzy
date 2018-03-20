@@ -21,7 +21,9 @@ package uk.co.nickthecoder.fizzy.controller.tools
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.model.Dimension2
+import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.Shape1d
+import uk.co.nickthecoder.fizzy.model.ShapeParent
 import uk.co.nickthecoder.fizzy.model.history.ChangeExpressions
 
 
@@ -38,7 +40,7 @@ class MoveShapesTool(controller: Controller, var previousPoint: Dimension2)
 
     override fun onMouseDragged(event: CMouseEvent) {
         val now = event.point
-        val delta = now - previousPoint
+        val delta = calculateSnap(controller.selection.lastOrNull(), controller.parent, now - previousPoint)
 
         // We must move the lines first, because if they are joined, and the thing they join to is earlier,
         // then they will be moved twice.
@@ -61,9 +63,8 @@ class MoveShapesTool(controller: Controller, var previousPoint: Dimension2)
                 )
             }
         }
-        //document.history.makeChange(MoveShapes(document.selection, delta))
 
-        previousPoint = now
+        previousPoint += delta
     }
 
     override fun onMouseReleased(event: CMouseEvent) {
@@ -89,4 +90,53 @@ class MoveShapesTool(controller: Controller, var previousPoint: Dimension2)
         controller.tool = SelectTool(controller)
     }
 
+}
+
+/**
+ * Calculates how much [delta] should be adjusted by to snap the shape.
+ *
+ *
+ *
+ * @param delta The change in position of shape in page coordinates
+ * @return The adjustment to make to the shape, so that it snaps to something.
+ * Returns [delta], if there are no suitable snapping points nearby.
+ */
+fun calculateSnap(shape: Shape?, parent: ShapeParent, delta: Dimension2): Dimension2 {
+    shape ?: return delta
+
+    var bestDeltaX = delta.x
+    var bestScoreX = Double.MAX_VALUE
+
+    var bestDeltaY = delta.y
+    var bestScoreY = Double.MAX_VALUE
+
+    fun maybeAdjustEither(diff: Dimension2) {
+        val scoreX = Math.abs(diff.x.inDefaultUnits)
+        if (scoreX < 10.0 && scoreX < bestScoreX) {
+            bestScoreX = scoreX
+            bestDeltaX = delta.x + diff.x
+        }
+        val scoreY = Math.abs(diff.y.inDefaultUnits)
+        if (scoreY < 10.0 && scoreY < bestScoreY) {
+            bestScoreY = scoreY
+            bestDeltaY = delta.y + diff.y
+        }
+    }
+
+    // TODO Add extra snap types, such as a Grid, Rulers etc.
+
+    shape.snapPoints.forEach { sp ->
+        val pageSP = shape.fromLocalToPage.value * sp.point.value + delta
+
+        parent.children.forEach { child ->
+            if (child != shape) {
+                child.snapPoints.forEach { childSP ->
+                    val pageChildSP = child.fromLocalToPage.value * childSP.point.value
+                    maybeAdjustEither(pageChildSP - pageSP)
+                }
+            }
+        }
+    }
+
+    return Dimension2(bestDeltaX, bestDeltaY)
 }

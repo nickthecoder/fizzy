@@ -69,6 +69,8 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
 
     val controlPoints = MutableFList<ControlPoint>()
 
+    val snapPoints = MutableFList<SnapPoint>()
+
     val scratches = ScratchList()
 
     val customProperties = CustomPropertyList()
@@ -138,6 +140,10 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
                 onRemoved = { item, _ -> item.shape = null }
         ))
         collectionListeners.add(ChangeAndListListener(this, controlPoints,
+                onAdded = { item, _ -> item.shape = this },
+                onRemoved = { item, _ -> item.shape = null }
+        ))
+        collectionListeners.add(ChangeAndListListener(this, snapPoints,
                 onAdded = { item, _ -> item.shape = this },
                 onRemoved = { item, _ -> item.shape = null }
         ))
@@ -280,6 +286,9 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
         controlPoints.forEach { controlPoint ->
             newShape.controlPoints.add(controlPoint.copy(link))
         }
+        snapPoints.forEach { snapPoint ->
+            newShape.snapPoints.add(snapPoint.copy(link))
+        }
         scratches.forEach { scratch ->
             newShape.scratches.add(scratch.copy(link))
         }
@@ -306,6 +315,11 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
                 controlPoints.add(cp)
                 Pair(cp, cp.metaData())
             }
+            "SnapPoint" -> {
+                val sp = SnapPoint()
+                snapPoints.add(sp)
+                Pair(sp, sp.metaData())
+            }
             "Scratch" -> {
                 val scratch = Scratch("Dimension2")
                 scratches.add(scratch)
@@ -328,6 +342,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
             "Lock" -> Pair(locks, metaData().sections[sectionName]!!)
             "ConnectionPoint" -> Pair(connectionPoints, metaData().sections[sectionName]!!)
             "ControlPoint" -> Pair(controlPoints, metaData().sections[sectionName]!!)
+            "SnapPoint" -> Pair(snapPoints, metaData().sections[sectionName]!!)
             "Scratch" -> Pair(scratches, metaData().sections[sectionName]!!)
             "CustomProperty" -> Pair(customProperties, metaData().sections[sectionName]!!)
             else -> throw IllegalStateException("Shape does not have a section named $sectionName")
@@ -353,6 +368,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
 
         locks.addMetaData(metaData)
 
+
         val geometrySection = metaData.newSection("Geometry")
         geometry.addMetaData(geometrySection)
 
@@ -368,6 +384,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
             connectionPoint.addMetaData(connectionPointRow)
         }
 
+
         val controlPointsSection = metaData.newSection("ControlPoint")
         controlPointsSection.rowFactories.add(RowFactory("New Control Point") { index ->
             document().history.makeChange(AddControlPoint(this, index))
@@ -379,6 +396,20 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
             val controlPointRow = controlPointsSection.newRow(null)
             controlPoint.addMetaData(controlPointRow)
         }
+
+
+        val snapPointsSection = metaData.newSection("SnapPoint")
+        snapPointsSection.rowFactories.add(RowFactory("New Snap Point") { index ->
+            document().history.makeChange(AddSnapPoint(this, index))
+        })
+        snapPointsSection.rowRemoval = { index ->
+            document().history.makeChange(RemoveSnapPoint(this, index))
+        }
+        snapPoints.forEach { snapPoint ->
+            val snapPointRow = snapPointsSection.newRow(null)
+            snapPoint.addMetaData(snapPointRow)
+        }
+
 
         val scratchSection = metaData.newSection("Scratch")
         // TODO Add the rest (in a loop!!!)
@@ -392,6 +423,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
             val scratchRow = scratchSection.newRow(null)
             scratch.addMetaData(scratchRow)
         }
+
 
         val customPropertySection = metaData.newSection("CustomProperty")
         customPropertySection.rowFactories.add(RowFactory("New Custom Property") { index ->
