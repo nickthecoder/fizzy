@@ -39,8 +39,11 @@ class MoveShapesTool(controller: Controller, var previousPoint: Dimension2)
     }
 
     override fun onMouseDragged(event: CMouseEvent) {
-        val now = event.point
-        val delta = calculateSnap(controller.selection.lastOrNull(), controller.parent, now - previousPoint)
+
+        val delta = if (event.isConstrain)
+            event.point - previousPoint
+        else
+            calculateSnap(controller.selection.lastOrNull(), controller.parent, event.point - previousPoint)
 
         // We must move the lines first, because if they are joined, and the thing they join to is earlier,
         // then they will be moved twice.

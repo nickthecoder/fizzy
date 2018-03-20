@@ -6,12 +6,6 @@ Move multiple shapes (clicking again as the start of a drag clears the selection
 BUGS
 ----
 
-Bounding rect is not scaled correctly
-
-Rotation handle is a different distance away depending on scale (it shouldn't be!)
-
-Handles (esp rotation) aren't easy to hit as they used to be???
-
 If a size expression is NaN or Inf, then drawing takes forever.
    Skip that operation instead (or use a default value).
 

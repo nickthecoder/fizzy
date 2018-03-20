@@ -37,9 +37,12 @@ class RotationHandle(shape: Shape, position: Dimension2)
 
     override fun dragTo(event: CMouseEvent, dragPoint: Dimension2) {
         val local = shape.fromPageToLocal.value * dragPoint
-        val angle = (local - shape.transform.locPin.value).angle() + Angle.degrees(90.0)
+        var degrees = shape.transform.rotation.value.degrees + (local - shape.transform.locPin.value).angle().degrees + 90.0
+        if (!event.isConstrain) {
+            degrees -= (degrees + 360.0).rem(15.0)
+        }
         shape.document().history.makeChange(ChangeExpression(
                 shape.transform.rotation,
-                (shape.transform.rotation.value + angle).toFormula()))
+                (Angle.degrees(degrees)).toFormula()))
     }
 }
