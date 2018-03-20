@@ -231,7 +231,7 @@
                 ]
               },
               {
-                "Section": "SnapPoint",
+                "Section": "Snap",
                 "rows": [
                   {
                     "cells": [
@@ -723,7 +723,7 @@
                 ]
               },
               {
-                "Section": "SnapPoint",
+                "Section": "Snap",
                 "rows": [
                   {
                     "cells": [
@@ -1400,7 +1400,7 @@
                 ]
               },
               {
-                "Section": "SnapPoint",
+                "Section": "Snap",
                 "rows": [
                   {
                     "cells": [
@@ -2116,7 +2116,7 @@
                 ]
               },
               {
-                "Section": "SnapPoint",
+                "Section": "Snap",
                 "rows": [
                   {
                     "cells": [
@@ -2769,7 +2769,7 @@
                 ]
               },
               {
-                "Section": "SnapPoint",
+                "Section": "Snap",
                 "rows": [
                   {
                     "cells": [
@@ -2864,8 +2864,8 @@
                 "cells": [
                   {
                     "name": "Connect",
-                    "f": "false",
-                    "v": "false"
+                    "f": "true",
+                    "v": "true"
                   }
                 ],
                 "rows": [
@@ -3508,7 +3508,7 @@
                 ]
               },
               {
-                "Section": "SnapPoint",
+                "Section": "Snap",
                 "rows": [
                   {
                     "cells": [
@@ -4768,7 +4768,7 @@
                 ]
               },
               {
-                "Section": "SnapPoint",
+                "Section": "Snap",
                 "rows": [
                   {
                     "cells": [

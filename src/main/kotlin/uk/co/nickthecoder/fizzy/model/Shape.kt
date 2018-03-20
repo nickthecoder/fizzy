@@ -315,7 +315,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
                 controlPoints.add(cp)
                 Pair(cp, cp.metaData())
             }
-            "SnapPoint" -> {
+            "Snap" -> {
                 val sp = SnapPoint()
                 snapPoints.add(sp)
                 Pair(sp, sp.metaData())
@@ -342,7 +342,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
             "Lock" -> Pair(locks, metaData().sections[sectionName]!!)
             "ConnectionPoint" -> Pair(connectionPoints, metaData().sections[sectionName]!!)
             "ControlPoint" -> Pair(controlPoints, metaData().sections[sectionName]!!)
-            "SnapPoint" -> Pair(snapPoints, metaData().sections[sectionName]!!)
+            "Snap" -> Pair(snapPoints, metaData().sections[sectionName]!!)
             "Scratch" -> Pair(scratches, metaData().sections[sectionName]!!)
             "CustomProperty" -> Pair(customProperties, metaData().sections[sectionName]!!)
             else -> throw IllegalStateException("Shape does not have a section named $sectionName")
@@ -398,7 +398,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
         }
 
 
-        val snapPointsSection = metaData.newSection("SnapPoint")
+        val snapPointsSection = metaData.newSection("Snap")
         snapPointsSection.rowFactories.add(RowFactory("New Snap Point") { index ->
             document().history.makeChange(AddSnapPoint(this, index))
         })

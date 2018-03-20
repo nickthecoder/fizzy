@@ -57,7 +57,7 @@ abstract class ShapePropType<T : Shape>(klass: Class<T>)
             "Geometry1" -> PropValue(prop.value.geometry) // For backwards compatibility
             "ConnectionPoint" -> PropValue(prop.value.connectionPoints)
             "ControlPoint" -> PropValue(prop.value.controlPoints)
-            "SnapPoint" -> PropValue(prop.value.snapPoints)
+            "Snap" -> PropValue(prop.value.snapPoints)
             "Scratch" -> PropValue(prop.value.scratches)
             "CustomProperty" -> PropValue(prop.value.customProperties)
 

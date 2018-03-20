@@ -23,8 +23,8 @@ import javafx.scene.Node
 import javafx.scene.control.*
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.VBox
-import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.collection.FList
+import uk.co.nickthecoder.fizzy.collection.ListListener
 import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.model.geometry.GeometryPart
 import uk.co.nickthecoder.fizzy.prop.PropExpression
@@ -68,6 +68,16 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
         }
     }
 
+    private val snapPointsListener = object : ListListener<SnapPoint> {
+        override fun added(list: FList<SnapPoint>, item: SnapPoint, index: Int) {
+            rebuildSection("Snap")
+        }
+
+        override fun removed(list: FList<SnapPoint>, item: SnapPoint, index: Int) {
+            rebuildSection("Snap")
+        }
+    }
+
     private val scratchListener = object : ListListener<Scratch> {
         override fun added(list: FList<Scratch>, item: Scratch, index: Int) {
             rebuildSection("Scratch")
@@ -77,12 +87,23 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
             rebuildSection("Scratch")
         }
     }
+    private val customPropertiesListener = object : ListListener<CustomProperty> {
+        override fun added(list: FList<CustomProperty>, item: CustomProperty, index: Int) {
+            rebuildSection("CustomProperty")
+        }
+
+        override fun removed(list: FList<CustomProperty>, item: CustomProperty, index: Int) {
+            rebuildSection("CustomProperty")
+        }
+    }
 
     init {
         shape.geometry.parts.listeners.add(geometryPartsListener)
         shape.connectionPoints.listeners.add(connectionPointsListener)
         shape.controlPoints.listeners.add(controlPointsListener)
+        shape.snapPoints.listeners.add(snapPointsListener)
         shape.scratches.listeners.add(scratchListener)
+        shape.customProperties.listeners.add(customPropertiesListener)
     }
 
     override fun build(): Node {
