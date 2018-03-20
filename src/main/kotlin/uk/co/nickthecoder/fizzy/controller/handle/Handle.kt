@@ -41,7 +41,7 @@ abstract class Handle() {
     }
 
     fun isAt(point: Dimension2, scale: Double): Boolean {
-        val delta = (point - position) / scale
+        val delta = (point - position)
         return Math.abs(delta.x.inDefaultUnits) < Controller.HANDLE_NEAR / scale && Math.abs(delta.y.inDefaultUnits) < Controller.HANDLE_NEAR / scale
     }
 

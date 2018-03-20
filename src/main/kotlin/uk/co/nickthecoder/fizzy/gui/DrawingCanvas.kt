@@ -74,7 +74,7 @@ class DrawingCanvas(page: Page, val singleShape: Shape?, val drawingArea: Drawin
     fun draw() {
         pageView.dc.clear()
         pageView.dc.use {
-            pageView.dc.scale(drawingArea.scale)
+            pageView.dc.scale(drawingArea.controller.scale)
             pageView.dc.translate(drawingArea.pan)
             pageView.draw()
             dirty = false

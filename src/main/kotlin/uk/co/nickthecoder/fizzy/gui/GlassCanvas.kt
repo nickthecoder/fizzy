@@ -153,7 +153,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
             event.button.ordinal,
             event.isShiftDown,
             event.isControlDown,
-            drawingArea.scale)
+            drawingArea.controller.scale)
 
     fun convertEvent(event: KeyEvent) = CKeyEvent(event.code.name, event.character)
 
@@ -263,7 +263,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
     fun draw() {
         dc.clear()
         dc.use {
-            dc.scale(drawingArea.scale)
+            dc.scale(drawingArea.controller.scale)
             dc.translate(drawingArea.pan)
 
             val parent = drawingArea.controller.parent
@@ -300,7 +300,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
 
     fun highlightShape(shape: Shape) {
         dc.use() {
-            dc.lineWidth(4.0 / drawingArea.scale)
+            dc.lineWidth(4.0 / drawingArea.controller.scale)
             dc.lineColor(GREEN_BASE)
 
             dc.beginPath()
@@ -326,7 +326,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
         val pagePoint = connectionPoint.shape!!.fromLocalToPage.value * connectionPoint.point.value
         dc.use {
             dc.translate(pagePoint)
-            dc.scale(4.0 / drawingArea.scale)
+            dc.scale(4.0 / drawingArea.controller.scale)
             dc.lineColor(BLUE_BASE)
             dc.lineWidth(0.5)
 
@@ -347,7 +347,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
             dc.polygon(true, false, *corners)
             if (shape is Shape2d) {
                 val r1 = (corners[0] + corners[1]) / 2.0
-                val r2 = r1 + (corners[1] - corners[2]).normalise() * Dimension(ROTATE_DISTANCE)
+                val r2 = r1 + (corners[1] - corners[2]).normalise() * Dimension(ROTATE_DISTANCE / drawingArea.controller.scale)
                 dc.beginPath()
                 dc.moveTo(r1)
                 dc.lineTo(r2)
@@ -358,14 +358,14 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
 
     fun beginSelection() {
         dc.lineColor(BLUE_BASE)
-        dc.lineWidth(2.0 / drawingArea.scale)
-        dc.lineDashes(5.0 / drawingArea.scale)
+        dc.lineWidth(2.0 / drawingArea.controller.scale)
+        dc.lineDashes(5.0 / drawingArea.controller.scale)
     }
 
     fun beginHandle() {
         dc.lineColor(HANDLE_STROKE)
         dc.fillColor(HANDLE_FILL)
-        dc.scale(1.0 / drawingArea.scale)
+        dc.scale(1.0 / drawingArea.controller.scale)
         dc.lineWidth(1.0)
     }
 

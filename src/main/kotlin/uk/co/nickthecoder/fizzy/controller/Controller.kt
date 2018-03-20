@@ -37,7 +37,7 @@ import uk.co.nickthecoder.fizzy.util.ChangeType
  */
 class Controller(val page: Page, val singleShape: Shape? = null, val otherActions: OtherActions) {
 
-    var scale = 1.0
+    var scale = 96.0 / 25.4
 
     var tool: Tool = SelectTool(this)
         set(v) {
@@ -190,7 +190,7 @@ class Controller(val page: Page, val singleShape: Shape? = null, val otherAction
                 handles.add(RotationHandle(shape,
                         (corners[0] + corners[1]) / 2.0 +
                                 (corners[1] - corners[2]).normalise()
-                                        * Dimension(GlassCanvas.ROTATE_DISTANCE)))
+                                        * Dimension(GlassCanvas.ROTATE_DISTANCE / scale)))
             }
 
         } else if (shape is Shape1d) {

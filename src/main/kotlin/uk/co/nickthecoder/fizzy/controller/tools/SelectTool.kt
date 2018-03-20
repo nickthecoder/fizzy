@@ -62,6 +62,13 @@ class SelectTool(controller: Controller)
 
         mousePressedPoint = event.point
 
+        controller.handles.forEach { handle ->
+            if (handle.isAt(mousePressedPoint, event.scale)) {
+                // If this is the beginning of dragging a handle, then leave the selection unchanged.
+                return
+            }
+        }
+
         val shapes = controller.findShapesAt(event.point)
         if (shapes.isEmpty()) {
             if (!event.isAdjust) {

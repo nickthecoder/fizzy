@@ -42,8 +42,6 @@ class DrawingArea(mainWindow: MainWindow, val page: Page, val singleShape: Shape
 
     val drawingCanvas = DrawingCanvas(page, singleShape, this)
 
-    var scale: Double = 96.0 / 25.4
-
     var pan: Dimension2 = Dimension2.ZERO_mm
 
     private val stackPane = StackPane()
@@ -82,15 +80,15 @@ class DrawingArea(mainWindow: MainWindow, val page: Page, val singleShape: Shape
 
     fun zoomOn(by: Double, atX: Double, atY: Double) {
         val pagePoint = pixelsToPage(atX, atY)
-        scale *= by
+        controller.scale *= by
         pan += pixelsToPage(atX, atY) - pagePoint
         controller.dirty.value++
         drawingCanvas.dirty = true
     }
 
     fun pixelsToPage(x: Double, y: Double): Dimension2 = Dimension2(
-            Dimension(x / scale - pan.x.inDefaultUnits),
-            Dimension(y / scale - pan.y.inDefaultUnits))
+            Dimension(x / controller.scale - pan.x.inDefaultUnits),
+            Dimension(y / controller.scale - pan.y.inDefaultUnits))
 
     fun toPage(event: MouseEvent) = pixelsToPage(event.x, event.y)
 
