@@ -234,6 +234,58 @@ class Controller(val page: Page, val singleShape: Shape? = null, val otherAction
         return true
     }
 
+
+    /**
+     * Calculates how much [delta] should be adjusted by to snap the shape.
+     *
+     *
+     *
+     * @param delta The change in position of shape in page coordinates
+     * @return The adjustment to make to the shape, so that it snaps to something.
+     * Returns [delta], if there are no suitable snapping points nearby.
+     */
+    fun calculateSnap(shape: Shape?, parent: ShapeParent, delta: Dimension2): Dimension2 {
+        shape ?: return delta
+
+        val maxSnap = 10 / scale
+
+        var bestDeltaX = delta.x
+        var bestScoreX = Double.MAX_VALUE
+
+        var bestDeltaY = delta.y
+        var bestScoreY = Double.MAX_VALUE
+
+        fun maybeAdjustEither(diff: Dimension2) {
+            val scoreX = Math.abs(diff.x.inDefaultUnits)
+            if (scoreX < maxSnap && scoreX < bestScoreX) {
+                bestScoreX = scoreX
+                bestDeltaX = delta.x + diff.x
+            }
+            val scoreY = Math.abs(diff.y.inDefaultUnits)
+            if (scoreY < maxSnap && scoreY < bestScoreY) {
+                bestScoreY = scoreY
+                bestDeltaY = delta.y + diff.y
+            }
+        }
+
+        // TODO Add extra snap types, such as a Grid, Rulers etc.
+
+        shape.snapPoints.forEach { sp ->
+            val pageSP = shape.fromLocalToPage.value * sp.point.value + delta
+
+            parent.children.forEach { child ->
+                if (child !in selection) {
+                    child.snapPoints.forEach { childSP ->
+                        val pageChildSP = child.fromLocalToPage.value * childSP.point.value
+                        maybeAdjustEither(pageChildSP - pageSP)
+                    }
+                }
+            }
+        }
+
+        return Dimension2(bestDeltaX, bestDeltaY)
+    }
+
     companion object {
 
         val HANDLE_SIZE = 3.0 // Half width (or height) of handles excluding the stroke.

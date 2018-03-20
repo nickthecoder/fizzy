@@ -76,25 +76,27 @@ class SelectTool(controller: Controller)
                 controller.parent = controller.page // Exit from editing a group if we ARE editing a group.
             }
         } else {
-            val latest = controller.selection.lastOrNull()
-            val shape: Shape?
-            if (shapes.size > 1 && shapes.contains(latest) && event.isConstrain) {
-                val i = shapes.indexOf(latest)
-                shape = if (i == 0) shapes.last() else shapes[i - 1]
+            val previouslyTopSelected = controller.selection.lastOrNull()
+            val clickedShape: Shape?
+            if (shapes.size > 1 && shapes.contains(previouslyTopSelected) && event.isConstrain) {
+                val i = shapes.indexOf(previouslyTopSelected)
+                clickedShape = if (i == 0) shapes.last() else shapes[i - 1]
             } else {
-                shape = shapes.lastOrNull()
+                clickedShape = shapes.lastOrNull()
             }
 
-            if (shape != null) {
+            if (clickedShape != null) {
                 if (event.isAdjust) {
-                    if (controller.selection.contains(shape)) {
-                        controller.selection.remove(shape)
+                    if (controller.selection.contains(clickedShape)) {
+                        controller.selection.remove(clickedShape)
                     } else {
-                        controller.selection.add(shape)
+                        controller.selection.add(clickedShape)
                     }
                 } else {
-                    controller.selection.clear()
-                    controller.selection.add(shape)
+                    if (clickedShape !in controller.selection) {
+                        controller.selection.clear()
+                        controller.selection.add(clickedShape)
+                    }
                 }
             }
         }

@@ -1,7 +1,8 @@
 To Do
 =====
 
-Move multiple shapes (clicking again as the start of a drag clears the selection).
+Scroll on StencilsView
+
 
 BUGS
 ----
