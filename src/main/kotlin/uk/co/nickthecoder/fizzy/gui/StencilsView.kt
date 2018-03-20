@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uk.co.nickthecoder.fizzy.gui
 
 import javafx.scene.Node
+import javafx.scene.control.ScrollPane
 import javafx.scene.control.TitledPane
 import javafx.scene.layout.VBox
 import uk.co.nickthecoder.fizzy.collection.MutableFList
@@ -29,11 +30,15 @@ class StencilsView(mainWindow: MainWindow)
 
     val vBox = VBox()
 
+    val scroll = ScrollPane(vBox)
+
     private val stencilViews = MutableFList<StencilView>()
 
     private var localStencilViewNode: TitledPane? = null
 
     override fun buildContent(): Node {
+
+        scroll.isFitToWidth = true
 
         Stencils.stencils.forEach { stencil ->
             val view = StencilView(mainWindow, stencil)
@@ -49,6 +54,6 @@ class StencilsView(mainWindow: MainWindow)
             }
         }
 
-        return vBox
+        return scroll
     }
 }

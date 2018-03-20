@@ -52,7 +52,7 @@ class StencilView(val mainWindow: MainWindow, val stencil: Document, val localMa
     }
 
     override fun build(): TitledPane {
-        titledPane.isExpanded = true
+        titledPane.isExpanded = false
         titledPane.content = buttons
 
         if (localMasters) {
