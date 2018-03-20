@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.model
 
 import uk.co.nickthecoder.fizzy.evaluator.ThisContext
 import uk.co.nickthecoder.fizzy.prop.*
+import uk.co.nickthecoder.fizzy.util.toFormula
 
 class ShapeText private constructor(parent: ShapeParent, linkedFrom: Shape?, id: Int = parent.document().generateShapeId())
     : Shape(parent, linkedFrom, id) {
@@ -32,9 +33,9 @@ class ShapeText private constructor(parent: ShapeParent, linkedFrom: Shape?, id:
 
     override val size = Dimension2Expression("textSize()")
 
-    val text = StringExpression("")
+    val text = StringExpression("".toFormula())
 
-    val fontName = StringExpression("Sans Regular")
+    val fontName = StringExpression("Sans Regular".toFormula())
 
     val fontSize = DimensionExpression("20pt")
 

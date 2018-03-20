@@ -24,10 +24,7 @@ import javafx.scene.control.Button
 import javafx.scene.control.Separator
 import javafx.scene.control.ToolBar
 import uk.co.nickthecoder.fizzy.controller.Controller
-import uk.co.nickthecoder.fizzy.controller.tools.DeleteTool
-import uk.co.nickthecoder.fizzy.controller.tools.EditGeometryTool
-import uk.co.nickthecoder.fizzy.controller.tools.SelectTool
-import uk.co.nickthecoder.fizzy.controller.tools.StampShape2dTool
+import uk.co.nickthecoder.fizzy.controller.tools.*
 import uk.co.nickthecoder.fizzy.model.Dimension
 import uk.co.nickthecoder.fizzy.model.Document
 import uk.co.nickthecoder.fizzy.model.PrimitiveStencil
@@ -94,6 +91,7 @@ class FToolBar(val mainWindow: MainWindow)
 
     val selectToolButton = ApplicationActions.TOOL_SELECT.createButton(sh) { controller?.let { it.tool = SelectTool(it) } }
     val editGeometryToolButton = ApplicationActions.TOOL_EDIT_GEOMETRY.createButton(sh) { controller?.let { it.tool = EditGeometryTool(it) } }
+    val editTextToolButton = ApplicationActions.TOOL_EDIT_TEXT.createButton(sh) { controller?.let { it.tool = EditTextTool(it) } }
 
     val primitive1dButton = ApplicationActions.TOOL_PRIMITIVE1D.create(sh, ShapePicker(mainWindow, primitives1d))
     val primitive2dButton = ApplicationActions.TOOL_PRIMITIVE2D.create(sh, ShapePicker(mainWindow, primitives2d))
@@ -127,7 +125,7 @@ class FToolBar(val mainWindow: MainWindow)
                 Separator(),
                 undoButton, redoButton,
                 Separator(),
-                selectToolButton, primitive1dButton, primitive2dButton, deleteToolButton, editGeometryToolButton,
+                selectToolButton, primitive1dButton, primitive2dButton, deleteToolButton, editGeometryToolButton, editTextToolButton,
                 Separator(),
                 fillColorPicker.build(), strokeColorPicker.build(),
                 lineWidthPicker.build(), strokeJoinPicker.build(), strokeCapPicker.build(),

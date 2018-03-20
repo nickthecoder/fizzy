@@ -24,10 +24,12 @@ import javafx.scene.Node
 import javafx.scene.canvas.Canvas
 import javafx.scene.control.ContextMenu
 import javafx.scene.control.MenuItem
+import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
 import uk.co.nickthecoder.fizzy.collection.FList
 import uk.co.nickthecoder.fizzy.collection.ListListener
+import uk.co.nickthecoder.fizzy.controller.CKeyEvent
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.tools.ToolCursor
 import uk.co.nickthecoder.fizzy.model.*
@@ -136,6 +138,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
         canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED) { onMouseDragged(it) }
         canvas.addEventHandler(MouseEvent.MOUSE_RELEASED) { onMouseReleased(it) }
         canvas.addEventHandler(MouseEvent.MOUSE_MOVED) { onMouseMoved(it) }
+        canvas.addEventHandler(KeyEvent.KEY_TYPED) { onKeyTyped(it) }
 
         drawingArea.controller.selection.listeners.add(selectionListener)
         runLater {
@@ -152,7 +155,20 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
             event.isControlDown,
             drawingArea.scale)
 
+    fun convertEvent(event: KeyEvent) = CKeyEvent(event.code.name, event.character)
+
+    fun onKeyTyped(event: KeyEvent) {
+        if (event.character.filter { it.isISOControl() }.isEmpty()) {
+            val fEvent = convertEvent(event)
+            drawingArea.controller.onKeyTyped(fEvent)
+            if (fEvent.consumed) {
+                event.consume()
+            }
+        }
+    }
+
     fun onMousePressed(event: MouseEvent) {
+        canvas.requestFocus()
         dragging = false
 
         if (event.button == MouseButton.SECONDARY || event.isMiddleButtonDown || event.isMetaDown || event.isAltDown) {

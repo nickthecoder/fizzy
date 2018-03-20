@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.controller.tools
 
+import uk.co.nickthecoder.fizzy.controller.CKeyEvent
 import uk.co.nickthecoder.fizzy.controller.CMouseEvent
 import uk.co.nickthecoder.fizzy.controller.Controller
 import uk.co.nickthecoder.fizzy.view.DrawContext
@@ -36,6 +37,8 @@ abstract class Tool(val controller: Controller) {
     open fun onDragDetected(event: CMouseEvent) {}
     open fun onMouseDragged(event: CMouseEvent) {}
     open fun onMouseMoved(event: CMouseEvent) {}
+
+    open fun onKeyTyped(event: CKeyEvent) {}
 
     open fun onContextMenu(event: CMouseEvent): List<Pair<String, () -> Unit>> = emptyList()
 

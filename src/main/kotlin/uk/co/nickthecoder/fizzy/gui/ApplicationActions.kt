@@ -35,6 +35,7 @@ object ApplicationActions {
     val TOOL_PRIMITIVE2D = ApplicationAction("tool-primitive2d", "Create Basic Shapes", KeyCode.F3)
     val TOOL_DELETE = ApplicationAction("tool-delete", "Delete", KeyCode.F4)
     val TOOL_EDIT_GEOMETRY = ApplicationAction("tool-edit-geometry", "Edit Geometry", KeyCode.F5)
+    val TOOL_EDIT_TEXT = ApplicationAction("tool-edit-text", "Edit Text", KeyCode.F8)
 
     val DEV_DEBUG = ApplicationAction("dev-debug", "Debug", KeyCode.F1, control = true)
 

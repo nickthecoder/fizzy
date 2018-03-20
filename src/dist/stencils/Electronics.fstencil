@@ -267,6 +267,262 @@
                   }
                 ]
               }
+            ],
+            "children": [
+              {
+                "id": 33,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "componentID"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "2mm",
+                    "v": "2 mm"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "Parent.CustomProperty.ComponentID",
+                    "v": "\"\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "1",
+                    "v": "1"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Parent.Size * Vector2( 0.5, -0.2 )",
+                        "v": "Dimension2(30 mm,-2.4 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(0 mm,18.890148163 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 34,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "resistance"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "0mm",
+                    "v": "0 mm"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "Parent.CustomProperty.Resistance",
+                    "v": "\"\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "0",
+                    "v": "0"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Parent.Size * Vector2( 0.5, 1.1 )",
+                        "v": "Dimension2(30 mm,13.2 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(0 mm,0 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           },
           {
@@ -653,6 +909,260 @@
                             "v": "Dimension2(24 mm,32 mm)"
                           }
                         ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 36,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "capacitance"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(10.324606895 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "\"1\"",
+                    "v": "\"1\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "0",
+                    "v": "0"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Parent.Size * Vector2( 0.5, 1.1 )",
+                        "v": "Dimension2(18 mm,35.2 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(5.162303448 mm,0 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 37,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "componentID"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(10.324606895 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "\"2\"",
+                    "v": "\"2\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "1",
+                    "v": "1"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Parent.Size * Vector2( 0.5, -0.2 )",
+                        "v": "Dimension2(18 mm,-6.4 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(5.162303448 mm,18.890148163 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   }
@@ -1107,6 +1617,260 @@
                     ]
                   }
                 ]
+              },
+              {
+                "id": 38,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "componentID"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "Parent.CustomProperty.ComponentID",
+                    "v": "\"\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "1",
+                    "v": "1"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Parent.Size * Vector2( 0.5, -0.2 )",
+                        "v": "Dimension2(18 mm,-6.4 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(0 mm,18.890148163 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 41,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "capacitance"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "Parent.CustomProperty.Capacitance",
+                    "v": "\"\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "0",
+                    "v": "0"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Parent.Size * Vector2( 0.5, 1.1 )",
+                        "v": "Dimension2(18 mm,35.2 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(0 mm,0 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },
@@ -1155,8 +1919,8 @@
                 "cells": [
                   {
                     "name": "Pin",
-                    "f": "Dimension2(9 mm,37 mm)",
-                    "v": "Dimension2(9 mm,37 mm)"
+                    "f": "Dimension2(12.644314869 mm,39.551020408 mm)",
+                    "v": "Dimension2(12.644314869 mm,39.551020408 mm)"
                   },
                   {
                     "name": "LocPin",
@@ -1347,6 +2111,262 @@
                       {
                         "name": "Value",
                         "s": ""
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "children": [
+              {
+                "id": 31,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "componentID"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "Parent.CustomProperty.ComponentID",
+                    "v": "\"\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "1",
+                    "v": "1"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Parent.Size * Vector2( 0.5, -0.2 )",
+                        "v": "Dimension2(30 mm,-2.4 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX, AlignY)",
+                        "v": "Dimension2(0 mm,18.890148163 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 32,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "resistance"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "Parent.CustomProperty.Resistance",
+                    "v": "\"\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "0",
+                    "v": "0"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Parent.Size * Vector2( 0.5, 1.1 )",
+                        "v": "Dimension2(30 mm,13.2 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(0 mm,0 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   }
@@ -2274,6 +3294,43 @@
                     ]
                   }
                 ]
+              },
+              {
+                "Section": "CustomProperty",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Name",
+                        "s": "ComponentID"
+                      },
+                      {
+                        "name": "Label",
+                        "s": "Component ID"
+                      },
+                      {
+                        "name": "Value",
+                        "s": ""
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Name",
+                        "s": "ProductCode"
+                      },
+                      {
+                        "name": "Label",
+                        "s": "Product Code"
+                      },
+                      {
+                        "name": "Value",
+                        "s": ""
+                      }
+                    ]
+                  }
+                ]
               }
             ],
             "children": [
@@ -2605,6 +3662,641 @@
                     ]
                   }
                 ]
+              },
+              {
+                "id": 25,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": ""
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "2mm",
+                    "v": "2 mm"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(11.330919266 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "\"C\"",
+                    "v": "\"C\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Dimension2(78.204081635 mm,105.816326545 mm)",
+                        "v": "Dimension2(78.204081635 mm,105.816326545 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(5.665459633 mm,9.445074081 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 26,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": ""
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "2mm",
+                    "v": "2 mm"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(11.132825851 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "\"B\"",
+                    "v": "\"B\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Dimension2(-9.734693872 mm,37.265306115 mm)",
+                        "v": "Dimension2(-9.734693872 mm,37.265306115 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(5.566412926 mm,9.445074081 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 27,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": ""
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "2mm",
+                    "v": "2 mm"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(10.253293037 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "\"E\"",
+                    "v": "\"E\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Dimension2(78.061224493 mm,-7.306122453 mm)",
+                        "v": "Dimension2(78.061224493 mm,-7.306122453 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(5.126646519 mm,9.445074081 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 43,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "componentID"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "Parent.CustomProperty.ComponentID",
+                    "v": "\"\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0",
+                    "v": "0"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "1",
+                    "v": "1"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Parent.Size * Vector2( 1, 0.45 )",
+                        "v": "Dimension2(100 mm,45 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(0 mm,18.890148163 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 46,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "productCode"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "Parent.CustomProperty.ProductCode",
+                    "v": "\"\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0",
+                    "v": "0"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "0",
+                    "v": "0"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Parent.Size * Vector2( 1, 0.55 )",
+                        "v": "Dimension2(100 mm,55 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(0 mm,0 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },
@@ -2817,6 +4509,43 @@
                         "name": "Point",
                         "f": "Size * Vector2(2/3,0.95)",
                         "v": "Dimension2(66.666666667 mm,95 mm)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Section": "CustomProperty",
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "name": "Name",
+                        "s": "ComponentID"
+                      },
+                      {
+                        "name": "Label",
+                        "s": "Component ID"
+                      },
+                      {
+                        "name": "Value",
+                        "s": ""
+                      }
+                    ]
+                  },
+                  {
+                    "cells": [
+                      {
+                        "name": "Name",
+                        "s": "ProductCode"
+                      },
+                      {
+                        "name": "Label",
+                        "s": "Product Code"
+                      },
+                      {
+                        "name": "Value",
+                        "s": ""
                       }
                     ]
                   }
@@ -3147,6 +4876,641 @@
                             "v": "Dimension2(0 mm,6 mm)"
                           }
                         ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 28,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": ""
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "2mm",
+                    "v": "2 mm"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(11.330919266 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "\"C\"",
+                    "v": "\"C\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Dimension2(79.64431487 mm,-5.720116618 mm)",
+                        "v": "Dimension2(79.64431487 mm,-5.720116618 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(5.665459633 mm,9.445074081 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 29,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": ""
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "2mm",
+                    "v": "2 mm"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(10.253293037 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "\"E\"",
+                    "v": "\"E\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Dimension2(78.551020408 mm,108.364431487 mm)",
+                        "v": "Dimension2(78.551020408 mm,108.364431487 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(5.126646519 mm,9.445074081 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 30,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": ""
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "2mm",
+                    "v": "2 mm"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(11.132825851 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "\"B\"",
+                    "v": "\"B\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "0.5",
+                    "v": "0.5"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "FontSize/2",
+                    "v": "23 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Dimension2(-10.160349851 mm,37.177842565 mm)",
+                        "v": "Dimension2(-10.160349851 mm,37.177842565 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(5.566412926 mm,9.445074081 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 47,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "productCode"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(11.116978645 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "Parent.CustomProperty.ProductCode",
+                    "v": "\"\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0",
+                    "v": "0"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "0",
+                    "v": "0"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Parent.Size * Vector2( 1, 0.55 )",
+                        "v": "Dimension2(100 mm,55 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(0 mm,0 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 48,
+                "type": "ShapeText",
+                "cells": [
+                  {
+                    "name": "Name",
+                    "s": "componentID"
+                  },
+                  {
+                    "name": "LineWidth",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "Size",
+                    "f": "textSize()",
+                    "v": "Dimension2(10.324606895 mm,18.890148163 mm)"
+                  },
+                  {
+                    "name": "LineColor",
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
+                  },
+                  {
+                    "name": "FillColor",
+                    "f": "BLACK",
+                    "v": "RGB(0,0,0)"
+                  },
+                  {
+                    "name": "StrokeCap",
+                    "f": "STROKE_CAP_ROUND",
+                    "v": "STROKE_CAP_ROUND"
+                  },
+                  {
+                    "name": "StrokeJoin",
+                    "f": "STROKE_JOIN_ROUND",
+                    "v": "STROKE_JOIN_ROUND"
+                  },
+                  {
+                    "name": "Text",
+                    "f": "Parent.CustomProperty.ComponentID",
+                    "v": "\"\""
+                  },
+                  {
+                    "name": "FontName",
+                    "f": "\"Sans Regular\"",
+                    "v": "\"Sans Regular\""
+                  },
+                  {
+                    "name": "FontSize",
+                    "f": "46pt",
+                    "v": "46 pt"
+                  },
+                  {
+                    "name": "AlignX",
+                    "f": "0",
+                    "v": "0"
+                  },
+                  {
+                    "name": "AlignY",
+                    "f": "1",
+                    "v": "1"
+                  },
+                  {
+                    "name": "Clip",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "MarginTop",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginRight",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginBottom",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  },
+                  {
+                    "name": "MarginLeft",
+                    "f": "0pt",
+                    "v": "0 pt"
+                  }
+                ],
+                "sections": [
+                  {
+                    "Section": "Transform",
+                    "cells": [
+                      {
+                        "name": "Pin",
+                        "f": "Parent.Size * Vector2( 1, 0.45 )",
+                        "v": "Dimension2(100 mm,45 mm)"
+                      },
+                      {
+                        "name": "LocPin",
+                        "f": "Size * Vector2(AlignX,AlignY)",
+                        "v": "Dimension2(0 mm,18.890148163 mm)"
+                      },
+                      {
+                        "name": "Scale",
+                        "f": "Vector2(1, 1)",
+                        "v": "Vector2(1,1)"
+                      },
+                      {
+                        "name": "Rotation",
+                        "f": "0 deg",
+                        "v": "0 deg"
+                      }
+                    ]
+                  },
+                  {
+                    "Section": "Geometry",
+                    "cells": [
+                      {
+                        "name": "Connect",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   }
