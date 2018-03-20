@@ -1,10 +1,6 @@
 To Do
 =====
 
-Scroll on StencilsView
-
-and implement keys BACKSPACE, DEL, LEFT, RIGHT, HOME, END
-
 BUGS
 ----
 

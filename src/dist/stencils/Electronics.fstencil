@@ -67,6 +67,16 @@
                     "name": "Rotation",
                     "f": "0 deg",
                     "v": "0 deg"
+                  },
+                  {
+                    "name": "FlipX",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "FlipY",
+                    "f": "false",
+                    "v": "false"
                   }
                 ]
               },
@@ -317,7 +327,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                    "v": "Dimension2(0 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -351,8 +361,8 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "12pt",
+                    "v": "12 pt"
                   },
                   {
                     "name": "AlignX",
@@ -402,7 +412,7 @@
                       {
                         "name": "LocPin",
                         "f": "Size * Vector2(AlignX,AlignY)",
-                        "v": "Dimension2(0 mm,18.890148163 mm)"
+                        "v": "Dimension2(0 mm,4.927864552 mm)"
                       },
                       {
                         "name": "Scale",
@@ -413,6 +423,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "false",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   },
@@ -444,7 +464,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                    "v": "Dimension2(0 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -478,8 +498,8 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "12pt",
+                    "v": "12 pt"
                   },
                   {
                     "name": "AlignX",
@@ -540,6 +560,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "false",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   },
@@ -619,6 +649,16 @@
                     "name": "Rotation",
                     "f": "0 deg",
                     "v": "0 deg"
+                  },
+                  {
+                    "name": "FlipX",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "FlipY",
+                    "f": "false",
+                    "v": "false"
                   }
                 ]
               },
@@ -856,6 +896,16 @@
                         "name": "Rotation",
                         "l": "1.Transform.Rotation",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "false",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   },
@@ -984,7 +1034,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                    "v": "Dimension2(0 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -1018,8 +1068,8 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "12pt",
+                    "v": "12 pt"
                   },
                   {
                     "name": "AlignX",
@@ -1080,6 +1130,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "false",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   },
@@ -1111,7 +1171,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                    "v": "Dimension2(0 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -1145,8 +1205,8 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "12pt",
+                    "v": "12 pt"
                   },
                   {
                     "name": "AlignX",
@@ -1196,7 +1256,7 @@
                       {
                         "name": "LocPin",
                         "f": "Size * Vector2(AlignX,AlignY)",
-                        "v": "Dimension2(0 mm,18.890148163 mm)"
+                        "v": "Dimension2(0 mm,4.927864552 mm)"
                       },
                       {
                         "name": "Scale",
@@ -1207,6 +1267,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "false",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   },
@@ -1286,6 +1356,16 @@
                     "name": "Rotation",
                     "f": "0 deg",
                     "v": "0 deg"
+                  },
+                  {
+                    "name": "FlipX",
+                    "f": "true",
+                    "v": "true"
+                  },
+                  {
+                    "name": "FlipY",
+                    "f": "false",
+                    "v": "false"
                   }
                 ]
               },
@@ -1446,7 +1526,7 @@
                       },
                       {
                         "name": "Value",
-                        "s": ""
+                        "s": "wq"
                       }
                     ]
                   },
@@ -1462,7 +1542,7 @@
                       },
                       {
                         "name": "Value",
-                        "s": ""
+                        "s": "123"
                       }
                     ]
                   }
@@ -1532,6 +1612,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "false",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   },
@@ -1710,7 +1800,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                    "v": "Dimension2(8.080126762 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -1735,7 +1825,7 @@
                   {
                     "name": "Text",
                     "f": "Parent.CustomProperty.ComponentID",
-                    "v": "\"\""
+                    "v": "\"123\""
                   },
                   {
                     "name": "FontName",
@@ -1744,8 +1834,8 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "12pt",
+                    "v": "12 pt"
                   },
                   {
                     "name": "AlignX",
@@ -1795,7 +1885,7 @@
                       {
                         "name": "LocPin",
                         "f": "Size * Vector2(AlignX,AlignY)",
-                        "v": "Dimension2(0 mm,18.890148163 mm)"
+                        "v": "Dimension2(4.040063381 mm,4.927864552 mm)"
                       },
                       {
                         "name": "Scale",
@@ -1806,6 +1896,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "Parent.FlipX",
+                        "v": "true"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "Parent.FlipY",
+                        "v": "false"
                       }
                     ]
                   },
@@ -1837,7 +1937,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                    "v": "Dimension2(6.149495125 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -1862,7 +1962,7 @@
                   {
                     "name": "Text",
                     "f": "Parent.CustomProperty.Capacitance",
-                    "v": "\"\""
+                    "v": "\"wq\""
                   },
                   {
                     "name": "FontName",
@@ -1871,8 +1971,8 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "12pt",
+                    "v": "12 pt"
                   },
                   {
                     "name": "AlignX",
@@ -1922,7 +2022,7 @@
                       {
                         "name": "LocPin",
                         "f": "Size * Vector2(AlignX,AlignY)",
-                        "v": "Dimension2(0 mm,0 mm)"
+                        "v": "Dimension2(3.074747562 mm,0 mm)"
                       },
                       {
                         "name": "Scale",
@@ -1933,6 +2033,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "Parent.FlipX",
+                        "v": "true"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "Parent.FlipY",
+                        "v": "false"
                       }
                     ]
                   },
@@ -2012,6 +2122,16 @@
                     "name": "Rotation",
                     "f": "0 deg",
                     "v": "0 deg"
+                  },
+                  {
+                    "name": "FlipX",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "FlipY",
+                    "f": "false",
+                    "v": "false"
                   }
                 ]
               },
@@ -2202,12 +2322,12 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                    "v": "Dimension2(0 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",
-                    "f": "RGB(0,0,0)",
-                    "v": "RGB(0,0,0)"
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
                   },
                   {
                     "name": "FillColor",
@@ -2236,8 +2356,8 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "12pt",
+                    "v": "12 pt"
                   },
                   {
                     "name": "AlignX",
@@ -2287,7 +2407,7 @@
                       {
                         "name": "LocPin",
                         "f": "Size * Vector2(AlignX, AlignY)",
-                        "v": "Dimension2(0 mm,18.890148163 mm)"
+                        "v": "Dimension2(0 mm,4.927864552 mm)"
                       },
                       {
                         "name": "Scale",
@@ -2298,6 +2418,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "false",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   },
@@ -2329,12 +2459,12 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                    "v": "Dimension2(0 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",
-                    "f": "RGB(0,0,0)",
-                    "v": "RGB(0,0,0)"
+                    "f": "TRANSPARENT",
+                    "v": "RGBA(0,0,0,0)"
                   },
                   {
                     "name": "FillColor",
@@ -2363,8 +2493,8 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "12pt",
+                    "v": "12 pt"
                   },
                   {
                     "name": "AlignX",
@@ -2425,6 +2555,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "false",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   },
@@ -2513,6 +2653,16 @@
                         "name": "Rotation",
                         "l": "49.Transform.Rotation",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "false",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   },
@@ -2634,6 +2784,16 @@
                     "name": "Rotation",
                     "f": "0 deg",
                     "v": "0 deg"
+                  },
+                  {
+                    "name": "FlipX",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "FlipY",
+                    "f": "false",
+                    "v": "false"
                   }
                 ]
               },
@@ -2856,6 +3016,16 @@
                     "name": "Rotation",
                     "f": "(End-Start).Angle",
                     "v": "45 deg"
+                  },
+                  {
+                    "name": "FlipX",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "FlipY",
+                    "f": "false",
+                    "v": "false"
                   }
                 ]
               },
@@ -2956,6 +3126,16 @@
                         "name": "Rotation",
                         "l": "10.Transform.Rotation",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "false",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   },
@@ -3155,6 +3335,16 @@
                         "name": "Rotation",
                         "l": "10.Transform.Rotation",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "false",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   },
@@ -3355,6 +3545,16 @@
                     "name": "Rotation",
                     "f": "0 deg",
                     "v": "0 deg"
+                  },
+                  {
+                    "name": "FlipX",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "FlipY",
+                    "f": "false",
+                    "v": "false"
                   }
                 ]
               },
@@ -3649,6 +3849,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "false",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   },
@@ -3844,6 +4054,16 @@
                         "name": "Rotation",
                         "f": "-40 deg",
                         "v": "-40 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "false",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   },
@@ -4011,8 +4231,8 @@
                     "cells": [
                       {
                         "name": "Pin",
-                        "f": "Parent.Size * Vector2( 0.7,0.75 )",
-                        "v": "Dimension2(14 mm,15 mm)"
+                        "f": "Parent.Size * Vector2( 0.7,0.7 )",
+                        "v": "Dimension2(14 mm,14 mm)"
                       },
                       {
                         "name": "LocPin",
@@ -4028,6 +4248,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "Parent.FlipX",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "Parent.FlipY",
+                        "v": "false"
                       }
                     ]
                   },
@@ -4155,6 +4385,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "Parent.FlipX",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "Parent.FlipY",
+                        "v": "false"
                       }
                     ]
                   },
@@ -4282,6 +4522,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "Parent.FlipX",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "Parent.FlipY",
+                        "v": "false"
                       }
                     ]
                   },
@@ -4313,7 +4563,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                    "v": "Dimension2(0 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -4347,12 +4597,12 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "12pt",
+                    "v": "12 pt"
                   },
                   {
                     "name": "AlignX",
-                    "f": "0",
+                    "f": "if (FlipX, 1, 0)",
                     "v": "0"
                   },
                   {
@@ -4392,13 +4642,13 @@
                     "cells": [
                       {
                         "name": "Pin",
-                        "f": "Parent.Size * Vector2( 1, 0.45 )",
+                        "f": "Parent.Size * Vector2( 1, if ( FlipY, 0.55, 0.45 ) )",
                         "v": "Dimension2(20 mm,9 mm)"
                       },
                       {
                         "name": "LocPin",
                         "f": "Size * Vector2(AlignX,AlignY)",
-                        "v": "Dimension2(0 mm,18.890148163 mm)"
+                        "v": "Dimension2(0 mm,4.927864552 mm)"
                       },
                       {
                         "name": "Scale",
@@ -4409,6 +4659,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "Parent.FlipX",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "Parent.FlipY",
+                        "v": "false"
                       }
                     ]
                   },
@@ -4440,7 +4700,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                    "v": "Dimension2(0 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -4474,12 +4734,12 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "12pt",
+                    "v": "12 pt"
                   },
                   {
                     "name": "AlignX",
-                    "f": "0",
+                    "f": "if( FlipX, 1, 0 )",
                     "v": "0"
                   },
                   {
@@ -4519,7 +4779,7 @@
                     "cells": [
                       {
                         "name": "Pin",
-                        "f": "Parent.Size * Vector2( 1, 0.55 )",
+                        "f": "Parent.Size * Vector2( 1, if ( FlipY, 0.45, 0.55 ) )",
                         "v": "Dimension2(20 mm,11 mm)"
                       },
                       {
@@ -4536,6 +4796,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "Parent.FlipX",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "Parent.FlipY",
+                        "v": "false"
                       }
                     ]
                   },
@@ -4615,6 +4885,16 @@
                     "name": "Rotation",
                     "f": "0 deg",
                     "v": "0 deg"
+                  },
+                  {
+                    "name": "FlipX",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "FlipY",
+                    "f": "false",
+                    "v": "false"
                   }
                 ]
               },
@@ -4823,7 +5103,7 @@
                       },
                       {
                         "name": "Value",
-                        "s": ""
+                        "s": "abcdef"
                       }
                     ]
                   },
@@ -4839,7 +5119,7 @@
                       },
                       {
                         "name": "Value",
-                        "s": ""
+                        "s": "123"
                       }
                     ]
                   }
@@ -4909,6 +5189,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "false",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   },
@@ -5103,6 +5393,16 @@
                         "name": "Rotation",
                         "f": "-140 deg",
                         "v": "-140 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "false",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "false",
+                        "v": "false"
                       }
                     ]
                   },
@@ -5287,6 +5587,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "Parent.FlipX",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "Parent.FlipY",
+                        "v": "false"
                       }
                     ]
                   },
@@ -5414,6 +5724,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "Parent.FlipX",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "Parent.FlipY",
+                        "v": "false"
                       }
                     ]
                   },
@@ -5541,6 +5861,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "Parent.FlipX",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "Parent.FlipY",
+                        "v": "false"
                       }
                     ]
                   },
@@ -5572,7 +5902,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                    "v": "Dimension2(0 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -5597,7 +5927,7 @@
                   {
                     "name": "Text",
                     "f": "Parent.CustomProperty.ProductCode",
-                    "v": "\"\""
+                    "v": "\"123\""
                   },
                   {
                     "name": "FontName",
@@ -5606,12 +5936,12 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "12pt",
+                    "v": "12 pt"
                   },
                   {
                     "name": "AlignX",
-                    "f": "0",
+                    "f": "if( FlipX, 1, 0 )",
                     "v": "0"
                   },
                   {
@@ -5651,7 +5981,7 @@
                     "cells": [
                       {
                         "name": "Pin",
-                        "f": "Parent.Size * Vector2( 1, 0.55 )",
+                        "f": "Parent.Size * Vector2( 1, if (FlipY, 0.45, 0.55 ) )",
                         "v": "Dimension2(20 mm,11 mm)"
                       },
                       {
@@ -5668,6 +5998,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "Parent.FlipX",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "Parent.FlipY",
+                        "v": "false"
                       }
                     ]
                   },
@@ -5699,7 +6039,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(0 mm,18.890148163 mm)"
+                    "v": "Dimension2(0 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -5724,7 +6064,7 @@
                   {
                     "name": "Text",
                     "f": "Parent.CustomProperty.ComponentID",
-                    "v": "\"\""
+                    "v": "\"abcdef\""
                   },
                   {
                     "name": "FontName",
@@ -5733,12 +6073,12 @@
                   },
                   {
                     "name": "FontSize",
-                    "f": "46pt",
-                    "v": "46 pt"
+                    "f": "12pt",
+                    "v": "12 pt"
                   },
                   {
                     "name": "AlignX",
-                    "f": "0",
+                    "f": "if( FlipX, 1, 0 )",
                     "v": "0"
                   },
                   {
@@ -5778,13 +6118,13 @@
                     "cells": [
                       {
                         "name": "Pin",
-                        "f": "Parent.Size * Vector2( 1, 0.45 )",
+                        "f": "Parent.Size * Vector2( 1, if (FlipY, 0.55, 0.45) )",
                         "v": "Dimension2(20 mm,9 mm)"
                       },
                       {
                         "name": "LocPin",
-                        "f": "Size * Vector2(AlignX,AlignY)",
-                        "v": "Dimension2(0 mm,18.890148163 mm)"
+                        "f": "Size * Vector2(AlignX, AlignY)",
+                        "v": "Dimension2(0 mm,4.927864552 mm)"
                       },
                       {
                         "name": "Scale",
@@ -5795,6 +6135,16 @@
                         "name": "Rotation",
                         "f": "0 deg",
                         "v": "0 deg"
+                      },
+                      {
+                        "name": "FlipX",
+                        "f": "Parent.FlipX",
+                        "v": "false"
+                      },
+                      {
+                        "name": "FlipY",
+                        "f": "Parent.FlipY",
+                        "v": "false"
                       }
                     ]
                   },
@@ -5880,6 +6230,16 @@
                   "name": "Rotation",
                   "f": "0 deg",
                   "v": "0 deg"
+                },
+                {
+                  "name": "FlipX",
+                  "f": "false",
+                  "v": "false"
+                },
+                {
+                  "name": "FlipY",
+                  "f": "false",
+                  "v": "false"
                 }
               ]
             },
@@ -6027,6 +6387,16 @@
                   "name": "Rotation",
                   "f": "0 deg",
                   "v": "0 deg"
+                },
+                {
+                  "name": "FlipX",
+                  "f": "false",
+                  "v": "false"
+                },
+                {
+                  "name": "FlipY",
+                  "f": "false",
+                  "v": "false"
                 }
               ]
             },
@@ -6228,6 +6598,16 @@
                   "name": "Rotation",
                   "f": "0 deg",
                   "v": "0 deg"
+                },
+                {
+                  "name": "FlipX",
+                  "f": "false",
+                  "v": "false"
+                },
+                {
+                  "name": "FlipY",
+                  "f": "false",
+                  "v": "false"
                 }
               ]
             },
@@ -6385,6 +6765,16 @@
                   "name": "Rotation",
                   "f": "(End-Start).Angle",
                   "v": "45 deg"
+                },
+                {
+                  "name": "FlipX",
+                  "f": "false",
+                  "v": "false"
+                },
+                {
+                  "name": "FlipY",
+                  "f": "false",
+                  "v": "false"
                 }
               ]
             },

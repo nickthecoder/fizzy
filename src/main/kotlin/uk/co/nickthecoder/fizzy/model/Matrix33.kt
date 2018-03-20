@@ -100,6 +100,13 @@ class Matrix33(
             )
         }
 
+        fun flip(x: Boolean, y: Boolean) = Matrix33(
+                if (x) -1.0 else 1.0, 0.0, 0.0,
+                0.0, if (y) -1.0 else 1.0, 0.0,
+                0.0, 0.0, 1.0
+        )
+
+
     }
 
 }

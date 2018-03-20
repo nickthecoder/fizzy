@@ -20,6 +20,7 @@ package uk.co.nickthecoder.fizzy.view
 
 import uk.co.nickthecoder.fizzy.model.Shape
 import uk.co.nickthecoder.fizzy.model.ShapeText
+import uk.co.nickthecoder.fizzy.model.Vector2
 import uk.co.nickthecoder.fizzy.model.geometry.BezierCurveTo
 import uk.co.nickthecoder.fizzy.model.geometry.LineTo
 import uk.co.nickthecoder.fizzy.model.geometry.MoveTo
@@ -34,7 +35,12 @@ abstract class View(val dc: DrawContext) {
             dc.translate(shape.transform.pin.value)
             dc.scale(shape.transform.scale.value)
             dc.rotate(shape.transform.rotation.value)
-
+            if (shape.transform.flipX.value) {
+                dc.scale(Vector2(-1.0, 1.0))
+            }
+            if (shape.transform.flipY.value) {
+                dc.scale(Vector2(1.0, -1.0))
+            }
             dc.translate(-shape.transform.locPin.value) // Inefficient
 
             dc.lineWidth(shape.lineWidth.value)

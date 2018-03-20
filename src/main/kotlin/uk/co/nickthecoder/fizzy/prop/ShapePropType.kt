@@ -52,6 +52,8 @@ abstract class ShapePropType<T : Shape>(klass: Class<T>)
             "LocPin" -> PropField("Shape.LocPin", prop) { prop.value.transform.locPin }
             "Scale" -> PropField("Shape.Scale", prop) { prop.value.transform.scale }
             "Rotation" -> PropField("Shape.Rotation", prop) { prop.value.transform.rotation }
+            "FlipX" -> PropField("Shape.FlipX", prop) { prop.value.transform.flipX }
+            "FlipY" -> PropField("Shape.FlipY", prop) { prop.value.transform.flipY }
 
             "Geometry" -> PropValue(prop.value.geometry)
             "Geometry1" -> PropValue(prop.value.geometry) // For backwards compatibility

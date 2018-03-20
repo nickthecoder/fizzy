@@ -18,10 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package uk.co.nickthecoder.fizzy.model
 
-import uk.co.nickthecoder.fizzy.prop.AngleExpression
-import uk.co.nickthecoder.fizzy.prop.Dimension2Expression
-import uk.co.nickthecoder.fizzy.prop.PropCalculation
-import uk.co.nickthecoder.fizzy.prop.Vector2Expression
+import uk.co.nickthecoder.fizzy.prop.*
 
 /**
  * Holds the position of a shape within a parent (which is either a [ShapeGroup] or a [Page].
@@ -49,7 +46,9 @@ class ShapeTransform(val shape: Shape)
 
     val rotation = AngleExpression("0 deg", shape.context)
 
-    // TODO Add flipX and flipY
+    val flipX = BooleanExpression(false, shape.context)
+
+    val flipY = BooleanExpression(false, shape.context)
 
     /**
      * A matrix which can transform a point from the coordinate system of the parent to local coordinates.
@@ -63,12 +62,15 @@ class ShapeTransform(val shape: Shape)
             locPin.propListeners.add(this)
             scale.propListeners.add(this)
             rotation.propListeners.add(this)
+            flipX.propListeners.add(this)
+            flipY.propListeners.add(this)
         }
 
         override fun eval() =
                 Matrix33.translate(locPin.value.x.inDefaultUnits, locPin.value.y.inDefaultUnits) *
                         Matrix33.scale(1.0 / scale.value.x, 1.0 / scale.value.y) *
                         Matrix33.rotate(-rotation.value) *
+                        Matrix33.flip(flipX.value, flipY.value) *
                         Matrix33.translate(-pin.value.x.inDefaultUnits, -pin.value.y.inDefaultUnits)
     }
 
@@ -84,10 +86,13 @@ class ShapeTransform(val shape: Shape)
             locPin.propListeners.add(this)
             scale.propListeners.add(this)
             rotation.propListeners.add(this)
+            flipX.propListeners.add(this)
+            flipY.propListeners.add(this)
         }
 
         override fun eval() =
                 Matrix33.translate(pin.value.x.inDefaultUnits, pin.value.y.inDefaultUnits) *
+                        Matrix33.flip(flipX.value, flipY.value) *
                         Matrix33.rotate(rotation.value) *
                         Matrix33.scale(scale.value) *
                         Matrix33.translate(-locPin.value.x.inDefaultUnits, -locPin.value.y.inDefaultUnits)
@@ -120,6 +125,10 @@ class ShapeTransform(val shape: Shape)
                 fromParentToLocal.value * shape.parent.fromPageToLocal.value
     }
 
+    init {
+        shape.listenTo(pin, locPin, scale, rotation, flipX, flipY)
+    }
+
     override fun metaData(): MetaData {
         val metaData = MetaData(null)
         addMetaData(metaData)
@@ -132,9 +141,8 @@ class ShapeTransform(val shape: Shape)
         section.newCell("LocPin", locPin)
         section.newCell("Scale", scale)
         section.newCell("Rotation", rotation)
+        section.newCell("FlipX", flipX)
+        section.newCell("FlipY", flipY)
     }
 
-    init {
-        shape.listenTo(pin, locPin, scale, rotation)
-    }
 }
