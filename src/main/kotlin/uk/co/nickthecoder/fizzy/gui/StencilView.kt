@@ -121,7 +121,7 @@ class StencilButton(val mainWindow: MainWindow, val shape: Shape)
 
     init {
         styleClass.add("stencil")
-        button.graphic = ShapeGraphic(shape, SIZE)
+        button.graphic = ShapeGraphic(shape, BUTTON_SIZE)
 
         button.onAction = EventHandler {
             mainWindow.controller?.let { controller ->
@@ -141,6 +141,10 @@ class StencilButton(val mainWindow: MainWindow, val shape: Shape)
 
         button.addEventFilter(MouseEvent.MOUSE_PRESSED) { checkMenu(it) }
         button.addEventFilter(MouseEvent.MOUSE_RELEASED) { checkMenu(it) }
+
+        nameLabel.maxWidth = MAX_WIDTH
+        this.minWidth = MAX_WIDTH + 6.0
+        this.maxWidth = MAX_WIDTH + 6.0
 
         children.addAll(button, nameLabel)
     }
@@ -171,7 +175,8 @@ class StencilButton(val mainWindow: MainWindow, val shape: Shape)
     }
 
     companion object {
-        val SIZE = 50.0
+        val MAX_WIDTH = 80.0
+        val BUTTON_SIZE = 50.0
         val MARGIN = 3.0
     }
 }

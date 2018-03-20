@@ -103,11 +103,11 @@ class MainWindow(val stage: Stage)
 
         splitPane.items.addAll(leftPane.build(), tabs)
         SplitPane.setResizableWithParent(splitPane.items[0], false)
-        splitPane.setDividerPositions(0.25)
+        splitPane.setDividerPositions(0.32)
 
         leftPane.add(stencils.build())
 
-        stage.scene = Scene(borderPane, 800.0, 600.0)
+        stage.scene = Scene(borderPane, 1000.0, 600.0)
         Fizzy.style(stage.scene)
 
         tabs.selectionModel.selectedItemProperty().addListener { _, oldTab, newTab -> onTabChanged(oldTab, newTab) }
