@@ -32,6 +32,8 @@ import uk.co.nickthecoder.fizzy.controller.tools.StampShape2dTool
 import uk.co.nickthecoder.fizzy.model.*
 import uk.co.nickthecoder.fizzy.model.history.CreateShape
 import uk.co.nickthecoder.fizzy.model.history.DeleteShape
+import uk.co.nickthecoder.fizzy.util.ChangeListener
+import uk.co.nickthecoder.fizzy.util.ChangeType
 import uk.co.nickthecoder.fizzy.view.ShapeView
 
 class StencilView(val mainWindow: MainWindow, val stencil: Document, val localMasters: Boolean = false)
@@ -181,24 +183,34 @@ class StencilButton(val mainWindow: MainWindow, val shape: Shape)
     }
 }
 
-class ShapeGraphic(val shape: Shape, size: Double, margin: Double = StencilButton.MARGIN)
-    : Canvas(size, size) {
+class ShapeGraphic(val shape: Shape, val size: Double, val margin: Double = StencilButton.MARGIN)
+    : Canvas(size, size), ChangeListener<Shape> {
 
     init {
-        val dc = CanvasContext(this)
-
-        val width = shape.size.value.x.inDefaultUnits
-        val height = shape.size.value.y.inDefaultUnits
-        //dc.translate(Dimension(-margin), Dimension(-margin))
-        dc.translate(Dimension(size / 2.0), Dimension(size / 2.0))
-        if (width > height) {
-            dc.scale((size - margin * 2) / width)
-        } else {
-            dc.scale((size - margin * 2) / height)
-        }
-        dc.translate(-shape.transform.pin.value)
-
-        ShapeView(shape, dc).draw()
+        redraw()
+        shape.changeListeners.add(this)
     }
 
+    override fun changed(item: Shape, changeType: ChangeType, obj: Any?) {
+        redraw()
+    }
+
+    fun redraw() {
+        val dc = CanvasContext(this)
+        dc.clear()
+
+        dc.use {
+            val width = shape.size.value.x.inDefaultUnits
+            val height = shape.size.value.y.inDefaultUnits
+            //dc.translate(Dimension(-margin), Dimension(-margin))
+            dc.translate(Dimension(size / 2.0), Dimension(size / 2.0))
+            if (width > height) {
+                dc.scale((size - margin * 2) / width)
+            } else {
+                dc.scale((size - margin * 2) / height)
+            }
+            dc.translate(-shape.transform.pin.value)
+            ShapeView(shape, dc).draw()
+        }
+    }
 }
