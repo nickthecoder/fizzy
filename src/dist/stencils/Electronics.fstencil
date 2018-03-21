@@ -1359,8 +1359,8 @@
                   },
                   {
                     "name": "FlipX",
-                    "f": "true",
-                    "v": "true"
+                    "f": "false",
+                    "v": "false"
                   },
                   {
                     "name": "FlipY",
@@ -1526,7 +1526,7 @@
                       },
                       {
                         "name": "Value",
-                        "s": "wq"
+                        "s": ""
                       }
                     ]
                   },
@@ -1542,7 +1542,7 @@
                       },
                       {
                         "name": "Value",
-                        "s": "123"
+                        "s": ""
                       }
                     ]
                   }
@@ -1745,8 +1745,8 @@
                         "cells": [
                           {
                             "name": "Point",
-                            "f": "Size * Vector2( 0.1, 1)",
-                            "v": "Dimension2(1.2 mm,8 mm)"
+                            "f": "Size * Vector2( 0.15, 0.9)",
+                            "v": "Dimension2(1.8 mm,7.2 mm)"
                           }
                         ]
                       },
@@ -1755,8 +1755,8 @@
                         "cells": [
                           {
                             "name": "Point",
-                            "f": "Size * Vector2( 0.1, 0.8)",
-                            "v": "Dimension2(1.2 mm,6.4 mm)"
+                            "f": "Size * Vector2( 0.15, 0.7)",
+                            "v": "Dimension2(1.8 mm,5.6 mm)"
                           }
                         ]
                       },
@@ -1765,8 +1765,8 @@
                         "cells": [
                           {
                             "name": "Point",
-                            "f": "Size * Vector2( 0, 0.9)",
-                            "v": "Dimension2(0 mm,7.2 mm)"
+                            "f": "Size * Vector2( 0.07, 0.8)",
+                            "v": "Dimension2(0.84 mm,6.4 mm)"
                           }
                         ]
                       },
@@ -1775,8 +1775,8 @@
                         "cells": [
                           {
                             "name": "Point",
-                            "f": "Size * Vector2( 0.2, 0.9)",
-                            "v": "Dimension2(2.4 mm,7.2 mm)"
+                            "f": "Size * Vector2( 0.23, 0.8)",
+                            "v": "Dimension2(2.76 mm,6.4 mm)"
                           }
                         ]
                       }
@@ -1825,7 +1825,7 @@
                   {
                     "name": "Text",
                     "f": "Parent.CustomProperty.ComponentID",
-                    "v": "\"123\""
+                    "v": "\"\""
                   },
                   {
                     "name": "FontName",
@@ -1900,7 +1900,7 @@
                       {
                         "name": "FlipX",
                         "f": "Parent.FlipX",
-                        "v": "true"
+                        "v": "false"
                       },
                       {
                         "name": "FlipY",
@@ -1962,7 +1962,7 @@
                   {
                     "name": "Text",
                     "f": "Parent.CustomProperty.Capacitance",
-                    "v": "\"wq\""
+                    "v": "\"\""
                   },
                   {
                     "name": "FontName",
@@ -2037,7 +2037,7 @@
                       {
                         "name": "FlipX",
                         "f": "Parent.FlipX",
-                        "v": "true"
+                        "v": "false"
                       },
                       {
                         "name": "FlipY",
@@ -5902,7 +5902,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(8.080126762 mm,4.927864552 mm)"
+                    "v": "Dimension2(0 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",
@@ -6039,7 +6039,7 @@
                   {
                     "name": "Size",
                     "f": "textSize()",
-                    "v": "Dimension2(14.471466064 mm,4.927864552 mm)"
+                    "v": "Dimension2(0 mm,4.927864552 mm)"
                   },
                   {
                     "name": "LineColor",

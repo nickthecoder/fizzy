@@ -21,6 +21,7 @@ package uk.co.nickthecoder.fizzy.gui
 import javafx.event.EventHandler
 import javafx.scene.Node
 import javafx.scene.control.*
+import javafx.scene.layout.FlowPane
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.VBox
 import uk.co.nickthecoder.fizzy.collection.FList
@@ -30,7 +31,7 @@ import uk.co.nickthecoder.fizzy.model.geometry.GeometryPart
 import uk.co.nickthecoder.fizzy.prop.PropExpression
 import uk.co.nickthecoder.fizzy.prop.PropVariable
 
-class ShapeSheetView(val shape: Shape) : BuildableNode {
+class ShapeSheetView(val mainWindow: MainWindow, val shape: Shape) : BuildableNode {
 
     private val vBox = VBox()
 
@@ -97,6 +98,19 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
         }
     }
 
+    private val childrenListener = object : ListListener<Shape> {
+        override fun added(list: FList<Shape>, item: Shape, index: Int) {
+            rebuildRelations()
+        }
+
+        override fun removed(list: FList<Shape>, item: Shape, index: Int) {
+            rebuildRelations()
+        }
+    }
+
+    private val relationsTitledPane = TitledPane("Relations", Label(""))
+
+
     init {
         shape.geometry.parts.listeners.add(geometryPartsListener)
         shape.connectionPoints.listeners.add(connectionPointsListener)
@@ -104,19 +118,55 @@ class ShapeSheetView(val shape: Shape) : BuildableNode {
         shape.snapPoints.listeners.add(snapPointsListener)
         shape.scratches.listeners.add(scratchListener)
         shape.customProperties.listeners.add(customPropertiesListener)
+        shape.children.listeners.add(childrenListener)
     }
 
     override fun build(): Node {
         vBox.styleClass.add("shape-sheet")
 
+        buildRelations()
+        vBox.children.add(relationsTitledPane)
+
         val metaData = shape.metaData()
-        buildSection("Shape ${shape.id}", metaData)
+        buildSection("Shape #${shape.id} ${shape.name.value}", metaData)
 
         metaData.sections.forEach { name, section ->
             buildSection(name, section)
         }
 
         return scroll
+    }
+
+    fun buildRelations() {
+        relationsTitledPane.isExpanded = false
+        rebuildRelations()
+    }
+
+    fun rebuildRelations() {
+
+        val container = VBox()
+
+        val parent = shape.parent
+        if (parent is Shape) {
+            val button = Button("Parent Shape#${parent.id}")
+            button.onAction = EventHandler { mainWindow.editShapeSheet(parent) }
+            container.children.add(button)
+        }
+
+        if (shape.children.isNotEmpty()) {
+            container.children.add(Label("Children"))
+
+            val flow = FlowPane()
+            container.children.add(flow)
+
+            shape.children.forEach { child ->
+                val childName = if (child.name.value.isBlank()) "Shape#${child.id}" else child.name.value
+                val button = Button("${childName}")
+                button.onAction = EventHandler { mainWindow.editShapeSheet(child) }
+                flow.children.add(button)
+            }
+        }
+        relationsTitledPane.content = container
     }
 
     fun buildSection(name: String, metaData: MetaData) {

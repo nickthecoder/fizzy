@@ -14,14 +14,6 @@ Aims
     Create circuit diagrams
     Create flow charts
 
-Edit text
-    Double click a shape
-        If it is ShapeText or has a child of ShapeText, then edit that
-        Otherwise, create a new ShapeText
-            For Shape2d parents, make the size of the ShapeText the same size as the parent.
-    At the beginning, just remember the "caret" position, and line Index without showing it
-    Add a "key" event handler (which will need a "consume" method).
-
 Soon
 ----
 

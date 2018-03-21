@@ -162,7 +162,7 @@ class MainWindow(val stage: Stage)
     }
 
     override fun editShapeSheet(shape: Shape) {
-        val tab = ShapeSheetTab(shape)
+        val tab = ShapeSheetTab(this, shape)
         tabs.tabs.add(tab)
         tabs.selectionModel.select(tab)
     }

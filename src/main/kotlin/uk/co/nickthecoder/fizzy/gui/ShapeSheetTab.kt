@@ -21,14 +21,14 @@ package uk.co.nickthecoder.fizzy.gui
 import javafx.scene.control.Tab
 import uk.co.nickthecoder.fizzy.model.Shape
 
-class ShapeSheetTab(val shape: Shape)
+class ShapeSheetTab(val mainWindow: MainWindow, val shape: Shape)
     : Tab("Shape ${shape.id}") {
 
 
     /**
      * A reference of the ShapeSheetView is kept, to ensure that its listeners are not gc'd.
      */
-    private val ssv = ShapeSheetView(shape)
+    private val ssv = ShapeSheetView(mainWindow, shape)
 
     init {
         content = ssv.build()
