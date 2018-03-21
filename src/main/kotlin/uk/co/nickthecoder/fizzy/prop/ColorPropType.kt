@@ -34,9 +34,6 @@ class ColorPropType private constructor()
             "Blue" -> SimplePropField("Color.Blue", prop) { it.value.blue }
             "Opacity" -> SimplePropField("Color.Opacity", prop) { it.value.opacity }
             "Alpha" -> SimplePropField("Color.Alpha", prop) { it.value.opacity }
-            "Hue" -> SimplePropField("Color.Hue", prop) { prop.value.hue }
-            "Saturation" -> SimplePropField("Color.Brightness", prop) { it.value.saturation }
-            "Brightness" -> SimplePropField("Color.Brightness", prop) { it.value.brightness }
             else -> return super.findField(prop, name)
         }
     }
@@ -45,12 +42,6 @@ class ColorPropType private constructor()
         return when (name) {
             "brighter" -> PropMethod0(prop) { prop.value.brighter() }
             "darker" -> PropMethod0(prop) { prop.value.darker() }
-            "saturate" -> PropMethod0(prop) { prop.value.saturate() }
-            "desaturate" -> PropMethod0(prop) { prop.value.desaturate() }
-            "grayscale" -> PropMethod0(prop) { prop.value.grayscale() }
-            "invert" -> PropMethod0(prop) { prop.value.invert() }
-            "isOpaque" -> PropMethod0(prop) { prop.value.isOpaque() }
-            "interpolate" -> PropMethod2(prop, Color::class.java, Double::class.java) { other, t -> prop.value.interpolate(other, t) }
             else -> return super.findMethod(prop, name)
         }
     }

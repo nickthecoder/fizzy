@@ -56,11 +56,8 @@ class DummyPropType private constructor()
             "Dimension2" -> PropFunction2(Dimension::class.java, Dimension::class.java) { x, y -> Dimension2(x, y) }
 
             "WebColor" -> PropFunction1(String::class.java) { Color.web(it) }
-            "WebColorA" -> PropFunction2(String::class.java, Double::class.java) { str, opacity -> Color.web(str, opacity) }
             "RGB" -> PropFunction3(Double::class.java, Double::class.java, Double::class.java) { r, g, b -> Color(clamp0_1(r), clamp0_1(g), clamp0_1(b)) }
             "RGBA" -> PropFunction4(Double::class.java, Double::class.java, Double::class.java, Double::class.java) { r, g, b, a -> Color(clamp0_1(r), clamp0_1(g), clamp0_1(b), clamp0_1(a)) }
-            "HSB" -> PropFunction3(Double::class.java, Double::class.java, Double::class.java) { h, s, b -> Color.hsb(h, clamp0_1(s), clamp0_1(b)) }
-            "HSBA" -> PropFunction4(Double::class.java, Double::class.java, Double::class.java, Double::class.java) { h, s, b, a -> Color.hsb(h, clamp0_1(s), clamp0_1(b), clamp0_1(a)) }
             else -> null
         }
     }
