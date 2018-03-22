@@ -5,6 +5,12 @@ Create flow chart symbols
 
 Create more electronics symbols
 
+Show edge of the page.
+
+When scaling by only x or only y, and contraining, then scale by ratios i.e 1/3 1/2 1 2 3 etc
+    Would be nice to scale by 11+1/4, 1+1/3, 1+1/2, 2, 3, 4 ...
+    And reduce to 3/4, 2/3, 1/2, 1/3, 1/4, 1/5 ...
+
 BUGS
 ----
 
@@ -16,10 +22,6 @@ Editing geometry doesn't work well (try changing the capacitor symbol!)
 
 Soon
 ----
-
-Re-code Color from scratch (without the hue stuff), so that it can be GPL3.
-
-Allow Color to be specified as #rrggbb or #rrggbbaa
 
 Add a caret to the EditTextTool, 
 
@@ -47,12 +49,6 @@ Create tests for each of the Tools
 DimensionExpression and Dimension2Expression to have an additional "expected power", which defaults to 1.
     Will error if other powers are returned
 
-Snapping
-    List of Snap : Point, + - | . AlongX, AlongY  tt, tf, ft, ff
-
-When scaling by only x or only y, and contraining, then scale by ratios i.e 1/3 1/2 1 2 3 etc
-    Would be nice to scale by 11+1/4, 1+1/3, 1+1/2, 2, 3, 4 ...
-    And reduce to 3/4, 2/3, 1/2, 1/3, 1/4, 1/5 ...
 
 Rounded corners
     Where two lines meet, back off a little, and draw a circular arc.
@@ -101,8 +97,6 @@ Can we create a single Shape, which is an N sided regular polygon? (or star).
 
 As well as ControlPoints, can we also add sliders to control shapes. e.g. a slider to control the line width.
     (I'd actually want a slider to control the "N" in the above!)
-
-Consider "1+1" creating a PropConstant.
 
 Later
 -----
