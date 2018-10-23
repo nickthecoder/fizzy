@@ -102,7 +102,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
             if (field != v) {
                 field = v
                 if (v) {
-                    runLater { draw() }
+                    runLater("GlassCanvas Dirty") { draw() }
                 }
             }
         }
@@ -142,7 +142,7 @@ class GlassCanvas(val page: Page, val drawingArea: DrawingArea) {
         canvas.addEventHandler(KeyEvent.KEY_PRESSED) { onKeyPressed(it) }
 
         drawingArea.controller.selection.listeners.add(selectionListener)
-        runLater {
+        runLater("GlassCanvas initial draw") {
             draw()
         }
     }

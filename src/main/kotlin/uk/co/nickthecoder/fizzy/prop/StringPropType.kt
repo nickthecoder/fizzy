@@ -20,7 +20,6 @@ package uk.co.nickthecoder.fizzy.prop
 
 import uk.co.nickthecoder.fizzy.evaluator.EvaluationContext
 import uk.co.nickthecoder.fizzy.evaluator.constantsContext
-import uk.co.nickthecoder.fizzy.util.toFormula
 
 class StringPropType private constructor()
     : PropType<String>(String::class.java) {
@@ -34,6 +33,12 @@ class StringPropType private constructor()
 
     override fun findMethod(prop: Prop<String>, name: String): PropMethod<String>? {
         return when (name) {
+            "contains" -> PropMethod1(prop, String::class.java) { a ->
+                prop.value.contains(a)
+            }
+            "endsWith" -> PropMethod1(prop, String::class.java) { a ->
+                prop.value.endsWith(a)
+            }
             "head" -> PropMethod1(prop, Double::class.java) { a ->
                 val intA = a.toInt()
                 if (prop.value.length <= intA) {
@@ -42,14 +47,17 @@ class StringPropType private constructor()
                     prop.value.substring(0, a.toInt())
                 }
             }
-            "tail" -> PropMethod1(prop, Double::class.java) { a ->
-                val length = prop.value.length
-                val intA = a.toInt()
-                if (length <= intA) {
-                    prop.value
-                } else {
-                    prop.value.substring(length - intA, length)
-                }
+            "indexOf" -> PropMethod1(prop, String::class.java) { a ->
+                prop.value.indexOf(a)
+            }
+            "isBlank" -> PropMethod0(prop) {
+                prop.value.isBlank()
+            }
+            "isEmpty" -> PropMethod0(prop) {
+                prop.value.isEmpty()
+            }
+            "startsWith" -> PropMethod1(prop, String::class.java) { a ->
+                prop.value.startsWith(a)
             }
             "substring" -> PropMethod2(prop, Double::class.java, Double::class.java) { a, b ->
                 var intA = a.toInt()
@@ -70,6 +78,15 @@ class StringPropType private constructor()
                             prop.value.substring(intA, intB)
                         }
                     }
+                }
+            }
+            "tail" -> PropMethod1(prop, Double::class.java) { a ->
+                val length = prop.value.length
+                val intA = a.toInt()
+                if (length <= intA) {
+                    prop.value
+                } else {
+                    prop.value.substring(length - intA, length)
                 }
             }
             else -> null

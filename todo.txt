@@ -7,6 +7,9 @@ Create more electronics symbols
 
 Show edge of the page.
 
+Typed properties
+    Same code for Scratch? Maybe not, scratches are PropExpressions, but CustomProperties are PropVariables.
+
 When scaling by only x or only y, and contraining, then scale by ratios i.e 1/3 1/2 1 2 3 etc
     Would be nice to scale by 11+1/4, 1+1/3, 1+1/2, 2, 3, 4 ...
     And reduce to 3/4, 2/3, 1/2, 1/3, 1/4, 1/5 ...
@@ -14,8 +17,9 @@ When scaling by only x or only y, and contraining, then scale by ratios i.e 1/3 
 BUGS
 ----
 
-If a size expression is NaN or Inf, then drawing takes forever.
-   Skip that operation instead (or use a default value).
+connectAlong does not work when used as a local point (such as a geometry point).
+
+100% CPU usage sometimes when resizing shapes.
 
 Editing geometry doesn't work well (try changing the capacitor symbol!)
 

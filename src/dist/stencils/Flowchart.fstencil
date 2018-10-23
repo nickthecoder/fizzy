@@ -1891,6 +1891,155 @@
                 ]
               }
             ]
+          },
+          {
+            "id": 15,
+            "type": "Shape1d",
+            "cells": [
+              {
+                "name": "Name",
+                "s": "Aligned Up/Down"
+              },
+              {
+                "name": "LineWidth",
+                "f": "1pt",
+                "v": "1 pt"
+              },
+              {
+                "name": "Size",
+                "f": "Dimension2((End-Start).Length,LineWidth)",
+                "v": "Dimension2(10 mm,1 pt)"
+              },
+              {
+                "name": "LineColor",
+                "f": "BLACK",
+                "v": "RGB(0,0,0)"
+              },
+              {
+                "name": "FillColor",
+                "f": "TRANSPARENT",
+                "v": "RGBA(0,0,0,0)"
+              },
+              {
+                "name": "StrokeCap",
+                "f": "STROKE_CAP_ROUND",
+                "v": "STROKE_CAP_ROUND"
+              },
+              {
+                "name": "StrokeJoin",
+                "f": "STROKE_JOIN_ROUND",
+                "v": "STROKE_JOIN_ROUND"
+              },
+              {
+                "name": "Start",
+                "f": "Dimension2(0mm,0mm)",
+                "v": "Dimension2(0 mm,0 mm)"
+              },
+              {
+                "name": "End",
+                "f": "Dimension2(10mm, 0mm)",
+                "v": "Dimension2(10 mm,0 mm)"
+              }
+            ],
+            "sections": [
+              {
+                "Section": "Transform",
+                "cells": [
+                  {
+                    "name": "Pin",
+                    "f": "(Start+End) * 0.5",
+                    "v": "Dimension2(5 mm,0 mm)"
+                  },
+                  {
+                    "name": "LocPin",
+                    "f": "Dimension2(Length*0.5, LineWidth * 0.5)",
+                    "v": "Dimension2(5 mm,0.5 pt)"
+                  },
+                  {
+                    "name": "Scale",
+                    "f": "Vector2(1, 1)",
+                    "v": "Vector2(1,1)"
+                  },
+                  {
+                    "name": "Rotation",
+                    "f": "(End-Start).Angle",
+                    "v": "0 deg"
+                  },
+                  {
+                    "name": "FlipX",
+                    "f": "false",
+                    "v": "false"
+                  },
+                  {
+                    "name": "FlipY",
+                    "f": "false",
+                    "v": "false"
+                  }
+                ]
+              },
+              {
+                "Section": "Geometry",
+                "cells": [
+                  {
+                    "name": "Connect",
+                    "f": "false",
+                    "v": "false"
+                  }
+                ],
+                "rows": [
+                  {
+                    "type": "MoveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Dimension2(0mm,LineWidth/2)",
+                        "v": "Dimension2(0 mm,0.5 pt)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Dimension2(Length,LineWidth/2)",
+                        "v": "Dimension2(10 mm,0.5 pt)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "MoveTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Dimension2(Length - 6pt,LineWidth/2-3pt)",
+                        "v": "Dimension2(7.883333333 mm,-2.5 pt)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Dimension2(Length,LineWidth/2)",
+                        "v": "Dimension2(10 mm,0.5 pt)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "LineTo",
+                    "cells": [
+                      {
+                        "name": "Point",
+                        "f": "Dimension2(Length - 6pt,LineWidth/2+3pt)",
+                        "v": "Dimension2(7.883333333 mm,3.5 pt)"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ]
       }

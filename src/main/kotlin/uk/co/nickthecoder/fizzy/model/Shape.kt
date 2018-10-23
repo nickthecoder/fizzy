@@ -169,7 +169,7 @@ abstract class Shape internal constructor(var parent: ShapeParent, val linkedFro
             if (field != v) {
                 field = v
                 if (v) {
-                    runLater {
+                    runLater("Shape is dirty") {
                         dirty = false
                         changeListeners.fireChanged(this)
                     }

@@ -44,7 +44,7 @@ class DrawingCanvas(page: Page, val singleShape: Shape?, val drawingArea: Drawin
                 field = v
 
                 if (v) {
-                    runLater {
+                    runLater("Drawing Canvas Dirty") {
                         draw()
                     }
                 }
